@@ -1,0 +1,49 @@
+[stdout]
+
+# criterion-a passes
+$ eh evidence /var/folders/wv/3m5dhh6x5pv9w0fbfzymldnw0000gn/T/extremely-hardcore-demo-zqBvHy/.extremely-hardcore/runs/proof-demo criterion-a -- bun -e process.exit(0)
+[stdout]
+5a624f73-b9d0-40b6-bb80-9e629d2fa6d7: criterion-a exited 0 (9ms)
+
+# criterion B has no evidence
+$ eh transition /var/folders/wv/3m5dhh6x5pv9w0fbfzymldnw0000gn/T/extremely-hardcore-demo-zqBvHy/.extremely-hardcore/runs/proof-demo complete
+[stderr]
+criterion.uncovered: criterion-b has no evidence
+[stdout]
+
+# criterion-b passes
+$ eh evidence /var/folders/wv/3m5dhh6x5pv9w0fbfzymldnw0000gn/T/extremely-hardcore-demo-zqBvHy/.extremely-hardcore/runs/proof-demo criterion-b -- bun -e process.exit(0)
+[stdout]
+d5b818bd-b855-45e2-961d-a42b08e3ae39: criterion-b exited 0 (9ms)
+[stdout]
+
+# criterion A is stale
+$ eh transition /var/folders/wv/3m5dhh6x5pv9w0fbfzymldnw0000gn/T/extremely-hardcore-demo-zqBvHy/.extremely-hardcore/runs/proof-demo complete
+[stderr]
+evidence.stale: 5a624f73-b9d0-40b6-bb80-9e629d2fa6d7 belongs to a different workspace fingerprint
+[stdout]
+
+# criterion-a passes
+$ eh evidence /var/folders/wv/3m5dhh6x5pv9w0fbfzymldnw0000gn/T/extremely-hardcore-demo-zqBvHy/.extremely-hardcore/runs/proof-demo criterion-a -- bun -e process.exit(0)
+[stdout]
+9647e826-f06b-42d3-8dbf-75da42b4b111: criterion-a exited 0 (10ms)
+
+# both criteria are fresh
+$ eh transition /var/folders/wv/3m5dhh6x5pv9w0fbfzymldnw0000gn/T/extremely-hardcore-demo-zqBvHy/.extremely-hardcore/runs/proof-demo complete
+[stdout]
+implemented -> complete (ab9cede7-ef1a-4072-b154-277026d348ab)
+[stdout]
+
+accepted transition:
+{
+  "schemaVersion": 1,
+  "transitionId": "ab9cede7-ef1a-4072-b154-277026d348ab",
+  "from": "implemented",
+  "to": "complete",
+  "at": "2026-07-14T07:17:46.104Z",
+  "workspaceFingerprint": "cc4784b7813f8a3f585adb4b5fabac55128a82a1c285286a8b6ec967ecc9d85d",
+  "evidenceIds": [
+    "9647e826-f06b-42d3-8dbf-75da42b4b111",
+    "d5b818bd-b855-45e2-961d-a42b08e3ae39"
+  ]
+}

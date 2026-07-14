@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "changeId": "proof-carrying-completion-demo",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "criterion-a",
+      "description": "The first verification command passes.",
+      "evidenceIds": []
+    },
+    {
+      "id": "criterion-b",
+      "description": "The second verification command passes.",
+      "evidenceIds": []
+    }
+  ],
+  "blockers": []
+}

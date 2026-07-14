@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "6f91e402-8bcd-4178-a487-a33b0a9cb446",
+  "criterionId": "demo-completes",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "examples/proof-carrying-completion/demo.ts"
+    ]
+  },
+  "startedAt": "2026-07-14T07:17:45.820Z",
+  "durationMs": 290,
+  "exitCode": 0,
+  "workspaceFingerprint": "e33e7df8a6e4211fa31860429b366de7f5305e3fadba86edf9a08116819130a6",
+  "logPath": "logs/6f91e402-8bcd-4178-a487-a33b0a9cb446.log",
+  "logSha256": "b6338ac4de76a6a2b35eeb8e0a45d4827fc112b2f98aa26c37fc6b8b9cd6b73c",
+  "summary": "[stdout]\n\n# criterion-a passes\n$ eh evidence /var/folders/wv/3m5dhh6x5pv9w0fbfzymldnw0000gn/T/extremely-hardcore-demo-zqBvHy/.extremely-hardcore/runs/proof-demo criterion-a -- bun -e process.exit(0)\n[stdout]\n5a624f73-b9d0-40b6-bb80-9e629d2fa6d7: criterion-a exited 0 (9ms)\n\n# criterion B has no evidence\n$ eh transition /var/folders/wv/3m5dhh6x5pv9w0fbfzymldnw0000gn/T/extremely-hardcore-demo-zqBvHy/.extremely-hardcore/runs/proof-demo complete\n[stderr]\ncriterion.uncovered: criterion-b has no eviden",
+  "truncated": false
+}

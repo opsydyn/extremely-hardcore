@@ -19,6 +19,7 @@ Do not use for trivial edits where the final answer can state the one file chang
 - Commands run and outputs.
 - Test, build, lint, or validation evidence.
 - Known risks and review notes.
+- The run path when a `.extremely-hardcore` change run exists.
 
 ## required output
 
@@ -36,10 +37,13 @@ Do not use for trivial edits where the final answer can state the one file chang
 7. Record risks left open.
 8. Say whether human review is needed.
 9. Give one final recommendation from the allowed list.
+10. When a protocol run exists, capture each meaningful verification command with `bun run eh evidence <run-path> <criterion-id> -- <command> [args...]`.
+11. Use `bun run eh transition <run-path> complete` for the completion claim. Do not hand-author success when the gate rejects it.
 
 ## quality bar
 
 - Every success claim has evidence.
+- Protocol-backed evidence is fresh for the current workspace fingerprint.
 - Failing checks are not buried.
 - Remaining risk is named plainly.
 - Recommendation follows the evidence.

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "changeId": "002-proof-carrying-completion",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "repository-valid",
+      "description": "The repository structure and required skill contracts validate.",
+      "evidenceIds": [
+        "ebe51281-24ff-4294-a832-57adfb185d9d"
+      ]
+    },
+    {
+      "id": "protocol-tested",
+      "description": "The focused validator and protocol test suite passes.",
+      "evidenceIds": [
+        "e9877459-75c0-467e-a902-0c24d050f4b2"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "The TypeScript implementation has no type errors.",
+      "evidenceIds": [
+        "1fb75942-424d-474a-a2cb-b2931ab89c46"
+      ]
+    },
+    {
+      "id": "demo-completes",
+      "description": "The executable example rejects invalid states and accepts refreshed evidence.",
+      "evidenceIds": [
+        "6f91e402-8bcd-4178-a487-a33b0a9cb446"
+      ]
+    }
+  ],
+  "blockers": []
+}

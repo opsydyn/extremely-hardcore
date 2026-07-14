@@ -79,6 +79,18 @@ bun install
 bun run check
 ```
 
+## Proof-carrying Completion
+
+The first executable protocol slice records verification commands and prevents an `implemented -> complete` transition until every criterion has fresh passing evidence and every blocker is resolved:
+
+```bash
+bun run eh evidence <run-path> <criterion-id> -- <command> [args...]
+bun run eh validate <run-path>
+bun run eh transition <run-path> complete
+```
+
+See [`examples/proof-carrying-completion/`](examples/proof-carrying-completion/) for an isolated end-to-end demo.
+
 ## Installing For Claude
 
 Copy the skill folders from `skills/` into your Claude skills directory, or package the repo using the plugin mechanism available in your Claude environment.
@@ -87,4 +99,4 @@ The skill content is plain markdown and does not require runtime code to use.
 
 ## Project Status
 
-V0 scaffold. Useful enough to dogfood, not yet proven enough to trust blindly. That is why the evidence ledger exists.
+V0 scaffold with an experimental completion gate. Useful enough to dogfood, not yet proven enough to trust blindly. That is why the evidence ledger exists.

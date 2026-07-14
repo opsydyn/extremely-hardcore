@@ -71,6 +71,8 @@ The roadmap is working when:
 
 **Estimated effort:** 5 focused engineering days
 
+**Status:** Implemented; dogfood validation pending.
+
 **Outcome:** Prove the central differentiator with one guarded transition: `implemented -> complete`.
 
 **Deliverables:**
