@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "5cc52c68-d76d-48eb-985c-7d3da8dee8da",
+  "criterionId": "repository-valid",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "run",
+      "check"
+    ]
+  },
+  "startedAt": "2026-07-14T20:47:51.175Z",
+  "durationMs": 23,
+  "exitCode": 0,
+  "workspaceFingerprint": "00de7c92c8c5a60ce086431249c39d7196d34415c68c7d1f60e46fd6ba90166e",
+  "logPath": "logs/5cc52c68-d76d-48eb-985c-7d3da8dee8da.log",
+  "logSha256": "76eaae63a2b2a327a2f6fd68321a5bc1de2412513b46772bafd743c07bd8bd62",
+  "summary": "[stderr]\n$ bun run validate\n[stderr]\n$ bun scripts/validate.ts\n[stdout]\nvalidation passed: extremely-hardcore scaffold is complete",
+  "truncated": false
+}

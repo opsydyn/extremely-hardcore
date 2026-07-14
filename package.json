@@ -7,8 +7,9 @@
   "scripts": {
     "validate": "bun scripts/validate.ts",
     "check": "bun run validate",
-    "test": "bun test ./scripts/validate.test.ts ./tests/protocol",
-    "eh": "bun scripts/eh.ts"
+    "test": "bun test ./scripts/validate.test.ts ./tests/protocol ./tests/evaluation",
+    "eh": "bun scripts/eh.ts",
+    "evaluate": "bun scripts/evaluate.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",

@@ -92,7 +92,7 @@ The roadmap is working when:
 
 **Estimated effort:** 2 weeks
 
-**Status:** Next. Begin only under the experimental schema boundary recorded in ADR 0004.
+**Status:** Core deterministic runner implemented; cross-agent adapters, baselines, and the 20-scenario corpus remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
 
 **Outcome:** Measure whether agents actually obey the completion protocol under pressure.
 

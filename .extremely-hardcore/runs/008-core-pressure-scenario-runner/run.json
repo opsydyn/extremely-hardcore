@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "changeId": "008-core-pressure-scenario-runner",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "core-scenarios-pass",
+      "description": "All seven core pressure scenarios report the expected protocol outcomes.",
+      "evidenceIds": [
+        "e7eb5197-f170-4388-8f62-444e04caddf0"
+      ]
+    },
+    {
+      "id": "evaluate-cli-json",
+      "description": "The evaluation command emits a parseable passing JSON report.",
+      "evidenceIds": [
+        "bfdd234d-e13b-4e16-bdf1-f5f6290c25f0"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "The repository structure and required skill contracts validate.",
+      "evidenceIds": [
+        "5cc52c68-d76d-48eb-985c-7d3da8dee8da"
+      ]
+    },
+    {
+      "id": "full-suite-pass",
+      "description": "The focused repository test suite passes, including evaluation tests.",
+      "evidenceIds": [
+        "b4ed3bfb-2266-4166-868e-a675a0eaeb4d"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "The TypeScript implementation has no type errors.",
+      "evidenceIds": [
+        "b9e8f68c-1aec-4bb2-8193-63d70b00f7dc"
+      ]
+    }
+  ],
+  "blockers": []
+}

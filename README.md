@@ -91,6 +91,16 @@ bun run eh transition <run-path> complete
 
 See [`examples/proof-carrying-completion/`](examples/proof-carrying-completion/) for an isolated end-to-end demo.
 
+## Pressure Evaluation
+
+The first Milestone 2 slice runs deterministic completion-gate pressure scenarios and prints a machine-readable report:
+
+```bash
+bun run evaluate
+```
+
+It currently covers uncovered criteria, failed and stale evidence, missing evidence artefacts, open blockers, and repeated completion. It does not yet execute or score external coding agents; see [`docs/evaluations/`](docs/evaluations/) for the result contract and scope boundary.
+
 ## Installing For Claude
 
 Copy the skill folders from `skills/` into your Claude skills directory, or package the repo using the plugin mechanism available in your Claude environment.

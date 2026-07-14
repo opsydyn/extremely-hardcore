@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "e7eb5197-f170-4388-8f62-444e04caddf0",
+  "criterionId": "core-scenarios-pass",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/core-scenarios.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-14T20:47:50.844Z",
+  "durationMs": 83,
+  "exitCode": 0,
+  "workspaceFingerprint": "00de7c92c8c5a60ce086431249c39d7196d34415c68c7d1f60e46fd6ba90166e",
+  "logPath": "logs/e7eb5197-f170-4388-8f62-444e04caddf0.log",
+  "logSha256": "3a3f2ee9d4ff4808002d7f8aa6e514409d7f4b3ed28776996e081db6b6179036",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/core-scenarios.test.ts:\n[stderr]\n(pass) runs every core pressure scenario and reports expected protocol outcomes [66.72ms]\n[stderr]\n\n 1 pass\n 0 fail\n 6 expect() calls\nRan 1 test across 1 file. [78.00ms]",
+  "truncated": false
+}
