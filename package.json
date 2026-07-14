@@ -1,0 +1,17 @@
+{
+  "name": "extremely-hardcore",
+  "version": "0.0.1",
+  "private": true,
+  "description": "architecture-first skills for coding agents",
+  "type": "module",
+  "scripts": {
+    "validate": "bun scripts/validate.ts",
+    "check": "bun run validate",
+    "test": "bun test scripts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "latest",
+    "typescript": "^5.9.3"
+  }
+}

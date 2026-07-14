@@ -1,0 +1,34 @@
+{
+  "name": "extremely-hardcore",
+  "version": "0.0.1",
+  "description": "Architecture-first skills for coding agents: change contracts, domain discovery, architecture gates, test-first implementation, and evidence ledgers.",
+  "author": {
+    "name": "Alan Currie"
+  },
+  "license": "MIT",
+  "keywords": [
+    "architecture",
+    "ddd",
+    "change-contract",
+    "adr",
+    "bounded-context",
+    "testing",
+    "evidence",
+    "skills"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Extremely Hardcore",
+    "shortDescription": "Architecture-first guardrails for careful coding agents",
+    "longDescription": "Use Extremely Hardcore to make coding agents define scope, discover domain boundaries, make architecture decisions explicit, implement test-first, and leave evidence before claiming confidence.",
+    "developerName": "Alan Currie",
+    "category": "Coding",
+    "capabilities": ["Interactive", "Read", "Write"],
+    "defaultPrompt": [
+      "Use Extremely Hardcore for this non-trivial change.",
+      "Create a change contract before editing this project."
+    ],
+    "brandColor": "#111827",
+    "screenshots": []
+  }
+}

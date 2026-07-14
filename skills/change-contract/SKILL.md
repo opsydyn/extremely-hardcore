@@ -1,0 +1,54 @@
+---
+name: change-contract
+description: Use before editing for non-trivial work to define user intent, allowed scope, forbidden scope, affected areas, public contracts, risks, acceptance evidence, and stop conditions.
+---
+
+# change-contract
+
+## when to use
+
+Use before non-trivial edits. Use especially when the request is broad, ambiguous, risky, or likely to touch public contracts, persistence, APIs, CI, deployment, shared packages, or domain rules.
+
+## when not to use
+
+Do not use for trivial copy, typo, formatting, or one-line local test fixes with no behaviour impact.
+
+## required inputs
+
+- User request.
+- Relevant files and current behaviour.
+- Known constraints.
+- Current git status.
+
+## required output
+
+- A completed change contract, preferably written from `templates/change-contract.md`.
+- Clear allowed scope and forbidden scope.
+- Acceptance evidence that can be verified later.
+
+## procedure
+
+1. Restate user intent in concrete terms.
+2. List current understanding from repository inspection.
+3. Define allowed scope.
+4. Define forbidden scope.
+5. Identify affected areas.
+6. Identify changed or potentially changed public contracts.
+7. Record assumptions and risks.
+8. Define acceptance evidence.
+9. Define stop conditions.
+10. Stop before editing if scope is unclear or acceptance evidence cannot be stated.
+
+## quality bar
+
+- A reviewer can tell what must change and what must not change.
+- Public contracts are named explicitly.
+- Stop conditions are specific enough to actually stop work.
+- Acceptance evidence maps to commands, tests, screenshots, logs, or review artefacts.
+
+## failure modes
+
+- Hiding product decisions inside implementation.
+- Calling scope "small" without naming forbidden scope.
+- Treating assumptions as facts.
+- Editing before the contract exists.
