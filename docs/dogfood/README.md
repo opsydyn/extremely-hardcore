@@ -12,6 +12,6 @@ Each record states the change type, risk, captured commands, gate behaviour, set
 | 2 | Bug fix | Complete |
 | 3 | Refactor or dependency change | Complete |
 | 4 | Change made stale during verification | Complete |
-| 5 | Real blocker or rejected completion | Pending |
+| 5 | Real blocker or rejected completion | Abandoned with recorded blocker |
 
-Do not start the behavioural evaluation harness until all five records exist and their aggregate decision is recorded.
+All five required records now exist. The aggregate decision is in `decision.md`.

@@ -2,7 +2,7 @@
 
 ## status
 
-Active. Runs 1 through 4 are recorded in `docs/dogfood/`.
+Complete. Four runs completed and one high-risk run was deliberately abandoned; the aggregate decision is recorded in `docs/dogfood/decision.md`.
 
 ## outcome
 

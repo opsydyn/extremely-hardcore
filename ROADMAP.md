@@ -71,7 +71,7 @@ The roadmap is working when:
 
 **Estimated effort:** 5 focused engineering days
 
-**Status:** Implemented; dogfood validation pending.
+**Status:** Implemented; five dogfood runs recorded. Schema version 1 remains experimental.
 
 **Outcome:** Prove the central differentiator with one guarded transition: `implemented -> complete`.
 
@@ -91,6 +91,8 @@ The roadmap is working when:
 ### 2. Behavioural Evaluation Harness
 
 **Estimated effort:** 2 weeks
+
+**Status:** Next. Begin only under the experimental schema boundary recorded in ADR 0004.
 
 **Outcome:** Measure whether agents actually obey the completion protocol under pressure.
 

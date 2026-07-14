@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "changeId": "007-schema-v1-stability-decision",
+  "initialState": "implemented",
+  "risk": "high",
+  "acceptanceCriteria": [
+    {
+      "id": "human-stability-decision",
+      "description": "A human owner has explicitly accepted or rejected the schema version 1 stability declaration.",
+      "evidenceIds": []
+    }
+  ],
+  "blockers": [
+    {
+      "id": "schema-v1-compatibility-policy",
+      "description": "Human product and architecture authority must define compatibility policy before a stability declaration.",
+      "status": "open"
+    }
+  ]
+}
