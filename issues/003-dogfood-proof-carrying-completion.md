@@ -1,5 +1,9 @@
 # issue: dogfood the proof-carrying completion gate
 
+## status
+
+Active. Run 1 is recorded in `docs/dogfood/002-proof-carrying-completion.md`.
+
 ## outcome
 
 Run the completion gate on five non-trivial repository changes and decide whether the protocol improves completion reliability at acceptable cost.
