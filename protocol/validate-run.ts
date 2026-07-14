@@ -53,7 +53,19 @@ export function validateCompletion(
         });
       }
 
-      const log = readFileSync(join(runPath, evidence.logPath));
+      let log: Buffer;
+      try {
+        log = readFileSync(join(runPath, evidence.logPath));
+      } catch (error) {
+        if (isMissingFile(error)) {
+          errors.push({
+            code: "evidence.log-missing",
+            message: `${evidenceId} log is missing at ${evidence.logPath}`,
+          });
+          continue;
+        }
+        throw error;
+      }
       const digest = createHash("sha256").update(log).digest("hex");
       if (digest !== evidence.logSha256) {
         errors.push({

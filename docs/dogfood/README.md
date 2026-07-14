@@ -11,7 +11,7 @@ Each record states the change type, risk, captured commands, gate behaviour, set
 | 1 | Feature | Complete |
 | 2 | Bug fix | Complete |
 | 3 | Refactor or dependency change | Complete |
-| 4 | Change made stale during verification | Pending |
+| 4 | Change made stale during verification | Complete |
 | 5 | Real blocker or rejected completion | Pending |
 
 Do not start the behavioural evaluation harness until all five records exist and their aggregate decision is recorded.

@@ -1,0 +1,42 @@
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+tests/protocol/validate-run.test.ts:
+[stderr]
+(pass) validateCompletion > rejects a run with an uncovered acceptance criterion [0.99ms]
+[stderr]
+(pass) validateCompletion > rejects evidence from a command that failed [0.89ms]
+[stderr]
+(pass) validateCompletion > reports a referenced evidence record that is missing [0.61ms]
+[stderr]
+(pass) validateCompletion > reports a referenced evidence log that is missing [0.63ms]
+[stderr]
+(pass) validateCompletion > rejects passing evidence from a stale workspace [0.61ms]
+[stderr]
+(pass) validateCompletion > rejects a run with an open blocker [0.67ms]
+[stderr]
+(pass) validateCompletion > rejects evidence attached to a different criterion [0.73ms]
+[stderr]
+(pass) validateCompletion > rejects evidence when its log digest does not match [0.63ms]
+[stderr]
+
+tests/protocol/cli.test.ts:
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence log as a validation error [106.91ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence log is missing [109.03ms]
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence record as a validation error [61.17ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence record is missing [63.03ms]
+[stderr]
+(pass) eh CLI > a failed transition reports exact criteria and leaves run files unchanged [60.70ms]
+[stderr]
+(pass) eh CLI > captures, rejects stale evidence, refreshes, and completes [219.04ms]
+[stderr]
+
+ 14 pass
+ 0 fail
+ 44 expect() calls
+Ran 14 tests across 2 files. [640.00ms]

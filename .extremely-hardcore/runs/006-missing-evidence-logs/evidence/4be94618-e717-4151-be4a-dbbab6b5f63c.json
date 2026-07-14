@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "4be94618-e717-4151-be4a-dbbab6b5f63c",
+  "criterionId": "types-valid",
+  "command": {
+    "executable": "bunx",
+    "args": [
+      "tsc",
+      "--noEmit"
+    ]
+  },
+  "startedAt": "2026-07-14T20:34:37.996Z",
+  "durationMs": 380,
+  "exitCode": 0,
+  "workspaceFingerprint": "08d20f01cca012d8073cdf4d9f5ac6cabba6f8b89b1e739eea4b2a5b85d5961c",
+  "logPath": "logs/4be94618-e717-4151-be4a-dbbab6b5f63c.log",
+  "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "summary": "",
+  "truncated": false
+}

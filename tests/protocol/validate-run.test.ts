@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -137,6 +137,34 @@ describe("validateCompletion", () => {
         {
           code: "evidence.missing",
           message: "missing-evidence evidence record is missing",
+        },
+      ],
+    });
+  });
+
+  test("reports a referenced evidence log that is missing", () => {
+    const runPath = createRun({
+      acceptanceCriteria: [
+        {
+          id: "criterion-a",
+          description: "The protected behaviour is verified.",
+          evidenceIds: ["evidence-a"],
+        },
+      ],
+    });
+    writeEvidence(runPath);
+    unlinkSync(join(runPath, "logs", "evidence-a.log"));
+
+    const result = validateCompletion(runPath, {
+      workspaceFingerprint: "workspace-a",
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      errors: [
+        {
+          code: "evidence.log-missing",
+          message: "evidence-a log is missing at logs/evidence-a.log",
         },
       ],
     });

@@ -1,0 +1,81 @@
+[stderr]
+$ bun test ./scripts/validate.test.ts ./tests/protocol
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+scripts/validate.test.ts:
+[stderr]
+(pass) validateProject > reports missing required files [2.27ms]
+[stderr]
+(pass) validateProject > reports missing required skill headings [6.06ms]
+[stderr]
+(pass) validateProject > passes a complete minimal fixture [5.71ms]
+[stderr]
+
+tests/protocol/workspace-fingerprint.test.ts:
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when a tracked file changes [66.75ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when an untracked file is added [56.64ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores untracked protocol artefacts [56.20ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores changes to tracked protocol artefacts [71.96ms]
+[stderr]
+
+tests/protocol/transition.test.ts:
+[stderr]
+(pass) transitionToComplete > does not modify the run when completion validation fails [1.08ms]
+[stderr]
+(pass) transitionToComplete > appends one completion event with the evidence that justified it [1.69ms]
+[stderr]
+(pass) transitionToComplete > rejects a repeated completion without appending another event [0.94ms]
+[stderr]
+
+tests/protocol/evidence.test.ts:
+[stderr]
+(pass) captureEvidence > executes a command without shell interpolation and records passing evidence [78.63ms]
+[stderr]
+(pass) captureEvidence > refreshes a criterion reference while retaining the earlier evidence record [82.74ms]
+[stderr]
+(pass) captureEvidence > bounds captured logs and marks truncation [56.17ms]
+[stderr]
+
+tests/protocol/support.test.ts:
+[stderr]
+(pass) createGitWorkspace creates a committed repository with a tracked file [35.11ms]
+[stderr]
+
+tests/protocol/validate-run.test.ts:
+[stderr]
+(pass) validateCompletion > rejects a run with an uncovered acceptance criterion [0.94ms]
+[stderr]
+(pass) validateCompletion > rejects evidence from a command that failed [0.58ms]
+[stderr]
+(pass) validateCompletion > reports a referenced evidence record that is missing [1.03ms]
+[stderr]
+(pass) validateCompletion > rejects passing evidence from a stale workspace [0.65ms]
+[stderr]
+(pass) validateCompletion > rejects a run with an open blocker [0.77ms]
+[stderr]
+(pass) validateCompletion > rejects evidence attached to a different criterion [0.75ms]
+[stderr]
+(pass) validateCompletion > rejects evidence when its log digest does not match [0.66ms]
+[stderr]
+
+tests/protocol/cli.test.ts:
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence record as a validation error [66.88ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence record is missing [62.15ms]
+[stderr]
+(pass) eh CLI > a failed transition reports exact criteria and leaves run files unchanged [61.90ms]
+[stderr]
+(pass) eh CLI > captures, rejects stale evidence, refreshes, and completes [229.15ms]
+[stderr]
+
+ 25 pass
+ 0 fail
+ 64 expect() calls
+Ran 25 tests across 7 files. [973.00ms]

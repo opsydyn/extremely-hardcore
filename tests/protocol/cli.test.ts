@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { RunDefinition, TransitionEvent } from "../../protocol/types";
 import { createGitWorkspace } from "./support";
@@ -51,6 +51,69 @@ function runCli(root: string, args: string[]): ReturnType<typeof Bun.spawnSync> 
 }
 
 describe("eh CLI", () => {
+  test("reports a missing referenced evidence log as a validation error", () => {
+    const { root, runPath } = createFixture();
+    expect(
+      runCli(root, [
+        "evidence",
+        runPath,
+        "criterion-a",
+        "--",
+        "bun",
+        "-e",
+        "process.exit(0)",
+      ]).exitCode,
+    ).toBe(0);
+    const run = JSON.parse(readFileSync(join(runPath, "run.json"), "utf8")) as RunDefinition;
+    const evidenceId = run.acceptanceCriteria[0]?.evidenceIds[0];
+    expect(evidenceId).toBeDefined();
+    const evidence = JSON.parse(
+      readFileSync(join(runPath, "evidence", `${evidenceId}.json`), "utf8"),
+    ) as { logPath: string };
+    unlinkSync(join(runPath, evidence.logPath));
+
+    const result = runCli(root, ["validate", runPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stderr.toString()).toContain(
+      `evidence.log-missing: ${evidenceId} log is missing at ${evidence.logPath}`,
+    );
+    expect(result.stderr.toString()).not.toContain("error:");
+  });
+
+  test("does not append a transition when a referenced evidence log is missing", () => {
+    const { root, runPath } = createFixture();
+    expect(
+      runCli(root, [
+        "evidence",
+        runPath,
+        "criterion-a",
+        "--",
+        "bun",
+        "-e",
+        "process.exit(0)",
+      ]).exitCode,
+    ).toBe(0);
+    const run = JSON.parse(readFileSync(join(runPath, "run.json"), "utf8")) as RunDefinition;
+    const evidenceId = run.acceptanceCriteria[0]?.evidenceIds[0];
+    expect(evidenceId).toBeDefined();
+    const evidence = JSON.parse(
+      readFileSync(join(runPath, "evidence", `${evidenceId}.json`), "utf8"),
+    ) as { logPath: string };
+    unlinkSync(join(runPath, evidence.logPath));
+    const runBefore = readFileSync(join(runPath, "run.json"));
+    const transitionsBefore = readFileSync(join(runPath, "transitions.jsonl"));
+
+    const result = runCli(root, ["transition", runPath, "complete"]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stderr.toString()).toContain(
+      `evidence.log-missing: ${evidenceId} log is missing at ${evidence.logPath}`,
+    );
+    expect(readFileSync(join(runPath, "run.json"))).toEqual(runBefore);
+    expect(readFileSync(join(runPath, "transitions.jsonl"))).toEqual(transitionsBefore);
+  });
+
   test("reports a missing referenced evidence record as a validation error", () => {
     const { root, runPath } = createFixture();
     const run = JSON.parse(readFileSync(join(runPath, "run.json"), "utf8")) as RunDefinition;
