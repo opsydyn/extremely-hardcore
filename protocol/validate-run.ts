@@ -21,7 +21,19 @@ export function validateCompletion(
 
   for (const criterion of run.acceptanceCriteria) {
     for (const evidenceId of criterion.evidenceIds) {
-      const evidence = readEvidence(runPath, evidenceId);
+      let evidence: EvidenceRecord;
+      try {
+        evidence = readEvidence(runPath, evidenceId);
+      } catch (error) {
+        if (isMissingFile(error)) {
+          errors.push({
+            code: "evidence.missing",
+            message: `${evidenceId} evidence record is missing`,
+          });
+          continue;
+        }
+        throw error;
+      }
       if (evidence.exitCode !== 0) {
         errors.push({
           code: "evidence.failed",
@@ -72,4 +84,8 @@ export function readEvidence(runPath: string, evidenceId: string): EvidenceRecor
   return JSON.parse(
     readFileSync(join(runPath, "evidence", `${evidenceId}.json`), "utf8"),
   ) as EvidenceRecord;
+}
+
+function isMissingFile(error: unknown): error is NodeJS.ErrnoException {
+  return typeof error === "object" && error !== null && "code" in error && error.code === "ENOENT";
 }

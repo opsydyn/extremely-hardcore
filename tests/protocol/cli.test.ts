@@ -58,6 +58,51 @@ function runCli(root: string, args: string[]): ReturnType<typeof Bun.spawnSync> 
 }
 
 describe("eh CLI", () => {
+  test("reports a missing referenced evidence record as a validation error", () => {
+    const { root, runPath } = createFixture();
+    const run = JSON.parse(readFileSync(join(runPath, "run.json"), "utf8")) as RunDefinition;
+    run.acceptanceCriteria = [
+      {
+        id: "criterion-a",
+        description: "Evidence must exist.",
+        evidenceIds: ["missing-evidence"],
+      },
+    ];
+    writeFileSync(join(runPath, "run.json"), `${JSON.stringify(run, null, 2)}\n`);
+
+    const result = runCli(root, ["validate", runPath]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stderr.toString()).toContain(
+      "evidence.missing: missing-evidence evidence record is missing",
+    );
+    expect(result.stderr.toString()).not.toContain("error:");
+  });
+
+  test("does not append a transition when a referenced evidence record is missing", () => {
+    const { root, runPath } = createFixture();
+    const run = JSON.parse(readFileSync(join(runPath, "run.json"), "utf8")) as RunDefinition;
+    run.acceptanceCriteria = [
+      {
+        id: "criterion-a",
+        description: "Evidence must exist.",
+        evidenceIds: ["missing-evidence"],
+      },
+    ];
+    writeFileSync(join(runPath, "run.json"), `${JSON.stringify(run, null, 2)}\n`);
+    const runBefore = readFileSync(join(runPath, "run.json"));
+    const transitionsBefore = readFileSync(join(runPath, "transitions.jsonl"));
+
+    const result = runCli(root, ["transition", runPath, "complete"]);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stderr.toString()).toContain(
+      "evidence.missing: missing-evidence evidence record is missing",
+    );
+    expect(readFileSync(join(runPath, "run.json"))).toEqual(runBefore);
+    expect(readFileSync(join(runPath, "transitions.jsonl"))).toEqual(transitionsBefore);
+  });
+
   test("a failed transition reports exact criteria and leaves run files unchanged", () => {
     const { root, runPath } = createFixture();
     const runBefore = readFileSync(join(runPath, "run.json"));

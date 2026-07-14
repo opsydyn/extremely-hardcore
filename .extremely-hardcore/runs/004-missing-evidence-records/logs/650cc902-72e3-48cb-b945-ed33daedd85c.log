@@ -1,0 +1,36 @@
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+tests/protocol/validate-run.test.ts:
+[stderr]
+(pass) validateCompletion > rejects a run with an uncovered acceptance criterion [0.96ms]
+[stderr]
+(pass) validateCompletion > rejects evidence from a command that failed [0.82ms]
+[stderr]
+(pass) validateCompletion > reports a referenced evidence record that is missing [0.64ms]
+[stderr]
+(pass) validateCompletion > rejects passing evidence from a stale workspace [0.78ms]
+[stderr]
+(pass) validateCompletion > rejects a run with an open blocker [0.70ms]
+[stderr]
+(pass) validateCompletion > rejects evidence attached to a different criterion [0.73ms]
+[stderr]
+(pass) validateCompletion > rejects evidence when its log digest does not match [0.57ms]
+[stderr]
+
+tests/protocol/cli.test.ts:
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence record as a validation error [71.26ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence record is missing [59.67ms]
+[stderr]
+(pass) eh CLI > a failed transition reports exact criteria and leaves run files unchanged [59.55ms]
+[stderr]
+(pass) eh CLI > captures, rejects stale evidence, refreshes, and completes [216.58ms]
+[stderr]
+
+ 11 pass
+ 0 fail
+ 32 expect() calls
+Ran 11 tests across 2 files. [427.00ms]

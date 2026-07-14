@@ -9,7 +9,7 @@ Each record states the change type, risk, captured commands, gate behaviour, set
 | Run | Required change type | Status |
 | --- | --- | --- |
 | 1 | Feature | Complete |
-| 2 | Bug fix | Pending |
+| 2 | Bug fix | Complete |
 | 3 | Refactor or dependency change | Pending |
 | 4 | Change made stale during verification | Pending |
 | 5 | Real blocker or rejected completion | Pending |

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "changeId": "004-missing-evidence-records",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "missing-evidence-regression",
+      "description": "Missing evidence records produce structured validation errors and cannot transition.",
+      "evidenceIds": [
+        "650cc902-72e3-48cb-b945-ed33daedd85c"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "The repository structure and required skill contracts validate.",
+      "evidenceIds": [
+        "4c0e3dbe-a442-4041-843d-8d4686878b7d"
+      ]
+    },
+    {
+      "id": "protocol-tested",
+      "description": "The focused validator and protocol test suite passes.",
+      "evidenceIds": [
+        "8bc61bd3-0206-4e31-982e-4ad8f12092b2"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "The TypeScript implementation has no type errors.",
+      "evidenceIds": [
+        "faf6f74c-8830-494c-91e9-359058e2b314"
+      ]
+    }
+  ],
+  "blockers": []
+}

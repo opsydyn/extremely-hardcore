@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "650cc902-72e3-48cb-b945-ed33daedd85c",
+  "criterionId": "missing-evidence-regression",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/protocol/validate-run.test.ts",
+      "tests/protocol/cli.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-14T14:18:46.322Z",
+  "durationMs": 432,
+  "exitCode": 0,
+  "workspaceFingerprint": "ef1c8f4beae93c66e0ef29a4ed18fcf71a846ddc09bd983c3d3e3201465df3b1",
+  "logPath": "logs/650cc902-72e3-48cb-b945-ed33daedd85c.log",
+  "logSha256": "a3ac5e830243be9e3fa59f352195ead116df01f32b39d4f446bc4838d9ca40f5",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/protocol/validate-run.test.ts:\n[stderr]\n(pass) validateCompletion > rejects a run with an uncovered acceptance criterion [0.96ms]\n[stderr]\n(pass) validateCompletion > rejects evidence from a command that failed [0.82ms]\n[stderr]\n(pass) validateCompletion > reports a referenced evidence record that is missing [0.64ms]\n[stderr]\n(pass) validateCompletion > rejects passing evidence from a stale workspace [0.78ms]\n[stderr]\n(pass) validateCompletion",
+  "truncated": false
+}

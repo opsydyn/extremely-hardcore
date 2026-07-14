@@ -116,6 +116,32 @@ describe("validateCompletion", () => {
     });
   });
 
+  test("reports a referenced evidence record that is missing", () => {
+    const runPath = createRun({
+      acceptanceCriteria: [
+        {
+          id: "criterion-a",
+          description: "The protected behaviour is verified.",
+          evidenceIds: ["missing-evidence"],
+        },
+      ],
+    });
+
+    const result = validateCompletion(runPath, {
+      workspaceFingerprint: "workspace-a",
+    });
+
+    expect(result).toEqual({
+      ok: false,
+      errors: [
+        {
+          code: "evidence.missing",
+          message: "missing-evidence evidence record is missing",
+        },
+      ],
+    });
+  });
+
   test("rejects passing evidence from a stale workspace", () => {
     const runPath = createRun({
       acceptanceCriteria: [

@@ -2,7 +2,7 @@
 
 ## status
 
-Active. Run 1 is recorded in `docs/dogfood/002-proof-carrying-completion.md`.
+Active. Runs 1 and 2 are recorded in `docs/dogfood/`.
 
 ## outcome
 

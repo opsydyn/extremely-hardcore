@@ -1,0 +1,76 @@
+[stderr]
+$ bun test ./scripts/validate.test.ts ./tests/protocol
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+scripts/validate.test.ts:
+[stderr]
+(pass) validateProject > reports missing required files [1.19ms]
+[stderr]
+(pass) validateProject > reports missing required skill headings [6.37ms]
+[stderr]
+(pass) validateProject > passes a complete minimal fixture [5.49ms]
+[stderr]
+
+tests/protocol/workspace-fingerprint.test.ts:
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when a tracked file changes [58.80ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when an untracked file is added [54.36ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores untracked protocol artefacts [54.55ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores changes to tracked protocol artefacts [71.71ms]
+[stderr]
+
+tests/protocol/transition.test.ts:
+[stderr]
+(pass) transitionToComplete > does not modify the run when completion validation fails [0.77ms]
+[stderr]
+(pass) transitionToComplete > appends one completion event with the evidence that justified it [1.09ms]
+[stderr]
+(pass) transitionToComplete > rejects a repeated completion without appending another event [0.78ms]
+[stderr]
+
+tests/protocol/evidence.test.ts:
+[stderr]
+(pass) captureEvidence > executes a command without shell interpolation and records passing evidence [68.43ms]
+[stderr]
+(pass) captureEvidence > refreshes a criterion reference while retaining the earlier evidence record [78.32ms]
+[stderr]
+(pass) captureEvidence > bounds captured logs and marks truncation [53.94ms]
+[stderr]
+
+tests/protocol/validate-run.test.ts:
+[stderr]
+(pass) validateCompletion > rejects a run with an uncovered acceptance criterion [0.71ms]
+[stderr]
+(pass) validateCompletion > rejects evidence from a command that failed [0.77ms]
+[stderr]
+(pass) validateCompletion > reports a referenced evidence record that is missing [0.59ms]
+[stderr]
+(pass) validateCompletion > rejects passing evidence from a stale workspace [0.64ms]
+[stderr]
+(pass) validateCompletion > rejects a run with an open blocker [0.49ms]
+[stderr]
+(pass) validateCompletion > rejects evidence attached to a different criterion [0.67ms]
+[stderr]
+(pass) validateCompletion > rejects evidence when its log digest does not match [0.42ms]
+[stderr]
+
+tests/protocol/cli.test.ts:
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence record as a validation error [61.70ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence record is missing [59.71ms]
+[stderr]
+(pass) eh CLI > a failed transition reports exact criteria and leaves run files unchanged [60.46ms]
+[stderr]
+(pass) eh CLI > captures, rejects stale evidence, refreshes, and completes [219.74ms]
+[stderr]
+
+ 24 pass
+ 0 fail
+ 62 expect() calls
+Ran 24 tests across 6 files. [877.00ms]
