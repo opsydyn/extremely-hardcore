@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "3787a06b-b78e-4ed2-a77b-df1a19cdd051",
+  "criterionId": "fixture-refactor-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/protocol/support.test.ts",
+      "tests/protocol/cli.test.ts",
+      "tests/protocol/evidence.test.ts",
+      "tests/protocol/workspace-fingerprint.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-14T14:23:08.145Z",
+  "durationMs": 907,
+  "exitCode": 0,
+  "workspaceFingerprint": "6ddd102d0b2ca7b83c2993b9fdcba93456b33a9ce92d9de0621013dadeb4582f",
+  "logPath": "logs/3787a06b-b78e-4ed2-a77b-df1a19cdd051.log",
+  "logSha256": "28db27933d587254635e25e735c5980ff182753c6462fe0716674d2ee8abff96",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/protocol/workspace-fingerprint.test.ts:\n[stderr]\n(pass) computeWorkspaceFingerprint > changes when a tracked file changes [65.04ms]\n[stderr]\n(pass) computeWorkspaceFingerprint > changes when an untracked file is added [56.41ms]\n[stderr]\n(pass) computeWorkspaceFingerprint > ignores untracked protocol artefacts [56.65ms]\n[stderr]\n(pass) computeWorkspaceFingerprint > ignores changes to tracked protocol artefacts [70.02ms]\n[stderr]\n\ntests/protocol",
+  "truncated": false
+}

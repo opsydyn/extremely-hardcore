@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "changeId": "005-share-protocol-git-test-fixture",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "fixture-refactor-tested",
+      "description": "The shared Git fixture and its CLI, evidence, and fingerprint consumers pass.",
+      "evidenceIds": [
+        "3787a06b-b78e-4ed2-a77b-df1a19cdd051"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "The repository structure and required skill contracts validate.",
+      "evidenceIds": [
+        "8281cb87-e4b5-4ad1-bca2-7036ec9ac13f"
+      ]
+    },
+    {
+      "id": "protocol-tested",
+      "description": "The focused validator and protocol test suite passes.",
+      "evidenceIds": [
+        "14096f4a-839c-415a-9bae-7d1b954fae99"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "The TypeScript implementation has no type errors.",
+      "evidenceIds": [
+        "133a2096-f172-4a85-a76d-4e306df2f171"
+      ]
+    }
+  ],
+  "blockers": []
+}

@@ -1,9 +1,8 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { execFileSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { RunDefinition, TransitionEvent } from "../../protocol/types";
+import { createGitWorkspace } from "./support";
 
 const CLI_PATH = join(import.meta.dir, "..", "..", "scripts", "eh.ts");
 const roots: string[] = [];
@@ -15,14 +14,8 @@ afterEach(() => {
 });
 
 function createFixture(): { root: string; runPath: string } {
-  const root = mkdtempSync(join(tmpdir(), "extremely hardcore cli "));
+  const root = createGitWorkspace("extremely hardcore cli ");
   roots.push(root);
-  execFileSync("git", ["init", "-q"], { cwd: root });
-  execFileSync("git", ["config", "user.email", "test@example.com"], { cwd: root });
-  execFileSync("git", ["config", "user.name", "Test User"], { cwd: root });
-  writeFileSync(join(root, "tracked.txt"), "initial work\n");
-  execFileSync("git", ["add", "tracked.txt"], { cwd: root });
-  execFileSync("git", ["commit", "-qm", "initial"], { cwd: root });
 
   const runPath = join(root, ".extremely-hardcore", "runs", "change with spaces");
   mkdirSync(join(runPath, "evidence"), { recursive: true });

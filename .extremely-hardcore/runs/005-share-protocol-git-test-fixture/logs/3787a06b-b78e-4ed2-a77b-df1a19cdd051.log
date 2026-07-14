@@ -1,0 +1,44 @@
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+tests/protocol/workspace-fingerprint.test.ts:
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when a tracked file changes [65.04ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when an untracked file is added [56.41ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores untracked protocol artefacts [56.65ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores changes to tracked protocol artefacts [70.02ms]
+[stderr]
+
+tests/protocol/evidence.test.ts:
+[stderr]
+(pass) captureEvidence > executes a command without shell interpolation and records passing evidence [69.33ms]
+[stderr]
+(pass) captureEvidence > refreshes a criterion reference while retaining the earlier evidence record [78.74ms]
+[stderr]
+(pass) captureEvidence > bounds captured logs and marks truncation [54.00ms]
+[stderr]
+
+tests/protocol/support.test.ts:
+[stderr]
+(pass) createGitWorkspace creates a committed repository with a tracked file [33.07ms]
+[stderr]
+
+tests/protocol/cli.test.ts:
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence record as a validation error [58.73ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence record is missing [61.39ms]
+[stderr]
+(pass) eh CLI > a failed transition reports exact criteria and leaves run files unchanged [59.70ms]
+[stderr]
+(pass) eh CLI > captures, rejects stale evidence, refreshes, and completes [221.37ms]
+[stderr]
+
+ 12 pass
+ 0 fail
+ 38 expect() calls
+Ran 12 tests across 4 files. [902.00ms]

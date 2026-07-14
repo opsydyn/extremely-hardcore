@@ -2,7 +2,7 @@
 
 ## status
 
-Active. Runs 1 and 2 are recorded in `docs/dogfood/`.
+Active. Runs 1 through 3 are recorded in `docs/dogfood/`.
 
 ## outcome
 

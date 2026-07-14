@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { computeWorkspaceFingerprint } from "../../protocol/workspace-fingerprint";
+import { createGitWorkspace } from "./support";
 
 const roots: string[] = [];
 
@@ -14,14 +14,8 @@ afterEach(() => {
 });
 
 function createGitRepository(): string {
-  const root = mkdtempSync(join(tmpdir(), "extremely-hardcore-git-"));
+  const root = createGitWorkspace("extremely-hardcore-git-");
   roots.push(root);
-  execFileSync("git", ["init", "-q"], { cwd: root });
-  execFileSync("git", ["config", "user.email", "test@example.com"], { cwd: root });
-  execFileSync("git", ["config", "user.name", "Test User"], { cwd: root });
-  writeFileSync(join(root, "tracked.txt"), "before\n");
-  execFileSync("git", ["add", "tracked.txt"], { cwd: root });
-  execFileSync("git", ["commit", "-qm", "initial"], { cwd: root });
   return root;
 }
 

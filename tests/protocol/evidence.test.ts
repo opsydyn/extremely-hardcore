@@ -1,11 +1,10 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { execFileSync } from "node:child_process";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { captureEvidence, TRUNCATION_MARKER } from "../../protocol/evidence";
 import { computeWorkspaceFingerprint } from "../../protocol/workspace-fingerprint";
 import type { EvidenceRecord, RunDefinition } from "../../protocol/types";
+import { createGitWorkspace } from "./support";
 
 const roots: string[] = [];
 
@@ -16,14 +15,8 @@ afterEach(() => {
 });
 
 function createFixture(): { root: string; runPath: string } {
-  const root = mkdtempSync(join(tmpdir(), "extremely-hardcore-evidence-"));
+  const root = createGitWorkspace("extremely-hardcore-evidence-");
   roots.push(root);
-  execFileSync("git", ["init", "-q"], { cwd: root });
-  execFileSync("git", ["config", "user.email", "test@example.com"], { cwd: root });
-  execFileSync("git", ["config", "user.name", "Test User"], { cwd: root });
-  writeFileSync(join(root, "tracked.txt"), "protected work\n");
-  execFileSync("git", ["add", "tracked.txt"], { cwd: root });
-  execFileSync("git", ["commit", "-qm", "initial"], { cwd: root });
 
   const runPath = join(root, ".extremely-hardcore", "runs", "example-change");
   mkdirSync(join(runPath, "evidence"), { recursive: true });
