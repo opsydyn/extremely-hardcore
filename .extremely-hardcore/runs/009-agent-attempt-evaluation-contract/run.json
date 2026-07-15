@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "changeId": "009-agent-attempt-evaluation-contract",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "attempt-assessor-tested",
+      "description": "Structured attempts pass, fail, or invalidate according to the shared core manifest.",
+      "evidenceIds": [
+        "c8cb5d86-3c4f-4d97-85ea-df6dcb45dcae"
+      ]
+    },
+    {
+      "id": "core-runner-preserved",
+      "description": "The deterministic core runner still reports every scenario as passing.",
+      "evidenceIds": [
+        "43c57aab-5f19-4627-a8a8-c818a213b8a3"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "The repository structure and required skill contracts validate.",
+      "evidenceIds": [
+        "798fd73e-d980-495b-b0df-9c9be9e016ad"
+      ]
+    },
+    {
+      "id": "full-suite-pass",
+      "description": "The focused repository test suite passes.",
+      "evidenceIds": [
+        "10f9dcb9-1c12-457d-99f1-2c4a9e29706d"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "The TypeScript implementation has no type errors.",
+      "evidenceIds": [
+        "fbe54157-8cf8-4c6e-a4cd-8964eec333d3"
+      ]
+    }
+  ],
+  "blockers": []
+}

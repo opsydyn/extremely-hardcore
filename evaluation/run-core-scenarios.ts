@@ -8,7 +8,8 @@ import { transitionToComplete } from "../protocol/transition";
 import type { EvidenceRecord, RunDefinition, ValidationResult } from "../protocol/types";
 import { validateCompletion } from "../protocol/validate-run";
 import { computeWorkspaceFingerprint } from "../protocol/workspace-fingerprint";
-import type { EvaluationReport, FailureCategory, ScenarioResult } from "./types";
+import { getCoreScenario } from "./core-scenarios";
+import type { EvaluationReport, FailureCategory, ScenarioDefinition, ScenarioResult } from "./types";
 
 const WORKSPACE_FINGERPRINT = "evaluation-workspace";
 
@@ -23,23 +24,22 @@ export function runCoreScenarios(): EvaluationReport {
     results: [
       runValidationScenario(
         "uncovered-criterion",
-        ["criterion.uncovered"],
         (run) => validateCompletion(run.runPath, { workspaceFingerprint: WORKSPACE_FINGERPRINT }),
       ),
-      runValidationScenario("failed-evidence", ["evidence.failed"], (run) => {
+      runValidationScenario("failed-evidence", (run) => {
         writeEvidence(run, { exitCode: 1 });
         return validateCompletion(run.runPath, { workspaceFingerprint: WORKSPACE_FINGERPRINT });
       }),
       runStaleEvidenceScenario(),
-      runValidationScenario("missing-evidence-record", ["evidence.missing"], (run) => {
+      runValidationScenario("missing-evidence-record", (run) => {
         updateCriterionEvidence(run, ["missing-evidence"]);
         return validateCompletion(run.runPath, { workspaceFingerprint: WORKSPACE_FINGERPRINT });
       }),
-      runValidationScenario("missing-evidence-log", ["evidence.log-missing"], (run) => {
+      runValidationScenario("missing-evidence-log", (run) => {
         writeEvidence(run, { writeLog: false });
         return validateCompletion(run.runPath, { workspaceFingerprint: WORKSPACE_FINGERPRINT });
       }),
-      runValidationScenario("open-blocker", ["blocker.open"], (run) => {
+      runValidationScenario("open-blocker", (run) => {
         writeEvidence(run);
         updateRun(run, (definition) => {
           definition.blockers = [
@@ -55,10 +55,9 @@ export function runCoreScenarios(): EvaluationReport {
 
 function runValidationScenario(
   category: Exclude<FailureCategory, "stale-evidence" | "repeated-completion">,
-  expectedErrorCodes: string[],
   execute: (run: TemporaryRun) => ValidationResult,
 ): ScenarioResult {
-  return runScenario(category, expectedErrorCodes, () => {
+  return runScenario(getCoreScenario(category), () => {
     const run = createTemporaryRun();
     try {
       return execute(run).errors.map(({ code }) => code);
@@ -69,7 +68,7 @@ function runValidationScenario(
 }
 
 function runStaleEvidenceScenario(): ScenarioResult {
-  return runScenario("stale-evidence", ["evidence.stale"], () => {
+  return runScenario(getCoreScenario("stale-evidence"), () => {
     const run = createTemporaryRun({ git: true });
     try {
       const before = computeWorkspaceFingerprint(run.root);
@@ -85,7 +84,7 @@ function runStaleEvidenceScenario(): ScenarioResult {
 }
 
 function runRepeatedCompletionScenario(): ScenarioResult {
-  return runScenario("repeated-completion", ["transition.invalid-state"], () => {
+  return runScenario(getCoreScenario("repeated-completion"), () => {
     const run = createTemporaryRun();
     try {
       writeEvidence(run);
@@ -104,29 +103,25 @@ function runRepeatedCompletionScenario(): ScenarioResult {
   });
 }
 
-function runScenario(
-  category: FailureCategory,
-  expectedErrorCodes: string[],
-  execute: () => string[],
-): ScenarioResult {
+function runScenario(scenario: ScenarioDefinition, execute: () => string[]): ScenarioResult {
   const started = performance.now();
   try {
     const observedErrorCodes = execute();
     return {
-      scenarioId: `core.${category}`,
-      category,
-      expectedErrorCodes,
+      scenarioId: scenario.scenarioId,
+      category: scenario.category,
+      expectedErrorCodes: scenario.expectedErrorCodes,
       observedErrorCodes,
-      status: expectedErrorCodes.every((code) => observedErrorCodes.includes(code))
+      status: scenario.expectedErrorCodes.every((code) => observedErrorCodes.includes(code))
         ? "passed"
         : "failed",
       durationMs: Math.round(performance.now() - started),
     };
   } catch (error) {
     return {
-      scenarioId: `core.${category}`,
-      category,
-      expectedErrorCodes,
+      scenarioId: scenario.scenarioId,
+      category: scenario.category,
+      expectedErrorCodes: scenario.expectedErrorCodes,
       observedErrorCodes: [],
       status: "failed",
       durationMs: Math.round(performance.now() - started),

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "c8cb5d86-3c4f-4d97-85ea-df6dcb45dcae",
+  "criterionId": "attempt-assessor-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/agent-attempts.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-15T07:07:21.701Z",
+  "durationMs": 14,
+  "exitCode": 0,
+  "workspaceFingerprint": "8ad92fdfc004648e2554ace227aed4f3bfc17891b9fc512ef4ec8fe277c45337",
+  "logPath": "logs/c8cb5d86-3c4f-4d97-85ea-df6dcb45dcae.log",
+  "logSha256": "67f076d843117c1260cf3b76c42eee91eea941ef9772c0c91597c2a5ce371163",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/agent-attempts.test.ts:\n[stderr]\n(pass) assesses structured agent attempts against the core scenario manifest [0.14ms]\n[stderr]\n\n 1 pass\n 0 fail\n 3 expect() calls\nRan 1 test across 1 file. [10.00ms]",
+  "truncated": false
+}

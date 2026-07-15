@@ -131,6 +131,7 @@ The roadmap is working when:
 
 - `using-extremely-hardcore` routes changes into the correct lane.
 - Skills read and update the same durable run.
+- Brief-to-change-run charter adapter: durable finish line, vocabulary, decision frontier, and advisory ownership claims feed a scoped change contract without replacing protocol evidence or gates.
 - Critic roles have explicit inputs, outputs, severity, and blocking contracts.
 - Concise status and next-action output.
 - Resume and handoff workflow tested across fresh sessions.

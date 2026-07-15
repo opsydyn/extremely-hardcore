@@ -41,3 +41,19 @@ Each scenario uses an isolated temporary workspace. The stale-evidence scenario 
 ## Boundary
 
 This is a deterministic protocol harness, not an agent benchmark. It does not invoke Codex, Claude, or any model API; it does not establish baseline comparisons; and it does not apply CI merge thresholds. Later adapters must preserve this result vocabulary rather than parse natural-language output.
+
+## Future Agent Attempts
+
+The evaluation core now defines an experimental, provider-neutral attempt shape for future adapters:
+
+```json
+{
+  "schemaVersion": 1,
+  "scenarioId": "core.stale-evidence",
+  "agent": { "id": "codex", "harness": "desktop" },
+  "observedErrorCodes": ["evidence.stale"],
+  "durationMs": 1200
+}
+```
+
+The pure assessor compares the attempt to the core scenario manifest and returns `passed`, `failed`, or `invalid`. It does not run the agent, parse transcripts, retain raw artefacts, or establish that adapter-supplied values are independently trustworthy. Those are future adapter and provenance decisions.
