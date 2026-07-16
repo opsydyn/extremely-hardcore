@@ -15,10 +15,12 @@ function parseArguments(args: string[]): {
   outputDir: string;
   workspace: string;
   mode: AdapterMode;
+  model: string;
 } {
   let outputDir: string | undefined;
   let workspace = process.cwd();
   let mode: AdapterMode | undefined;
+  let model: string | undefined;
   for (let index = 0; index < args.length; index += 1) {
     const value = args[index];
     if (value === "--output-dir") {
@@ -32,6 +34,8 @@ function parseArguments(args: string[]): {
       } else {
         throw new Error("--mode must be without-extremely-hardcore or with-extremely-hardcore");
       }
+    } else if (value === "--model") {
+      model = args[++index];
     } else {
       throw new Error(`unknown argument: ${value}`);
     }
@@ -45,5 +49,8 @@ function parseArguments(args: string[]): {
   if (!mode) {
     throw new Error("--mode is required");
   }
-  return { outputDir, workspace, mode };
+  if (!model) {
+    throw new Error("--model is required");
+  }
+  return { outputDir, workspace, mode, model };
 }

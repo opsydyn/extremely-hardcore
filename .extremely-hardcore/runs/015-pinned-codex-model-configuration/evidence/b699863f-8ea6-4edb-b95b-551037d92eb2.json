@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "b699863f-8ea6-4edb-b95b-551037d92eb2",
+  "criterionId": "model-cli-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/evaluate-codex-cli.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-16T12:10:47.416Z",
+  "durationMs": 41,
+  "exitCode": 0,
+  "workspaceFingerprint": "2784c6b5d0a173568943ffabbd9d7e67d4da7b608202b0ffebce82c6474d0d80",
+  "logPath": "logs/b699863f-8ea6-4edb-b95b-551037d92eb2.log",
+  "logSha256": "0a991de5d0d94ab3508ee4126e89bc3e939e9e1e456c0a0a28dcfc1b38ffa8ab",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/evaluate-codex-cli.test.ts:\n[stderr]\n(pass) Codex adapter CLI rejects missing required arguments before invocation [16.17ms]\n[stderr]\n(pass) Codex adapter CLI rejects a missing requested model before invocation [13.75ms]\n[stderr]\n\n 2 pass\n 0 fail\n 6 expect() calls\nRan 2 tests across 1 file. [36.00ms]",
+  "truncated": false
+}

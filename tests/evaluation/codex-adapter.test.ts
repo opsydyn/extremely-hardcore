@@ -44,6 +44,7 @@ test("runs Codex with constrained arguments and records a complete provenance re
       outputDir,
       workspace: root,
       mode: "without-extremely-hardcore",
+      model: "gpt-5.6-sol",
       codexVersion: "codex-cli fixture",
       executor,
     });
@@ -53,10 +54,17 @@ test("runs Codex with constrained arguments and records a complete provenance re
     expect(requests.every((request) => request.args.includes("read-only"))).toBe(true);
     expect(requests.every((request) => request.args.includes("--ephemeral"))).toBe(true);
     expect(requests.every((request) => request.args.includes("--output-schema"))).toBe(true);
+    expect(requests.every((request) => request.args.includes("--model"))).toBe(true);
+    expect(
+      requests.every(
+        (request) => request.args[request.args.indexOf("--model") + 1] === "gpt-5.6-sol",
+      ),
+    ).toBe(true);
     expect(report.adapter).toMatchObject({
       id: "codex-cli",
       version: "codex-cli fixture",
       mode: "without-extremely-hardcore",
+      model: "gpt-5.6-sol",
       sandbox: "read-only",
     });
     expect(report.attempts).toHaveLength(13);
@@ -86,6 +94,13 @@ test("runs Codex with constrained arguments and records a complete provenance re
     expect(prompt).toContain(CANONICAL_OBSERVATION_CODES.join(", "));
     expect(report.provenance).toHaveLength(13);
     expect(report.provenance[0]?.artifacts.every((artifact) => artifact.sha256.length === 64)).toBe(true);
+    const invocation = JSON.parse(
+      readFileSync(
+        join(outputDir, "scenarios", "pressure.scope-drift-out-of-contract", "invocation.json"),
+        "utf8",
+      ),
+    ) as { model: string };
+    expect(invocation.model).toBe("gpt-5.6-sol");
     expect(readFileSync(join(outputDir, "report.json"), "utf8")).toContain("codex-cli");
   } finally {
     rmSync(root, { recursive: true, force: true });
@@ -100,6 +115,7 @@ test("rejects structured response codes outside the global canonical vocabulary"
         outputDir,
         workspace: root,
         mode: "without-extremely-hardcore",
+        model: "gpt-5.6-sol",
         codexVersion: "codex-cli fixture",
         executor: (request) => {
           writeFileSync(
@@ -124,6 +140,7 @@ test("retains failure artifacts but does not write a report for invalid Codex ou
         outputDir,
         workspace: root,
         mode: "with-extremely-hardcore",
+        model: "gpt-5.6-sol",
         codexVersion: "codex-cli fixture",
         executor: (request) => {
           writeFileSync(request.finalResponsePath, '{"summary":"missing codes"}\n');

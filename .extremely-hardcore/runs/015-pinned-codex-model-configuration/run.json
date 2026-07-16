@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "changeId": "015-pinned-codex-model-configuration",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "model-contract-tested",
+      "description": "Every adapter scenario receives and retains the required requested model.",
+      "evidenceIds": [
+        "f1236976-8e96-4443-b48f-f031e1331c06"
+      ]
+    },
+    {
+      "id": "model-cli-tested",
+      "description": "The evaluation CLI rejects a missing required model before adapter invocation.",
+      "evidenceIds": [
+        "b699863f-8ea6-4edb-b95b-551037d92eb2"
+      ]
+    },
+    {
+      "id": "existing-evaluators-preserved",
+      "description": "Deterministic and declared-baseline evaluators remain passing.",
+      "evidenceIds": [
+        "cfcc3e27-49fa-4ddd-adf9-378d7cd42402"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "Static repository checks pass.",
+      "evidenceIds": [
+        "ea797f53-856c-4878-a1b2-35cc943b614e"
+      ]
+    },
+    {
+      "id": "full-suite-pass",
+      "description": "The full test suite passes.",
+      "evidenceIds": [
+        "ab59a957-0b81-4950-b4bd-3dd5209f4582"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "TypeScript type checking passes.",
+      "evidenceIds": [
+        "0a2347d6-2e8d-4824-b754-a610a6e29781"
+      ]
+    }
+  ],
+  "blockers": []
+}

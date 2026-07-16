@@ -103,6 +103,7 @@ export type CodexAdapterReport = {
   adapter: {
     id: "codex-cli";
     version: string;
+    model: string;
     mode: AdapterMode;
     sandbox: "read-only";
   };

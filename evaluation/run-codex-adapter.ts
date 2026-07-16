@@ -54,6 +54,7 @@ export type CodexAdapterOptions = {
   outputDir: string;
   workspace: string;
   mode: AdapterMode;
+  model: string;
   codexPath?: string;
   codexVersion?: string;
   executor?: CodexExecutor;
@@ -62,6 +63,10 @@ export type CodexAdapterOptions = {
 export function runCodexAdapter(options: CodexAdapterOptions): CodexAdapterReport {
   const outputDir = resolve(options.outputDir);
   const workspace = resolve(options.workspace);
+  const model = options.model.trim();
+  if (!model) {
+    throw new Error("Codex model is required");
+  }
   if (existsSync(outputDir)) {
     throw new Error(`output directory already exists: ${outputDir}`);
   }
@@ -92,6 +97,8 @@ export function runCodexAdapter(options: CodexAdapterOptions): CodexAdapterRepor
 
     const args = [
       "exec",
+      "--model",
+      model,
       "--sandbox",
       "read-only",
       "--ephemeral",
@@ -116,6 +123,7 @@ export function runCodexAdapter(options: CodexAdapterOptions): CodexAdapterRepor
       scenarioId: scenario.scenarioId,
       startedAt,
       durationMs: execution.durationMs,
+      model,
       command: [codexPath, ...args.slice(0, -1)],
       exitCode: execution.exitCode,
     });
@@ -152,6 +160,7 @@ export function runCodexAdapter(options: CodexAdapterOptions): CodexAdapterRepor
     adapter: {
       id: "codex-cli",
       version: codexVersion,
+      model,
       mode: options.mode,
       sandbox: "read-only",
     },

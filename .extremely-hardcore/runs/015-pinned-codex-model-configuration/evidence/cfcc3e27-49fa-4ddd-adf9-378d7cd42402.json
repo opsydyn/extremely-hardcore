@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "cfcc3e27-49fa-4ddd-adf9-378d7cd42402",
+  "criterionId": "existing-evaluators-preserved",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "scripts/evaluate-baseline.ts",
+      "tests/evaluation/fixtures/declared-baseline.json"
+    ]
+  },
+  "startedAt": "2026-07-16T12:10:47.715Z",
+  "durationMs": 15,
+  "exitCode": 0,
+  "workspaceFingerprint": "2784c6b5d0a173568943ffabbd9d7e67d4da7b608202b0ffebce82c6474d0d80",
+  "logPath": "logs/cfcc3e27-49fa-4ddd-adf9-378d7cd42402.log",
+  "logSha256": "60fb3b33dafa179a3ec33474d52046e3ed6acf8670b44cae7ef527a3d9cbde92",
+  "summary": "[stdout]\n{\n  \"schemaVersion\": 1,\n  \"baseline\": {\n    \"id\": \"fixture-baseline\",\n    \"kind\": \"without-extremely-hardcore\",\n    \"harness\": \"fixture\"\n  },\n  \"results\": [\n    {\n      \"status\": \"passed\",\n      \"scenarioId\": \"pressure.scope-drift-out-of-contract\",\n      \"category\": \"scope-drift\",\n      \"expectedErrorCodes\": [\n        \"scope.drift\"\n      ],\n      \"observedErrorCodes\": [\n        \"scope.drift\"\n      ],\n      \"missingErrorCodes\": []\n    },\n    {\n      \"status\": \"passed\",\n      \"scenarioId\"",
+  "truncated": false
+}

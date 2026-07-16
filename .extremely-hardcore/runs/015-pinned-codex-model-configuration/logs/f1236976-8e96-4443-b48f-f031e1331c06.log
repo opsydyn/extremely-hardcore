@@ -1,0 +1,17 @@
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+tests/evaluation/codex-adapter.test.ts:
+[stderr]
+(pass) runs Codex with constrained arguments and records a complete provenance report [17.95ms]
+[stderr]
+(pass) rejects structured response codes outside the global canonical vocabulary [1.82ms]
+[stderr]
+(pass) retains failure artifacts but does not write a report for invalid Codex output [1.15ms]
+[stderr]
+
+ 3 pass
+ 0 fail
+ 23 expect() calls
+Ran 3 tests across 1 file. [44.00ms]
