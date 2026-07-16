@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "5cc6dfd0-49a0-4cfd-b762-07bc85d9ecc8",
+  "criterionId": "full-suite-pass",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "run",
+      "test"
+    ]
+  },
+  "startedAt": "2026-07-16T10:31:31.914Z",
+  "durationMs": 1267,
+  "exitCode": 0,
+  "workspaceFingerprint": "66fd38fd76f69147c2009c3380c615b5631a09d0a20b467d305d5aacf0b5a459",
+  "logPath": "logs/5cc6dfd0-49a0-4cfd-b762-07bc85d9ecc8.log",
+  "logSha256": "1bec982d4a6607f4b19756fac36562a3a9272cb5f48d959715821038696c7614",
+  "summary": "[stderr]\n$ bun test ./scripts/validate.test.ts ./tests/protocol ./tests/evaluation\n[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\nscripts/validate.test.ts:\n[stderr]\n(pass) validateProject > reports missing required files [1.11ms]\n[stderr]\n(pass) validateProject > reports missing required skill headings [5.80ms]\n[stderr]\n(pass) validateProject > passes a complete minimal fixture [6.05ms]\n[stderr]\n\ntests/protocol/workspace-fingerprint.test.ts:\n[stderr]\n(pass) computeWorkspaceFingerprint > changes ",
+  "truncated": false
+}

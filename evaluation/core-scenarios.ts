@@ -147,6 +147,10 @@ export const CORE_SCENARIOS = PRESSURE_SCENARIOS.filter(
   (scenario) => scenario.executionMode === "deterministic",
 );
 
+export const AGENT_ATTEMPT_SCENARIOS = PRESSURE_SCENARIOS.filter(
+  (scenario) => scenario.executionMode === "agent-attempt",
+);
+
 export function getCoreScenario(category: FailureCategory): ScenarioDefinition {
   const scenario = CORE_SCENARIOS.find((candidate) => candidate.category === category);
   if (!scenario) {

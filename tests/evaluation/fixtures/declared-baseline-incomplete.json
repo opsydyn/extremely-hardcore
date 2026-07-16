@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "baseline": {
+    "id": "incomplete-fixture-baseline",
+    "kind": "without-extremely-hardcore",
+    "harness": "fixture"
+  },
+  "attempts": []
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "changeId": "011-declared-baseline-runner",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "baseline-evaluator-tested",
+      "description": "A complete declared baseline is assessed and invalid coverage is rejected.",
+      "evidenceIds": [
+        "b93ac851-0174-42de-a835-420a9abeee64"
+      ]
+    },
+    {
+      "id": "baseline-cli-tested",
+      "description": "The baseline CLI emits JSON for valid input and rejects invalid input.",
+      "evidenceIds": [
+        "58917956-ef7a-489a-86f2-eb628eb5ff70"
+      ]
+    },
+    {
+      "id": "core-evaluator-preserved",
+      "description": "The deterministic core evaluator remains passing.",
+      "evidenceIds": [
+        "6b461fe8-578c-4a68-8d0b-b8485d3cd636"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "Static repository checks pass.",
+      "evidenceIds": [
+        "6df0d50e-0750-47ee-b5df-1a099dec30f9"
+      ]
+    },
+    {
+      "id": "full-suite-pass",
+      "description": "The full test suite passes.",
+      "evidenceIds": [
+        "5cc6dfd0-49a0-4cfd-b762-07bc85d9ecc8"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "TypeScript type checking passes.",
+      "evidenceIds": [
+        "82d8195e-4b92-404b-b18f-0251266dc6ea"
+      ]
+    }
+  ],
+  "blockers": []
+}

@@ -92,7 +92,7 @@ The roadmap is working when:
 
 **Estimated effort:** 2 weeks
 
-**Status:** The 20-scenario corpus and seven-scenario deterministic runner are implemented; baselines, cross-agent adapters, repeated runs, and regression thresholds remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
+**Status:** The 20-scenario corpus, seven-scenario deterministic runner, and declared no-skill baseline assessor are implemented; real cross-agent adapters, repeated runs, provenance, and regression thresholds remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
 
 **Outcome:** Measure whether agents actually obey the completion protocol under pressure.
 

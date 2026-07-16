@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "b93ac851-0174-42de-a835-420a9abeee64",
+  "criterionId": "baseline-evaluator-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/declared-baseline.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-16T10:31:31.442Z",
+  "durationMs": 25,
+  "exitCode": 0,
+  "workspaceFingerprint": "66fd38fd76f69147c2009c3380c615b5631a09d0a20b467d305d5aacf0b5a459",
+  "logPath": "logs/b93ac851-0174-42de-a835-420a9abeee64.log",
+  "logSha256": "e8cd6f0e0e8b60689af529e122f4dd8399f8825a10bdfc6eb6b749cb42a849ab",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/declared-baseline.test.ts:\n[stderr]\n(pass) assesses one complete declared baseline across every behavioural scenario [1.12ms]\n[stderr]\n(pass) rejects incomplete and duplicate baseline scenario coverage [1.14ms]\n[stderr]\n\n 2 pass\n 0 fail\n 7 expect() calls\nRan 2 tests across 1 file. [19.00ms]",
+  "truncated": false
+}

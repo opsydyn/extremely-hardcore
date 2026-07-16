@@ -1,0 +1,15 @@
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+tests/evaluation/declared-baseline.test.ts:
+[stderr]
+(pass) assesses one complete declared baseline across every behavioural scenario [1.12ms]
+[stderr]
+(pass) rejects incomplete and duplicate baseline scenario coverage [1.14ms]
+[stderr]
+
+ 2 pass
+ 0 fail
+ 7 expect() calls
+Ran 2 tests across 1 file. [19.00ms]

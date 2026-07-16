@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "58917956-ef7a-489a-86f2-eb628eb5ff70",
+  "criterionId": "baseline-cli-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/evaluate-baseline-cli.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-16T10:31:31.534Z",
+  "durationMs": 34,
+  "exitCode": 0,
+  "workspaceFingerprint": "66fd38fd76f69147c2009c3380c615b5631a09d0a20b467d305d5aacf0b5a459",
+  "logPath": "logs/58917956-ef7a-489a-86f2-eb628eb5ff70.log",
+  "logSha256": "f6c0d659cbb7c08d26596bacd03635ff3b11538c9ce3768c470b002c1e133de3",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/evaluate-baseline-cli.test.ts:\n[stderr]\n(pass) baseline evaluate command emits a parseable complete report [12.13ms]\n[stderr]\n(pass) baseline evaluate command rejects incomplete coverage [12.64ms]\n[stderr]\n\n 2 pass\n 0 fail\n 6 expect() calls\nRan 2 tests across 1 file. [30.00ms]",
+  "truncated": false
+}

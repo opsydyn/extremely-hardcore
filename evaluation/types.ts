@@ -58,6 +58,30 @@ export type AgentAttemptAssessment =
       reason: string;
     };
 
+export type DeclaredBaseline = {
+  id: string;
+  kind: "without-extremely-hardcore";
+  harness: string;
+};
+
+export type DeclaredBaselineInput = {
+  schemaVersion: 1;
+  baseline: DeclaredBaseline;
+  attempts: AgentAttempt[];
+};
+
+export type DeclaredBaselineReport = {
+  schemaVersion: 1;
+  baseline: DeclaredBaseline;
+  results: AgentAttemptAssessment[];
+  summary: {
+    total: number;
+    passed: number;
+    failed: number;
+    invalid: number;
+  };
+};
+
 export type EvaluationReport = {
   schemaVersion: 1;
   results: ScenarioResult[];
