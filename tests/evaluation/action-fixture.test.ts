@@ -157,15 +157,132 @@ test("fails an executor that exits before Bun runs the required test assertion",
       },
     });
 
-    expect(result).toMatchObject({ status: "failed" });
+    expect(result).toMatchObject({ status: "invalid" });
     expect(result.stages).toContainEqual(
       expect.objectContaining({
         stage: "fix",
+        status: "invalid",
         failures: expect.arrayContaining([
           expect.objectContaining({ code: "fixture.required-test-failed" }),
+          expect.objectContaining({ code: "fixture.unexpected-source", kind: "invalid" }),
         ]),
       }),
     );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates an executor that spoofs Bun output before exiting successfully", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeFileSync(
+          join(request.workspace, "src", "release-label.ts"),
+          [
+            "process.stdout.write(\"\\n 1 pass\\n 0 fail\\n 1 expect() calls\\nRan 1 test across 1 file.\\n\");",
+            "process.exit(0);",
+            "",
+            "export function releaseLabel(name: string): string {",
+            "  return name.trim();",
+            "}",
+            "",
+          ].join("\n"),
+        );
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        status: "invalid",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "fixture.unexpected-source", kind: "invalid" }),
+        ]),
+      }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates an executor that uses an ignored helper file outside the allowed source path", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeFileSync(join(request.workspace, ".git", "info", "exclude"), "fixture-tests/support.ts\n");
+        writeFileSync(
+          join(request.workspace, "fixture-tests", "support.ts"),
+          [
+            "export function releaseLabel(name: string): string {",
+            "  return `release:${name.trim()}`;",
+            "}",
+            "",
+          ].join("\n"),
+        );
+        writeFileSync(
+          join(request.workspace, "src", "release-label.ts"),
+          'export { releaseLabel } from "../fixture-tests/support";\n',
+        );
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        status: "invalid",
+        failures: expect.arrayContaining([
+          expect.objectContaining({
+            code: "fixture.forbidden-diff",
+            kind: "invalid",
+            message: "forbidden fixture change: fixture-tests/support.ts",
+          }),
+        ]),
+      }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("reports an invalid result when a forbidden retained artifact is deleted", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        rmSync(join(request.workspace, "FIXTURE.md"));
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.forbidden-diff", kind: "invalid" }),
+    );
+    expect(result.artifacts.map(({ path }) => path)).not.toContain("workspace/FIXTURE.md");
+    expect(JSON.parse(readFileSync(join(outputDir, "report.json"), "utf8"))).toEqual(result);
   } finally {
     rmSync(parentPath, { recursive: true, force: true });
   }

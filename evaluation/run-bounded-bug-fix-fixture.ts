@@ -17,6 +17,12 @@ import type {
 } from "./types";
 
 const FIXTURE_ROOT = fileURLToPath(new URL("./fixtures/bounded-bug-fix", import.meta.url));
+const EXPECTED_RELEASE_LABEL_SOURCE = [
+  "export function releaseLabel(name: string): string {",
+  "  return `release:${name.trim()}`;",
+  "}",
+  "",
+].join("\n");
 
 export async function runBoundedBugFixFixture(options: {
   outputDir: string;
@@ -32,6 +38,7 @@ export async function runBoundedBugFixFixture(options: {
   const baselineCommit = initialiseGitWorkspace(workspace);
 
   const runPath = join(workspace, ".extremely-hardcore", "runs", "bounded-bug-fix");
+  const baselineFiles = inventoryWorkspace(workspace, runPath);
   const request = (stage: ActionFixtureStage): ActionFixtureRequest => ({
     fixtureId: "action.bounded-bug-fix",
     stage,
@@ -45,7 +52,8 @@ export async function runBoundedBugFixFixture(options: {
   await options.executor(request("fix"));
   const stageAFingerprint = computeWorkspaceFingerprint(workspace);
   const stageAFailures = [
-    ...validateAllowedDiff(workspace, baselineCommit, ["src/release-label.ts"]),
+    ...validateAllowedDiff(workspace, baselineCommit, baselineFiles, runPath, ["src/release-label.ts"]),
+    ...validateExpectedSource(workspace),
     ...validateRequiredTest(workspace, request("fix").requiredTestCommand),
     ...toStageAEvidenceFailures(
       validateCompletion(runPath, { workspaceFingerprint: stageAFingerprint }),
@@ -69,7 +77,14 @@ export async function runBoundedBugFixFixture(options: {
   await options.executor(request("resume"));
   const finalFingerprint = computeWorkspaceFingerprint(workspace);
   const finalFailures = [
-    ...validateAllowedDiff(workspace, baselineCommit, ["src/release-label.ts", "fixture-state.txt"]),
+    ...validateAllowedDiff(
+      workspace,
+      baselineCommit,
+      baselineFiles,
+      runPath,
+      ["src/release-label.ts", "fixture-state.txt"],
+    ),
+    ...validateExpectedSource(workspace),
     ...validateHarnessMarker(workspace),
     ...validateRequiredTest(workspace, request("resume").requiredTestCommand),
     ...toFixtureFailures(validateCompletion(runPath, { workspaceFingerprint: finalFingerprint })),
@@ -95,6 +110,8 @@ function initialiseGitWorkspace(workspace: string): string {
 function validateAllowedDiff(
   workspace: string,
   baselineCommit: string,
+  baselineFiles: Map<string, string>,
+  runPath: string,
   allowedPaths: string[],
 ): ActionFixtureFailure[] {
   const pathspec = [".", ":(exclude).extremely-hardcore/**"];
@@ -104,18 +121,63 @@ function validateAllowedDiff(
   })
     .split("\n")
     .filter(Boolean);
-  const untracked = execFileSync(
-    "git",
-    ["ls-files", "--others", "--exclude-standard", "-z", "--", ...pathspec],
-    { cwd: workspace, encoding: "utf8" },
-  )
-    .split("\0")
-    .filter(Boolean);
+  const changedFiles = [...new Set([...tracked, ...changedInventoryFiles(baselineFiles, inventoryWorkspace(workspace, runPath))])];
 
-  return [...new Set([...tracked, ...untracked])]
+  return changedFiles
     .sort()
     .filter((path) => !allowedPaths.includes(path))
     .map((path) => invalid("fixture.forbidden-diff", `forbidden fixture change: ${path}`));
+}
+
+function validateExpectedSource(workspace: string): ActionFixtureFailure[] {
+  const sourcePath = join(workspace, "src", "release-label.ts");
+  let actual: string;
+  try {
+    actual = readFileSync(sourcePath, "utf8");
+  } catch {
+    actual = "<missing>";
+  }
+
+  if (actual === EXPECTED_RELEASE_LABEL_SOURCE) {
+    return [];
+  }
+
+  return [
+    invalid(
+      "fixture.unexpected-source",
+      "src/release-label.ts must match the fixture's expected correction exactly",
+    ),
+  ];
+}
+
+function inventoryWorkspace(workspace: string, runPath: string): Map<string, string> {
+  const files = new Map<string, string>();
+
+  const visit = (directory: string): void => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = join(directory, entry.name);
+      if (path === join(workspace, ".git") || path === runPath) {
+        continue;
+      }
+      if (entry.isDirectory()) {
+        visit(path);
+      } else {
+        files.set(relative(workspace, path), createHash("sha256").update(readFileSync(path)).digest("hex"));
+      }
+    }
+  };
+
+  visit(workspace);
+  return files;
+}
+
+function changedInventoryFiles(
+  baselineFiles: Map<string, string>,
+  currentFiles: Map<string, string>,
+): string[] {
+  return [...new Set([...baselineFiles.keys(), ...currentFiles.keys()])].filter(
+    (path) => baselineFiles.get(path) !== currentFiles.get(path),
+  );
 }
 
 function validateRequiredTest(
@@ -266,6 +328,7 @@ function collectArtifacts(outputDir: string, workspace: string, runPath: string)
   ];
 
   return retained
+    .filter((path) => existsSync(path))
     .map((path) => digestArtifact(outputDir, path))
     .sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0));
 }
