@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "e71d28b2-21cb-49b1-9983-99ac097d8cf7",
+  "criterionId": "fixture-contract-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/action-fixture.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-16T20:43:46.093Z",
+  "durationMs": 3242,
+  "exitCode": 0,
+  "workspaceFingerprint": "36f6716c29d7ac38c201380f681316489ba2878e77d769bbee3fcb871fc4a1cb",
+  "logPath": "logs/e71d28b2-21cb-49b1-9983-99ac097d8cf7.log",
+  "logSha256": "3c2dddeec2a370f8de9caf9f5784faff0846fab37a63080dac6aea507f61ca16",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/action-fixture.test.ts:\n[stderr]\n(pass) runs the bounded bug-fix fixture through fresh evidence and completion [201.86ms]\n[stderr]\n(pass) invalidates an executor that commits a forbidden fixture-test edit during Stage A [130.85ms]\n[stderr]\n(pass) fails an executor that exits before Bun runs the required test assertion [97.21ms]\n[stderr]\n(pass) invalidates an executor that spoofs Bun output before exiting successfully [107.11ms]\n[std",
+  "truncated": false
+}

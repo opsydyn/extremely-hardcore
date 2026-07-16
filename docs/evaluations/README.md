@@ -50,6 +50,18 @@ The corpus covers scope drift, fabricated evidence, stale state, unsafe commands
 
 This is a deterministic protocol harness, not an agent benchmark. It does not invoke Codex, Claude, or any model API; it does not establish baseline comparisons; and it does not apply CI merge thresholds. Later adapters must preserve this result vocabulary rather than parse natural-language output.
 
+## Action Fixture Reference Proof
+
+Run the bounded action-fixture reference proof from the repository root:
+
+```bash
+bun run evaluate:action-fixture -- --output-dir /tmp/extremely-hardcore-action-fixture-proof
+```
+
+`--output-dir` is required and must name a directory that does not already exist. The command writes a JSON `ActionFixtureResult` to stdout, retains the copied fixture workspace and `report.json` under that directory, and exits zero only when the result status is `passed`.
+
+This command runs the deterministic reference executor to prove the local fixture runner, its stale-evidence intervention, and the guarded completion path. It is not a provider evaluation: it does not invoke Codex, Claude, another model API, or a staged provider adapter. A passing report proves only the bounded local reference path, not agent capability or provider performance.
+
 ## Future Agent Attempts
 
 The evaluation core now defines an experimental, provider-neutral attempt shape for future adapters:

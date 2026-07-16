@@ -1,0 +1,76 @@
+[stderr]
+$ bun scripts/evaluate-action-fixture.ts --output-dir "/tmp/extremely-hardcore-action-fixture-proof-017-27ce4869-d1cd-4bee-b70b-dba9c8f80683"
+[stdout]
+{
+  "schemaVersion": 1,
+  "fixtureId": "action.bounded-bug-fix",
+  "status": "passed",
+  "stages": [
+    {
+      "stage": "fix",
+      "status": "passed",
+      "workspaceFingerprint": "20b92e2ea1e4cfb11b03378f9f846fc79f9959a46abc534624bc485f877ddf58",
+      "failures": []
+    },
+    {
+      "stage": "resume",
+      "status": "passed",
+      "workspaceFingerprint": "1d1877a2274b3ac728967ceed0adec6b6f262692c49871b07f9b0809b459068d",
+      "failures": []
+    }
+  ],
+  "transitionCount": 1,
+  "artifacts": [
+    {
+      "path": "workspace/.extremely-hardcore/runs/bounded-bug-fix/evidence/21d5cc51-a786-454e-b792-add8f12574ef.json",
+      "sha256": "8693986afea9d6d49c551ba7c1ef139935aed382b91152bfe541dbedfef302b4",
+      "bytes": 833
+    },
+    {
+      "path": "workspace/.extremely-hardcore/runs/bounded-bug-fix/evidence/bdc18a24-3f26-4183-ac30-b527ce7cc294.json",
+      "sha256": "fbbf1b79ce7388cd39bc54f68bc76a12933cd09b1eb9a4defa9558ecfc4eff11",
+      "bytes": 834
+    },
+    {
+      "path": "workspace/.extremely-hardcore/runs/bounded-bug-fix/logs/21d5cc51-a786-454e-b792-add8f12574ef.log",
+      "sha256": "50e2c2aa538b8ec24e5cc63f909d794b393fb9dcb597f246639744b2658a2255",
+      "bytes": 215
+    },
+    {
+      "path": "workspace/.extremely-hardcore/runs/bounded-bug-fix/logs/bdc18a24-3f26-4183-ac30-b527ce7cc294.log",
+      "sha256": "0697c03ff9a4fd7670e52ed8b6940a1670f563c84612d486b32cf92241224c27",
+      "bytes": 215
+    },
+    {
+      "path": "workspace/.extremely-hardcore/runs/bounded-bug-fix/run.json",
+      "sha256": "9568befe9d790f4f578a19c4dc858237f3015a0fb17a03685cf555dd0efd7cb6",
+      "bytes": 351
+    },
+    {
+      "path": "workspace/.extremely-hardcore/runs/bounded-bug-fix/transitions.jsonl",
+      "sha256": "776a2ce69aa5165be9497010771eec8e5ef2f9c0ab1b18647a5609a3c5ea38d3",
+      "bytes": 288
+    },
+    {
+      "path": "workspace/FIXTURE.md",
+      "sha256": "3b13ee793159fcb4a3295a303d87e9d062bac417ba645dccec185a684adbbb4b",
+      "bytes": 340
+    },
+    {
+      "path": "workspace/fixture-state.txt",
+      "sha256": "9fd762eb0848a3fe091ba2b5033f03c9b77f68ce88e90371aa236ab1f51b402a",
+      "bytes": 21
+    },
+    {
+      "path": "workspace/fixture-tests/release-label.fixture.ts",
+      "sha256": "60063c015d8ac5d5e2b982e04f93a25576f2f3c7df53b8586225d77d03e2153e",
+      "bytes": 215
+    },
+    {
+      "path": "workspace/src/release-label.ts",
+      "sha256": "edb63d9e40ff204e8b2f1678efc094f9fc764df461738b82f55c5a7d48076be1",
+      "bytes": 90
+    }
+  ],
+  "failures": []
+}

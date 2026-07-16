@@ -10,6 +10,7 @@
     "test": "bun test ./scripts/validate.test.ts ./tests/protocol ./tests/evaluation",
     "eh": "bun scripts/eh.ts",
     "evaluate": "bun scripts/evaluate.ts",
+    "evaluate:action-fixture": "bun scripts/evaluate-action-fixture.ts",
     "evaluate:baseline": "bun scripts/evaluate-baseline.ts",
     "evaluate:codex": "bun scripts/evaluate-codex.ts"
   },
