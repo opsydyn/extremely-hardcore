@@ -15,7 +15,7 @@
 - Do not call a provider, modify the Codex adapter, parse transcripts, add retries, or add CI thresholds.
 - Fixture agent-owned source path is exactly `src/release-label.ts`; tests, `FIXTURE.md`, package metadata, and marker are not agent-owned.
 - Harness marker is exactly `fixture-state.txt`, changed only from `evidence phase one\n` to `evidence invalidated\n`.
-- Required fixture test command is `bun test tests/release-label.test.ts`.
+- Required fixture test command is `bun test ./fixture-tests/release-label.fixture.ts`; bare `bun test` does not discover the fixture.
 - All output artifacts stay under the caller-selected new output directory.
 
 ---
@@ -27,7 +27,7 @@
 | `evaluation/types.ts` | Experimental action-fixture result, stage, failure, request, and executor types. |
 | `evaluation/run-bounded-bug-fix-fixture.ts` | Copies assets, initialises Git, enforces stages/diffs, validates protocol state, writes report. |
 | `evaluation/reference-bounded-bug-fix-executor.ts` | Deterministic executor used only to prove the local runner. |
-| `evaluation/fixtures/bounded-bug-fix/**` | Read-only task contract, defective source, test, marker, and protocol run template. |
+| `evaluation/fixtures/bounded-bug-fix/**` | Read-only task contract, defective source, explicitly invoked fixture test, marker, and protocol run template. |
 | `scripts/evaluate-action-fixture.ts` | JSON CLI for the deterministic reference run. |
 | `tests/evaluation/action-fixture.test.ts` | End-to-end runner tests with passing and adversarial staged executors. |
 | `package.json` | `evaluate:action-fixture` script. |
@@ -88,7 +88,7 @@ export type ActionFixtureRequest = {
   runPath: string;
   taskPath: string;
   criterionId: "required-test-passes";
-  requiredTestCommand: ["bun", "test", "tests/release-label.test.ts"];
+  requiredTestCommand: ["bun", "test", "./fixture-tests/release-label.fixture.ts"];
 };
 
 export type ActionFixtureExecutor = (request: ActionFixtureRequest) => Promise<void> | void;
@@ -130,7 +130,7 @@ git commit -m "test: define action fixture contract"
 - Create: `evaluation/fixtures/bounded-bug-fix/FIXTURE.md`
 - Create: `evaluation/fixtures/bounded-bug-fix/package.json`
 - Create: `evaluation/fixtures/bounded-bug-fix/src/release-label.ts`
-- Create: `evaluation/fixtures/bounded-bug-fix/tests/release-label.test.ts`
+- Create: `evaluation/fixtures/bounded-bug-fix/fixture-tests/release-label.fixture.ts`
 - Create: `evaluation/fixtures/bounded-bug-fix/fixture-state.txt`
 - Create: `evaluation/fixtures/bounded-bug-fix/.extremely-hardcore/runs/bounded-bug-fix/run.json`
 - Create: `evaluation/fixtures/bounded-bug-fix/.extremely-hardcore/runs/bounded-bug-fix/transitions.jsonl`
@@ -146,7 +146,7 @@ git commit -m "test: define action fixture contract"
 ```ts
 executor: async (request) => {
   if (request.stage === "fix") {
-    const result = Bun.spawnSync(["bun", "test", "tests/release-label.test.ts"], {
+    const result = Bun.spawnSync(["bun", "test", "./fixture-tests/release-label.fixture.ts"], {
       cwd: request.workspace,
       stdout: "pipe",
       stderr: "pipe",
@@ -172,7 +172,7 @@ export function releaseLabel(name: string): string {
 }
 ```
 
-`tests/release-label.test.ts` is read-only and requires the one permitted correction:
+`fixture-tests/release-label.fixture.ts` is read-only, is not discovered by bare `bun test`, and requires the one permitted correction:
 
 ```ts
 import { expect, test } from "bun:test";
@@ -292,7 +292,7 @@ return writeReport(resultFrom([...stageAFailures, ...finalFailures]));
 
 `validateExactlyOneCompletion` requires one `implemented -> complete` event whose fingerprint equals `finalFingerprint`. `resultFrom` returns `invalid` when any failure has kind `invalid`, otherwise `failed` when failures exist, otherwise `passed`.
 
-`writeReport` writes `report.json` after constructing a sorted `artifacts` list for these retained relative paths: `workspace/FIXTURE.md`, `workspace/src/release-label.ts`, `workspace/tests/release-label.test.ts`, `workspace/fixture-state.txt`, `workspace/.extremely-hardcore/runs/bounded-bug-fix/run.json`, `workspace/.extremely-hardcore/runs/bounded-bug-fix/transitions.jsonl`, and every file below that run's `evidence/` and `logs/` directories. It computes SHA-256 and byte count for each artifact. It never includes `report.json` in its own digest list.
+`writeReport` writes `report.json` after constructing a sorted `artifacts` list for these retained relative paths: `workspace/FIXTURE.md`, `workspace/src/release-label.ts`, `workspace/fixture-tests/release-label.fixture.ts`, `workspace/fixture-state.txt`, `workspace/.extremely-hardcore/runs/bounded-bug-fix/run.json`, `workspace/.extremely-hardcore/runs/bounded-bug-fix/transitions.jsonl`, and every file below that run's `evidence/` and `logs/` directories. It computes SHA-256 and byte count for each artifact. It never includes `report.json` in its own digest list.
 
 - [ ] **Step 5: Implement the reference executor**
 

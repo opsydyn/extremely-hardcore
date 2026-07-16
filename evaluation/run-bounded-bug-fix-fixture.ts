@@ -39,7 +39,7 @@ export async function runBoundedBugFixFixture(options: {
     runPath,
     taskPath: join(workspace, "FIXTURE.md"),
     criterionId: "required-test-passes",
-    requiredTestCommand: ["bun", "test", "tests/release-label.test.ts"],
+    requiredTestCommand: ["bun", "test", "./fixture-tests/release-label.fixture.ts"],
   });
 
   await options.executor(request("fix"));
@@ -203,7 +203,7 @@ function collectArtifacts(outputDir: string, workspace: string, runPath: string)
   const retained = [
     join(workspace, "FIXTURE.md"),
     join(workspace, "src", "release-label.ts"),
-    join(workspace, "tests", "release-label.test.ts"),
+    join(workspace, "fixture-tests", "release-label.fixture.ts"),
     join(workspace, "fixture-state.txt"),
     join(runPath, "run.json"),
     join(runPath, "transitions.jsonl"),

@@ -56,7 +56,7 @@ test("runs the bounded bug-fix fixture through fresh evidence and completion", a
       "workspace/FIXTURE.md",
       "workspace/fixture-state.txt",
       "workspace/src/release-label.ts",
-      "workspace/tests/release-label.test.ts",
+      "workspace/fixture-tests/release-label.fixture.ts",
       ...result.artifacts
         .map(({ path }) => path)
         .filter((path) => path.includes("/evidence/") || path.includes("/logs/"))

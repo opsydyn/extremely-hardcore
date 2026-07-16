@@ -105,7 +105,7 @@ export type ActionFixtureRequest = {
   runPath: string;
   taskPath: string;
   criterionId: "required-test-passes";
-  requiredTestCommand: ["bun", "test", "tests/release-label.test.ts"];
+  requiredTestCommand: ["bun", "test", "./fixture-tests/release-label.fixture.ts"];
 };
 
 export type ActionFixtureExecutor = (request: ActionFixtureRequest) => Promise<void> | void;

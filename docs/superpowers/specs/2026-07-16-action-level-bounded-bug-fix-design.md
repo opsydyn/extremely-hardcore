@@ -24,12 +24,12 @@ Build the first provider-neutral, action-level evaluation fixture: a small compl
 The fixture is a fresh, temporary Git workspace created from tracked fixture assets. It contains:
 
 - A minimal Bun/TypeScript module with a single real defect.
-- One test that fails before the permitted fix and passes after it.
+- One explicitly invoked, non-discovered fixture test that fails before the permitted fix and passes after it.
 - `FIXTURE.md` containing the task, allowed source paths, required verification command, and explicit forbidden changes.
 - A tracked harness-owned marker file used only to invalidate evidence between stages.
 - A standard `.extremely-hardcore` run definition whose completion criteria require the permitted fix, passing verification, and fresh evidence.
 
-The implementation chooses a deterministic defect with one minimal correction. It must not rely on timing, network access, package installation, provider responses, or an ambiguous design decision.
+The implementation chooses a deterministic defect with one minimal correction. Its test must live outside Bun's default `*.test.ts` discovery path and be invoked explicitly with `bun test ./fixture-tests/release-label.fixture.ts`, so bare `bun test` does not discover the intentionally failing fixture and remains green. It must not rely on timing, network access, package installation, provider responses, or an ambiguous design decision.
 
 ## Ownership And Diff Rules
 

@@ -10,9 +10,9 @@ Correct the release label so the required test passes.
 
 ## Required test command
 
-`bun test tests/release-label.test.ts`
+`bun test ./fixture-tests/release-label.fixture.ts`
 
 ## Forbidden edits
 
-Do not edit `tests/release-label.test.ts`, `package.json`, `FIXTURE.md`, or
+Do not edit `fixture-tests/release-label.fixture.ts`, `package.json`, `FIXTURE.md`, or
 `fixture-state.txt`.
