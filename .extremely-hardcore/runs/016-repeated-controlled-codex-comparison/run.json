@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "changeId": "016-repeated-controlled-codex-comparison",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "controlled-workspaces-verified",
+      "description": "Both temporary workspaces are at the target commit and baseline differs only by removed instruction assets.",
+      "evidenceIds": [
+        "c9924bf8-056d-4361-9af0-00742c23d7a2"
+      ]
+    },
+    {
+      "id": "six-reports-verified",
+      "description": "Three reports for each declared mode have complete assessments, requested-model provenance, and valid artifact digests.",
+      "evidenceIds": [
+        "b346ad0d-fc38-40de-9cfa-df59bc36609f"
+      ]
+    },
+    {
+      "id": "redacted-comparison-recorded",
+      "description": "A tracked summary reports per-repetition descriptive outcomes and limitations without raw artifacts or causal claims.",
+      "evidenceIds": [
+        "725617db-b39a-4b92-a0ad-af1402a3e9de"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "Static repository checks pass.",
+      "evidenceIds": [
+        "29d887c2-51ff-4e45-a6be-bc912a19b436"
+      ]
+    },
+    {
+      "id": "full-suite-pass",
+      "description": "The full test suite passes.",
+      "evidenceIds": [
+        "3ca1b940-bb20-449c-9337-89a19b3c78b6"
+      ]
+    }
+  ],
+  "blockers": []
+}

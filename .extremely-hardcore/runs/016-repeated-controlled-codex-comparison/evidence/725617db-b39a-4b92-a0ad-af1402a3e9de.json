@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "725617db-b39a-4b92-a0ad-af1402a3e9de",
+  "criterionId": "redacted-comparison-recorded",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "-e",
+      "import { readFileSync } from \"node:fs\"; const value = readFileSync(\"docs/evaluations/016-repeated-controlled-codex-comparison-2026-07-16.md\", \"utf8\"); const hashes = [\"2a780ac3912c1a3f4a7bd26369f61a33a537cd8a07b7d4755ece91fc31e74fc3\",\"c0aab8cb433e11d8c8ce63c0e33bec86febbc545ab103a31c71176e472b3372f\",\"3b732699a8cce6e84fa1f3d27a4a734e8d97104c06522122473586265734fb25\",\"c2b8a9b2a63e0ee00aced55ef7ca1e03f8976a9154a43eb8badf9c2921f8189c\",\"f51dac6dad55c2fa84bbfcfef24641ba4ceca1af96b3c208f3a563794c71c68b\",\"313697ff516cc616ddcc2425bc3c3361f062b651744f38f5cbdb2debc63dff68\"]; const valid = hashes.every((hash) => value.includes(hash)) && value.includes(\"The null difference is not evidence\") && !value.includes(\"final-response.json\"); console.log(JSON.stringify({ documentedHashes: hashes.length, valid })); if (!valid) process.exitCode = 1;"
+    ]
+  },
+  "startedAt": "2026-07-16T12:20:00.559Z",
+  "durationMs": 16,
+  "exitCode": 0,
+  "workspaceFingerprint": "b307cf265a2046556f69559b828cdbd438b57933ee161aba651bb5cf66134ff1",
+  "logPath": "logs/725617db-b39a-4b92-a0ad-af1402a3e9de.log",
+  "logSha256": "560fc990d4877b8ce43394dc58242c23c968efe2de16f387be6c5bcf126f21bb",
+  "summary": "[stdout]\n{\"documentedHashes\":6,\"valid\":true}",
+  "truncated": false
+}

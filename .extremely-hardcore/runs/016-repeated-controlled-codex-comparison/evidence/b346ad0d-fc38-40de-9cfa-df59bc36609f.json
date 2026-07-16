@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "b346ad0d-fc38-40de-9cfa-df59bc36609f",
+  "criterionId": "six-reports-verified",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "-e",
+      "import { createHash } from \"node:crypto\"; import { readFileSync } from \"node:fs\"; import { join } from \"node:path\"; const root = process.argv.at(-1); const names = [\"baseline-1-artifacts\",\"skill-1-artifacts\",\"skill-2-artifacts\",\"baseline-2-artifacts\",\"baseline-3-artifacts\",\"skill-3-artifacts\"]; const results = names.map((name) => { const dir = join(root, name); const bytes = readFileSync(join(dir, \"report.json\")); const report = JSON.parse(bytes.toString()); const artifacts = [...report.sharedArtifacts, ...report.provenance.flatMap((entry) => entry.artifacts)]; const mismatch = artifacts.some((artifact) => { const file = readFileSync(join(dir, artifact.path)); return file.length !== artifact.bytes || createHash(\"sha256\").update(file).digest(\"hex\") !== artifact.sha256; }); const invocations = report.provenance.map((entry) => JSON.parse(readFileSync(join(dir, \"scenarios\", entry.scenarioId, \"invocation.json\"), \"utf8\"))); const valid = report.attempts.length === 13 && report.assessments.length === 13 && report.assessments.every((assessment) => assessment.status === \"passed\") && artifacts.length === 66 && !mismatch && report.adapter.model === \"gpt-5.6-sol\" && invocations.every((entry) => entry.model === \"gpt-5.6-sol\"); return { name, valid, sha256: createHash(\"sha256\").update(bytes).digest(\"hex\") }; }); console.log(JSON.stringify(results)); if (!results.every((result) => result.valid)) process.exitCode = 1;",
+      "/tmp/extremely-hardcore-controlled-016.kaOypO"
+    ]
+  },
+  "startedAt": "2026-07-16T12:19:26.010Z",
+  "durationMs": 53,
+  "exitCode": 0,
+  "workspaceFingerprint": "b307cf265a2046556f69559b828cdbd438b57933ee161aba651bb5cf66134ff1",
+  "logPath": "logs/b346ad0d-fc38-40de-9cfa-df59bc36609f.log",
+  "logSha256": "aa63b2afbc20282a0518c1a413885bc978e81b3a0eae66c2895948629ec51f09",
+  "summary": "[stdout]\n[{\"name\":\"baseline-1-artifacts\",\"valid\":true,\"sha256\":\"2a780ac3912c1a3f4a7bd26369f61a33a537cd8a07b7d4755ece91fc31e74fc3\"},{\"name\":\"skill-1-artifacts\",\"valid\":true,\"sha256\":\"c0aab8cb433e11d8c8ce63c0e33bec86febbc545ab103a31c71176e472b3372f\"},{\"name\":\"skill-2-artifacts\",\"valid\":true,\"sha256\":\"3b732699a8cce6e84fa1f3d27a4a734e8d97104c06522122473586265734fb25\"},{\"name\":\"baseline-2-artifacts\",\"valid\":true,\"sha256\":\"c2b8a9b2a63e0ee00aced55ef7ca1e03f8976a9154a43eb8badf9c2921f8189c\"},{\"name\":\"bas",
+  "truncated": false
+}

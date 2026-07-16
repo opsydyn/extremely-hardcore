@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "c9924bf8-056d-4361-9af0-00742c23d7a2",
+  "criterionId": "controlled-workspaces-verified",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "-e",
+      "import { execFileSync } from \"node:child_process\"; const root = process.argv.at(-1); const expected = [\"D\\tAGENTS.md\",\"D\\tskills/architecture-decision/SKILL.md\",\"D\\tskills/architecture-decision/templates/adr.md\",\"D\\tskills/bounded-context-review/SKILL.md\",\"D\\tskills/bounded-context-review/templates/bounded-context-review.md\",\"D\\tskills/change-contract/SKILL.md\",\"D\\tskills/change-contract/templates/change-contract.md\",\"D\\tskills/domain-discovery/SKILL.md\",\"D\\tskills/domain-discovery/templates/domain-map.md\",\"D\\tskills/evidence-ledger/SKILL.md\",\"D\\tskills/evidence-ledger/templates/evidence-ledger.md\",\"D\\tskills/test-first-implementation/SKILL.md\",\"D\\tskills/test-first-implementation/templates/implementation-plan.md\",\"D\\tskills/using-extremely-hardcore/SKILL.md\"].join(\"\\n\"); const skill = execFileSync(\"git\", [\"-C\", root + \"/skill-workspace\", \"rev-parse\", \"HEAD\"], { encoding: \"utf8\" }).trim(); const baseline = execFileSync(\"git\", [\"-C\", root + \"/baseline-workspace\", \"rev-parse\", \"HEAD\"], { encoding: \"utf8\" }).trim(); const diff = execFileSync(\"git\", [\"-C\", root + \"/baseline-workspace\", \"diff\", \"--name-status\"], { encoding: \"utf8\" }).trim(); if (skill !== \"45f4d1c8a071a693ba84fd83025a6daa17378dff\" || baseline !== skill || diff !== expected) process.exitCode = 1; console.log(JSON.stringify({ skill, baseline, deletionEntries: diff.split(\"\\n\").length }));",
+      "/tmp/extremely-hardcore-controlled-016.kaOypO"
+    ]
+  },
+  "startedAt": "2026-07-16T12:19:25.894Z",
+  "durationMs": 48,
+  "exitCode": 0,
+  "workspaceFingerprint": "b307cf265a2046556f69559b828cdbd438b57933ee161aba651bb5cf66134ff1",
+  "logPath": "logs/c9924bf8-056d-4361-9af0-00742c23d7a2.log",
+  "logSha256": "329c14e717f9c5da8c12dc3e7fa2e78c697d762c0797112ae733c9c95d91e494",
+  "summary": "[stdout]\n{\"skill\":\"45f4d1c8a071a693ba84fd83025a6daa17378dff\",\"baseline\":\"45f4d1c8a071a693ba84fd83025a6daa17378dff\",\"deletionEntries\":14}",
+  "truncated": false
+}

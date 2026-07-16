@@ -1,0 +1,133 @@
+[stderr]
+$ bun test ./scripts/validate.test.ts ./tests/protocol ./tests/evaluation
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+scripts/validate.test.ts:
+[stderr]
+(pass) validateProject > reports missing required files [1.47ms]
+[stderr]
+(pass) validateProject > reports missing required skill headings [6.10ms]
+[stderr]
+(pass) validateProject > passes a complete minimal fixture [5.35ms]
+[stderr]
+
+tests/protocol/workspace-fingerprint.test.ts:
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when a tracked file changes [59.85ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when an untracked file is added [53.91ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores untracked protocol artefacts [53.74ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores changes to tracked protocol artefacts [69.57ms]
+[stderr]
+
+tests/protocol/transition.test.ts:
+[stderr]
+(pass) transitionToComplete > does not modify the run when completion validation fails [0.89ms]
+[stderr]
+(pass) transitionToComplete > appends one completion event with the evidence that justified it [1.38ms]
+[stderr]
+(pass) transitionToComplete > rejects a repeated completion without appending another event [0.84ms]
+[stderr]
+
+tests/protocol/evidence.test.ts:
+[stderr]
+(pass) captureEvidence > executes a command without shell interpolation and records passing evidence [72.20ms]
+[stderr]
+(pass) captureEvidence > refreshes a criterion reference while retaining the earlier evidence record [76.23ms]
+[stderr]
+(pass) captureEvidence > bounds captured logs and marks truncation [53.03ms]
+[stderr]
+
+tests/protocol/support.test.ts:
+[stderr]
+(pass) createGitWorkspace creates a committed repository with a tracked file [32.16ms]
+[stderr]
+
+tests/protocol/validate-run.test.ts:
+[stderr]
+(pass) validateCompletion > rejects a run with an uncovered acceptance criterion [1.04ms]
+[stderr]
+(pass) validateCompletion > rejects evidence from a command that failed [0.68ms]
+[stderr]
+(pass) validateCompletion > reports a referenced evidence record that is missing [0.78ms]
+[stderr]
+(pass) validateCompletion > reports a referenced evidence log that is missing [0.85ms]
+[stderr]
+(pass) validateCompletion > rejects passing evidence from a stale workspace [0.78ms]
+[stderr]
+(pass) validateCompletion > rejects a run with an open blocker [0.57ms]
+[stderr]
+(pass) validateCompletion > rejects evidence attached to a different criterion [0.62ms]
+[stderr]
+(pass) validateCompletion > rejects evidence when its log digest does not match [0.49ms]
+[stderr]
+
+tests/protocol/cli.test.ts:
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence log as a validation error [98.10ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence log is missing [107.39ms]
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence record as a validation error [76.64ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence record is missing [70.70ms]
+[stderr]
+(pass) eh CLI > a failed transition reports exact criteria and leaves run files unchanged [80.99ms]
+[stderr]
+(pass) eh CLI > captures, rejects stale evidence, refreshes, and completes [231.51ms]
+[stderr]
+
+tests/evaluation/codex-adapter.test.ts:
+[stderr]
+(pass) runs Codex with constrained arguments and records a complete provenance report [9.98ms]
+[stderr]
+(pass) rejects structured response codes outside the global canonical vocabulary [1.26ms]
+[stderr]
+(pass) retains failure artifacts but does not write a report for invalid Codex output [1.29ms]
+[stderr]
+
+tests/evaluation/evaluate-baseline-cli.test.ts:
+[stderr]
+(pass) baseline evaluate command emits a parseable complete report [12.73ms]
+[stderr]
+(pass) baseline evaluate command rejects incomplete coverage [11.57ms]
+[stderr]
+
+tests/evaluation/evaluate-cli.test.ts:
+[stderr]
+(pass) evaluate command emits a parseable passing report [82.73ms]
+[stderr]
+
+tests/evaluation/declared-baseline.test.ts:
+[stderr]
+(pass) assesses one complete declared baseline across every behavioural scenario [0.22ms]
+[stderr]
+(pass) rejects incomplete and duplicate baseline scenario coverage [0.09ms]
+
+tests/evaluation/core-scenarios.test.ts:
+[stderr]
+(pass) declares a 20-scenario pressure corpus with explicit execution boundaries
+[stderr]
+(pass) runs every core pressure scenario and reports expected protocol outcomes [60.46ms]
+[stderr]
+
+tests/evaluation/agent-attempts.test.ts:
+[stderr]
+(pass) assesses structured agent attempts against the core scenario manifest [0.23ms]
+[stderr]
+
+tests/evaluation/evaluate-codex-cli.test.ts:
+[stderr]
+(pass) Codex adapter CLI rejects missing required arguments before invocation [12.54ms]
+[stderr]
+(pass) Codex adapter CLI rejects a missing requested model before invocation [11.69ms]
+[stderr]
+
+ 41 pass
+ 0 fail
+ 136 expect() calls
+Ran 41 tests across 14 files. [1390.00ms]

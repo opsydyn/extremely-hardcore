@@ -92,7 +92,7 @@ The roadmap is working when:
 
 **Estimated effort:** 2 weeks
 
-**Status:** The 20-scenario corpus, seven-scenario deterministic runner, declared no-skill baseline assessor, and Codex artifact/provenance adapter are implemented. One controlled declared-mode run validated artifact mechanics and led to a global canonical response-vocabulary correction. The adapter now requires a pinned requested model for repeatability; corrected repeat runs, a second provider, comparison policy, and regression thresholds remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
+**Status:** The 20-scenario corpus, seven-scenario deterministic runner, declared no-skill baseline assessor, and Codex artifact/provenance adapter are implemented. Three corrected, model-pinned Codex repetitions per declared mode produced stable 13/13 strict classification results in both modes; this validates repeatable mechanics but is non-discriminative and cannot support a skills-effect claim. Action-level fixtures, a second provider, comparison policy, and regression thresholds remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
 
 **Outcome:** Measure whether agents actually obey the completion protocol under pressure.
 
