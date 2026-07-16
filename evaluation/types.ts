@@ -90,6 +90,43 @@ export type ArtifactDigest = {
   bytes: number;
 };
 
+export type ActionFixtureStage = "fix" | "resume";
+
+export type ActionFixtureFailure = {
+  code: string;
+  kind: "failed" | "invalid";
+  message: string;
+};
+
+export type ActionFixtureRequest = {
+  fixtureId: "action.bounded-bug-fix";
+  stage: ActionFixtureStage;
+  workspace: string;
+  runPath: string;
+  taskPath: string;
+  criterionId: "required-test-passes";
+  requiredTestCommand: ["bun", "test", "tests/release-label.test.ts"];
+};
+
+export type ActionFixtureExecutor = (request: ActionFixtureRequest) => Promise<void> | void;
+
+export type ActionFixtureStageResult = {
+  stage: ActionFixtureStage;
+  status: "passed" | "failed" | "invalid";
+  workspaceFingerprint: string;
+  failures: ActionFixtureFailure[];
+};
+
+export type ActionFixtureResult = {
+  schemaVersion: 1;
+  fixtureId: "action.bounded-bug-fix";
+  status: "passed" | "failed" | "invalid";
+  stages: ActionFixtureStageResult[];
+  transitionCount: number;
+  artifacts: ArtifactDigest[];
+  failures: ActionFixtureFailure[];
+};
+
 export type CodexAttemptProvenance = {
   scenarioId: string;
   startedAt: string;
