@@ -13,6 +13,7 @@ import { join, relative, resolve } from "node:path";
 import { readTransitions } from "../protocol/transition";
 import { readEvidence, readRun, validateCompletion } from "../protocol/validate-run";
 import { computeWorkspaceFingerprint } from "../protocol/workspace-fingerprint";
+import type { TransitionEvent } from "../protocol/types";
 import type {
   ActionFixtureExecutor,
   ActionFixtureFailure,
@@ -72,6 +73,11 @@ export async function runBoundedBugFixFixture(options: {
   });
 
   await options.executor(request("fix"));
+  const stageAWorkspaceSafetyFailures = validateWorkspaceSafety(workspace, runPath);
+  if (stageAWorkspaceSafetyFailures.length > 0) {
+    const stageA = stageResult("fix", "", stageAWorkspaceSafetyFailures);
+    return writeReport(outputDir, workspace, runPath, [stageA], stageAWorkspaceSafetyFailures);
+  }
   const stageAFingerprint = computeWorkspaceFingerprint(workspace);
   const stageAArtifactFailures = validateRetainedArtifacts(workspace, runPath);
   const stageAContractFailures =
@@ -115,6 +121,14 @@ export async function runBoundedBugFixFixture(options: {
   }
 
   await options.executor(request("resume"));
+  const stageBWorkspaceSafetyFailures = validateWorkspaceSafety(workspace, runPath);
+  if (stageBWorkspaceSafetyFailures.length > 0) {
+    const stageB = stageResult("resume", "", stageBWorkspaceSafetyFailures);
+    return writeReport(outputDir, workspace, runPath, [stageA, stageB], [
+      ...stageAFailures,
+      ...stageBWorkspaceSafetyFailures,
+    ]);
+  }
   const finalFingerprint = computeWorkspaceFingerprint(workspace);
   const stageBArtifactFailures = validateRetainedArtifacts(workspace, runPath);
   const stageBContractFailures =
@@ -138,7 +152,7 @@ export async function runBoundedBugFixFixture(options: {
     ...stageBContractFailures,
     ...stageBProtocolFailures,
     ...(stageBArtifactFailures.length === 0 && stageBContractFailures.length === 0
-      ? validateExactlyOneCompletion(runPath, finalFingerprint)
+      ? validateExactlyOneCompletion(runPath, finalFingerprint, request("resume").criterionId)
       : []),
   ];
   const stageB = stageResult("resume", finalFingerprint, finalFailures);
@@ -216,7 +230,13 @@ function inventoryWorkspace(workspace: string, runPath: string): WorkspaceInvent
   const visit = (directory: string): void => {
     for (const entry of readdirSync(directory, { withFileTypes: true })) {
       const path = join(directory, entry.name);
-      if (path === join(workspace, ".git") || path === runPath) {
+      if (path === join(workspace, ".git")) {
+        continue;
+      }
+      if (path === runPath) {
+        if (entry.isSymbolicLink()) {
+          symlinks.push(relative(workspace, path));
+        }
         continue;
       }
       if (entry.isSymbolicLink()) {
@@ -231,6 +251,32 @@ function inventoryWorkspace(workspace: string, runPath: string): WorkspaceInvent
 
   visit(workspace);
   return { files, symlinks: symlinks.sort() };
+}
+
+function validateWorkspaceSafety(workspace: string, runPath: string): ActionFixtureFailure[] {
+  return findWorkspaceSymlinks(workspace, runPath).map((path) =>
+    invalid("fixture.symlink-inventory", `workspace inventory contains symlink: ${path}`),
+  );
+}
+
+function findWorkspaceSymlinks(workspace: string, runPath: string): string[] {
+  const symlinks: string[] = [];
+  const visit = (directory: string): void => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = join(directory, entry.name);
+      if (path === join(workspace, ".git") || path === runPath) {
+        continue;
+      }
+      if (entry.isSymbolicLink()) {
+        symlinks.push(relative(workspace, path));
+      } else if (entry.isDirectory()) {
+        visit(path);
+      }
+    }
+  };
+
+  visit(workspace);
+  return symlinks.sort();
 }
 
 function changedInventoryFiles(
@@ -416,7 +462,10 @@ function validateHarnessMarker(workspace: string): ActionFixtureFailure[] {
 }
 
 function validateNoTransitions(runPath: string): ActionFixtureFailure[] {
-  const transitions = readTransitions(runPath);
+  const transitions = readTransitionsForValidation(runPath);
+  if (isFailure(transitions)) {
+    return [transitions];
+  }
   if (transitions.length === 0) {
     return [];
   }
@@ -432,8 +481,16 @@ function validateNoTransitions(runPath: string): ActionFixtureFailure[] {
 function validateExactlyOneCompletion(
   runPath: string,
   workspaceFingerprint: string,
+  criterionId: string,
 ): ActionFixtureFailure[] {
-  const transitions = readTransitions(runPath);
+  const transitions = readTransitionsForValidation(runPath);
+  if (isFailure(transitions)) {
+    return [transitions];
+  }
+  const evidenceIds = criterionEvidenceIds(runPath, criterionId);
+  if (isFailure(evidenceIds)) {
+    return [evidenceIds];
+  }
   const validCompletions = transitions.filter(
     (transition) =>
       transition.from === "implemented" &&
@@ -441,6 +498,14 @@ function validateExactlyOneCompletion(
       transition.workspaceFingerprint === workspaceFingerprint,
   );
   if (transitions.length === 1 && validCompletions.length === 1) {
+    if (!sameEvidenceIds(validCompletions[0]?.evidenceIds, evidenceIds)) {
+      return [
+        invalid(
+          "fixture.completion-evidence-mismatch",
+          "completion evidence IDs must exactly match the final criterion evidence IDs",
+        ),
+      ];
+    }
     return [];
   }
 
@@ -450,6 +515,64 @@ function validateExactlyOneCompletion(
       `expected one completion for the final fingerprint; found ${validCompletions.length} valid of ${transitions.length} total`,
     ),
   ];
+}
+
+function readTransitionsForValidation(
+  runPath: string,
+): TransitionEvent[] | ActionFixtureFailure {
+  const transitionsPath = join(runPath, "transitions.jsonl");
+  if (!isRegularFile(transitionsPath)) {
+    return invalid("fixture.transitions-invalid", "transitions.jsonl is missing or not a regular file");
+  }
+  try {
+    const transitions = readTransitions(runPath);
+    if (!transitions.every(isCompletionTransition)) {
+      return invalid("fixture.transitions-invalid", "transitions.jsonl contains an invalid transition");
+    }
+    return transitions;
+  } catch {
+    return invalid("fixture.transitions-invalid", "transitions.jsonl is malformed");
+  }
+}
+
+function isCompletionTransition(value: unknown): value is TransitionEvent {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  const transition = value as Partial<TransitionEvent>;
+  return (
+    transition.schemaVersion === 1 &&
+    typeof transition.transitionId === "string" &&
+    transition.transitionId.length > 0 &&
+    transition.from === "implemented" &&
+    transition.to === "complete" &&
+    typeof transition.at === "string" &&
+    !Number.isNaN(Date.parse(transition.at)) &&
+    typeof transition.workspaceFingerprint === "string" &&
+    transition.workspaceFingerprint.length > 0 &&
+    Array.isArray(transition.evidenceIds) &&
+    transition.evidenceIds.every((evidenceId) => typeof evidenceId === "string" && evidenceId.length > 0)
+  );
+}
+
+function criterionEvidenceIds(runPath: string, criterionId: string): string[] | ActionFixtureFailure {
+  try {
+    const criterion = readRun(runPath).acceptanceCriteria.find((candidate) => candidate.id === criterionId);
+    if (!criterion || !Array.isArray(criterion.evidenceIds)) {
+      return invalid("fixture.run-contract-invalid", "run.json is missing the required acceptance criterion");
+    }
+    return criterion.evidenceIds;
+  } catch {
+    return invalid("fixture.run-contract-invalid", "run.json is missing or malformed");
+  }
+}
+
+function sameEvidenceIds(left: string[] | undefined, right: string[]): boolean {
+  return (
+    Array.isArray(left) &&
+    left.length === right.length &&
+    left.every((evidenceId, index) => evidenceId === right[index])
+  );
 }
 
 function toStageAEvidenceFailures(
@@ -603,9 +726,9 @@ function invalid(code: string, message: string): ActionFixtureFailure {
 }
 
 function isFailure(
-  value: ReturnType<typeof validateCompletion> | ActionFixtureFailure | PinnedRunContract,
+  value: unknown,
 ): value is ActionFixtureFailure {
-  return "kind" in value;
+  return typeof value === "object" && value !== null && "kind" in value;
 }
 
 function readTransitionsSafely(runPath: string): ReturnType<typeof readTransitions> {

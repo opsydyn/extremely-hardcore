@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -35,6 +36,59 @@ function createFixOnlyExecutor(): ActionFixtureExecutor {
       command: request.requiredTestCommand,
     });
   };
+}
+
+function writeExpectedSource(workspace: string): void {
+  writeFileSync(
+    join(workspace, "src", "release-label.ts"),
+    [
+      "export function releaseLabel(name: string): string {",
+      "  return `release:${name.trim()}`;",
+      "}",
+      "",
+    ].join("\n"),
+  );
+}
+
+function replaceCriterionEvidenceIds(runPath: string, evidenceIds: string[]): void {
+  const run = JSON.parse(readFileSync(join(runPath, "run.json"), "utf8"));
+  run.acceptanceCriteria[0].evidenceIds = evidenceIds;
+  writeFileSync(join(runPath, "run.json"), `${JSON.stringify(run, null, 2)}\n`);
+}
+
+function writeForgedEvidence(options: {
+  evidencePath: string;
+  evidenceId: string;
+  runPath: string;
+  workspaceFingerprint: string;
+  logPath: string;
+}): void {
+  const log = Buffer.from("verification passed\n");
+  writeFileSync(join(options.runPath, options.logPath), log);
+  writeFileSync(
+    options.evidencePath,
+    `${JSON.stringify(
+      {
+        schemaVersion: 1,
+        evidenceId: options.evidenceId,
+        criterionId: "required-test-passes",
+        command: {
+          executable: "bun",
+          args: ["test", "./fixture-tests/release-label.fixture.ts"],
+        },
+        startedAt: "2026-07-16T12:00:00.000Z",
+        durationMs: 1,
+        exitCode: 0,
+        workspaceFingerprint: options.workspaceFingerprint,
+        logPath: options.logPath,
+        logSha256: createHash("sha256").update(log).digest("hex"),
+        summary: "verification passed",
+        truncated: false,
+      },
+      null,
+      2,
+    )}\n`,
+  );
 }
 
 test("runs the bounded bug-fix fixture through fresh evidence and completion", async () => {
@@ -655,6 +709,305 @@ test("invalidates a symlinked retained run artifact without following it", async
     expect(result.artifacts.map(({ path }) => path)).not.toContain(
       "workspace/.extremely-hardcore/runs/bounded-bug-fix/run.json",
     );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates evidence records forged outside the run evidence directory", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeExpectedSource(request.workspace);
+        const evidenceId = "../../../../.git/forged-evidence";
+        writeForgedEvidence({
+          evidencePath: join(request.runPath, "evidence", `${evidenceId}.json`),
+          evidenceId,
+          runPath: request.runPath,
+          workspaceFingerprint: computeWorkspaceFingerprint(request.workspace),
+          logPath: "../../../.git/forged.log",
+        });
+        replaceCriterionEvidenceIds(request.runPath, [evidenceId]);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "evidence.invalid", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates evidence logs forged outside the run logs directory", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeExpectedSource(request.workspace);
+        const evidence = await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+        const log = Buffer.from("forged verification log\n");
+        writeFileSync(join(request.runPath, "../../../.git/forged.log"), log);
+        const evidencePath = join(request.runPath, "evidence", `${evidence.evidenceId}.json`);
+        const forged = JSON.parse(readFileSync(evidencePath, "utf8"));
+        forged.logPath = "../../../.git/forged.log";
+        forged.logSha256 = createHash("sha256").update(log).digest("hex");
+        writeFileSync(evidencePath, `${JSON.stringify(forged, null, 2)}\n`);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "evidence.log-invalid", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates missing evidence referenced by the final criterion", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeExpectedSource(request.workspace);
+        replaceCriterionEvidenceIds(request.runPath, ["missing-evidence"]);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "evidence.missing", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates symlinked evidence referenced by the final criterion", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeExpectedSource(request.workspace);
+        const evidence = await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+        const evidencePath = join(request.runPath, "evidence", `${evidence.evidenceId}.json`);
+        const forgedPath = join(request.runPath, "../../forged-evidence.json");
+        writeFileSync(forgedPath, readFileSync(evidencePath));
+        rmSync(evidencePath);
+        symlinkSync("../../forged-evidence.json", evidencePath);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.symlink-retained-artifact", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates a symlinked evidence log referenced by the final criterion", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeExpectedSource(request.workspace);
+        const evidence = await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+        const logPath = join(request.runPath, evidence.logPath);
+        const forgedPath = join(request.runPath, "../../../.git/forged.log");
+        writeFileSync(forgedPath, readFileSync(logPath));
+        rmSync(logPath);
+        symlinkSync("../../../../.git/forged.log", logPath);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.symlink-retained-artifact", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+for (const evidenceIds of [[], ["forged-evidence"]]) {
+  test(`invalidates completion whose evidence IDs are ${JSON.stringify(evidenceIds)}`, async () => {
+    const { parentPath, outputDir } = createOutputDir();
+    try {
+      const result = await runBoundedBugFixFixture({
+        outputDir,
+        executor: async (request) => {
+          if (request.stage === "fix") {
+            writeExpectedSource(request.workspace);
+          }
+
+          await captureEvidence({
+            runPath: request.runPath,
+            criterionId: request.criterionId,
+            command: request.requiredTestCommand,
+          });
+
+          if (request.stage === "resume") {
+            writeFileSync(
+              join(request.runPath, "transitions.jsonl"),
+              `${JSON.stringify({
+                schemaVersion: 1,
+                transitionId: "forged-transition",
+                from: "implemented",
+                to: "complete",
+                at: "2026-07-16T12:00:00.000Z",
+                workspaceFingerprint: computeWorkspaceFingerprint(request.workspace),
+                evidenceIds,
+              })}\n`,
+            );
+          }
+        },
+      });
+
+      expect(result).toMatchObject({ status: "invalid" });
+      expect(result.failures).toContainEqual(
+        expect.objectContaining({ code: "fixture.completion-evidence-mismatch", kind: "invalid" }),
+      );
+    } finally {
+      rmSync(parentPath, { recursive: true, force: true });
+    }
+  });
+}
+
+test("invalidates a completion transition with an invalid schema", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage === "fix") {
+          writeExpectedSource(request.workspace);
+        }
+
+        const evidence = await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+        if (request.stage === "resume") {
+          writeFileSync(
+            join(request.runPath, "transitions.jsonl"),
+            `${JSON.stringify({
+              schemaVersion: 2,
+              transitionId: "forged-transition",
+              from: "implemented",
+              to: "complete",
+              at: "2026-07-16T12:00:00.000Z",
+              workspaceFingerprint: computeWorkspaceFingerprint(request.workspace),
+              evidenceIds: [evidence.evidenceId],
+            })}\n`,
+          );
+        }
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.transitions-invalid", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+for (const mutation of [
+  {
+    name: "deletes",
+    apply: (path: string) => rmSync(path),
+  },
+  {
+    name: "malforms",
+    apply: (path: string) => writeFileSync(path, "not JSON\n"),
+  },
+]) {
+  test(`reports an invalid result when Stage A ${mutation.name} transitions JSON`, async () => {
+    const { parentPath, outputDir } = createOutputDir();
+    try {
+      const result = await runBoundedBugFixFixture({
+        outputDir,
+        executor: async (request) => {
+          if (request.stage !== "fix") return;
+
+          writeExpectedSource(request.workspace);
+          await captureEvidence({
+            runPath: request.runPath,
+            criterionId: request.criterionId,
+            command: request.requiredTestCommand,
+          });
+          mutation.apply(join(request.runPath, "transitions.jsonl"));
+        },
+      });
+
+      expect(result).toMatchObject({ status: "invalid" });
+      expect(result.failures).toContainEqual(
+        expect.objectContaining({ code: "fixture.transitions-invalid", kind: "invalid" }),
+      );
+      expect(JSON.parse(readFileSync(join(outputDir, "report.json"), "utf8"))).toEqual(result);
+    } finally {
+      rmSync(parentPath, { recursive: true, force: true });
+    }
+  });
+}
+
+test("reports an invalid result for an executor-created directory symlink before fingerprinting", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        symlinkSync(join(request.workspace, "src"), join(request.workspace, "linked-src"), "dir");
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        workspaceFingerprint: "",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "fixture.symlink-inventory", kind: "invalid" }),
+        ]),
+      }),
+    );
+    expect(JSON.parse(readFileSync(join(outputDir, "report.json"), "utf8"))).toEqual(result);
   } finally {
     rmSync(parentPath, { recursive: true, force: true });
   }
