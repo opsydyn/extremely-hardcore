@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "changeId": "013-controlled-codex-comparison",
+  "initialState": "implemented",
+  "risk": "high",
+  "acceptanceCriteria": [
+    {
+      "id": "controlled-workspaces-verified",
+      "description": "The two workspaces are at the same commit and differ only by the approved baseline instruction removal.",
+      "evidenceIds": [
+        "79ac777b-fb8f-4d69-bc9c-ceafdf1d806a"
+      ]
+    },
+    {
+      "id": "baseline-report-inspected",
+      "description": "The declared no-skill report has complete attempts and valid artifact digests.",
+      "evidenceIds": [
+        "1efa3f05-39df-42ee-9c7a-a29f9fd1feea"
+      ]
+    },
+    {
+      "id": "skill-report-inspected",
+      "description": "The declared skill-assisted report has complete attempts and valid artifact digests.",
+      "evidenceIds": [
+        "e358ac40-96b2-4267-a45f-5108fcbce2d5"
+      ]
+    },
+    {
+      "id": "comparison-recorded",
+      "description": "A redacted comparison records observed results and limitations without benchmark claims.",
+      "evidenceIds": [
+        "a8841b58-2287-4594-b127-63e240e8d2b3"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "Static repository checks pass.",
+      "evidenceIds": [
+        "67395439-22bf-448c-84d2-fa70a8e5ab76"
+      ]
+    },
+    {
+      "id": "full-suite-pass",
+      "description": "The full test suite passes.",
+      "evidenceIds": [
+        "7b1308dd-d53e-4fe0-bd75-c1dc6f42ba40"
+      ]
+    }
+  ],
+  "blockers": []
+}

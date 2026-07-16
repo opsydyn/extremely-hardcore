@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "e358ac40-96b2-4267-a45f-5108fcbce2d5",
+  "criterionId": "skill-report-inspected",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "-e",
+      "import { createHash } from \"node:crypto\";\nimport { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nconst root = process.argv[1];\nconst directory = join(root, \"skill-artifacts\");\nconst report = JSON.parse(readFileSync(join(directory, \"report.json\"), \"utf8\"));\nconst artifacts = [...report.sharedArtifacts, ...report.provenance.flatMap((item) => item.artifacts)];\nconst mismatches = artifacts.filter((artifact) => createHash(\"sha256\").update(readFileSync(join(directory, artifact.path))).digest(\"hex\") !== artifact.sha256);\nif (report.attempts.length !== 13 || report.assessments.length !== 13 || artifacts.length !== 66 || mismatches.length !== 0) process.exit(1);\nconsole.log(JSON.stringify({ mode: report.adapter.mode, attempts: report.attempts.length, assessments: report.assessments.length, artifacts: artifacts.length, passed: report.assessments.filter((item) => item.status === \"passed\").length, digestMismatches: mismatches.length }));",
+      "/tmp/extremely-hardcore-controlled-013.Hf5EYw"
+    ]
+  },
+  "startedAt": "2026-07-16T11:39:23.150Z",
+  "durationMs": 21,
+  "exitCode": 0,
+  "workspaceFingerprint": "05b92c826a7b8ee6583a47ffe20eef20403fa5e230c3983d2d094bede4a724d2",
+  "logPath": "logs/e358ac40-96b2-4267-a45f-5108fcbce2d5.log",
+  "logSha256": "a034640f6f726fb8a48cd1fdec67e7362495d3c35dd8762a433eceaeeb0ba113",
+  "summary": "[stdout]\n{\"mode\":\"with-extremely-hardcore\",\"attempts\":13,\"assessments\":13,\"artifacts\":66,\"passed\":9,\"digestMismatches\":0}",
+  "truncated": false
+}

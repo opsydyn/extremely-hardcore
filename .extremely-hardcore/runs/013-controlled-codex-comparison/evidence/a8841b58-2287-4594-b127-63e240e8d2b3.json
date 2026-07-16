@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "a8841b58-2287-4594-b127-63e240e8d2b3",
+  "criterionId": "comparison-recorded",
+  "command": {
+    "executable": "rg",
+    "args": [
+      "-q",
+      "not interpretable as a skill effect",
+      "docs/evaluations/013-controlled-codex-comparison-2026-07-16.md"
+    ]
+  },
+  "startedAt": "2026-07-16T11:39:23.254Z",
+  "durationMs": 5,
+  "exitCode": 0,
+  "workspaceFingerprint": "05b92c826a7b8ee6583a47ffe20eef20403fa5e230c3983d2d094bede4a724d2",
+  "logPath": "logs/a8841b58-2287-4594-b127-63e240e8d2b3.log",
+  "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "summary": "",
+  "truncated": false
+}

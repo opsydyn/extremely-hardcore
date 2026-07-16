@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "79ac777b-fb8f-4d69-bc9c-ceafdf1d806a",
+  "criterionId": "controlled-workspaces-verified",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "-e",
+      "import { spawnSync } from \"node:child_process\";\nconst root = process.argv[1];\nconst baseline = spawnSync(\"git\", [\"-C\", root + \"/baseline-workspace\", \"diff\", \"--name-status\"], { encoding: \"utf8\" });\nconst skill = spawnSync(\"git\", [\"-C\", root + \"/skill-workspace\", \"diff\", \"--name-status\"], { encoding: \"utf8\" });\nconst baselineHead = spawnSync(\"git\", [\"-C\", root + \"/baseline-workspace\", \"rev-parse\", \"HEAD\"], { encoding: \"utf8\" });\nconst skillHead = spawnSync(\"git\", [\"-C\", root + \"/skill-workspace\", \"rev-parse\", \"HEAD\"], { encoding: \"utf8\" });\nconst expected = new Set([\"AGENTS.md\", \"skills/architecture-decision/SKILL.md\", \"skills/architecture-decision/templates/adr.md\", \"skills/bounded-context-review/SKILL.md\", \"skills/bounded-context-review/templates/bounded-context-review.md\", \"skills/change-contract/SKILL.md\", \"skills/change-contract/templates/change-contract.md\", \"skills/domain-discovery/SKILL.md\", \"skills/domain-discovery/templates/domain-map.md\", \"skills/evidence-ledger/SKILL.md\", \"skills/evidence-ledger/templates/evidence-ledger.md\", \"skills/test-first-implementation/SKILL.md\", \"skills/test-first-implementation/templates/implementation-plan.md\", \"skills/using-extremely-hardcore/SKILL.md\"]);\nconst changed = baseline.stdout.trim().split(\"\\n\").filter(Boolean).map((line) => line.slice(2));\nconst valid = baseline.status === 0 && skill.status === 0 && baselineHead.stdout.trim() === skillHead.stdout.trim() && changed.length === expected.size && changed.every((path) => expected.has(path)) && skill.stdout === \"\";\nif (!valid) process.exit(1);\nconsole.log(JSON.stringify({ commit: baselineHead.stdout.trim(), baselineRemovedPaths: changed.length, skillWorkspaceClean: true }));",
+      "/tmp/extremely-hardcore-controlled-013.Hf5EYw"
+    ]
+  },
+  "startedAt": "2026-07-16T11:39:22.924Z",
+  "durationMs": 54,
+  "exitCode": 0,
+  "workspaceFingerprint": "05b92c826a7b8ee6583a47ffe20eef20403fa5e230c3983d2d094bede4a724d2",
+  "logPath": "logs/79ac777b-fb8f-4d69-bc9c-ceafdf1d806a.log",
+  "logSha256": "fbfb35df7bd77103cfabbc4da0392570c2bc6daa26b66c9e3cf3b59f6b585210",
+  "summary": "[stdout]\n{\"commit\":\"e4c0c3cd64a4cc19516c5c999139c64d23783ab4\",\"baselineRemovedPaths\":14,\"skillWorkspaceClean\":true}",
+  "truncated": false
+}
