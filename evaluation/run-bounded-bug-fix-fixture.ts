@@ -9,7 +9,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { join, relative, resolve } from "node:path";
+import { join, relative, resolve, sep } from "node:path";
 import { readTransitions } from "../protocol/transition";
 import { readEvidence, readRun, validateCompletion } from "../protocol/validate-run";
 import { computeWorkspaceFingerprint } from "../protocol/workspace-fingerprint";
@@ -55,6 +55,11 @@ export async function runBoundedBugFixFixture(options: {
   const baselineCommit = initialiseGitWorkspace(workspace);
 
   const runPath = join(workspace, ".extremely-hardcore", "runs", "bounded-bug-fix");
+  const initialWorkspaceSafetyFailures = validateWorkspaceSafety(workspace, runPath);
+  if (initialWorkspaceSafetyFailures.length > 0) {
+    const stage = stageResult("fix", "", initialWorkspaceSafetyFailures);
+    return writeReport(outputDir, workspace, runPath, [stage], initialWorkspaceSafetyFailures);
+  }
   const baselineInventory = inventoryWorkspace(workspace, runPath);
   const pinnedRunContract = pinRunContract(runPath);
   if (isFailure(pinnedRunContract)) {
@@ -234,9 +239,6 @@ function inventoryWorkspace(workspace: string, runPath: string): WorkspaceInvent
         continue;
       }
       if (path === runPath) {
-        if (entry.isSymbolicLink()) {
-          symlinks.push(relative(workspace, path));
-        }
         continue;
       }
       if (entry.isSymbolicLink()) {
@@ -264,7 +266,13 @@ function findWorkspaceSymlinks(workspace: string, runPath: string): string[] {
   const visit = (directory: string): void => {
     for (const entry of readdirSync(directory, { withFileTypes: true })) {
       const path = join(directory, entry.name);
-      if (path === join(workspace, ".git") || path === runPath) {
+      if (path === join(workspace, ".git")) {
+        continue;
+      }
+      if (path === runPath) {
+        if (entry.isSymbolicLink()) {
+          symlinks.push(relative(workspace, path));
+        }
         continue;
       }
       if (entry.isSymbolicLink()) {
@@ -586,7 +594,15 @@ function toStageAEvidenceFailures(
 }
 
 function toFixtureFailures(validation: ReturnType<typeof validateCompletion>): ActionFixtureFailure[] {
-  return validation.errors.map(({ code, message }) => failed(code, message));
+  return validation.errors.map(({ code, message }) =>
+    code === "criterion.uncovered" || (code.startsWith("evidence.") && isMalformedEvidenceError(code))
+      ? invalid(code, message)
+      : failed(code, message),
+  );
+}
+
+function isMalformedEvidenceError(code: string): boolean {
+  return code !== "evidence.failed" && code !== "evidence.stale";
 }
 
 function stageResult(
@@ -614,7 +630,7 @@ function writeReport(
     fixtureId: "action.bounded-bug-fix",
     status: resultStatus(failures),
     stages,
-    transitionCount: readTransitionsSafely(runPath).length,
+    transitionCount: readTransitionsSafely(workspace, runPath).length,
     artifacts: collectArtifacts(outputDir, workspace, runPath),
     failures,
   };
@@ -624,22 +640,31 @@ function writeReport(
 
 function collectArtifacts(outputDir: string, workspace: string, runPath: string): ArtifactDigest[] {
   return retainedArtifactPaths(workspace, runPath)
-    .filter((path) => isRegularFile(path))
+    .filter((path) => isSafeRegularFile(workspace, path))
     .map((path) => digestArtifact(outputDir, path))
     .sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0));
 }
 
 function retainedArtifactPaths(workspace: string, runPath: string): string[] {
-  return [
+  const retained = [
     join(workspace, "FIXTURE.md"),
     join(workspace, "src", "release-label.ts"),
     join(workspace, "fixture-tests", "release-label.fixture.ts"),
     join(workspace, "fixture-state.txt"),
-    join(runPath, "run.json"),
-    join(runPath, "transitions.jsonl"),
-    ...filesBelow(join(runPath, "evidence")),
-    ...filesBelow(join(runPath, "logs")),
   ];
+  if (!hasSymlinkedAncestor(workspace, runPath)) {
+    retained.push(
+      join(runPath, "run.json"),
+      join(runPath, "transitions.jsonl"),
+      ...filesBelowIfSafe(workspace, join(runPath, "evidence")),
+      ...filesBelowIfSafe(workspace, join(runPath, "logs")),
+    );
+  }
+  return retained;
+}
+
+function filesBelowIfSafe(workspace: string, root: string): string[] {
+  return hasSymlinkedAncestor(workspace, root) ? [] : filesBelow(root);
 }
 
 function validateRetainedArtifacts(workspace: string, runPath: string): ActionFixtureFailure[] {
@@ -692,6 +717,37 @@ function isRegularFile(path: string): boolean {
   }
 }
 
+function isSafeRegularFile(workspace: string, path: string): boolean {
+  return !hasSymlinkedAncestor(workspace, path) && isRegularFile(path);
+}
+
+function hasSymlinkedAncestor(workspace: string, path: string): boolean {
+  const workspacePath = resolve(workspace);
+  const targetPath = resolve(path);
+  const targetRelativePath = relative(workspacePath, targetPath);
+  if (
+    targetRelativePath === ".." ||
+    targetRelativePath.startsWith(`..${sep}`)
+  ) {
+    return true;
+  }
+  if (targetRelativePath === "" || targetRelativePath === ".") {
+    return isSymlink(workspacePath);
+  }
+
+  let currentPath = workspacePath;
+  if (isSymlink(currentPath)) {
+    return true;
+  }
+  for (const segment of targetRelativePath.split(sep)) {
+    currentPath = join(currentPath, segment);
+    if (isSymlink(currentPath)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function isDirectory(path: string): boolean {
   try {
     return lstatSync(path).isDirectory();
@@ -731,9 +787,9 @@ function isFailure(
   return typeof value === "object" && value !== null && "kind" in value;
 }
 
-function readTransitionsSafely(runPath: string): ReturnType<typeof readTransitions> {
+function readTransitionsSafely(workspace: string, runPath: string): ReturnType<typeof readTransitions> {
   const transitionsPath = join(runPath, "transitions.jsonl");
-  if (isSymlink(transitionsPath)) {
+  if (hasSymlinkedAncestor(workspace, transitionsPath)) {
     return [];
   }
   try {

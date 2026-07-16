@@ -2,47 +2,41 @@
 
 ## summary
 
-The bounded action-fixture runner now pins its initialized run contract, requires the exact fixture test argv in referenced evidence, reports unreadable run JSON as invalid state, and rejects symlinks from workspace inventory and retained artifacts.
+The bounded action-fixture runner now rejects a symlinked run directory before any Stage A or Stage B workspace fingerprint is computed. Report construction also omits artifact paths with a symlinked ancestor, so it cannot digest the symlink target. Stage B now classifies malformed executor-owned evidence and log artifacts as `invalid`, while genuine failed or stale evidence remains `failed`.
 
 ## changed files
 
 - `evaluation/run-bounded-bug-fix-fixture.ts`
 - `tests/evaluation/action-fixture.test.ts`
-- `docs/change-contracts/018-action-fixture-protocol-hardening.md`
-- `docs/domain/018-action-fixture-protocol-hardening.md`
-- `docs/reviews/018-action-fixture-protocol-hardening.md`
-- `docs/implementation-plans/018-action-fixture-protocol-hardening.md`
 - `docs/evidence/018-action-fixture-protocol-hardening.md`
 
 ## commands run
 
 - `bun test tests/evaluation/action-fixture.test.ts`
 - `bun run check`
-- `bun run evaluate`
-- `bun run evaluate:baseline -- tests/evaluation/fixtures/declared-baseline.json`
 - `bun run test`
 - `bunx tsc --noEmit`
 - `git diff --check`
 
 ## passing checks
 
-Focused runner tests cover contract mutation, substitute evidence argv, missing and malformed run JSON, workspace-inventory symlinks, and retained-artifact symlinks. Repository validation, deterministic evaluation, declared baseline assessment, full tests, and TypeScript typechecking are recorded with this change.
+The focused runner suite has 30 passing tests, including a run-directory symlink regression that asserts the empty pre-fingerprint value and excludes the redirected run target from the report. It also covers a fresh Stage B evidence log replaced by a directory after completion, which now produces `evidence.log-invalid` with `kind: invalid`. The full repository suite has 71 passing tests.
 
 ## failing checks
 
-`bun run evaluate:action-fixture` is not available in the current `package.json`. The command is documented for a future Task 4 CLI and is outside this runner-only hardening slice.
+None.
 
 ## architecture impact
 
-No architecture or protocol ownership change. Fixture-specific integrity checks remain in the action runner.
+No architecture or protocol ownership change. The runner continues to own fixture-specific integrity scoring and report construction; the generic protocol APIs are unchanged.
 
 ## public contract impact
 
-No external API, staged executor, report schema, or transition-semantic change.
+No external API, staged executor, report schema, transition semantic, or fixture-test discovery change.
 
 ## risks left open
 
-The action-fixture CLI remains absent from this checkout. Generic protocol validation still intentionally accepts arbitrary commands because command binding belongs to the fixture request boundary.
+The runner only has a fixture-owned view of filesystem safety. Generic protocol validation intentionally remains reusable and does not acquire fixture-specific command binding or artifact traversal policy.
 
 ## human review needed
 

@@ -1,7 +1,15 @@
 import { expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import {
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  renameSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { captureEvidence } from "../../protocol/evidence";
@@ -1004,6 +1012,73 @@ test("reports an invalid result for an executor-created directory symlink before
         workspaceFingerprint: "",
         failures: expect.arrayContaining([
           expect.objectContaining({ code: "fixture.symlink-inventory", kind: "invalid" }),
+        ]),
+      }),
+    );
+    expect(JSON.parse(readFileSync(join(outputDir, "report.json"), "utf8"))).toEqual(result);
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("rejects a symlinked run directory before fingerprinting without retaining target artifacts", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        const redirectedRunPath = join(request.workspace, "executor-controlled-run");
+        renameSync(request.runPath, redirectedRunPath);
+        symlinkSync(redirectedRunPath, request.runPath, "dir");
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        workspaceFingerprint: "",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "fixture.symlink-inventory", kind: "invalid" }),
+        ]),
+      }),
+    );
+    expect(result.artifacts.map(({ path }) => path)).not.toContain(
+      "workspace/.extremely-hardcore/runs/bounded-bug-fix/run.json",
+    );
+    expect(JSON.parse(readFileSync(join(outputDir, "report.json"), "utf8"))).toEqual(result);
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates Stage B evidence when its fresh log becomes a directory after completion", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  const reference = createReferenceBoundedBugFixExecutor();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        await reference(request);
+        if (request.stage !== "resume") return;
+
+        const run = JSON.parse(readFileSync(join(request.runPath, "run.json"), "utf8"));
+        const evidenceId = run.acceptanceCriteria[0].evidenceIds[0];
+        const logPath = join(request.runPath, "logs", `${evidenceId}.log`);
+        rmSync(logPath);
+        mkdirSync(logPath);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "resume",
+        status: "invalid",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "evidence.log-invalid", kind: "invalid" }),
         ]),
       }),
     );
