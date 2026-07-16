@@ -3,6 +3,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { runBoundedBugFixFixture } from "../../evaluation/run-bounded-bug-fix-fixture";
+import type { ActionFixtureExecutor } from "../../evaluation/types";
 
 function createOutputDir(): { parentPath: string; outputDir: string } {
   const parentPath = mkdtempSync(join(tmpdir(), "extremely-hardcore-action-fixture-"));
@@ -10,8 +11,18 @@ function createOutputDir(): { parentPath: string; outputDir: string } {
   return { parentPath, outputDir: join(parentPath, "artifacts") };
 }
 
-function createPassingExecutor() {
-  return () => undefined;
+function createPassingExecutor(): ActionFixtureExecutor {
+  return async (request) => {
+    if (request.stage === "fix") {
+      const result = Bun.spawnSync(["bun", "test", "tests/release-label.test.ts"], {
+        cwd: request.workspace,
+        stdout: "pipe",
+        stderr: "pipe",
+      });
+
+      expect(result.exitCode).toBe(1);
+    }
+  };
 }
 
 test("runs the bounded bug-fix fixture through fresh evidence and completion", async () => {

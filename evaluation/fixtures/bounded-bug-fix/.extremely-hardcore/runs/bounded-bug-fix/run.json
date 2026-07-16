@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "changeId": "bounded-bug-fix",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "required-test-passes",
+      "description": "The bounded release-label test passes.",
+      "evidenceIds": []
+    }
+  ],
+  "blockers": []
+}
