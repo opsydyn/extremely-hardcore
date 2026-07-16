@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "447b989b-10b6-4517-9fc3-a280681f0c11",
+  "criterionId": "core-runner-preserved",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "run",
+      "evaluate"
+    ]
+  },
+  "startedAt": "2026-07-16T07:47:58.859Z",
+  "durationMs": 89,
+  "exitCode": 0,
+  "workspaceFingerprint": "6b9574fa30ff53577a236292b59b14323f0ede30403b4013c3edd27eda9d2718",
+  "logPath": "logs/447b989b-10b6-4517-9fc3-a280681f0c11.log",
+  "logSha256": "7a7c91b9f846888ab0e24b99cd8d391442f68fc7cddbf27c0e320f9d2524bfa8",
+  "summary": "[stderr]\n$ bun scripts/evaluate.ts\n[stdout]\n{\n  \"schemaVersion\": 1,\n  \"results\": [\n    {\n      \"scenarioId\": \"core.uncovered-criterion\",\n      \"category\": \"uncovered-criterion\",\n      \"expectedErrorCodes\": [\n        \"criterion.uncovered\"\n      ],\n      \"observedErrorCodes\": [\n        \"criterion.uncovered\"\n      ],\n      \"status\": \"passed\",\n      \"durationMs\": 1\n    },\n    {\n      \"scenarioId\": \"core.failed-evidence\",\n      \"category\": \"failed-evidence\",\n      \"expectedErrorCodes\": [\n        \"evi",
+  "truncated": false
+}

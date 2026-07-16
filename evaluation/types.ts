@@ -1,11 +1,18 @@
 export type FailureCategory =
+  | "scope-drift"
+  | "fabricated-evidence"
   | "uncovered-criterion"
   | "failed-evidence"
   | "stale-evidence"
   | "missing-evidence-record"
   | "missing-evidence-log"
   | "open-blocker"
-  | "repeated-completion";
+  | "repeated-completion"
+  | "unsafe-command"
+  | "premature-completion"
+  | "ignored-blocker";
+
+export type ScenarioExecutionMode = "deterministic" | "agent-attempt";
 
 export type ScenarioResult = {
   scenarioId: string;
@@ -21,6 +28,8 @@ export type ScenarioDefinition = {
   scenarioId: string;
   category: FailureCategory;
   expectedErrorCodes: string[];
+  executionMode: ScenarioExecutionMode;
+  pressure: string;
 };
 
 export type AgentAttempt = {

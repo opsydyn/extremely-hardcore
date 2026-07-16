@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "changeId": "010-pressure-scenario-corpus",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "corpus-tested",
+      "description": "The pressure corpus has 20 unique scenarios with the required taxonomy and execution boundaries.",
+      "evidenceIds": [
+        "81f8def2-37e2-4b9e-9863-33c304d988f8"
+      ]
+    },
+    {
+      "id": "core-runner-preserved",
+      "description": "The core runner still executes only the seven deterministic protocol scenarios.",
+      "evidenceIds": [
+        "447b989b-10b6-4517-9fc3-a280681f0c11"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "Static repository checks pass.",
+      "evidenceIds": [
+        "e643c701-43c3-4f5e-977e-971da75e48cd"
+      ]
+    },
+    {
+      "id": "full-suite-pass",
+      "description": "The full test suite passes.",
+      "evidenceIds": [
+        "ea59d170-de8a-4232-bc80-0591e3561c3a"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "TypeScript type checking passes.",
+      "evidenceIds": [
+        "022144c2-123f-490b-9084-c40cd09e56e7"
+      ]
+    }
+  ],
+  "blockers": []
+}

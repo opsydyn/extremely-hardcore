@@ -1,0 +1,104 @@
+[stderr]
+$ bun test ./scripts/validate.test.ts ./tests/protocol ./tests/evaluation
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+scripts/validate.test.ts:
+[stderr]
+(pass) validateProject > reports missing required files [0.79ms]
+[stderr]
+(pass) validateProject > reports missing required skill headings [5.46ms]
+[stderr]
+(pass) validateProject > passes a complete minimal fixture [5.27ms]
+[stderr]
+
+tests/protocol/workspace-fingerprint.test.ts:
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when a tracked file changes [60.33ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > changes when an untracked file is added [55.19ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores untracked protocol artefacts [59.25ms]
+[stderr]
+(pass) computeWorkspaceFingerprint > ignores changes to tracked protocol artefacts [79.30ms]
+[stderr]
+
+tests/protocol/transition.test.ts:
+[stderr]
+(pass) transitionToComplete > does not modify the run when completion validation fails [0.72ms]
+[stderr]
+(pass) transitionToComplete > appends one completion event with the evidence that justified it [1.00ms]
+[stderr]
+(pass) transitionToComplete > rejects a repeated completion without appending another event [0.67ms]
+[stderr]
+
+tests/protocol/evidence.test.ts:
+[stderr]
+(pass) captureEvidence > executes a command without shell interpolation and records passing evidence [74.66ms]
+[stderr]
+(pass) captureEvidence > refreshes a criterion reference while retaining the earlier evidence record [80.94ms]
+[stderr]
+(pass) captureEvidence > bounds captured logs and marks truncation [58.85ms]
+[stderr]
+
+tests/protocol/support.test.ts:
+[stderr]
+(pass) createGitWorkspace creates a committed repository with a tracked file [33.47ms]
+[stderr]
+
+tests/protocol/validate-run.test.ts:
+[stderr]
+(pass) validateCompletion > rejects a run with an uncovered acceptance criterion [0.96ms]
+[stderr]
+(pass) validateCompletion > rejects evidence from a command that failed [0.53ms]
+[stderr]
+(pass) validateCompletion > reports a referenced evidence record that is missing [0.68ms]
+[stderr]
+(pass) validateCompletion > reports a referenced evidence log that is missing [0.50ms]
+[stderr]
+(pass) validateCompletion > rejects passing evidence from a stale workspace [0.82ms]
+[stderr]
+(pass) validateCompletion > rejects a run with an open blocker [0.49ms]
+[stderr]
+(pass) validateCompletion > rejects evidence attached to a different criterion [0.68ms]
+[stderr]
+(pass) validateCompletion > rejects evidence when its log digest does not match [0.50ms]
+[stderr]
+
+tests/protocol/cli.test.ts:
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence log as a validation error [108.88ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence log is missing [105.24ms]
+[stderr]
+(pass) eh CLI > reports a missing referenced evidence record as a validation error [60.83ms]
+[stderr]
+(pass) eh CLI > does not append a transition when a referenced evidence record is missing [66.16ms]
+[stderr]
+(pass) eh CLI > a failed transition reports exact criteria and leaves run files unchanged [78.71ms]
+[stderr]
+(pass) eh CLI > captures, rejects stale evidence, refreshes, and completes [231.46ms]
+[stderr]
+
+tests/evaluation/evaluate-cli.test.ts:
+[stderr]
+(pass) evaluate command emits a parseable passing report [81.76ms]
+[stderr]
+
+tests/evaluation/core-scenarios.test.ts:
+[stderr]
+(pass) declares a 20-scenario pressure corpus with explicit execution boundaries [0.11ms]
+[stderr]
+(pass) runs every core pressure scenario and reports expected protocol outcomes [69.11ms]
+[stderr]
+
+tests/evaluation/agent-attempts.test.ts:
+[stderr]
+(pass) assesses structured agent attempts against the core scenario manifest [0.23ms]
+[stderr]
+
+ 32 pass
+ 0 fail
+ 94 expect() calls
+Ran 32 tests across 10 files. [1342.00ms]

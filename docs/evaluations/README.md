@@ -28,15 +28,23 @@ The command writes one JSON document to stdout. Exit status is zero only when ev
 
 Each scenario uses an isolated temporary workspace. The stale-evidence scenario uses a temporary Git repository, captures its fingerprint, changes a tracked file, and verifies rejection against the new fingerprint.
 
-## Current scenarios
+## Executed scenarios
 
-- `uncovered-criterion`
-- `failed-evidence`
-- `stale-evidence`
-- `missing-evidence-record`
-- `missing-evidence-log`
-- `open-blocker`
-- `repeated-completion`
+`bun run evaluate` executes the seven deterministic protocol fixtures:
+
+- `core.uncovered-criterion`
+- `core.failed-evidence`
+- `core.stale-evidence`
+- `core.missing-evidence-record`
+- `core.missing-evidence-log`
+- `core.open-blocker`
+- `core.repeated-completion`
+
+## Pressure corpus
+
+The manifest contains 20 scenarios. Each declares an `executionMode`, expected structured error codes, and a short pressure condition. Seven scenarios use `deterministic` execution; thirteen use `agent-attempt` and require a future baseline or agent adapter to supply an `AgentAttempt`.
+
+The corpus covers scope drift, fabricated evidence, stale state, unsafe commands, premature completion, and ignored blockers. The agent-attempt scenarios are declared evaluation cases, not model runs or benchmark evidence.
 
 ## Boundary
 
@@ -56,4 +64,4 @@ The evaluation core now defines an experimental, provider-neutral attempt shape 
 }
 ```
 
-The pure assessor compares the attempt to the core scenario manifest and returns `passed`, `failed`, or `invalid`. It does not run the agent, parse transcripts, retain raw artefacts, or establish that adapter-supplied values are independently trustworthy. Those are future adapter and provenance decisions.
+The pure assessor compares the attempt to the pressure-scenario manifest and returns `passed`, `failed`, or `invalid`. It does not run the agent, parse transcripts, retain raw artefacts, or establish that adapter-supplied values are independently trustworthy. Those are future adapter and provenance decisions.

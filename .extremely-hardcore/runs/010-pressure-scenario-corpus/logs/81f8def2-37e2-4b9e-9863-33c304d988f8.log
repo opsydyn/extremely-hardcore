@@ -1,0 +1,20 @@
+[stdout]
+bun test v1.3.11 (af24e281)
+[stderr]
+
+tests/evaluation/core-scenarios.test.ts:
+[stderr]
+(pass) declares a 20-scenario pressure corpus with explicit execution boundaries [1.47ms]
+[stderr]
+(pass) runs every core pressure scenario and reports expected protocol outcomes [79.77ms]
+[stderr]
+
+tests/evaluation/agent-attempts.test.ts:
+[stderr]
+(pass) assesses structured agent attempts against the core scenario manifest [0.45ms]
+[stderr]
+
+ 3 pass
+ 0 fail
+ 14 expect() calls
+Ran 3 tests across 2 files. [105.00ms]

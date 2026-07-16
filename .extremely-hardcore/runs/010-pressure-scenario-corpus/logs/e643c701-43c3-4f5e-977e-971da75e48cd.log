@@ -1,0 +1,6 @@
+[stderr]
+$ bun run validate
+[stderr]
+$ bun scripts/validate.ts
+[stdout]
+validation passed: extremely-hardcore scaffold is complete

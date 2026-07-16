@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "89d3bcd6-5ace-4e3c-9268-86b9164d455d",
+  "criterionId": "corpus-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/core-scenarios.test.ts",
+      "tests/evaluation/agent-attempts.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-16T07:47:28.156Z",
+  "durationMs": 95,
+  "exitCode": 0,
+  "workspaceFingerprint": "55e27776e4524f10da2071b7fefa088acd7711addb982dcd2bc8afb59cf1bb27",
+  "logPath": "logs/89d3bcd6-5ace-4e3c-9268-86b9164d455d.log",
+  "logSha256": "4aeb54208a9c0052a9969bb08d8c9df56dd3cfacb3f59e340ae3e2eea31e80c4",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/core-scenarios.test.ts:\n[stderr]\n(pass) declares a 20-scenario pressure corpus with explicit execution boundaries\n[stderr]\n(pass) runs every core pressure scenario and reports expected protocol outcomes [75.37ms]\n[stderr]\n\ntests/evaluation/agent-attempts.test.ts:\n[stderr]\n(pass) assesses structured agent attempts against the core scenario manifest [0.22ms]\n[stderr]\n\n 3 pass\n 0 fail\n 14 expect() calls\nRan 3 tests across 2 files. [90.",
+  "truncated": false
+}

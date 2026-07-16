@@ -1,0 +1,92 @@
+[stderr]
+$ bun scripts/evaluate.ts
+[stdout]
+{
+  "schemaVersion": 1,
+  "results": [
+    {
+      "scenarioId": "core.uncovered-criterion",
+      "category": "uncovered-criterion",
+      "expectedErrorCodes": [
+        "criterion.uncovered"
+      ],
+      "observedErrorCodes": [
+        "criterion.uncovered"
+      ],
+      "status": "passed",
+      "durationMs": 1
+    },
+    {
+      "scenarioId": "core.failed-evidence",
+      "category": "failed-evidence",
+      "expectedErrorCodes": [
+        "evidence.failed"
+      ],
+      "observedErrorCodes": [
+        "evidence.failed"
+      ],
+      "status": "passed",
+      "durationMs": 1
+    },
+    {
+      "scenarioId": "core.stale-evidence",
+      "category": "stale-evidence",
+      "expectedErrorCodes": [
+        "evidence.stale"
+      ],
+      "observedErrorCodes": [
+        "evidence.stale"
+      ],
+      "status": "passed",
+      "durationMs": 64
+    },
+    {
+      "scenarioId": "core.missing-evidence-record",
+      "category": "missing-evidence-record",
+      "expectedErrorCodes": [
+        "evidence.missing"
+      ],
+      "observedErrorCodes": [
+        "evidence.missing"
+      ],
+      "status": "passed",
+      "durationMs": 1
+    },
+    {
+      "scenarioId": "core.missing-evidence-log",
+      "category": "missing-evidence-log",
+      "expectedErrorCodes": [
+        "evidence.log-missing"
+      ],
+      "observedErrorCodes": [
+        "evidence.log-missing"
+      ],
+      "status": "passed",
+      "durationMs": 1
+    },
+    {
+      "scenarioId": "core.open-blocker",
+      "category": "open-blocker",
+      "expectedErrorCodes": [
+        "blocker.open"
+      ],
+      "observedErrorCodes": [
+        "blocker.open"
+      ],
+      "status": "passed",
+      "durationMs": 1
+    },
+    {
+      "scenarioId": "core.repeated-completion",
+      "category": "repeated-completion",
+      "expectedErrorCodes": [
+        "transition.invalid-state"
+      ],
+      "observedErrorCodes": [
+        "transition.invalid-state"
+      ],
+      "status": "passed",
+      "durationMs": 2
+    }
+  ]
+}
