@@ -77,3 +77,18 @@ bun run evaluate:baseline -- path/to/baseline.json
 The input must declare `"kind": "without-extremely-hardcore"` and provide exactly one structured `AgentAttempt` for every one of the 13 `agent-attempt` scenarios. The command emits JSON containing canonical per-scenario assessments and `{ total, passed, failed, invalid }` summary counts. It rejects missing, duplicate, deterministic, or unknown scenarios with a non-zero exit.
 
 The declaration is a caller assertion, not verified provenance. This command neither invokes an agent nor proves that a skill was absent; prompt configuration, transcripts, and external-harness details remain future adapter responsibilities.
+
+## Codex adapter
+
+Run the 13 behavioural scenarios through the locally installed Codex CLI with:
+
+```bash
+bun run evaluate:codex -- \
+  --output-dir ./codex-evaluation-artifacts \
+  --workspace /path/to/target-workspace \
+  --mode without-extremely-hardcore
+```
+
+`--output-dir` must name a directory that does not yet exist. `--mode` is required and accepts `without-extremely-hardcore` or `with-extremely-hardcore`; it is caller-declared metadata, not independent proof of what skills Codex loaded. The adapter invokes `codex exec` once per scenario with `--sandbox read-only`, `--ephemeral`, `--output-schema`, and `--output-last-message`.
+
+The output directory retains `response-schema.json`, `report.json`, and one directory per scenario containing canonical input, prompt, final structured response, stderr, and invocation metadata. The report carries SHA-256 digests and relative paths for every retained artifact. Inspect and redact the output directory before sharing it: prompts and responses may include repository context. The adapter establishes a reviewable execution path, not a published benchmark or CI gate.

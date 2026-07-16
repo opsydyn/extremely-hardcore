@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "changeId": "012-codex-provenance-adapter",
+  "initialState": "implemented",
+  "risk": "high",
+  "acceptanceCriteria": [
+    {
+      "id": "adapter-tested",
+      "description": "The fake-executor adapter produces complete attempts, assessments, and hash-addressed provenance.",
+      "evidenceIds": [
+        "ed24e7c3-769d-4544-be3a-500e38b7272b"
+      ]
+    },
+    {
+      "id": "adapter-rejects-invalid-output",
+      "description": "Malformed Codex final output prevents an aggregate report.",
+      "evidenceIds": [
+        "dc4b24f4-85cc-49ca-9bbf-6215b73082a4"
+      ]
+    },
+    {
+      "id": "cli-tested",
+      "description": "The CLI validates required arguments without invoking Codex.",
+      "evidenceIds": [
+        "982675b1-c412-4dad-af1e-1f9b74c9a5b4"
+      ]
+    },
+    {
+      "id": "existing-evaluators-preserved",
+      "description": "The deterministic and declared-baseline evaluators remain passing.",
+      "evidenceIds": [
+        "ec7c71dc-dec7-48d5-8aac-8f92b75ad89a"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "Static repository checks pass.",
+      "evidenceIds": [
+        "b7d45136-92e5-42ff-bd07-6428cde40926"
+      ]
+    },
+    {
+      "id": "full-suite-pass",
+      "description": "The full test suite passes.",
+      "evidenceIds": [
+        "0f6955f5-ae1e-4357-98ac-57a2eee60633"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "TypeScript type checking passes.",
+      "evidenceIds": [
+        "b7140d7b-2249-4a45-8500-c025849a18f9"
+      ]
+    }
+  ],
+  "blockers": []
+}

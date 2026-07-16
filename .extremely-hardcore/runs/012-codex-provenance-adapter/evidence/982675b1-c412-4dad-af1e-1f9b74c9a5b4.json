@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "982675b1-c412-4dad-af1e-1f9b74c9a5b4",
+  "criterionId": "cli-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/evaluate-codex-cli.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-16T11:12:45.858Z",
+  "durationMs": 22,
+  "exitCode": 0,
+  "workspaceFingerprint": "5a37fb7f7cf978e3651a3fd804e7ea514ff8063da6bc1c1f19be6dc539832ef2",
+  "logPath": "logs/982675b1-c412-4dad-af1e-1f9b74c9a5b4.log",
+  "logSha256": "5710ad43a12119c5330dffec34c1636fc06b0dad8d726596c098aad4605ad89b",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/evaluate-codex-cli.test.ts:\n[stderr]\n(pass) Codex adapter CLI rejects missing required arguments before invocation [12.38ms]\n[stderr]\n\n 1 pass\n 0 fail\n 3 expect() calls\nRan 1 test across 1 file. [18.00ms]",
+  "truncated": false
+}

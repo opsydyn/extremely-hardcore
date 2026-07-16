@@ -82,6 +82,36 @@ export type DeclaredBaselineReport = {
   };
 };
 
+export type AdapterMode = "without-extremely-hardcore" | "with-extremely-hardcore";
+
+export type ArtifactDigest = {
+  path: string;
+  sha256: string;
+  bytes: number;
+};
+
+export type CodexAttemptProvenance = {
+  scenarioId: string;
+  startedAt: string;
+  durationMs: number;
+  command: string[];
+  artifacts: ArtifactDigest[];
+};
+
+export type CodexAdapterReport = {
+  schemaVersion: 1;
+  adapter: {
+    id: "codex-cli";
+    version: string;
+    mode: AdapterMode;
+    sandbox: "read-only";
+  };
+  attempts: AgentAttempt[];
+  assessments: AgentAttemptAssessment[];
+  sharedArtifacts: ArtifactDigest[];
+  provenance: CodexAttemptProvenance[];
+};
+
 export type EvaluationReport = {
   schemaVersion: 1;
   results: ScenarioResult[];

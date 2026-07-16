@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "ed24e7c3-769d-4544-be3a-500e38b7272b",
+  "criterionId": "adapter-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/codex-adapter.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-16T11:12:45.635Z",
+  "durationMs": 51,
+  "exitCode": 0,
+  "workspaceFingerprint": "5a37fb7f7cf978e3651a3fd804e7ea514ff8063da6bc1c1f19be6dc539832ef2",
+  "logPath": "logs/ed24e7c3-769d-4544-be3a-500e38b7272b.log",
+  "logSha256": "047f2caa65f7c433a94717fb0d282957617d2534cc271c95e7bfcd3091efdd88",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/codex-adapter.test.ts:\n[stderr]\n(pass) runs Codex with constrained arguments and records a complete provenance report [14.17ms]\n[stderr]\n(pass) retains failure artifacts but does not write a report for invalid Codex output [1.74ms]\n[stderr]\n\n 2 pass\n 0 fail\n 15 expect() calls\nRan 2 tests across 1 file. [44.00ms]",
+  "truncated": false
+}
