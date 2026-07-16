@@ -29,3 +29,7 @@ Revert the new fixture runner, reference executor, fixtures, CLI, types, documen
 ## notes
 
 This slice proves the local action oracle only. No live model run, declared-mode comparison, or provider adapter is allowed.
+
+## review-fix coverage
+
+The public `bun run evaluate:action-fixture -- --output-dir <new-dir>` package-script boundary is covered directly. The CLI suite also protects existing-output-directory rejection and preservation of its contents. The runner already implemented this rejection, so these review tests are expected to pass without a production-code change. The retained focused-suite evidence command is `bun test tests/evaluation/action-fixture.test.ts tests/evaluation/evaluate-action-fixture-cli.test.ts`.

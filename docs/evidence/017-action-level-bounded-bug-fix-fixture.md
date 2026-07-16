@@ -16,14 +16,15 @@ Added the local JSON CLI for the bounded action fixture. It runs the existing de
 
 ## commands run
 
-- `bun test tests/evaluation/evaluate-action-fixture-cli.test.ts` before implementation, confirming the missing script red state.
-- `bun test tests/evaluation/action-fixture.test.ts tests/evaluation/evaluate-action-fixture-cli.test.ts` after implementation.
+- `bun test tests/evaluation/action-fixture.test.ts tests/evaluation/evaluate-action-fixture-cli.test.ts` for the retained focused-suite evidence.
 - `bun run evaluate:action-fixture -- --output-dir <new-dir>` using a new temporary directory.
-- Deterministic and declared-baseline evaluations, static validation, the full suite, TypeScript checking, `git diff --check`, and the slice 017 evidence/transition commands.
+- `bun run check`, `bunx tsc --noEmit`, `bun run test`, and `git diff --check`.
+- `bun run eh evidence .extremely-hardcore/runs/017-action-level-bounded-bug-fix-fixture fixture-contract-tested -- bun test tests/evaluation/action-fixture.test.ts tests/evaluation/evaluate-action-fixture-cli.test.ts`.
+- `bun run eh evidence .extremely-hardcore/runs/017-action-level-bounded-bug-fix-fixture reference-run-passed -- bun run evaluate:action-fixture -- --output-dir <new-dir>`, then `bun run eh validate .extremely-hardcore/runs/017-action-level-bounded-bug-fix-fixture` and `bun run eh transition .extremely-hardcore/runs/017-action-level-bounded-bug-fix-fixture complete`.
 
 ## passing checks
 
-The focused action-fixture and CLI suite passes 32 tests. The deterministic core evaluator passes all seven scenarios, and the declared-baseline evaluator passes all 13 declared attempts. Static validation and TypeScript checking pass, and the full repository suite passes 73 tests. The CLI rejects a missing output directory before fixture execution and emits a passing two-stage JSON report with one completion transition for a new output directory. The reference executor uses only local Bun, Git, filesystem, and existing protocol APIs; no live provider call occurs.
+The focused action-fixture and public CLI suite passes 33 tests. The public package script rejects missing and already-existing output directories without overwriting the latter, and emits a passing two-stage JSON report with one completion transition for a new output directory. Static validation and TypeScript checking pass, and the full repository suite passes 74 tests. The reference executor uses only local Bun, Git, filesystem, and existing protocol APIs; no live provider call occurs.
 
 ## failing checks
 

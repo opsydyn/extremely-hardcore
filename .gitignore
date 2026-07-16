@@ -2,5 +2,6 @@ node_modules/
 dist/
 coverage/
 .worktrees/
+.extremely-hardcore/runs/
 .DS_Store
 superpowers-main/*
