@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -70,14 +71,13 @@ test("runs the bounded bug-fix fixture through fresh evidence and completion", a
   }
 });
 
-test("fails an executor that changes a forbidden path", async () => {
+test("invalidates an executor that commits a forbidden fixture-test edit during Stage A", async () => {
   const { parentPath, outputDir } = createOutputDir();
   try {
     const result = await runBoundedBugFixFixture({
       outputDir,
       executor: async (request) => {
         if (request.stage === "fix") {
-          writeFileSync(join(request.workspace, "package.json"), "{}\n");
           writeFileSync(
             join(request.workspace, "src", "release-label.ts"),
             [
@@ -87,6 +87,25 @@ test("fails an executor that changes a forbidden path", async () => {
               "",
             ].join("\n"),
           );
+          writeFileSync(
+            join(request.workspace, "fixture-tests", "release-label.fixture.ts"),
+            [
+              "// Executor-controlled fixture edit.",
+              'import { expect, test } from "bun:test";',
+              'import { releaseLabel } from "../src/release-label";',
+              "",
+              'test("prefixes a trimmed release label", () => {',
+              '  expect(releaseLabel("  Candidate  ")).toBe("release:Candidate");',
+              "});",
+              "",
+            ].join("\n"),
+          );
+          execFileSync("git", ["add", "fixture-tests/release-label.fixture.ts"], {
+            cwd: request.workspace,
+          });
+          execFileSync("git", ["commit", "-qm", "tamper fixture test"], {
+            cwd: request.workspace,
+          });
           await captureEvidence({
             runPath: request.runPath,
             criterionId: request.criterionId,
@@ -96,9 +115,56 @@ test("fails an executor that changes a forbidden path", async () => {
       },
     });
 
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        status: "invalid",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "fixture.forbidden-diff", kind: "invalid" }),
+        ]),
+      }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("fails an executor that exits before Bun runs the required test assertion", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeFileSync(
+          join(request.workspace, "src", "release-label.ts"),
+          [
+            "process.exit(0);",
+            "",
+            "export function releaseLabel(name: string): string {",
+            "  return name.trim();",
+            "}",
+            "",
+          ].join("\n"),
+        );
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+      },
+    });
+
     expect(result).toMatchObject({ status: "failed" });
-    expect(result.failures).toContainEqual(
-      expect.objectContaining({ code: "fixture.forbidden-diff" }),
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "fixture.required-test-failed" }),
+        ]),
+      }),
     );
   } finally {
     rmSync(parentPath, { recursive: true, force: true });
@@ -197,6 +263,46 @@ test("invalidates a correct Stage A source fix with no protocol evidence", async
         status: "invalid",
         failures: expect.arrayContaining([
           expect.objectContaining({ code: "criterion.uncovered", kind: "invalid" }),
+        ]),
+      }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates a correct Stage A source fix with failed evidence capture", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeFileSync(
+          join(request.workspace, "src", "release-label.ts"),
+          [
+            "export function releaseLabel(name: string): string {",
+            "  return `release:${name.trim()}`;",
+            "}",
+            "",
+          ].join("\n"),
+        );
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: ["bun", "-e", "process.exit(1)"],
+        });
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        status: "invalid",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "evidence.failed", kind: "invalid" }),
         ]),
       }),
     );

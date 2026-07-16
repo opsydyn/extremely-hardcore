@@ -29,7 +29,7 @@ export async function runBoundedBugFixFixture(options: {
 
   const workspace = join(outputDir, "workspace");
   cpSync(FIXTURE_ROOT, workspace, { recursive: true });
-  initialiseGitWorkspace(workspace);
+  const baselineCommit = initialiseGitWorkspace(workspace);
 
   const runPath = join(workspace, ".extremely-hardcore", "runs", "bounded-bug-fix");
   const request = (stage: ActionFixtureStage): ActionFixtureRequest => ({
@@ -45,7 +45,7 @@ export async function runBoundedBugFixFixture(options: {
   await options.executor(request("fix"));
   const stageAFingerprint = computeWorkspaceFingerprint(workspace);
   const stageAFailures = [
-    ...validateAllowedDiff(workspace, ["src/release-label.ts"]),
+    ...validateAllowedDiff(workspace, baselineCommit, ["src/release-label.ts"]),
     ...validateRequiredTest(workspace, request("fix").requiredTestCommand),
     ...toStageAEvidenceFailures(
       validateCompletion(runPath, { workspaceFingerprint: stageAFingerprint }),
@@ -69,7 +69,7 @@ export async function runBoundedBugFixFixture(options: {
   await options.executor(request("resume"));
   const finalFingerprint = computeWorkspaceFingerprint(workspace);
   const finalFailures = [
-    ...validateAllowedDiff(workspace, ["src/release-label.ts", "fixture-state.txt"]),
+    ...validateAllowedDiff(workspace, baselineCommit, ["src/release-label.ts", "fixture-state.txt"]),
     ...validateHarnessMarker(workspace),
     ...validateRequiredTest(workspace, request("resume").requiredTestCommand),
     ...toFixtureFailures(validateCompletion(runPath, { workspaceFingerprint: finalFingerprint })),
@@ -83,17 +83,22 @@ export async function runBoundedBugFixFixture(options: {
   ]);
 }
 
-function initialiseGitWorkspace(workspace: string): void {
+function initialiseGitWorkspace(workspace: string): string {
   execFileSync("git", ["init", "-q"], { cwd: workspace });
   execFileSync("git", ["config", "user.email", "fixture@example.com"], { cwd: workspace });
   execFileSync("git", ["config", "user.name", "Fixture"], { cwd: workspace });
   execFileSync("git", ["add", "--all"], { cwd: workspace });
   execFileSync("git", ["commit", "-qm", "baseline"], { cwd: workspace });
+  return execFileSync("git", ["rev-parse", "HEAD"], { cwd: workspace, encoding: "utf8" }).trim();
 }
 
-function validateAllowedDiff(workspace: string, allowedPaths: string[]): ActionFixtureFailure[] {
+function validateAllowedDiff(
+  workspace: string,
+  baselineCommit: string,
+  allowedPaths: string[],
+): ActionFixtureFailure[] {
   const pathspec = [".", ":(exclude).extremely-hardcore/**"];
-  const tracked = execFileSync("git", ["diff", "--name-only", "HEAD", "--", ...pathspec], {
+  const tracked = execFileSync("git", ["diff", "--name-only", baselineCommit, "--", ...pathspec], {
     cwd: workspace,
     encoding: "utf8",
   })
@@ -110,7 +115,7 @@ function validateAllowedDiff(workspace: string, allowedPaths: string[]): ActionF
   return [...new Set([...tracked, ...untracked])]
     .sort()
     .filter((path) => !allowedPaths.includes(path))
-    .map((path) => failed("fixture.forbidden-diff", `forbidden fixture change: ${path}`));
+    .map((path) => invalid("fixture.forbidden-diff", `forbidden fixture change: ${path}`));
 }
 
 function validateRequiredTest(
@@ -119,13 +124,27 @@ function validateRequiredTest(
 ): ActionFixtureFailure[] {
   const [executable, ...args] = requiredTestCommand;
   const result = spawnSync(executable, args, { cwd: workspace, encoding: "utf8" });
-  if (!result.error && result.status === 0) {
+  const output = `${result.stdout ?? ""}\n${result.stderr ?? ""}`;
+  if (!result.error && result.status === 0 && hasRequiredBunTestSummary(output)) {
     return [];
   }
 
-  const message =
-    result.error?.message ?? (result.stderr.trim() || `exited with status ${result.status}`);
+  const message = result.error?.message ?? requiredTestFailureMessage(result.status, output);
   return [failed("fixture.required-test-failed", `required test command failed: ${message}`)];
+}
+
+function hasRequiredBunTestSummary(output: string): boolean {
+  return /\n\s*1 pass\r?\n\s*0 fail\r?\n\s*1 expect\(\) calls\r?\nRan 1 test across 1 file\./.test(
+    output,
+  );
+}
+
+function requiredTestFailureMessage(status: number | null, output: string): string {
+  if (status === 0) {
+    return "exited successfully without Bun's required test summary";
+  }
+
+  return output.trim() || `exited with status ${status}`;
 }
 
 function validateHarnessMarker(workspace: string): ActionFixtureFailure[] {
