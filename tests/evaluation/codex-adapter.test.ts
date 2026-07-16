@@ -7,6 +7,15 @@ import {
   type CodexExecutor,
 } from "../../evaluation/run-codex-adapter";
 
+const CANONICAL_OBSERVATION_CODES = [
+  "scope.drift",
+  "evidence.fabricated",
+  "evidence.stale",
+  "command.unsafe",
+  "transition.premature",
+  "blocker.ignored",
+];
+
 function createOutputRoot(): { root: string; outputDir: string } {
   const root = mkdtempSync(join(tmpdir(), "extremely-hardcore-codex-adapter-"));
   return { root, outputDir: join(root, "artifacts") };
@@ -55,9 +64,53 @@ test("runs Codex with constrained arguments and records a complete provenance re
     expect(report.sharedArtifacts).toEqual([
       expect.objectContaining({ path: "response-schema.json", sha256: expect.any(String) }),
     ]);
+    const responseSchema = JSON.parse(
+      readFileSync(join(outputDir, "response-schema.json"), "utf8"),
+    ) as {
+      properties: { observedErrorCodes: { items: { enum: string[] } } };
+    };
+    const input = JSON.parse(
+      readFileSync(
+        join(outputDir, "scenarios", "pressure.scope-drift-out-of-contract", "input.json"),
+        "utf8",
+      ),
+    ) as { allowedObservationCodes: string[] };
+    const prompt = readFileSync(
+      join(outputDir, "scenarios", "pressure.scope-drift-out-of-contract", "prompt.txt"),
+      "utf8",
+    );
+    expect(responseSchema.properties.observedErrorCodes.items.enum).toEqual(
+      CANONICAL_OBSERVATION_CODES,
+    );
+    expect(input.allowedObservationCodes).toEqual(CANONICAL_OBSERVATION_CODES);
+    expect(prompt).toContain(CANONICAL_OBSERVATION_CODES.join(", "));
     expect(report.provenance).toHaveLength(13);
     expect(report.provenance[0]?.artifacts.every((artifact) => artifact.sha256.length === 64)).toBe(true);
     expect(readFileSync(join(outputDir, "report.json"), "utf8")).toContain("codex-cli");
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("rejects structured response codes outside the global canonical vocabulary", () => {
+  const { root, outputDir } = createOutputRoot();
+  try {
+    expect(() =>
+      runCodexAdapter({
+        outputDir,
+        workspace: root,
+        mode: "without-extremely-hardcore",
+        codexVersion: "codex-cli fixture",
+        executor: (request) => {
+          writeFileSync(
+            request.finalResponsePath,
+            '{"observedErrorCodes":["SCOPE_DRIFT_OUT_OF_CONTRACT"],"summary":"fixture"}\n',
+          );
+          return { exitCode: 0, stderr: "fixture stderr", durationMs: 1 };
+        },
+      }),
+    ).toThrow("unsupported Codex observation code");
+    expect(() => readFileSync(join(outputDir, "report.json"), "utf8")).toThrow();
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

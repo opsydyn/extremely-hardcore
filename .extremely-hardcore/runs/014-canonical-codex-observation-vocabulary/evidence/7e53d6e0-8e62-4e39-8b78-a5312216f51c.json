@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "7e53d6e0-8e62-4e39-8b78-a5312216f51c",
+  "criterionId": "unsupported-code-rejected",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/codex-adapter.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-16T12:04:35.599Z",
+  "durationMs": 26,
+  "exitCode": 0,
+  "workspaceFingerprint": "128a9993c7d1eeab94ee5ac3c1135a6afdae9d5efa309bd2720287a144b3d2f0",
+  "logPath": "logs/7e53d6e0-8e62-4e39-8b78-a5312216f51c.log",
+  "logSha256": "e4a73d74f7c22b7493fab15d2ad96d97ac5cbbf1be1adb9201c035caf224117c",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/codex-adapter.test.ts:\n[stderr]\n(pass) runs Codex with constrained arguments and records a complete provenance report [10.47ms]\n[stderr]\n(pass) rejects structured response codes outside the global canonical vocabulary [1.14ms]\n[stderr]\n(pass) retains failure artifacts but does not write a report for invalid Codex output [0.96ms]\n[stderr]\n\n 3 pass\n 0 fail\n 20 expect() calls\nRan 3 tests across 1 file. [22.00ms]",
+  "truncated": false
+}

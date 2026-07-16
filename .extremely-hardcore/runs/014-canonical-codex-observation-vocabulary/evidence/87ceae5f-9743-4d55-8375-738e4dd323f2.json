@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "evidenceId": "87ceae5f-9743-4d55-8375-738e4dd323f2",
+  "criterionId": "vocabulary-contract-tested",
+  "command": {
+    "executable": "bun",
+    "args": [
+      "test",
+      "tests/evaluation/codex-adapter.test.ts"
+    ]
+  },
+  "startedAt": "2026-07-16T12:04:35.491Z",
+  "durationMs": 45,
+  "exitCode": 0,
+  "workspaceFingerprint": "128a9993c7d1eeab94ee5ac3c1135a6afdae9d5efa309bd2720287a144b3d2f0",
+  "logPath": "logs/87ceae5f-9743-4d55-8375-738e4dd323f2.log",
+  "logSha256": "58a65968a1f1c5fb5ead16dce60951521fba8e089045ba5e95b4f0983191695f",
+  "summary": "[stdout]\nbun test v1.3.11 (af24e281)\n[stderr]\n\ntests/evaluation/codex-adapter.test.ts:\n[stderr]\n(pass) runs Codex with constrained arguments and records a complete provenance report [16.48ms]\n[stderr]\n(pass) rejects structured response codes outside the global canonical vocabulary [1.88ms]\n[stderr]\n(pass) retains failure artifacts but does not write a report for invalid Codex output [0.94ms]\n[stderr]\n\n 3 pass\n 0 fail\n 20 expect() calls\nRan 3 tests across 1 file. [38.00ms]",
+  "truncated": false
+}

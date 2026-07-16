@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "changeId": "014-canonical-codex-observation-vocabulary",
+  "initialState": "implemented",
+  "risk": "standard",
+  "acceptanceCriteria": [
+    {
+      "id": "vocabulary-contract-tested",
+      "description": "The schema, input, and prompt expose the full global vocabulary without per-scenario answer disclosure.",
+      "evidenceIds": [
+        "87ceae5f-9743-4d55-8375-738e4dd323f2"
+      ]
+    },
+    {
+      "id": "unsupported-code-rejected",
+      "description": "A non-canonical response code prevents an aggregate adapter report.",
+      "evidenceIds": [
+        "7e53d6e0-8e62-4e39-8b78-a5312216f51c"
+      ]
+    },
+    {
+      "id": "existing-evaluators-preserved",
+      "description": "Existing deterministic and baseline evaluators remain passing.",
+      "evidenceIds": [
+        "94552012-4355-4f73-a1be-daddca36c1ca"
+      ]
+    },
+    {
+      "id": "repository-valid",
+      "description": "Static repository checks pass.",
+      "evidenceIds": [
+        "1d8acedf-ccc5-438b-8607-8371753a187d"
+      ]
+    },
+    {
+      "id": "full-suite-pass",
+      "description": "The full test suite passes.",
+      "evidenceIds": [
+        "aef8b3b6-ea6b-49f4-998b-f6580ae41606"
+      ]
+    },
+    {
+      "id": "types-valid",
+      "description": "TypeScript type checking passes.",
+      "evidenceIds": [
+        "8698a567-1577-45a6-8771-390798accc82"
+      ]
+    }
+  ],
+  "blockers": []
+}
