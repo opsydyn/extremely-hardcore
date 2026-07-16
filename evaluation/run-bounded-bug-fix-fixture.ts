@@ -1,10 +1,17 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { cpSync, existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import {
+  cpSync,
+  existsSync,
+  lstatSync,
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join, relative, resolve } from "node:path";
 import { readTransitions } from "../protocol/transition";
-import { validateCompletion } from "../protocol/validate-run";
+import { readEvidence, readRun, validateCompletion } from "../protocol/validate-run";
 import { computeWorkspaceFingerprint } from "../protocol/workspace-fingerprint";
 import type {
   ActionFixtureExecutor,
@@ -24,6 +31,15 @@ const EXPECTED_RELEASE_LABEL_SOURCE = [
   "",
 ].join("\n");
 
+type WorkspaceInventory = {
+  files: Map<string, string>;
+  symlinks: string[];
+};
+
+type PinnedRunContract = {
+  signature: string;
+};
+
 export async function runBoundedBugFixFixture(options: {
   outputDir: string;
   executor: ActionFixtureExecutor;
@@ -38,7 +54,13 @@ export async function runBoundedBugFixFixture(options: {
   const baselineCommit = initialiseGitWorkspace(workspace);
 
   const runPath = join(workspace, ".extremely-hardcore", "runs", "bounded-bug-fix");
-  const baselineFiles = inventoryWorkspace(workspace, runPath);
+  const baselineInventory = inventoryWorkspace(workspace, runPath);
+  const pinnedRunContract = pinRunContract(runPath);
+  if (isFailure(pinnedRunContract)) {
+    const workspaceFingerprint = computeWorkspaceFingerprint(workspace);
+    const stage = stageResult("fix", workspaceFingerprint, [pinnedRunContract]);
+    return writeReport(outputDir, workspace, runPath, [stage], [pinnedRunContract]);
+  }
   const request = (stage: ActionFixtureStage): ActionFixtureRequest => ({
     fixtureId: "action.bounded-bug-fix",
     stage,
@@ -51,14 +73,29 @@ export async function runBoundedBugFixFixture(options: {
 
   await options.executor(request("fix"));
   const stageAFingerprint = computeWorkspaceFingerprint(workspace);
+  const stageAArtifactFailures = validateRetainedArtifacts(workspace, runPath);
+  const stageAContractFailures =
+    stageAArtifactFailures.length === 0 ? validatePinnedRunContract(runPath, pinnedRunContract) : [];
+  const stageAProtocolFailures =
+    stageAArtifactFailures.length === 0 && stageAContractFailures.length === 0
+      ? validateStageAProtocol(runPath, stageAFingerprint, request("fix"))
+      : [];
   const stageAFailures = [
-    ...validateAllowedDiff(workspace, baselineCommit, baselineFiles, runPath, ["src/release-label.ts"]),
+    ...validateAllowedDiff(
+      workspace,
+      baselineCommit,
+      baselineInventory.files,
+      runPath,
+      ["src/release-label.ts"],
+    ),
     ...validateExpectedSource(workspace),
     ...validateRequiredTest(workspace, request("fix").requiredTestCommand),
-    ...toStageAEvidenceFailures(
-      validateCompletion(runPath, { workspaceFingerprint: stageAFingerprint }),
-    ),
-    ...validateNoTransitions(runPath),
+    ...stageAArtifactFailures,
+    ...stageAContractFailures,
+    ...stageAProtocolFailures,
+    ...(stageAArtifactFailures.length === 0 && stageAContractFailures.length === 0
+      ? validateNoTransitions(runPath)
+      : []),
   ];
   const stageA = stageResult("fix", stageAFingerprint, stageAFailures);
   if (stageAFailures.length > 0) {
@@ -67,7 +104,10 @@ export async function runBoundedBugFixFixture(options: {
 
   writeFileSync(join(workspace, "fixture-state.txt"), "evidence invalidated\n");
   const staleFingerprint = computeWorkspaceFingerprint(workspace);
-  const stale = validateCompletion(runPath, { workspaceFingerprint: staleFingerprint });
+  const stale = validateCompletionSafely(runPath, staleFingerprint);
+  if (isFailure(stale)) {
+    return writeReport(outputDir, workspace, runPath, [stageA], [stale]);
+  }
   if (!stale.errors.some(({ code }) => code === "evidence.stale")) {
     return writeReport(outputDir, workspace, runPath, [stageA], [
       invalid("fixture.marker-invalid", "fixture marker did not invalidate Stage A evidence"),
@@ -76,19 +116,30 @@ export async function runBoundedBugFixFixture(options: {
 
   await options.executor(request("resume"));
   const finalFingerprint = computeWorkspaceFingerprint(workspace);
+  const stageBArtifactFailures = validateRetainedArtifacts(workspace, runPath);
+  const stageBContractFailures =
+    stageBArtifactFailures.length === 0 ? validatePinnedRunContract(runPath, pinnedRunContract) : [];
+  const stageBProtocolFailures =
+    stageBArtifactFailures.length === 0 && stageBContractFailures.length === 0
+      ? validateStageBProtocol(runPath, finalFingerprint, request("resume"))
+      : [];
   const finalFailures = [
     ...validateAllowedDiff(
       workspace,
       baselineCommit,
-      baselineFiles,
+      baselineInventory.files,
       runPath,
       ["src/release-label.ts", "fixture-state.txt"],
     ),
     ...validateExpectedSource(workspace),
     ...validateHarnessMarker(workspace),
     ...validateRequiredTest(workspace, request("resume").requiredTestCommand),
-    ...toFixtureFailures(validateCompletion(runPath, { workspaceFingerprint: finalFingerprint })),
-    ...validateExactlyOneCompletion(runPath, finalFingerprint),
+    ...stageBArtifactFailures,
+    ...stageBContractFailures,
+    ...stageBProtocolFailures,
+    ...(stageBArtifactFailures.length === 0 && stageBContractFailures.length === 0
+      ? validateExactlyOneCompletion(runPath, finalFingerprint)
+      : []),
   ];
   const stageB = stageResult("resume", finalFingerprint, finalFailures);
 
@@ -121,12 +172,20 @@ function validateAllowedDiff(
   })
     .split("\n")
     .filter(Boolean);
-  const changedFiles = [...new Set([...tracked, ...changedInventoryFiles(baselineFiles, inventoryWorkspace(workspace, runPath))])];
+  const currentInventory = inventoryWorkspace(workspace, runPath);
+  const changedFiles = [
+    ...new Set([...tracked, ...changedInventoryFiles(baselineFiles, currentInventory.files)]),
+  ];
 
-  return changedFiles
-    .sort()
-    .filter((path) => !allowedPaths.includes(path))
-    .map((path) => invalid("fixture.forbidden-diff", `forbidden fixture change: ${path}`));
+  return [
+    ...currentInventory.symlinks.map((path) =>
+      invalid("fixture.symlink-inventory", `workspace inventory contains symlink: ${path}`),
+    ),
+    ...changedFiles
+      .sort()
+      .filter((path) => !allowedPaths.includes(path))
+      .map((path) => invalid("fixture.forbidden-diff", `forbidden fixture change: ${path}`)),
+  ];
 }
 
 function validateExpectedSource(workspace: string): ActionFixtureFailure[] {
@@ -150,8 +209,9 @@ function validateExpectedSource(workspace: string): ActionFixtureFailure[] {
   ];
 }
 
-function inventoryWorkspace(workspace: string, runPath: string): Map<string, string> {
+function inventoryWorkspace(workspace: string, runPath: string): WorkspaceInventory {
   const files = new Map<string, string>();
+  const symlinks: string[] = [];
 
   const visit = (directory: string): void => {
     for (const entry of readdirSync(directory, { withFileTypes: true })) {
@@ -159,16 +219,18 @@ function inventoryWorkspace(workspace: string, runPath: string): Map<string, str
       if (path === join(workspace, ".git") || path === runPath) {
         continue;
       }
-      if (entry.isDirectory()) {
+      if (entry.isSymbolicLink()) {
+        symlinks.push(relative(workspace, path));
+      } else if (entry.isDirectory()) {
         visit(path);
-      } else {
+      } else if (entry.isFile()) {
         files.set(relative(workspace, path), createHash("sha256").update(readFileSync(path)).digest("hex"));
       }
     }
   };
 
   visit(workspace);
-  return files;
+  return { files, symlinks: symlinks.sort() };
 }
 
 function changedInventoryFiles(
@@ -193,6 +255,128 @@ function validateRequiredTest(
 
   const message = result.error?.message ?? requiredTestFailureMessage(result.status, output);
   return [failed("fixture.required-test-failed", `required test command failed: ${message}`)];
+}
+
+function validateStageAProtocol(
+  runPath: string,
+  workspaceFingerprint: string,
+  request: ActionFixtureRequest,
+): ActionFixtureFailure[] {
+  const completion = validateCompletionSafely(runPath, workspaceFingerprint);
+  if (isFailure(completion)) {
+    return [completion];
+  }
+
+  return [
+    ...toStageAEvidenceFailures(completion),
+    ...validateEvidenceCommands(runPath, request),
+  ];
+}
+
+function validateStageBProtocol(
+  runPath: string,
+  workspaceFingerprint: string,
+  request: ActionFixtureRequest,
+): ActionFixtureFailure[] {
+  const completion = validateCompletionSafely(runPath, workspaceFingerprint);
+  if (isFailure(completion)) {
+    return [completion];
+  }
+
+  return [
+    ...toFixtureFailures(completion),
+    ...validateEvidenceCommands(runPath, request),
+  ];
+}
+
+function validateCompletionSafely(
+  runPath: string,
+  workspaceFingerprint: string,
+): ReturnType<typeof validateCompletion> | ActionFixtureFailure {
+  try {
+    return validateCompletion(runPath, { workspaceFingerprint });
+  } catch {
+    return invalid("fixture.run-contract-invalid", "run.json is missing or malformed");
+  }
+}
+
+function validateEvidenceCommands(
+  runPath: string,
+  request: ActionFixtureRequest,
+): ActionFixtureFailure[] {
+  try {
+    const run = readRun(runPath);
+    const criterion = run.acceptanceCriteria.find((candidate) => candidate.id === request.criterionId);
+    if (!criterion) {
+      return [];
+    }
+
+    const [executable, ...args] = request.requiredTestCommand;
+    return criterion.evidenceIds.flatMap((evidenceId) => {
+      try {
+        const evidence = readEvidence(runPath, evidenceId);
+        if (
+          evidence.command.executable === executable &&
+          evidence.command.args.length === args.length &&
+          evidence.command.args.every((argument, index) => argument === args[index])
+        ) {
+          return [];
+        }
+      } catch {
+        return [invalid("fixture.evidence-command-invalid", `${evidenceId} could not be read`)];
+      }
+
+      return [
+        invalid(
+          "fixture.evidence-command-mismatch",
+          `${evidenceId} must record ${JSON.stringify(request.requiredTestCommand)}`,
+        ),
+      ];
+    });
+  } catch {
+    return [invalid("fixture.run-contract-invalid", "run.json is missing or malformed")];
+  }
+}
+
+function pinRunContract(runPath: string): PinnedRunContract | ActionFixtureFailure {
+  try {
+    const run = readRun(runPath);
+    if (!Array.isArray(run.acceptanceCriteria)) {
+      return invalid("fixture.run-contract-invalid", "run.json is missing acceptance criteria");
+    }
+
+    const contract = {
+      ...run,
+      acceptanceCriteria: run.acceptanceCriteria.map((criterion) => {
+        if (!Array.isArray(criterion.evidenceIds)) {
+          throw new Error("acceptance criterion evidenceIds must be an array");
+        }
+        return { ...criterion, evidenceIds: [] };
+      }),
+    };
+    return { signature: JSON.stringify(contract) };
+  } catch {
+    return invalid("fixture.run-contract-invalid", "run.json is missing or malformed");
+  }
+}
+
+function validatePinnedRunContract(
+  runPath: string,
+  pinned: PinnedRunContract,
+): ActionFixtureFailure[] {
+  const current = pinRunContract(runPath);
+  if (isFailure(current)) {
+    return [current];
+  }
+  if (current.signature !== pinned.signature) {
+    return [
+      invalid(
+        "fixture.run-contract-mutated",
+        "run.json changed outside refreshable acceptance-criterion evidence references",
+      ),
+    ];
+  }
+  return [];
 }
 
 function hasRequiredBunTestSummary(output: string): boolean {
@@ -307,7 +491,7 @@ function writeReport(
     fixtureId: "action.bounded-bug-fix",
     status: resultStatus(failures),
     stages,
-    transitionCount: readTransitions(runPath).length,
+    transitionCount: readTransitionsSafely(runPath).length,
     artifacts: collectArtifacts(outputDir, workspace, runPath),
     failures,
   };
@@ -316,7 +500,14 @@ function writeReport(
 }
 
 function collectArtifacts(outputDir: string, workspace: string, runPath: string): ArtifactDigest[] {
-  const retained = [
+  return retainedArtifactPaths(workspace, runPath)
+    .filter((path) => isRegularFile(path))
+    .map((path) => digestArtifact(outputDir, path))
+    .sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0));
+}
+
+function retainedArtifactPaths(workspace: string, runPath: string): string[] {
+  return [
     join(workspace, "FIXTURE.md"),
     join(workspace, "src", "release-label.ts"),
     join(workspace, "fixture-tests", "release-label.fixture.ts"),
@@ -326,22 +517,72 @@ function collectArtifacts(outputDir: string, workspace: string, runPath: string)
     ...filesBelow(join(runPath, "evidence")),
     ...filesBelow(join(runPath, "logs")),
   ];
+}
 
-  return retained
-    .filter((path) => existsSync(path))
-    .map((path) => digestArtifact(outputDir, path))
-    .sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0));
+function validateRetainedArtifacts(workspace: string, runPath: string): ActionFixtureFailure[] {
+  const retained = retainedArtifactPaths(workspace, runPath);
+  const symlinks = [
+    ...retained.filter((path) => isSymlink(path)),
+    ...findSymlinksBelow(join(runPath, "evidence")),
+    ...findSymlinksBelow(join(runPath, "logs")),
+  ];
+  return [...new Set(symlinks)]
+    .sort()
+    .map((path) =>
+      invalid(
+        "fixture.symlink-retained-artifact",
+        `retained artifact is a symlink: ${relative(workspace, path)}`,
+      ),
+    );
 }
 
 function filesBelow(root: string): string[] {
-  if (!existsSync(root)) {
+  if (!isDirectory(root)) {
     return [];
   }
 
   return readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
     const path = join(root, entry.name);
-    return entry.isDirectory() ? filesBelow(path) : [path];
+    return entry.isSymbolicLink() ? [] : entry.isDirectory() ? filesBelow(path) : [path];
   });
+}
+
+function findSymlinksBelow(root: string): string[] {
+  if (isSymlink(root)) {
+    return [root];
+  }
+  if (!isDirectory(root)) {
+    return [];
+  }
+
+  return readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(root, entry.name);
+    return entry.isSymbolicLink() ? [path] : entry.isDirectory() ? findSymlinksBelow(path) : [];
+  });
+}
+
+function isRegularFile(path: string): boolean {
+  try {
+    return lstatSync(path).isFile();
+  } catch {
+    return false;
+  }
+}
+
+function isDirectory(path: string): boolean {
+  try {
+    return lstatSync(path).isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+function isSymlink(path: string): boolean {
+  try {
+    return lstatSync(path).isSymbolicLink();
+  } catch {
+    return false;
+  }
 }
 
 function digestArtifact(outputDir: string, path: string): ArtifactDigest {
@@ -349,7 +590,7 @@ function digestArtifact(outputDir: string, path: string): ArtifactDigest {
   return {
     path: relative(outputDir, path),
     sha256: createHash("sha256").update(source).digest("hex"),
-    bytes: statSync(path).size,
+    bytes: lstatSync(path).size,
   };
 }
 
@@ -359,6 +600,24 @@ function failed(code: string, message: string): ActionFixtureFailure {
 
 function invalid(code: string, message: string): ActionFixtureFailure {
   return { code, kind: "invalid", message };
+}
+
+function isFailure(
+  value: ReturnType<typeof validateCompletion> | ActionFixtureFailure | PinnedRunContract,
+): value is ActionFixtureFailure {
+  return "kind" in value;
+}
+
+function readTransitionsSafely(runPath: string): ReturnType<typeof readTransitions> {
+  const transitionsPath = join(runPath, "transitions.jsonl");
+  if (isSymlink(transitionsPath)) {
+    return [];
+  }
+  try {
+    return readTransitions(runPath);
+  } catch {
+    return [];
+  }
 }
 
 function resultStatus(

@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { captureEvidence } from "../../protocol/evidence";
@@ -460,6 +460,200 @@ test("fails a completion transition attempted during Stage A", async () => {
     expect(result).toMatchObject({ status: "failed" });
     expect(result.failures).toContainEqual(
       expect.objectContaining({ code: "fixture.premature-completion" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates a Stage A executor that changes the pinned run contract", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeFileSync(
+          join(request.workspace, "src", "release-label.ts"),
+          [
+            "export function releaseLabel(name: string): string {",
+            "  return `release:${name.trim()}`;",
+            "}",
+            "",
+          ].join("\n"),
+        );
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+        const runPath = join(request.runPath, "run.json");
+        const run = JSON.parse(readFileSync(runPath, "utf8"));
+        run.risk = "trivial";
+        writeFileSync(runPath, `${JSON.stringify(run, null, 2)}\n`);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        status: "invalid",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "fixture.run-contract-mutated", kind: "invalid" }),
+        ]),
+      }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates evidence captured with an argv other than the required fixture test", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeFileSync(
+          join(request.workspace, "src", "release-label.ts"),
+          [
+            "export function releaseLabel(name: string): string {",
+            "  return `release:${name.trim()}`;",
+            "}",
+            "",
+          ].join("\n"),
+        );
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: ["bun", "-e", "process.exit(0)"],
+        });
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        status: "invalid",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "fixture.evidence-command-mismatch", kind: "invalid" }),
+        ]),
+      }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+for (const mutation of [
+  {
+    name: "deletes",
+    apply: (path: string) => rmSync(path),
+  },
+  {
+    name: "malforms",
+    apply: (path: string) => writeFileSync(path, "not JSON\n"),
+  },
+]) {
+  test(`reports an invalid result when Stage A ${mutation.name} run.json`, async () => {
+    const { parentPath, outputDir } = createOutputDir();
+    try {
+      const result = await runBoundedBugFixFixture({
+        outputDir,
+        executor: async (request) => {
+          if (request.stage !== "fix") return;
+
+          mutation.apply(join(request.runPath, "run.json"));
+        },
+      });
+
+      expect(result).toMatchObject({ status: "invalid" });
+      expect(result.failures).toContainEqual(
+        expect.objectContaining({ code: "fixture.run-contract-invalid", kind: "invalid" }),
+      );
+      expect(JSON.parse(readFileSync(join(outputDir, "report.json"), "utf8"))).toEqual(result);
+    } finally {
+      rmSync(parentPath, { recursive: true, force: true });
+    }
+  });
+}
+
+test("invalidates a symlink discovered by the workspace inventory", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeFileSync(
+          join(request.workspace, "src", "release-label.ts"),
+          [
+            "export function releaseLabel(name: string): string {",
+            "  return `release:${name.trim()}`;",
+            "}",
+            "",
+          ].join("\n"),
+        );
+        symlinkSync("release-label.ts", join(request.workspace, "src", "linked-release-label.ts"));
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.symlink-inventory", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates a symlinked retained run artifact without following it", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeFileSync(
+          join(request.workspace, "src", "release-label.ts"),
+          [
+            "export function releaseLabel(name: string): string {",
+            "  return `release:${name.trim()}`;",
+            "}",
+            "",
+          ].join("\n"),
+        );
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+        const runPath = join(request.runPath, "run.json");
+        const replacement = join(request.runPath, "replacement-run.json");
+        writeFileSync(replacement, readFileSync(runPath));
+        rmSync(runPath);
+        symlinkSync("replacement-run.json", runPath);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.symlink-retained-artifact", kind: "invalid" }),
+    );
+    expect(result.artifacts.map(({ path }) => path)).not.toContain(
+      "workspace/.extremely-hardcore/runs/bounded-bug-fix/run.json",
     );
   } finally {
     rmSync(parentPath, { recursive: true, force: true });
