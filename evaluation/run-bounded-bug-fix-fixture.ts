@@ -47,7 +47,9 @@ export async function runBoundedBugFixFixture(options: {
   const stageAFailures = [
     ...validateAllowedDiff(workspace, ["src/release-label.ts"]),
     ...validateRequiredTest(workspace, request("fix").requiredTestCommand),
-    ...toFixtureFailures(validateCompletion(runPath, { workspaceFingerprint: stageAFingerprint })),
+    ...toStageAEvidenceFailures(
+      validateCompletion(runPath, { workspaceFingerprint: stageAFingerprint }),
+    ),
     ...validateNoTransitions(runPath),
   ];
   const stageA = stageResult("fix", stageAFingerprint, stageAFailures);
@@ -68,6 +70,7 @@ export async function runBoundedBugFixFixture(options: {
   const finalFingerprint = computeWorkspaceFingerprint(workspace);
   const finalFailures = [
     ...validateAllowedDiff(workspace, ["src/release-label.ts", "fixture-state.txt"]),
+    ...validateHarnessMarker(workspace),
     ...validateRequiredTest(workspace, request("resume").requiredTestCommand),
     ...toFixtureFailures(validateCompletion(runPath, { workspaceFingerprint: finalFingerprint })),
     ...validateExactlyOneCompletion(runPath, finalFingerprint),
@@ -125,6 +128,28 @@ function validateRequiredTest(
   return [failed("fixture.required-test-failed", `required test command failed: ${message}`)];
 }
 
+function validateHarnessMarker(workspace: string): ActionFixtureFailure[] {
+  const markerPath = join(workspace, "fixture-state.txt");
+  const expected = "evidence invalidated\n";
+  let actual: string;
+  try {
+    actual = readFileSync(markerPath, "utf8");
+  } catch {
+    actual = "<missing>";
+  }
+
+  if (actual === expected) {
+    return [];
+  }
+
+  return [
+    invalid(
+      "fixture.marker-modified",
+      `fixture-state.txt must remain ${JSON.stringify(expected)} after Stage B`,
+    ),
+  ];
+}
+
 function validateNoTransitions(runPath: string): ActionFixtureFailure[] {
   const transitions = readTransitions(runPath);
   if (transitions.length === 0) {
@@ -160,6 +185,16 @@ function validateExactlyOneCompletion(
       `expected one completion for the final fingerprint; found ${validCompletions.length} valid of ${transitions.length} total`,
     ),
   ];
+}
+
+function toStageAEvidenceFailures(
+  validation: ReturnType<typeof validateCompletion>,
+): ActionFixtureFailure[] {
+  return validation.errors.map(({ code, message }) =>
+    code === "criterion.uncovered" || code.startsWith("evidence.")
+      ? invalid(code, message)
+      : failed(code, message),
+  );
 }
 
 function toFixtureFailures(validation: ReturnType<typeof validateCompletion>): ActionFixtureFailure[] {

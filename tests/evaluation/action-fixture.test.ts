@@ -78,6 +78,20 @@ test("fails an executor that changes a forbidden path", async () => {
       executor: async (request) => {
         if (request.stage === "fix") {
           writeFileSync(join(request.workspace, "package.json"), "{}\n");
+          writeFileSync(
+            join(request.workspace, "src", "release-label.ts"),
+            [
+              "export function releaseLabel(name: string): string {",
+              "  return `release:${name.trim()}`;",
+              "}",
+              "",
+            ].join("\n"),
+          );
+          await captureEvidence({
+            runPath: request.runPath,
+            criterionId: request.criterionId,
+            command: request.requiredTestCommand,
+          });
         }
       },
     });
@@ -101,6 +115,91 @@ test("fails when Stage B leaves Stage A evidence stale", async () => {
 
     expect(result).toMatchObject({ status: "failed" });
     expect(result.failures).toContainEqual(expect.objectContaining({ code: "evidence.stale" }));
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates an executor that rewrites the harness-owned marker during resume", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage === "fix") {
+          writeFileSync(
+            join(request.workspace, "src", "release-label.ts"),
+            [
+              "export function releaseLabel(name: string): string {",
+              "  return `release:${name.trim()}`;",
+              "}",
+              "",
+            ].join("\n"),
+          );
+        } else {
+          writeFileSync(join(request.workspace, "fixture-state.txt"), "executor controlled\n");
+        }
+
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+
+        if (request.stage === "resume") {
+          const transition = transitionToComplete(request.runPath, {
+            workspaceFingerprint: computeWorkspaceFingerprint(request.workspace),
+          });
+          expect(transition.ok).toBe(true);
+        }
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "resume",
+        status: "invalid",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "fixture.marker-modified", kind: "invalid" }),
+        ]),
+      }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates a correct Stage A source fix with no protocol evidence", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeFileSync(
+          join(request.workspace, "src", "release-label.ts"),
+          [
+            "export function releaseLabel(name: string): string {",
+            "  return `release:${name.trim()}`;",
+            "}",
+            "",
+          ].join("\n"),
+        );
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.stages).toContainEqual(
+      expect.objectContaining({
+        stage: "fix",
+        status: "invalid",
+        failures: expect.arrayContaining([
+          expect.objectContaining({ code: "criterion.uncovered", kind: "invalid" }),
+        ]),
+      }),
+    );
   } finally {
     rmSync(parentPath, { recursive: true, force: true });
   }
