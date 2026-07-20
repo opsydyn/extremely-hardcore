@@ -26,10 +26,11 @@ The goal is not to slow every edit to a committee meeting. Trivial edits stay tr
 1. Create change contract.
 2. Discover domain and architecture impact.
 3. Decide whether an ADR is needed.
-4. Plan the smallest safe change.
-5. Implement test-first.
-6. Review boundaries and delivery risk.
-7. Produce evidence ledger.
+4. Challenge high-consequence proposals before planning when the trigger rubric applies.
+5. Plan the smallest safe change.
+6. Implement test-first.
+7. Review boundaries and delivery risk.
+8. Produce evidence ledger.
 
 ## Included Skills
 
@@ -38,6 +39,7 @@ The goal is not to slow every edit to a committee meeting. Trivial edits stay tr
 - `domain-discovery`: maps domain language, contexts, rules, integrations, and ambiguity.
 - `architecture-decision`: records decisions when architecture, contracts, or operational behaviour changes.
 - `bounded-context-review`: checks coupling, ownership, dependencies, transactions, and context leakage.
+- `decision-challenge`: tests high-consequence execution, boundary, differentiation, and comparison claims before planning.
 - `test-first-implementation`: plans behaviour-first implementation with the first failing test.
 - `evidence-ledger`: records commands, checks, risks, architecture impact, and final recommendation.
 

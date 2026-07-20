@@ -2,19 +2,19 @@
 
 ## behaviour to protect
 
-ADR 0012 keeps the bounded fixture runner and deterministic reference executor provider-neutral. ADR 0013 holds the live Codex adapter until a provider process can own the protocol actions it is claimed to demonstrate. The protocol, fixture runner, reference executor, validator, and provider adapter remain unchanged.
+ADR 0012 keeps the bounded fixture runner and deterministic reference executor provider-neutral. ADR 0013 holds the live Codex adapter until a provider process can own the protocol actions it is claimed to demonstrate. The protocol, fixture runner, reference executor, and provider adapter remain unchanged. The scaffold validator must reject an incomplete decision-challenge trigger rubric or record template.
 
 ## first failing test
 
-Not applicable: this slice adds no executable behaviour or production code. The mandatory decision-challenge scaffold contract was added and tested in the preceding slice; the Task 3 checks re-run that focused validator test and the existing full suite to protect the unchanged behaviour.
+Add focused tests for a complete decision-challenge skill/template, then for each required missing semantic element. Confirm they fail because the scaffold validator only checks presence and generic headings before adding the narrow validation rules.
 
 ## smallest implementation
 
-Create one dogfooded decision record, project-native issue, implementation plan, evidence ledger, and targeted roadmap status update. Commit every tracked documentation change before creating the ignored proof-carrying run.
+Add the narrow validator rules, restore the complete trigger routing, add the durable differentiated value template/record content, and correct the dogfood self-sufficiency gap. Update the project-native issue, implementation plan, README, and evidence ledger. Commit every tracked review fix before creating the ignored proof-carrying run.
 
 ## refactor step
 
-None. Do not alter shared templates or implementation boundaries while closing this documentation-only slice.
+None. Do not alter fixture, protocol, provider, or evaluation-runtime boundaries.
 
 ## checks to run
 

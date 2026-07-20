@@ -6,6 +6,8 @@
 
 ## existing-platform ownership
 
+## durable differentiated value
+
 ## strongest counterargument
 
 ## claim-to-evidence map

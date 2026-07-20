@@ -17,6 +17,42 @@ export const requiredSkillHeadings = [
   "## failure modes",
 ];
 
+export const decisionChallengeTriggerRequirements = [
+  "external writable-agent execution",
+  "architecture",
+  "security",
+  "sandbox",
+  "isolation",
+  "provenance",
+  "public contracts",
+  "persistence",
+  "ci",
+  "deployment",
+  "observability",
+  "product-differentiation",
+  "benchmark",
+  "provider-comparison",
+  "regression-threshold",
+];
+
+export const requiredDecisionChallengeTemplateSections = [
+  "## trigger",
+  "## proposal and claims",
+  "## existing-platform ownership",
+  "## durable differentiated value",
+  "## strongest counterargument",
+  "## claim-to-evidence map",
+  "## minimum credible slice",
+  "## stop conditions",
+  "## verdict",
+  "## rationale",
+];
+
+const decisionChallengeEvidenceGapTable = "| claim | current evidence | gap | required evidence |";
+const decisionChallengeVerdictOptions = "proceed | hold | needs-human-decision";
+const decisionChallengeSkillFile = "skills/decision-challenge/SKILL.md";
+const decisionChallengeTemplateFile = "skills/decision-challenge/templates/decision-challenge.md";
+
 export const skillFiles = [
   "skills/using-extremely-hardcore/SKILL.md",
   "skills/change-contract/SKILL.md",
@@ -96,9 +132,69 @@ export function validateProject(root: string): ValidationResult {
     }
   }
 
+  validateDecisionChallengeContract(root, errors);
   validatePluginManifest(root, errors);
 
   return { ok: errors.length === 0, errors };
+}
+
+function validateDecisionChallengeContract(root: string, errors: string[]): void {
+  validateDecisionChallengeTriggerRubric(root, decisionChallengeSkillFile, errors);
+  validateDecisionChallengeTriggerRubric(root, "AGENTS.md", errors);
+
+  const templatePath = resolve(root, decisionChallengeTemplateFile);
+  if (!existsSync(templatePath)) {
+    return;
+  }
+
+  const content = readFileSync(templatePath, "utf8");
+  const normalised = content.toLowerCase();
+  for (const section of requiredDecisionChallengeTemplateSections) {
+    if (!normalised.includes(`\n${section}\n`)) {
+      errors.push(`${decisionChallengeTemplateFile} missing decision-challenge template section: ${section}`);
+    }
+  }
+
+  if (!normalised.includes(decisionChallengeEvidenceGapTable)) {
+    errors.push(`${decisionChallengeTemplateFile} missing decision-challenge evidence-gap table`);
+  }
+
+  if (!normalised.includes(decisionChallengeVerdictOptions)) {
+    errors.push(`${decisionChallengeTemplateFile} missing decision-challenge verdict options`);
+  }
+}
+
+function validateDecisionChallengeTriggerRubric(
+  root: string,
+  file: string,
+  errors: string[],
+): void {
+  const fullPath = resolve(root, file);
+  if (!existsSync(fullPath)) {
+    return;
+  }
+
+  const normalised = readFileSync(fullPath, "utf8").toLowerCase();
+  const rubric =
+    file === decisionChallengeSkillFile
+      ? getMarkdownSection(normalised, "## when to use")
+      : normalised;
+  for (const requirement of decisionChallengeTriggerRequirements) {
+    if (!rubric.includes(requirement)) {
+      errors.push(`${file} missing decision-challenge trigger: ${requirement}`);
+    }
+  }
+}
+
+function getMarkdownSection(content: string, heading: string): string {
+  const start = content.indexOf(`\n${heading}\n`);
+  if (start === -1) {
+    return "";
+  }
+
+  const sectionStart = start + heading.length + 2;
+  const nextHeading = content.indexOf("\n## ", sectionStart);
+  return content.slice(sectionStart, nextHeading === -1 ? undefined : nextHeading);
 }
 
 export function formatValidationResult(result: ValidationResult): string {
