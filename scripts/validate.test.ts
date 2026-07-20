@@ -59,6 +59,22 @@ describe("validateProject", () => {
     expect(result.errors.some((error) => error.includes("missing required file: README.md"))).toBe(true);
   });
 
+  test("requires the decision challenge skill and record template", () => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    rmSync(join(root, "skills", "decision-challenge"), { recursive: true, force: true });
+
+    const result = validateProject(root);
+
+    expect(result.ok).toBe(false);
+    expect(result.errors).toContain(
+      "missing required file: skills/decision-challenge/SKILL.md",
+    );
+    expect(result.errors).toContain(
+      "missing required file: skills/decision-challenge/templates/decision-challenge.md",
+    );
+  });
+
   test("reports missing required skill headings", () => {
     const root = tempRepo();
     writeMinimalRequiredFiles(root);

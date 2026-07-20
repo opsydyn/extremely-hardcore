@@ -23,6 +23,7 @@ export const skillFiles = [
   "skills/architecture-decision/SKILL.md",
   "skills/domain-discovery/SKILL.md",
   "skills/bounded-context-review/SKILL.md",
+  "skills/decision-challenge/SKILL.md",
   "skills/test-first-implementation/SKILL.md",
   "skills/evidence-ledger/SKILL.md",
 ];
@@ -32,6 +33,7 @@ export const templateFiles = [
   "skills/architecture-decision/templates/adr.md",
   "skills/domain-discovery/templates/domain-map.md",
   "skills/bounded-context-review/templates/bounded-context-review.md",
+  "skills/decision-challenge/templates/decision-challenge.md",
   "skills/test-first-implementation/templates/implementation-plan.md",
   "skills/evidence-ledger/templates/evidence-ledger.md",
 ];
