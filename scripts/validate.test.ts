@@ -195,6 +195,25 @@ describe("validateProject", () => {
     expect(result.errors).toContain("AGENTS.md missing decision-challenge trigger: sandbox");
   });
 
+  test("does not count trigger terms outside the decision-challenge routing rule", () => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    write(
+      root,
+      "AGENTS.md",
+      [
+        completeAgentsRouting().replace("sandbox, ", ""),
+        "",
+        "Unrelated notes mention sandbox, isolation, provenance, public contracts, persistence, CI, deployment, observability, product-differentiation, benchmark, provider-comparison, and regression-threshold.",
+      ].join("\n"),
+    );
+
+    const result = validateProject(root);
+
+    expect(result.ok).toBe(false);
+    expect(result.errors).toContain("AGENTS.md missing decision-challenge trigger: sandbox");
+  });
+
   test("reads the skill trigger rubric instead of unrelated prose", () => {
     const root = tempRepo();
     writeMinimalRequiredFiles(root);

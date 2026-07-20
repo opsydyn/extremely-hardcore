@@ -30,7 +30,7 @@ None. Do not alter fixture, protocol, provider, or evaluation-runtime boundaries
 
 ## rollback plan
 
-Revert the five tracked documentation changes as one commit and remove the ignored local run directory. No protocol state outside the ignored run, public API, provider configuration, persistence, or external system requires migration.
+Revert the full Task 3 branch change as one commit series, including the decision-challenge skill and template, `AGENTS.md` routing, scaffold validator and tests, decision record, issue, implementation plan, evidence ledger, README, and roadmap status; then remove the ignored local run directory. No protocol state outside the ignored run, public API, provider configuration, persistence, or external system requires migration.
 
 ## notes
 

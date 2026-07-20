@@ -178,7 +178,7 @@ function validateDecisionChallengeTriggerRubric(
   const rubric =
     file === decisionChallengeSkillFile
       ? getMarkdownSection(normalised, "## when to use")
-      : normalised;
+      : getAgentsDecisionChallengeRoutingRule(normalised);
   for (const requirement of decisionChallengeTriggerRequirements) {
     if (!rubric.includes(requirement)) {
       errors.push(`${file} missing decision-challenge trigger: ${requirement}`);
@@ -195,6 +195,24 @@ function getMarkdownSection(content: string, heading: string): string {
   const sectionStart = start + heading.length + 2;
   const nextHeading = content.indexOf("\n## ", sectionStart);
   return content.slice(sectionStart, nextHeading === -1 ? undefined : nextHeading);
+}
+
+function getAgentsDecisionChallengeRoutingRule(content: string): string {
+  const lines = content.split(/\r?\n/);
+  const start = lines.findIndex((line) => /^- use `decision-challenge`(?:\s|$)/.test(line));
+  if (start === -1) {
+    return "";
+  }
+
+  const rule = [lines[start]];
+  for (const line of lines.slice(start + 1)) {
+    if (line !== "" && !/^\s+/.test(line)) {
+      break;
+    }
+    rule.push(line);
+  }
+
+  return rule.join("\n");
 }
 
 export function formatValidationResult(result: ValidationResult): string {

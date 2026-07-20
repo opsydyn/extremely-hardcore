@@ -2,7 +2,7 @@
 
 ## summary
 
-Dogfooded the accepted decision-challenge skill against the proposed live Codex action-fixture adapter and closed final review findings. The record holds the live adapter because the copied fixture has no fixture-local protocol instruction or interface through which the provider could create agent-owned evidence and completion records. `FIXTURE.md` remains the task oracle only. This skill, validator, documentation, and proof-carrying-run slice is complete independently of that held proposal.
+Dogfooded the accepted decision-challenge skill against the proposed live Codex action-fixture adapter and closed final review findings. The record holds the live adapter because the copied fixture has no fixture-local protocol instruction or interface through which the provider could create agent-owned evidence and completion records. `FIXTURE.md` remains the task oracle only. This skill, validator, documentation, and proof-carrying-run slice is complete independently of that held proposal. The scaffold validator now evaluates every required trigger category within the decision-challenge routing rule itself, rather than allowing unrelated `AGENTS.md` prose to satisfy the rubric.
 
 ## changed files
 
@@ -46,7 +46,7 @@ No new architecture decision is required. This enforces and dogfoods the boundar
 
 ## public contract impact
 
-The public skill/scaffold contract now requires the full decision-challenge trigger rubric and record template, including durable differentiated value, strongest counterargument, evidence-gap map, stop conditions, and verdict. No runtime API, protocol schema, CLI, provider adapter, authentication, persistence, CI, deployment, or observability behaviour changes. The roadmap status remains unchanged: the live provider adapter is held and provider execution, comparison policy, and regression thresholds remain pending.
+The scaffold-validation contract now requires the full decision-challenge trigger rubric in both the skill's `## when to use` section and the dedicated `AGENTS.md` routing rule; unrelated `AGENTS.md` prose cannot satisfy a missing routing trigger. The record template continues to require durable differentiated value, strongest counterargument, evidence-gap map, stop conditions, and verdict. The Behavioural Evaluation Harness roadmap status changed to record the implemented decision-challenge gate and the held live provider adapter; provider execution, comparison policy, and regression thresholds remain pending. No runtime API, protocol schema, protocol CLI configuration, CI configuration, provider adapter, authentication, persistence, deployment, or observability behaviour changed.
 
 ## risks left open
 
