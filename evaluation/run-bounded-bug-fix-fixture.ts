@@ -105,12 +105,23 @@ export async function runBoundedBugFixFixture(options: {
     ...stageAContractFailures,
     ...stageAProtocolFailures,
     ...(stageAArtifactFailures.length === 0 && stageAContractFailures.length === 0
+      ? validateFixtureProtocolInvocations(runPath, {
+          stage: "fix",
+          stageAFingerprint,
+        })
+      : []),
+    ...(stageAArtifactFailures.length === 0 && stageAContractFailures.length === 0
       ? validateNoTransitions(runPath)
       : []),
   ];
   const stageA = stageResult("fix", stageAFingerprint, stageAFailures);
   if (stageAFailures.length > 0) {
     return writeReport(outputDir, workspace, runPath, [stageA], stageAFailures);
+  }
+  const pinnedStageAInvocation = pinStageAInvocation(runPath);
+  if (isFailure(pinnedStageAInvocation)) {
+    const failedStageA = stageResult("fix", stageAFingerprint, [pinnedStageAInvocation]);
+    return writeReport(outputDir, workspace, runPath, [failedStageA], [pinnedStageAInvocation]);
   }
 
   writeFileSync(join(workspace, "fixture-state.txt"), "evidence invalidated\n");
@@ -156,6 +167,14 @@ export async function runBoundedBugFixFixture(options: {
     ...stageBArtifactFailures,
     ...stageBContractFailures,
     ...stageBProtocolFailures,
+    ...(stageBArtifactFailures.length === 0 && stageBContractFailures.length === 0
+      ? validateFixtureProtocolInvocations(runPath, {
+          stage: "resume",
+          stageAFingerprint,
+          finalFingerprint,
+          pinnedStageAInvocation,
+        })
+      : []),
     ...(stageBArtifactFailures.length === 0 && stageBContractFailures.length === 0
       ? validateExactlyOneCompletion(runPath, finalFingerprint, request("resume").criterionId)
       : []),
@@ -390,6 +409,289 @@ function validateEvidenceCommands(
   } catch {
     return [invalid("fixture.run-contract-invalid", "run.json is missing or malformed")];
   }
+}
+
+type FixtureProtocolInvocation =
+  | {
+      schemaVersion: 1;
+      invocationId: string;
+      command: "evidence";
+      stage: ActionFixtureStage;
+      at: string;
+      workspaceFingerprint: string;
+      evidenceId: string;
+    }
+  | {
+      schemaVersion: 1;
+      invocationId: string;
+      command: "complete";
+      stage: "resume";
+      at: string;
+      workspaceFingerprint: string;
+      transitionId: string;
+    };
+
+type PinnedStageAInvocation = {
+  evidenceId: string;
+  evidenceSignature: string;
+  invocationSignature: string;
+  logSha256: string;
+};
+
+function validateFixtureProtocolInvocations(
+  runPath: string,
+  options:
+    | { stage: "fix"; stageAFingerprint: string }
+    | {
+        stage: "resume";
+        stageAFingerprint: string;
+        finalFingerprint: string;
+        pinnedStageAInvocation: PinnedStageAInvocation;
+      },
+): ActionFixtureFailure[] {
+  const invocations = readFixtureProtocolInvocations(runPath);
+  if (isFailure(invocations)) {
+    return [invocations];
+  }
+
+  const evidenceIds = criterionEvidenceIds(runPath, "required-test-passes");
+  if (isFailure(evidenceIds)) {
+    return [evidenceIds];
+  }
+
+  if (options.stage === "fix") {
+    const [invocation] = invocations;
+    if (
+      invocations.length !== 1 ||
+      !isEvidenceInvocation(invocation) ||
+      invocation.stage !== "fix" ||
+      invocation.workspaceFingerprint !== options.stageAFingerprint
+    ) {
+      return [
+        invalid(
+          "fixture.protocol-invocation-sequence",
+          "Stage A requires exactly one fix evidence invocation",
+        ),
+      ];
+    }
+    if (evidenceIds.length !== 1 || evidenceIds[0] !== invocation.evidenceId) {
+      return [
+        invalid(
+          "fixture.protocol-invocation-link",
+          "Stage A evidence must be linked to the fix invocation",
+        ),
+      ];
+    }
+    return [];
+  }
+
+  const [fixEvidence, resumeEvidence, completion] = invocations;
+  if (
+    invocations.length !== 3 ||
+    !isEvidenceInvocation(fixEvidence) ||
+    fixEvidence.stage !== "fix" ||
+    fixEvidence.workspaceFingerprint !== options.stageAFingerprint ||
+    !isEvidenceInvocation(resumeEvidence) ||
+    resumeEvidence.stage !== "resume" ||
+    resumeEvidence.workspaceFingerprint !== options.finalFingerprint ||
+    !isCompletionInvocation(completion) ||
+    completion.workspaceFingerprint !== options.finalFingerprint
+  ) {
+    return [
+      invalid(
+        "fixture.protocol-invocation-sequence",
+        "fixture invocations must be fix evidence, resume evidence, then resume completion",
+      ),
+    ];
+  }
+  if (
+    evidenceIds.length !== 1 ||
+    evidenceIds[0] !== resumeEvidence.evidenceId ||
+    fixEvidence.evidenceId === resumeEvidence.evidenceId ||
+    fixEvidence.evidenceId !== options.pinnedStageAInvocation.evidenceId ||
+    JSON.stringify(fixEvidence) !== options.pinnedStageAInvocation.invocationSignature
+  ) {
+    return [
+      invalid(
+        "fixture.protocol-invocation-link",
+        "final evidence must be fresh resume evidence distinct from Stage A evidence",
+      ),
+    ];
+  }
+  const transitions = readTransitionsForValidation(runPath);
+  if (isFailure(transitions)) {
+    return [transitions];
+  }
+  if (transitions.length !== 1 || transitions[0]?.transitionId !== completion.transitionId) {
+    return [
+      invalid(
+        "fixture.protocol-invocation-link",
+        "resume completion invocation must link to the sole completion transition",
+      ),
+    ];
+  }
+  return validatePinnedStageAEvidence(runPath, options.pinnedStageAInvocation);
+}
+
+function pinStageAInvocation(runPath: string): PinnedStageAInvocation | ActionFixtureFailure {
+  const invocations = readFixtureProtocolInvocations(runPath);
+  if (isFailure(invocations)) {
+    return invocations;
+  }
+  const [invocation] = invocations;
+  if (invocations.length !== 1 || !isEvidenceInvocation(invocation) || invocation.stage !== "fix") {
+    return invalid(
+      "fixture.protocol-invocation-sequence",
+      "Stage A has no unique fix evidence invocation to pin",
+    );
+  }
+  try {
+    const evidence = readEvidence(runPath, invocation.evidenceId);
+    const log = readPinnedEvidenceLog(runPath, evidence.logPath);
+    if (isFailure(log)) {
+      return log;
+    }
+    return {
+      evidenceId: invocation.evidenceId,
+      evidenceSignature: JSON.stringify(evidence),
+      invocationSignature: JSON.stringify(invocation),
+      logSha256: createHash("sha256").update(log).digest("hex"),
+    };
+  } catch {
+    return invalid(
+      "fixture.protocol-invocation-link",
+      "Stage A evidence invocation must reference a readable retained evidence record",
+    );
+  }
+}
+
+function validatePinnedStageAEvidence(
+  runPath: string,
+  pinned: PinnedStageAInvocation,
+): ActionFixtureFailure[] {
+  try {
+    const evidence = readEvidence(runPath, pinned.evidenceId);
+    if (JSON.stringify(evidence) !== pinned.evidenceSignature) {
+      return [
+        invalid(
+          "fixture.protocol-invocation-link",
+          "Stage A evidence record no longer matches its pinned invocation",
+        ),
+      ];
+    }
+    const log = readPinnedEvidenceLog(runPath, evidence.logPath);
+    if (isFailure(log)) {
+      return [log];
+    }
+    if (createHash("sha256").update(log).digest("hex") !== pinned.logSha256) {
+      return [
+        invalid(
+          "fixture.protocol-invocation-link",
+          "Stage A evidence log no longer matches its pinned invocation",
+        ),
+      ];
+    }
+    return [];
+  } catch {
+    return [
+      invalid(
+        "fixture.protocol-invocation-link",
+        "Stage A evidence invocation no longer resolves to a retained evidence record",
+      ),
+    ];
+  }
+}
+
+function readPinnedEvidenceLog(runPath: string, logPath: string): Buffer | ActionFixtureFailure {
+  if (!logPath.startsWith("logs/")) {
+    return invalid("fixture.protocol-invocation-link", "Stage A evidence log must remain below logs");
+  }
+  const logsRoot = join(runPath, "logs");
+  const path = resolve(runPath, logPath);
+  const relativePath = relative(logsRoot, path);
+  if (
+    relativePath === ".." ||
+    relativePath.startsWith(`..${sep}`) ||
+    relativePath === "" ||
+    !isRegularFile(path) ||
+    hasSymlinkedAncestor(runPath, path)
+  ) {
+    return invalid(
+      "fixture.protocol-invocation-link",
+      "Stage A evidence log is missing, unsafe, or outside logs",
+    );
+  }
+  return readFileSync(path);
+}
+
+function readFixtureProtocolInvocations(
+  runPath: string,
+): FixtureProtocolInvocation[] | ActionFixtureFailure {
+  const path = join(runPath, "protocol-invocations.jsonl");
+  if (!isRegularFile(path)) {
+    return invalid(
+      "fixture.protocol-invocations-missing",
+      "protocol-invocations.jsonl is missing or not a regular file",
+    );
+  }
+  try {
+    const invocations = readFileSync(path, "utf8")
+      .split("\n")
+      .filter((line) => line.trim().length > 0)
+      .map((line) => JSON.parse(line) as unknown);
+    if (
+      !invocations.every(isFixtureProtocolInvocation) ||
+      new Set(invocations.map((invocation) => invocation.invocationId)).size !== invocations.length
+    ) {
+      return invalid(
+        "fixture.protocol-invocations-invalid",
+        "protocol-invocations.jsonl contains an invalid invocation",
+      );
+    }
+    return invocations;
+  } catch {
+    return invalid("fixture.protocol-invocations-invalid", "protocol-invocations.jsonl is malformed");
+  }
+}
+
+function isFixtureProtocolInvocation(value: unknown): value is FixtureProtocolInvocation {
+  if (typeof value !== "object" || value === null) {
+    return false;
+  }
+  const invocation = value as Partial<FixtureProtocolInvocation>;
+  const common =
+    invocation.schemaVersion === 1 &&
+    typeof invocation.invocationId === "string" &&
+    invocation.invocationId.length > 0 &&
+    typeof invocation.at === "string" &&
+    !Number.isNaN(Date.parse(invocation.at)) &&
+    typeof invocation.workspaceFingerprint === "string" &&
+    invocation.workspaceFingerprint.length > 0;
+  if (!common) {
+    return false;
+  }
+  return (
+    (invocation.command === "evidence" &&
+      (invocation.stage === "fix" || invocation.stage === "resume") &&
+      typeof invocation.evidenceId === "string" &&
+      invocation.evidenceId.length > 0) ||
+    (invocation.command === "complete" &&
+      invocation.stage === "resume" &&
+      typeof invocation.transitionId === "string" &&
+      invocation.transitionId.length > 0)
+  );
+}
+
+function isEvidenceInvocation(
+  invocation: FixtureProtocolInvocation | undefined,
+): invocation is Extract<FixtureProtocolInvocation, { command: "evidence" }> {
+  return invocation?.command === "evidence";
+}
+
+function isCompletionInvocation(
+  invocation: FixtureProtocolInvocation | undefined,
+): invocation is Extract<FixtureProtocolInvocation, { command: "complete" }> {
+  return invocation?.command === "complete";
 }
 
 function pinRunContract(runPath: string): PinnedRunContract | ActionFixtureFailure {
@@ -648,6 +950,7 @@ function collectArtifacts(outputDir: string, workspace: string, runPath: string)
 function retainedArtifactPaths(workspace: string, runPath: string): string[] {
   const retained = [
     join(workspace, "FIXTURE.md"),
+    join(workspace, "fixture-protocol.ts"),
     join(workspace, "src", "release-label.ts"),
     join(workspace, "fixture-tests", "release-label.fixture.ts"),
     join(workspace, "fixture-state.txt"),
@@ -656,6 +959,7 @@ function retainedArtifactPaths(workspace: string, runPath: string): string[] {
     retained.push(
       join(runPath, "run.json"),
       join(runPath, "transitions.jsonl"),
+      join(runPath, "protocol-invocations.jsonl"),
       ...filesBelowIfSafe(workspace, join(runPath, "evidence")),
       ...filesBelowIfSafe(workspace, join(runPath, "logs")),
     );

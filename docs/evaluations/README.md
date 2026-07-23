@@ -60,7 +60,23 @@ bun run evaluate:action-fixture -- --output-dir /tmp/extremely-hardcore-action-f
 
 `--output-dir` is required and must name a directory that does not already exist. The command writes a JSON `ActionFixtureResult` to stdout, retains the copied fixture workspace and `report.json` under that directory, and exits zero only when the result status is `passed`.
 
-This command runs the deterministic reference executor to prove the local fixture runner, its stale-evidence intervention, and the guarded completion path. It is not a provider evaluation: it does not invoke Codex, Claude, another model API, or a staged provider adapter. A passing report proves only the bounded local reference path, not agent capability or provider performance.
+This command runs the deterministic reference executor to prove the local fixture runner, its stale-evidence intervention, and the guarded completion path. The reference executor uses the copied fixture's immutable `fixture-protocol.ts` commands, which retain `protocol-invocations.jsonl` linking the fixed and resumed evidence commands to the final completion transition. The runner validates that structural ledger and retains both artifacts in the report.
+
+The ledger proves that the fixture command surface is executable and that its local artifacts link correctly. It does not prove which external process invoked the commands, agent identity, network isolation, agent capability, or provider performance. No provider is invoked by this command; provider-side provenance correlation remains future adapter work.
+
+## Codex Action-Fixture Adapter
+
+The experimental Codex adapter executes the bounded fixture's two stages with the local Codex CLI:
+
+```bash
+bun run evaluate:codex-action-fixture -- \
+  --output-dir ./codex-action-fixture-artifacts \
+  --model gpt-5.6-sol
+```
+
+`--output-dir` and `--model` are required. The directory must not exist. The adapter requests one `codex exec` process for each fixture stage with `--sandbox workspace-write`, `--ephemeral`, `--cd`, `--json`, and `--output-last-message`. It writes provider-side prompts, invocation metadata, raw stdout event streams, stderr, and any emitted final message under `provider/fix/` and `provider/resume/`, outside the copied fixture workspace. `codex-action-fixture-report.json` records SHA-256 digests for these files and nests the runner-owned fixture result. It rejects unsafe stage paths and revalidates every retained provider digest before report emission; `provenance.status: "invalid"` makes the command fail even when the independent fixture score passed.
+
+The fixture runner alone decides pass or fail. Raw provider events are retained for review but are not parsed as command attribution or fixture evidence. The recorded sandbox setting is requested configuration, not proof of sandbox enforcement or no-network execution. This command does not prove agent identity, skill loading, provider capability, protocol compliance, or benchmark performance. Review and redact the output directory before sharing it.
 
 ## Future Agent Attempts
 

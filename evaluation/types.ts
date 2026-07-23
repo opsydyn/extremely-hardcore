@@ -127,6 +127,34 @@ export type ActionFixtureResult = {
   failures: ActionFixtureFailure[];
 };
 
+export type CodexActionFixtureStageProvenance = {
+  stage: ActionFixtureStage;
+  startedAt: string;
+  durationMs: number;
+  exitCode: number;
+  command: string[];
+  artifacts: ArtifactDigest[];
+  failure?: string;
+};
+
+export type CodexActionFixtureAdapterReport = {
+  schemaVersion: 1;
+  adapter: {
+    id: "codex-cli-action-fixture";
+    version: string;
+    model: string;
+    sandbox: "workspace-write";
+    rawEventCapture: "stdout-json";
+  };
+  fixture: ActionFixtureResult;
+  fixtureReport: ArtifactDigest;
+  stages: CodexActionFixtureStageProvenance[];
+  provenance: {
+    status: "complete" | "invalid";
+    failures: string[];
+  };
+};
+
 export type CodexAttemptProvenance = {
   scenarioId: string;
   startedAt: string;

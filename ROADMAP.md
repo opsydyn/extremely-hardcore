@@ -92,7 +92,7 @@ The roadmap is working when:
 
 **Estimated effort:** 2 weeks
 
-**Status:** The 20-scenario corpus, seven-scenario deterministic runner, declared no-skill baseline assessor, and Codex artifact/provenance adapter are implemented. Three corrected, model-pinned Codex repetitions per declared mode produced stable 13/13 strict classification results in both modes; this validates repeatable mechanics but is non-discriminative and cannot support a skills-effect claim. The first deterministic, provider-neutral action-level fixture reference proof and the decision-challenge gate are implemented. The live provider adapter is held pending fixture self-sufficiency; provider execution, a second provider, comparison policy, and regression thresholds remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
+**Status:** The 20-scenario corpus, seven-scenario deterministic runner, declared no-skill baseline assessor, and read-only Codex artifact/provenance adapter are implemented. Three corrected, model-pinned Codex repetitions per declared mode produced stable 13/13 strict classification results in both modes; this validates repeatable mechanics but is non-discriminative and cannot support a skills-effect claim. The first deterministic, provider-neutral action-level fixture now has immutable fixture-local evidence and completion commands plus a validated structural invocation ledger. An experimental two-stage Codex action-fixture adapter retains digest-validated raw provider-process artifacts beside that ledger, without using them as scoring input. This proves local command executability and reviewable requested-process provenance, not agent identity, command ownership, sandbox or network enforcement, provider compliance, or provider performance. No live provider action-fixture run has been used as evidence. A second provider, comparison policy, and regression thresholds remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
 
 **Outcome:** Measure whether agents actually obey the completion protocol under pressure.
 
@@ -194,6 +194,30 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 - Cryptographic signing or hostile tamper resistance.
 - Full lifecycle implementation before the completion gate is dogfooded.
 - More engineering skills merely to increase catalogue size.
+
+## Deferred, Gated Initiatives
+
+### Governed Skill Evolution Sandbox (SkillOpt-Informed)
+
+**Status:** Backlogged. No optimiser integration or autonomous skill adoption is approved.
+
+**Outcome:** Evaluate bounded candidate edits to nominated skill documents using independent behavioural evidence, then promote only human-reviewed improvements.
+
+**Preconditions:**
+
+- The action fixture provides an immutable fixture-local protocol CLI, a structural invocation ledger, and digest-validated retained provider-process artifacts; command ownership remains unproven.
+- Multiple action-level fixtures support independent train, selection, and hidden holdout splits.
+- Baseline, repeated provider runs, and critical-regression policy are defined before any comparative claim.
+
+**Guardrails:**
+
+- The evaluator, policy, promotion record, and protected skills remain Bun-native.
+- `change-contract`, `architecture-decision`, `decision-challenge`, `test-first-implementation`, and `evidence-ledger` are immutable to candidate generation.
+- An external optimiser, including SkillOpt, is optional and offline; it can propose bounded candidate diffs but cannot adopt them.
+- Candidate promotion requires independent held-out results, no critical integrity regression, a decision challenge where triggered, human review, and an evidence ledger.
+- Do not mine or send session transcripts to an external provider by default.
+
+**First eventual slice:** Build a Bun candidate-skill sandbox that evaluates one non-protected skill copy against the fixture suite and emits a reviewable promotion record. Consider SkillOpt only as one candidate proposer after the evaluator is credible.
 
 ## Decision Gates
 

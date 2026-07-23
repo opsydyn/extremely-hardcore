@@ -1,8 +1,6 @@
+import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { captureEvidence } from "../protocol/evidence";
-import { transitionToComplete } from "../protocol/transition";
-import { computeWorkspaceFingerprint } from "../protocol/workspace-fingerprint";
 import type { ActionFixtureExecutor } from "./types";
 
 export function createReferenceBoundedBugFixExecutor(): ActionFixtureExecutor {
@@ -19,19 +17,17 @@ export function createReferenceBoundedBugFixExecutor(): ActionFixtureExecutor {
       );
     }
 
-    await captureEvidence({
-      runPath: request.runPath,
-      criterionId: request.criterionId,
-      command: request.requiredTestCommand,
-    });
+    runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", request.stage]);
 
     if (request.stage === "resume") {
-      const transition = transitionToComplete(request.runPath, {
-        workspaceFingerprint: computeWorkspaceFingerprint(request.workspace),
-      });
-      if (!transition.ok) {
-        throw new Error(transition.errors.map((error) => error.code).join(", "));
-      }
+      runFixtureProtocolCommand(request.workspace, ["complete", "--stage", "resume"]);
     }
   };
+}
+
+function runFixtureProtocolCommand(workspace: string, args: string[]): void {
+  execFileSync("bun", ["fixture-protocol.ts", ...args], {
+    cwd: workspace,
+    stdio: "pipe",
+  });
 }

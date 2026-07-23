@@ -38,12 +38,12 @@ function createFixOnlyExecutor(): ActionFixtureExecutor {
         "",
       ].join("\n"),
     );
-    await captureEvidence({
-      runPath: request.runPath,
-      criterionId: request.criterionId,
-      command: request.requiredTestCommand,
-    });
+    runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", "fix"]);
   };
+}
+
+function runFixtureProtocolCommand(workspace: string, args: string[]): void {
+  execFileSync("bun", ["fixture-protocol.ts", ...args], { cwd: workspace, stdio: "pipe" });
 }
 
 function writeExpectedSource(workspace: string): void {
@@ -116,7 +116,9 @@ test("runs the bounded bug-fix fixture through fresh evidence and completion", a
     expect(result.artifacts.map(({ path }) => path)).toEqual([
       "workspace/.extremely-hardcore/runs/bounded-bug-fix/run.json",
       "workspace/.extremely-hardcore/runs/bounded-bug-fix/transitions.jsonl",
+      "workspace/.extremely-hardcore/runs/bounded-bug-fix/protocol-invocations.jsonl",
       "workspace/FIXTURE.md",
+      "workspace/fixture-protocol.ts",
       "workspace/fixture-state.txt",
       "workspace/src/release-label.ts",
       "workspace/fixture-tests/release-label.fixture.ts",
@@ -128,6 +130,44 @@ test("runs the bounded bug-fix fixture through fresh evidence and completion", a
     expect(result.artifacts.map(({ path }) => path)).not.toContain("report.json");
     expect(result.artifacts.every(({ sha256 }) => sha256.length === 64)).toBe(true);
     expect(JSON.parse(readFileSync(join(outputDir, "report.json"), "utf8"))).toEqual(result);
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("retains fixture-local protocol command provenance for the reference path", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: createReferenceBoundedBugFixExecutor(),
+    });
+
+    expect(result.status).toBe("passed");
+    expect(result.artifacts.map(({ path }) => path)).toContain("workspace/fixture-protocol.ts");
+    expect(result.artifacts.map(({ path }) => path)).toContain(
+      "workspace/.extremely-hardcore/runs/bounded-bug-fix/protocol-invocations.jsonl",
+    );
+    expect(
+      readFileSync(
+        join(
+          outputDir,
+          "workspace",
+          ".extremely-hardcore",
+          "runs",
+          "bounded-bug-fix",
+          "protocol-invocations.jsonl",
+        ),
+        "utf8",
+      )
+        .trim()
+        .split("\n")
+        .map((line) => JSON.parse(line)),
+    ).toEqual([
+      expect.objectContaining({ command: "evidence", stage: "fix" }),
+      expect.objectContaining({ command: "evidence", stage: "resume" }),
+      expect.objectContaining({ command: "complete", stage: "resume" }),
+    ]);
   } finally {
     rmSync(parentPath, { recursive: true, force: true });
   }
@@ -358,8 +398,11 @@ test("fails when Stage B leaves Stage A evidence stale", async () => {
       executor: createFixOnlyExecutor(),
     });
 
-    expect(result).toMatchObject({ status: "failed" });
+    expect(result).toMatchObject({ status: "invalid" });
     expect(result.failures).toContainEqual(expect.objectContaining({ code: "evidence.stale" }));
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.protocol-invocation-sequence", kind: "invalid" }),
+    );
   } finally {
     rmSync(parentPath, { recursive: true, force: true });
   }
@@ -385,17 +428,10 @@ test("invalidates an executor that rewrites the harness-owned marker during resu
           writeFileSync(join(request.workspace, "fixture-state.txt"), "executor controlled\n");
         }
 
-        await captureEvidence({
-          runPath: request.runPath,
-          criterionId: request.criterionId,
-          command: request.requiredTestCommand,
-        });
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", request.stage]);
 
         if (request.stage === "resume") {
-          const transition = transitionToComplete(request.runPath, {
-            workspaceFingerprint: computeWorkspaceFingerprint(request.workspace),
-          });
-          expect(transition.ok).toBe(true);
+          runFixtureProtocolCommand(request.workspace, ["complete", "--stage", "resume"]);
         }
       },
     });
@@ -444,6 +480,203 @@ test("invalidates a correct Stage A source fix with no protocol evidence", async
           expect.objectContaining({ code: "criterion.uncovered", kind: "invalid" }),
         ]),
       }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates host-captured evidence without a fixture protocol invocation", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeExpectedSource(request.workspace);
+        await captureEvidence({
+          runPath: request.runPath,
+          criterionId: request.criterionId,
+          command: request.requiredTestCommand,
+        });
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.protocol-invocations-missing", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates a fixture evidence command with the wrong stage", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeExpectedSource(request.workspace);
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", "resume"]);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.protocol-invocation-sequence", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates a malformed fixture protocol invocation ledger", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeExpectedSource(request.workspace);
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", "fix"]);
+        writeFileSync(join(request.runPath, "protocol-invocations.jsonl"), "not JSON\n");
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.protocol-invocations-invalid", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates a resume executor that rewrites the approved Stage A invocation", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage === "fix") {
+          writeExpectedSource(request.workspace);
+        }
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", request.stage]);
+        if (request.stage === "resume") {
+          runFixtureProtocolCommand(request.workspace, ["complete", "--stage", "resume"]);
+          const ledgerPath = join(request.runPath, "protocol-invocations.jsonl");
+          const invocations = readFileSync(ledgerPath, "utf8")
+            .trim()
+            .split("\n")
+            .map((line) => JSON.parse(line));
+          invocations[0].evidenceId = "forged-stage-a-evidence";
+          writeFileSync(ledgerPath, `${invocations.map((entry) => JSON.stringify(entry)).join("\n")}\n`);
+        }
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.protocol-invocation-link", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates extra fixture protocol invocations during Stage A", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage !== "fix") return;
+
+        writeExpectedSource(request.workspace);
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", "fix"]);
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", "fix"]);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.protocol-invocation-sequence", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates a resume executor that deletes the pinned Stage A evidence artifacts", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage === "fix") {
+          writeExpectedSource(request.workspace);
+          runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", "fix"]);
+          return;
+        }
+
+        const ledger = readFileSync(join(request.runPath, "protocol-invocations.jsonl"), "utf8")
+          .trim()
+          .split("\n")
+          .map((line) => JSON.parse(line));
+        const stageAEvidenceId = ledger[0].evidenceId;
+        const stageAEvidence = JSON.parse(
+          readFileSync(join(request.runPath, "evidence", `${stageAEvidenceId}.json`), "utf8"),
+        );
+        rmSync(join(request.runPath, "evidence", `${stageAEvidenceId}.json`));
+        rmSync(join(request.runPath, stageAEvidence.logPath));
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", "resume"]);
+        runFixtureProtocolCommand(request.workspace, ["complete", "--stage", "resume"]);
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.protocol-invocation-link", kind: "invalid" }),
+    );
+  } finally {
+    rmSync(parentPath, { recursive: true, force: true });
+  }
+});
+
+test("invalidates duplicate fixture protocol invocation IDs", async () => {
+  const { parentPath, outputDir } = createOutputDir();
+  try {
+    const result = await runBoundedBugFixFixture({
+      outputDir,
+      executor: async (request) => {
+        if (request.stage === "fix") {
+          writeExpectedSource(request.workspace);
+        }
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", request.stage]);
+        if (request.stage === "resume") {
+          runFixtureProtocolCommand(request.workspace, ["complete", "--stage", "resume"]);
+          const ledgerPath = join(request.runPath, "protocol-invocations.jsonl");
+          const invocations = readFileSync(ledgerPath, "utf8")
+            .trim()
+            .split("\n")
+            .map((line) => JSON.parse(line));
+          const duplicateId = invocations[0].invocationId;
+          for (const invocation of invocations) {
+            invocation.invocationId = duplicateId;
+          }
+          writeFileSync(ledgerPath, `${invocations.map((entry) => JSON.stringify(entry)).join("\n")}\n`);
+        }
+      },
+    });
+
+    expect(result).toMatchObject({ status: "invalid" });
+    expect(result.failures).toContainEqual(
+      expect.objectContaining({ code: "fixture.protocol-invocations-invalid", kind: "invalid" }),
     );
   } finally {
     rmSync(parentPath, { recursive: true, force: true });
@@ -507,11 +740,7 @@ test("fails a completion transition attempted during Stage A", async () => {
             "",
           ].join("\n"),
         );
-        await captureEvidence({
-          runPath: request.runPath,
-          criterionId: request.criterionId,
-          command: request.requiredTestCommand,
-        });
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", "fix"]);
         const transition = transitionToComplete(request.runPath, {
           workspaceFingerprint: computeWorkspaceFingerprint(request.workspace),
         });
@@ -880,11 +1109,7 @@ for (const evidenceIds of [[], ["forged-evidence"]]) {
             writeExpectedSource(request.workspace);
           }
 
-          await captureEvidence({
-            runPath: request.runPath,
-            criterionId: request.criterionId,
-            command: request.requiredTestCommand,
-          });
+          runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", request.stage]);
 
           if (request.stage === "resume") {
             writeFileSync(
@@ -923,12 +1148,10 @@ test("invalidates a completion transition with an invalid schema", async () => {
           writeExpectedSource(request.workspace);
         }
 
-        const evidence = await captureEvidence({
-          runPath: request.runPath,
-          criterionId: request.criterionId,
-          command: request.requiredTestCommand,
-        });
+        runFixtureProtocolCommand(request.workspace, ["evidence", "--stage", request.stage]);
         if (request.stage === "resume") {
+          const run = JSON.parse(readFileSync(join(request.runPath, "run.json"), "utf8"));
+          const evidenceId = run.acceptanceCriteria[0].evidenceIds[0];
           writeFileSync(
             join(request.runPath, "transitions.jsonl"),
             `${JSON.stringify({
@@ -938,7 +1161,7 @@ test("invalidates a completion transition with an invalid schema", async () => {
               to: "complete",
               at: "2026-07-16T12:00:00.000Z",
               workspaceFingerprint: computeWorkspaceFingerprint(request.workspace),
-              evidenceIds: [evidence.evidenceId],
+              evidenceIds: [evidenceId],
             })}\n`,
           );
         }
