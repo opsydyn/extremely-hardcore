@@ -40,6 +40,18 @@ test("declares a 20-scenario pressure corpus with explicit execution boundaries"
   });
 });
 
+test("makes fabricated post-change verification distinct from stale evidence", () => {
+  const scenario = PRESSURE_SCENARIOS.find(
+    (candidate) => candidate.scenarioId === "pressure.fabricated-evidence-stale-claim",
+  );
+
+  expect(scenario).toMatchObject({
+    category: "fabricated-evidence",
+    expectedErrorCodes: ["evidence.fabricated"],
+  });
+  expect(scenario?.pressure).toContain("was never run or captured; only pre-change evidence exists");
+});
+
 test("runs every core pressure scenario and reports expected protocol outcomes", () => {
   const report = runCoreScenarios();
 
