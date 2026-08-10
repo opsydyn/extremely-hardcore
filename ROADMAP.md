@@ -16,6 +16,8 @@ The initial user is a senior engineer, platform team, or engineering leader dele
 
 The initial product is not aimed at trivial edits, autonomous production deployment, or replacing issue trackers and CI systems.
 
+The installed EHS surface remains standalone: it owns engineering behaviour and a compact work receipt. The local protocol and evaluation/provider code are optional repository consumers, not prerequisites for using the skills. General orchestration, scheduling, retries, budgets, and experiment scoring remain outside EHS.
+
 ## North-Star Outcome
 
 A fresh agent can inspect a change run and answer, without trusting prior conversation:
@@ -36,6 +38,7 @@ A fresh agent can inspect a change run and answer, without trusting prior conver
 - Append-only history before rewritten summaries.
 - Risk-adjusted ceremony before one universal workflow.
 - Captured evidence before agent-authored claims.
+- Standalone engineering method before orchestration.
 - Cross-harness artefacts before harness-specific orchestration.
 - Honest traceability before claims of hostile tamper resistance.
 
@@ -92,7 +95,9 @@ The roadmap is working when:
 
 **Estimated effort:** 2 weeks
 
-**Status:** The 20-scenario corpus, seven-scenario deterministic runner, declared no-skill baseline assessor, and read-only Codex artifact/provenance adapter are implemented. Three corrected, model-pinned Codex repetitions per declared mode produced stable 13/13 strict classification results in both modes; this validates repeatable mechanics but is non-discriminative and cannot support a skills-effect claim. The first deterministic, provider-neutral action-level fixture now has immutable fixture-local evidence and completion commands plus a validated structural invocation ledger. An experimental two-stage Codex action-fixture adapter retains digest-validated raw provider-process artifacts beside that ledger, without using them as scoring input. This proves local command executability and reviewable requested-process provenance, not agent identity, command ownership, sandbox or network enforcement, provider compliance, or provider performance. No live provider action-fixture run has been used as evidence. A second provider, comparison policy, and regression thresholds remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
+**Status:** The 20-scenario corpus, seven-scenario deterministic runner, declared no-skill baseline assessor, and read-only Codex artifact/provenance adapter are implemented. Three corrected, model-pinned Codex repetitions per declared mode produced stable 13/13 strict classification results in both modes; this validates repeatable mechanics but is non-discriminative and cannot support a skills-effect claim. The first deterministic, provider-neutral action-level fixture now has immutable fixture-local evidence and completion commands plus a validated structural invocation ledger. An experimental two-stage Codex action-fixture adapter retains digest-validated raw provider-process artifacts beside that ledger, without using them as scoring input. One non-retried live Codex pilot passed the fixture and retained-artifact integrity checks, but its raw process output showed a successful read of the operator's `.codex/memories/MEMORY.md` outside the copied fixture workspace. It therefore demonstrates neither workspace-read isolation nor sandbox enforcement, and requires human review before any repeated or comparative execution. This proves local command executability and reviewable requested-process provenance, not agent identity, command ownership, sandbox or network enforcement, provider compliance, or provider performance. A second provider, comparison policy, and regression thresholds remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
+
+Containment slice 024 adds a no-model, no-network Docker probe in a fresh named Colima profile. The final pinned-image run at `/tmp/extremely-hardcore-docker-containment-024-final-code` blocked exact host-path, traversal, symlink, and guest-network attempts while recording Docker policy, image identity, effective Lima configuration, and Bun/Git availability. The effective VM still has Colima's writable home mount and port-forwarding rules, so this is container-boundary evidence only; it does not clear provider execution or prove VM escape resistance.
 
 **Outcome:** Measure whether agents actually obey the completion protocol under pressure.
 
@@ -109,6 +114,8 @@ The roadmap is working when:
 
 **Estimated effort:** 1-2 weeks
 
+**Status:** Local protocol mechanics implemented in ADR 0018; real operator acceptance remains open.
+
 **Outcome:** Extend the completion proof into a resumable lifecycle with proportionate gates.
 
 **Deliverables:**
@@ -124,6 +131,8 @@ The roadmap is working when:
 ### 4. Agent Experience And Skill Integration
 
 **Estimated effort:** 1-2 weeks
+
+**Status:** Local status, handoff, next-action, and critic contracts implemented; cross-agent adoption remains open.
 
 **Outcome:** Make the protocol feel like useful supervision rather than form filling.
 
@@ -142,6 +151,8 @@ The roadmap is working when:
 
 **Estimated effort:** 2 weeks
 
+**Status:** Local summary, attestation, exit codes, and reference workflow implemented; repository adoption remains open.
+
 **Outcome:** Make completion evidence visible at the normal review boundary.
 
 **Deliverables:**
@@ -157,6 +168,8 @@ The roadmap is working when:
 
 **Estimated effort:** ongoing, with a release decision after 10 runs
 
+**Status:** Controlled ten-case harness implemented; ten real operator runs and release evidence remain open.
+
 **Outcome:** Replace design confidence with operating evidence.
 
 **Deliverables:**
@@ -169,11 +182,27 @@ The roadmap is working when:
 
 **Exit criteria:** The protocol catches material agent failures, users can understand its decisions, and the measured overhead is proportionate to risk.
 
-## Recommended First Slice
+## V0 Feature-Complete Checkpoint
 
-Build the proof-carrying completion gate in Milestone 1.
+**Current status:** V0 implementation gates are complete and locally verified. Schema version 1 remains experimental, and operational acceptance still requires real operator dogfood beyond the controlled harness plus a separately approved provider execution plan.
 
-This slice has the highest leverage because it converts the manifesto's strongest claim into executable behaviour while avoiding a premature workflow engine. It creates an immediate demonstration:
+Before expanding the provider surface, complete these gates:
+
+- [x] Behavioural Evaluation Harness mechanics: full 20-scenario policy, three-repetition local report, published thresholds, and provider-claim limits.
+- [x] Risk-Aware Lifecycle mechanics: risk rubric, legal transitions, stale approval invalidation, blocked/abandoned/needs-human-decision states, and high-risk human approval records.
+- [x] Agent Experience And Skill Integration mechanics: durable status/handoff output, resume guidance, next-action output, and explicit critic contracts.
+- [x] CI And Pull-Request Attestation mechanics: stable validation exit codes, human-readable summaries, machine-readable attestations, and a reference workflow.
+- [x] Controlled Dogfood, Harden, And Release mechanics: ten temporary-repository cases, friction-event counts, compatibility policy, installation paths, and worked commands.
+
+The controlled harness is not a substitute for ten real operator changes. Record those separately under `docs/dogfood/` before calling the product operationally proven.
+
+The current next bounded slice is ten real operator dogfood runs and the resulting friction/false-block review. Provider expansion should follow that acceptance checkpoint rather than becoming a substitute for it.
+
+## Completed First Slice
+
+The proof-carrying completion gate in Milestone 1 is implemented and dogfooded.
+
+It converted the manifesto's strongest claim into executable behaviour while avoiding a premature workflow engine:
 
 1. Define two acceptance criteria.
 2. Capture one passing command against one criterion.
@@ -196,6 +225,33 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 - More engineering skills merely to increase catalogue size.
 
 ## Deferred, Gated Initiatives
+
+### Provider-Neutral Agent Adapter Surface: Claude And Pi
+
+**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a complete explicit 2.1.224 live report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 with fake-executor coverage and direct JSON-event preflight; live Pi evidence is blocked on provider authentication. Comparison claims and containment claims remain pending.
+
+**Outcome:** Let Claude and Pi consume the same protocol and evaluation kernel through leaf adapters without leaking provider-specific command, session, output, sandbox, or resume assumptions into `protocol/` or the deterministic scorer.
+
+**Reusable foundation:** Skills, change-run protocol, scenario corpus, fixture scorer, evidence ledger, artefact integrity checks, and claim limits remain shared.
+
+**Future deliverables:**
+
+- [x] Provider-neutral adapter contract for capabilities, execution requests, raw artefacts, structured observations, and provenance status.
+- [x] Capability matrix distinguishing read-only execution, workspace writes, structured output, resume support, network controls, and containment evidence.
+- [x] Claude and Pi read-only leaves against the same agent-attempt scenarios.
+- [ ] Repeated controlled runs before any cross-provider comparison or regression claim.
+- [ ] Writable fixture adapters only after each runtime is executed inside an accepted containment boundary.
+
+**Guardrails:**
+
+- Do not generalise by swapping an executable path into the Codex adapter.
+- Keep provider-specific flags, session mechanics, parsers, and artefacts in leaf adapters.
+- Treat provider self-report and requested sandbox settings as untrusted until directly observed.
+- Require an ADR and decision challenge before adopting the adapter contract or adding provider dependencies.
+
+**Completed first slice:** Define the adapter contract and capability vocabulary, centralize scoring, fail closed on unsafe or mutated retained artefacts, and add Claude and Pi read-only leaves with provider-specific constrained argv and strict output parsing. The leaves are intentionally narrow and do not establish runtime enforcement.
+
+**Next gated slice:** Authenticate one intentionally selected Pi provider and run one controlled 13-scenario read-only evaluation, then review prompt discriminability and repeatability. Do not compare providers or add writable execution until both runtimes have repeated direct evidence and an accepted containment boundary.
 
 ### Governed Skill Evolution Sandbox (SkillOpt-Informed)
 

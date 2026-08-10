@@ -48,6 +48,18 @@ Still use judgement. If the one-line change is in auth, billing, schema migratio
 3. For risky work, add `architecture-critic` and `delivery-critic` review roles.
 4. Keep scope small. If the work grows, stop and update the change contract.
 
+## durable run handoff
+
+When a run path already exists, inspect it before relying on conversation history:
+
+```bash
+bun run eh status <run-path>
+```
+
+Read `state`, `risk`, `criteria`, `blockers`, `validation`, and `nextAction`. Continue only from the recorded state. Use `summary` for a human review handoff, and record a reason when moving to `blocked`, `needs-human-decision`, or `abandoned`.
+
+High-risk runs require a human approval recorded against the current workspace fingerprint before `complete`. Approval is a gate record, not a claim that the local workspace is tamper-resistant.
+
 ## quality bar
 
 - Scope is explicit before edits.

@@ -1,0 +1,25 @@
+name: Extremely Hardcore run gate
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_path:
+        description: Path to the committed change run directory
+        required: true
+        type: string
+
+jobs:
+  validate-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run eh ci "${{ inputs.run_path }}" eh-artifacts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: extremely-hardcore-attestation
+          path: eh-artifacts

@@ -50,6 +50,18 @@ The corpus covers scope drift, fabricated evidence, stale state, unsafe commands
 
 This is a deterministic protocol harness, not an agent benchmark. It does not invoke Codex, Claude, or any model API; it does not establish baseline comparisons; and it does not apply CI merge thresholds. Later adapters must preserve this result vocabulary rather than parse natural-language output.
 
+## Full-corpus policy
+
+Run the local policy-backed aggregate with:
+
+```bash
+bun run evaluate:full
+```
+
+The policy requires all seven deterministic scenarios and all thirteen structured agent-attempt scenarios for every repetition, requires three repetitions by default, and sets a 100% pass threshold with zero critical failures. Missing or duplicate attempt coverage fails closed. The default input is the checked-in declared fixture at `tests/evaluation/fixtures/declared-baseline.json`; it proves assessor and repetition mechanics only. It is not a provider run, a skills-effect comparison, or a regression claim.
+
+The machine-readable report records the policy, every repetition, deterministic results, agent assessments, and a summary. A future provider adapter may supply attempts, but it must retain raw provenance separately and cannot change this scorer.
+
 ## Action Fixture Reference Proof
 
 Run the bounded action-fixture reference proof from the repository root:
@@ -105,6 +117,50 @@ bun run evaluate:baseline -- path/to/baseline.json
 The input must declare `"kind": "without-extremely-hardcore"` and provide exactly one structured `AgentAttempt` for every one of the 13 `agent-attempt` scenarios. The command emits JSON containing canonical per-scenario assessments and `{ total, passed, failed, invalid }` summary counts. It rejects missing, duplicate, deterministic, or unknown scenarios with a non-zero exit.
 
 The declaration is a caller assertion, not verified provenance. This command neither invokes an agent nor proves that a skill was absent; prompt configuration, transcripts, and external-harness details remain future adapter responsibilities.
+
+## Vendor-neutral read-only adapter contract
+
+The shared `evaluation/agent-adapter.ts` contract is the first provider-neutral adapter slice. It accepts only scenario identity, pressure text, workspace, and caller-owned artifact directories. It does not pass expected answers to adapters. The runner owns coverage validation, calls the existing `assessAgentAttempt` scorer, and checks retained artifact paths, symlink boundaries, SHA-256 digests, and byte counts.
+
+Capability descriptors use explicit evidence levels: `unknown`, `unsupported`, `declared`, `observed`, and `attested`. These levels are metadata, not boolean support or enforcement proof. The report's claim limits explicitly exclude provider identity, command ownership, sandbox, network, resume, containment, benchmark, and comparison claims.
+
+The contract is exercised with a deterministic fake adapter and experimental Claude and Pi leaves. The shared runner remains provider-free: it does not invoke Claude, Pi, Codex, or any provider executable directly. A provider adapter must remain a leaf implementation for command construction, prompt/session behaviour, output parsing, runtime metadata, and raw artefact capture.
+
+## Claude read-only adapter
+
+Run the 13 behavioural scenarios through the locally installed Claude Code CLI with:
+
+```bash
+bun run evaluate:claude -- \
+  --output-dir ./claude-evaluation-artifacts \
+  --workspace /path/to/target-workspace \
+  --model sonnet \
+  --claude-path "$(command -v claude)"
+```
+
+`--output-dir`, `--workspace`, and `--model` are required. The output directory must not exist. `--claude-path` is optional, but is recommended when running through Bun because a repo-local `node_modules/.bin/claude` can take precedence over the system executable. The adapter invokes the selected Claude executable once per scenario with `--print`, `--output-format json`, inline `--json-schema`, `--no-session-persistence`, `--permission-mode plan`, and `--tools ""`. The model and executable path are caller-declared configuration, not independent proof of provider-side routing or identity.
+
+Each scenario retains the prompt, schema, raw stdout, stderr, invocation metadata, and normalized response beneath `scenarios/<scenario-id>/`. The shared runner validates coverage, applies the canonical assessor, and rechecks every returned artifact's relative path, symlink boundary, SHA-256 digest, and byte count. Failed or malformed provider output is retained on disk but produces `provenance.status: "invalid"`.
+
+The adapter accepts only Claude structured output or a JSON-encoded `result` field containing the normalized shape. It rejects free-form output and observation codes outside the global vocabulary. The requested tool and permission settings are not enforcement evidence; this read-only slice does not establish workspace isolation, network control, resume behaviour, containment, command ownership, provider identity, or provider performance. Review and redact artifacts before sharing them.
+
+## Pi read-only adapter
+
+Run the 13 behavioural scenarios through the installed Pi CLI with an explicitly selected provider/model:
+
+```bash
+bun run evaluate:pi -- \
+  --output-dir ./pi-evaluation-artifacts \
+  --workspace /path/to/target-workspace \
+  --model provider/model-id \
+  --pi-path "$(command -v pi)"
+```
+
+Replace `provider/model-id` with a model available to the authenticated Pi provider. `--output-dir`, `--workspace`, and `--model` are required; the output directory must not exist. The adapter invokes Pi once per scenario with `--mode json`, `--print`, `--no-session`, `--no-tools`, `--no-extensions`, `--no-skills`, `--no-prompt-templates`, `--no-themes`, `--no-context-files`, `--no-approve`, and `--offline`. The executable path and model are caller-declared configuration, not independent proof of provider identity or routing.
+
+Each scenario retains the prompt, raw JSONL stdout, stderr, invocation metadata, selected final assistant message, and normalized response beneath `scenarios/<scenario-id>/`. The shared runner validates coverage, applies the canonical assessor, and rechecks every returned artifact's relative path, symlink boundary, SHA-256 digest, and byte count. The leaf parses every non-empty stdout line as JSON, selects the final assistant `message_end` event, and accepts only JSON in its text content. It rejects prose, code fences, missing final assistant text, malformed JSONL, and unsupported codes.
+
+Pi's JSON mode is structured transport, not schema-constrained model output. `--offline` disables Pi startup network operations only; it does not control model-provider traffic. This slice does not establish workspace isolation, network control, sandbox enforcement, containment, command ownership, provider identity, resume behaviour, provider performance, or comparison claims. Review and redact artifacts before sharing them.
 
 ## Codex adapter
 

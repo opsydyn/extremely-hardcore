@@ -1,6 +1,8 @@
 import { createHash } from "node:crypto";
 import { lstatSync, readFileSync } from "node:fs";
 import { basename, isAbsolute, join, normalize, relative, resolve, sep } from "node:path";
+import { readApprovals } from "./approvals";
+import { classifyRisk } from "./risk";
 import type { EvidenceRecord, RunDefinition, ValidationError, ValidationResult } from "./types";
 
 export type CompletionValidationOptions = {
@@ -103,6 +105,34 @@ export function validateCompletion(
       errors.push({
         code: "blocker.open",
         message: `${blocker.id} is still open`,
+      });
+    }
+  }
+
+  if (run.riskAssessment && classifyRisk(run.riskAssessment) !== run.risk) {
+    errors.push({
+      code: "risk.mismatch",
+      message: `risk assessment classifies this run as ${classifyRisk(run.riskAssessment)}, not ${run.risk}`,
+    });
+  }
+
+  if (run.risk === "high") {
+    const approvals = readApprovals(runPath);
+    const approval = approvals.at(-1);
+    if (!approval) {
+      errors.push({
+        code: "approval.required",
+        message: "high-risk completion requires a human approval",
+      });
+    } else if (approval.gate !== "complete" || approval.workspaceFingerprint !== options.workspaceFingerprint) {
+      errors.push({
+        code: "approval.stale",
+        message: `${approval.approvalId} approval belongs to a different workspace fingerprint or gate`,
+      });
+    } else if (approval.decision !== "approved") {
+      errors.push({
+        code: "approval.rejected",
+        message: `${approval.approvalId} approval was rejected`,
       });
     }
   }

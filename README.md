@@ -41,7 +41,7 @@ The goal is not to slow every edit to a committee meeting. Trivial edits stay tr
 - `bounded-context-review`: checks coupling, ownership, dependencies, transactions, and context leakage.
 - `decision-challenge`: tests high-consequence execution, boundary, differentiation, and comparison claims before planning.
 - `test-first-implementation`: plans behaviour-first implementation with the first failing test.
-- `evidence-ledger`: records commands, checks, risks, architecture impact, and final recommendation.
+- `evidence-ledger`: records a compact work receipt plus commands, checks, risks, architecture impact, and final recommendation.
 
 ## Agent Roles
 
@@ -74,6 +74,8 @@ The example includes a change contract, domain map, ADR, implementation plan, an
 
 For local development, keep this repo available and point Codex at the `skills/` directory or install it as a plugin once packaged. The Codex plugin metadata lives at `.codex-plugin/plugin.json`.
 
+New users should start with the [user guide](docs/user-guide.md), which walks through the no-model health checks, proof-carrying demo, local `eh` CLI, host-agent loading, and optional provider evaluations.
+
 After changing the repo, run:
 
 ```bash
@@ -93,6 +95,24 @@ bun run eh transition <run-path> complete
 
 See [`examples/proof-carrying-completion/`](examples/proof-carrying-completion/) for an isolated end-to-end demo.
 
+## Durable Run Handoff
+
+Run state survives the agent session. A fresh agent should inspect it before editing:
+
+```bash
+bun run eh status <run-path>
+bun run eh summary <run-path>
+```
+
+Use `blocked`, `needs-human-decision`, and `abandoned` transitions with a reason when work cannot proceed. High-risk completion requires an approval tied to the current workspace fingerprint:
+
+```bash
+bun run eh approve <run-path> --approver <name> --decision approved --reason "reviewed"
+bun run eh transition <run-path> complete
+```
+
+The status output is the handoff contract: current state, risk lane, criterion coverage, blockers, validation, and one next action.
+
 ## Pressure Evaluation
 
 The first Milestone 2 slice runs deterministic completion-gate pressure scenarios and prints a machine-readable report:
@@ -101,7 +121,33 @@ The first Milestone 2 slice runs deterministic completion-gate pressure scenario
 bun run evaluate
 ```
 
-It currently covers uncovered criteria, failed and stale evidence, missing evidence artefacts, open blockers, and repeated completion. It does not yet execute or score external coding agents; see [`docs/evaluations/`](docs/evaluations/) for the result contract and scope boundary.
+It currently covers uncovered criteria, failed and stale evidence, missing evidence artefacts, open blockers, and repeated completion. The deterministic protocol runner does not invoke external coding agents; explicit provider adapters are documented separately in [`docs/evaluations/`](docs/evaluations/).
+
+The full local policy runner combines all 20 manifest scenarios for three repetitions. Its structured agent attempts are assessor inputs, not provider evidence:
+
+```bash
+bun run evaluate:full
+```
+
+The controlled dogfood command exercises ten temporary Git repositories across completion, stale refresh, blocking, approval, and abandonment paths:
+
+```bash
+bun run dogfood
+```
+
+The results are deliberately labelled controlled evidence. They do not replace real operator dogfood or establish provider claims.
+
+The provider-neutral adapter surface now includes the shared runner and experimental Claude Code and Pi read-only leaves. The runner centralizes scenario coverage, scoring, capability evidence levels, and retained-artifact integrity; each leaf owns only its provider command construction, output parsing, and raw process artefacts. Writable execution, containment, live Pi evidence, and provider comparisons remain separate evidence gates. See [`docs/adr/0020-provider-neutral-read-only-adapter-contract.md`](docs/adr/0020-provider-neutral-read-only-adapter-contract.md), [`docs/adr/0021-claude-read-only-leaf-adapter.md`](docs/adr/0021-claude-read-only-leaf-adapter.md), and [`docs/adr/0022-pi-read-only-leaf-adapter.md`](docs/adr/0022-pi-read-only-leaf-adapter.md).
+
+## CI Attestation
+
+The local delivery command writes `summary.txt` and `attestation.json`, and exits non-zero unless the run is valid and complete:
+
+```bash
+bun run eh ci <run-path> <output-directory>
+```
+
+See [the reference workflow](.github/workflows/extremely-hardcore.yml) and the [compatibility policy](docs/COMPATIBILITY.md). Attestations provide local traceability, not cryptographic trust.
 
 ## Installing For Claude
 
@@ -111,4 +157,4 @@ The skill content is plain markdown and does not require runtime code to use.
 
 ## Project Status
 
-V0 scaffold with an experimental completion gate. Useful enough to dogfood, not yet proven enough to trust blindly. That is why the evidence ledger exists.
+V0 protocol mechanics now include risk-aware lifecycle states, high-risk approval freshness, durable handoff status, repeated evaluation policy, CI artefacts, and controlled dogfood. Schema version 1 remains experimental; real operator dogfood and provider execution remain separate evidence gates.

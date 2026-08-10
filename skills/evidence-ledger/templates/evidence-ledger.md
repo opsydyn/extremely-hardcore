@@ -1,5 +1,13 @@
 # evidence ledger
 
+## work receipt
+
+- result: complete | blocked | needs-human-decision | abandoned
+- claim:
+- evidence:
+- remaining uncertainty:
+- next:
+
 ## summary
 
 ## changed files

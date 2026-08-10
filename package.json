@@ -13,7 +13,12 @@
     "evaluate:action-fixture": "bun scripts/evaluate-action-fixture.ts",
     "evaluate:baseline": "bun scripts/evaluate-baseline.ts",
     "evaluate:codex": "bun scripts/evaluate-codex.ts",
-    "evaluate:codex-action-fixture": "bun scripts/evaluate-codex-action-fixture.ts"
+    "evaluate:claude": "bun scripts/evaluate-claude.ts",
+    "evaluate:pi": "bun scripts/evaluate-pi.ts",
+    "evaluate:codex-action-fixture": "bun scripts/evaluate-codex-action-fixture.ts",
+    "evaluate:docker-containment": "bun scripts/evaluate-docker-containment.ts",
+    "evaluate:full": "bun scripts/evaluate-full.ts",
+    "dogfood": "bun scripts/dogfood.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",

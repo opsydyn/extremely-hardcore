@@ -8,3 +8,6 @@ Rules:
 - Check data ownership.
 - Flag dependency direction problems.
 - Ask for an ADR when architecture changed without one.
+- Input: change contract, domain map, proposed imports, public contracts, and relevant ADRs.
+- Output: `safe`, `safe with noted risk`, `needs redesign`, or `needs human decision`, with named boundary findings.
+- Blocking: unreviewed protocol/schema ownership changes or delivery code deciding protocol validity.

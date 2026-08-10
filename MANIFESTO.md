@@ -83,6 +83,8 @@ If a check was not run, the ledger says `not run`. It does not write the test re
 
 Completion is a state supported by evidence, not a mood.
 
+A completion handoff starts with a small receipt: result, claim, evidence, remaining uncertainty, and next action. The receipt is a human-readable summary, not a new runtime protocol.
+
 ## We Believe Review Must Be Capable Of Disagreement
 
 Review is not a ceremonial second voice saying the first voice did well.

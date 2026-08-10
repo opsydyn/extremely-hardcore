@@ -1,7 +1,25 @@
 import type { SCHEMA_VERSION } from "./schema-version";
 
 export type Risk = "trivial" | "standard" | "high";
-export type RunState = "implemented" | "complete";
+export type RiskFactor =
+  | "blast-radius"
+  | "reversibility"
+  | "data-sensitivity"
+  | "privilege"
+  | "public-contract"
+  | "operational-impact"
+  | "uncertainty";
+export type RiskLevel = "low" | "medium" | "high";
+export type RiskAssessment = {
+  factors: Partial<Record<RiskFactor, RiskLevel>>;
+  rationale?: string;
+};
+export type RunState =
+  | "implemented"
+  | "blocked"
+  | "needs-human-decision"
+  | "abandoned"
+  | "complete";
 
 export type AcceptanceCriterion = {
   id: string;
@@ -20,8 +38,22 @@ export type RunDefinition = {
   changeId: string;
   initialState: "implemented";
   risk: Risk;
+  riskAssessment?: RiskAssessment;
   acceptanceCriteria: AcceptanceCriterion[];
   blockers: Blocker[];
+};
+
+export type ApprovalDecision = "approved" | "rejected";
+
+export type ApprovalRecord = {
+  schemaVersion: typeof SCHEMA_VERSION;
+  approvalId: string;
+  approver: string;
+  decision: ApprovalDecision;
+  gate: "complete";
+  at: string;
+  workspaceFingerprint: string;
+  reason: string;
 };
 
 export type EvidenceRecord = {
@@ -55,11 +87,12 @@ export type ValidationResult = {
 export type TransitionEvent = {
   schemaVersion: typeof SCHEMA_VERSION;
   transitionId: string;
-  from: "implemented";
-  to: "complete";
+  from: RunState;
+  to: RunState;
   at: string;
   workspaceFingerprint: string;
   evidenceIds: string[];
+  reason?: string;
 };
 
 export type TransitionResult = ValidationResult & {
