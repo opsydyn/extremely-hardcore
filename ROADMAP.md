@@ -228,7 +228,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 ### Provider-Neutral Agent Adapter Surface: Claude And Pi
 
-**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a complete explicit 2.1.224 live report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 with fake-executor coverage and direct JSON-event preflight; live Pi evidence is blocked on provider authentication. Comparison claims and containment claims remain pending.
+**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a complete explicit 2.1.224 live report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 and now has authenticated `openai-codex/gpt-5.3-codex-spark` evidence: the first post-auth report had complete provenance and 12/13 strict classifications passed; after pressure-scenario adjudication, a bounded repeat had complete provenance and 13/13 passed. These runs demonstrate a reviewable read-only process path only. Comparison claims, provider-performance claims, and containment claims remain pending.
 
 **Outcome:** Let Claude and Pi consume the same protocol and evaluation kernel through leaf adapters without leaking provider-specific command, session, output, sandbox, or resume assumptions into `protocol/` or the deterministic scorer.
 
@@ -251,7 +251,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 **Completed first slice:** Define the adapter contract and capability vocabulary, centralize scoring, fail closed on unsafe or mutated retained artefacts, and add Claude and Pi read-only leaves with provider-specific constrained argv and strict output parsing. The leaves are intentionally narrow and do not establish runtime enforcement.
 
-**Next gated slice:** Authenticate one intentionally selected Pi provider and run one controlled 13-scenario read-only evaluation, then review prompt discriminability and repeatability. Do not compare providers or add writable execution until both runtimes have repeated direct evidence and an accepted containment boundary.
+**Next gated slice:** Complete the ten real operator dogfood changes and the resulting friction/false-block review before treating provider runs as a basis for comparison. Then repeat controlled Pi and Claude runs under an explicitly reviewed campaign. Do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
 
 ### Governed Skill Evolution Sandbox (SkillOpt-Informed)
 
