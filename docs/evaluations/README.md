@@ -126,6 +126,12 @@ Capability descriptors use explicit evidence levels: `unknown`, `unsupported`, `
 
 The contract is exercised with a deterministic fake adapter and experimental Claude and Pi leaves. The shared runner remains provider-free: it does not invoke Claude, Pi, Codex, or any provider executable directly. A provider adapter must remain a leaf implementation for command construction, prompt/session behaviour, output parsing, runtime metadata, and raw artefact capture.
 
+These adapter commands are provider evaluations, not EHS loading tests. Use the
+[provider onboarding guide](../provider-onboarding.md) for host installation
+and the harmless loading smoke. In particular, the Pi read-only adapter passes
+`--no-skills` and `--no-context-files` intentionally, so a passing
+`evaluate:pi` report cannot be described as evidence that Pi loaded EHS.
+
 ## Claude read-only adapter
 
 Run the 13 behavioural scenarios through the locally installed Claude Code CLI with:

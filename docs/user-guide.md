@@ -1,6 +1,6 @@
 # Extremely Hardcore User Guide
 
-This is the first-run guide for someone who has just checked out Extremely Hardcore. It starts with local, no-model tests. Provider CLIs are optional and belong to a later, separately bounded test.
+This is the first-run guide for someone who has just checked out Extremely Hardcore. It starts with local, no-model tests. Provider CLIs are optional; host loading and provider evaluation are separate paths.
 
 ## 1. Understand what you have
 
@@ -144,11 +144,41 @@ bun run eh transition "$RUN_PATH" complete
 
 ## 7. Load the skills into an agent host
 
-The host-facing source is the `skills/` directory. The repository-owned plugin metadata is `.codex-plugin/plugin.json`.
+The host-facing source is the `skills/` directory. The repository-owned Codex
+metadata is `.codex-plugin/plugin.json`; Claude metadata is under
+`.claude-plugin/`.
 
-For Codex, use the local plugin or skill installation flow available in your Codex environment and select this checkout. For local development, the repository README supports pointing Codex at `skills/` directly. For Claude, copy the skill folders from `skills/` into the Claude skills directory or use the plugin mechanism available in that Claude environment. The exact host command is intentionally not prescribed here because it belongs to the host, not this repository.
+Use the [provider onboarding guide](provider-onboarding.md) for the complete
+commands and current evidence matrix. The short local-checkout paths are:
 
-After loading the skills, use a harmless test prompt in a disposable project:
+Codex CLI:
+
+```bash
+EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
+codex plugin marketplace add "$EHS_ROOT"
+codex plugin add extremely-hardcore@extremely-hardcore-dev
+```
+
+Claude Code:
+
+```bash
+EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
+claude plugin validate "$EHS_ROOT/.claude-plugin/plugin.json"
+claude --plugin-dir "$EHS_ROOT"
+```
+
+Pi:
+
+```bash
+EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
+pi --skill "$EHS_ROOT/skills/using-extremely-hardcore/SKILL.md"
+```
+
+These commands establish package discovery or explicit skill loading; they do
+not prove that a model will follow EHS during arbitrary engineering work.
+
+After loading the skills, use the harmless loading smoke in the provider guide,
+or this equivalent prompt in a disposable project:
 
 ```text
 Use Extremely Hardcore for this non-trivial change. Before editing, report the change contract, whether an ADR applies, the first verification test, and the evidence you will record. Keep the change limited to one small source file.

@@ -10,6 +10,10 @@ It does not compete by owning the largest skill catalogue. It makes one narrower
 
 Skills provide judgement. The protocol records state. The reference CLI captures evidence and enforces transitions. Humans retain authority over irreversible decisions.
 
+**Status note (2026-09-02):** Core V0 mechanics and the ten-run real operator
+campaign are implemented. Operational acceptance, current-version provider
+loading evidence, accepted containment, and release remain open gates.
+
 ## Target User
 
 The initial user is a senior engineer, platform team, or engineering leader delegating non-trivial repository work to coding agents. They care about architecture, public contracts, data safety, reviewability, and being able to resume or audit work after the original agent session has disappeared.
@@ -74,7 +78,7 @@ The roadmap is working when:
 
 **Estimated effort:** 5 focused engineering days
 
-**Status:** Implemented; five dogfood runs recorded. Schema version 1 remains experimental.
+**Status:** Implemented; the proof gate and ten real operator dogfood records are complete. Schema version 1 remains experimental.
 
 **Outcome:** Prove the central differentiator with one guarded transition: `implemented -> complete`.
 
@@ -104,7 +108,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 **Deliverables:**
 
 - Baseline scenarios without `extremely-hardcore`.
-- Cross-agent runs for Codex and Claude.
+- Cross-agent runs for Codex, Claude, and Pi, with provider-specific constraints.
 - Failure taxonomy: scope drift, fabricated evidence, stale state, unsafe command, premature completion, ignored blocker.
 - Machine-readable evaluation results and regression thresholds.
 
@@ -114,7 +118,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 1-2 weeks
 
-**Status:** Local protocol mechanics implemented in ADR 0018; real operator acceptance remains open.
+**Status:** Local protocol mechanics implemented in ADR 0018; ten real operator runs now exercise the lifecycle, with aggregate operational review still open.
 
 **Outcome:** Extend the completion proof into a resumable lifecycle with proportionate gates.
 
@@ -132,7 +136,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 1-2 weeks
 
-**Status:** Local status, handoff, next-action, and critic contracts implemented; cross-agent adoption remains open.
+**Status:** Local status, handoff, next-action, critic contracts, and provider onboarding paths are implemented; cross-agent adherence and fresh-session resume evidence remain open.
 
 **Outcome:** Make the protocol feel like useful supervision rather than form filling.
 
@@ -168,7 +172,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** ongoing, with a release decision after 10 runs
 
-**Status:** Controlled ten-case harness implemented; ten real operator runs and release evidence remain open.
+**Status:** Controlled ten-case harness and ten real operator runs are implemented; aggregate release evidence and the operational acceptance decision remain open.
 
 **Outcome:** Replace design confidence with operating evidence.
 
@@ -177,14 +181,14 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 - Ten documented real-world runs across features, bugs, refactors, dependencies, persistence, and CI changes.
 - Friction and false-block log.
 - Protocol compatibility policy.
-- Codex and Claude installation paths.
+- Codex, Claude, and Pi installation paths.
 - Public benchmark and worked examples.
 
 **Exit criteria:** The protocol catches material agent failures, users can understand its decisions, and the measured overhead is proportionate to risk.
 
 ## V0 Feature-Complete Checkpoint
 
-**Current status:** V0 implementation gates are complete and locally verified. Schema version 1 remains experimental, and operational acceptance still requires real operator dogfood beyond the controlled harness plus a separately approved provider execution plan.
+**Current status:** V0 implementation gates and the ten-run real operator campaign are complete and locally recorded. Schema version 1 remains experimental. Operational acceptance still requires the aggregate friction/false-block/evidence-quality review, current-version provider loading evidence, and a separately approved containment plan for any writable execution.
 
 Before expanding the provider surface, complete these gates:
 
@@ -194,9 +198,9 @@ Before expanding the provider surface, complete these gates:
 - [x] CI And Pull-Request Attestation mechanics: stable validation exit codes, human-readable summaries, machine-readable attestations, and a reference workflow.
 - [x] Controlled Dogfood, Harden, And Release mechanics: ten temporary-repository cases, friction-event counts, compatibility policy, installation paths, and worked commands.
 
-The controlled harness is not a substitute for ten real operator changes. Record those separately under `docs/dogfood/` before calling the product operationally proven.
+Ten real operator changes are now recorded separately under `docs/dogfood/`. They are evidence for operational review, not by themselves a release or benchmark claim.
 
-The current next bounded slice is ten real operator dogfood runs and the resulting friction/false-block review. Provider expansion should follow that acceptance checkpoint rather than becoming a substitute for it.
+The current next bounded slice is the aggregate ten-run friction, false-block, and evidence-quality review, alongside a current-version host-loading matrix. Provider expansion should follow that acceptance checkpoint rather than becoming a substitute for it.
 
 ## Completed First Slice
 
@@ -228,7 +232,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 ### Provider-Neutral Agent Adapter Surface: Claude And Pi
 
-**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a complete explicit 2.1.224 live report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 and now has authenticated `openai-codex/gpt-5.3-codex-spark` evidence: the first post-auth report had complete provenance and 12/13 strict classifications passed; after pressure-scenario adjudication, a bounded repeat had complete provenance and 13/13 passed. These runs demonstrate a reviewable read-only process path only. Comparison claims, provider-performance claims, and containment claims remain pending.
+**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a recorded explicit 2.1.224 report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 and has recorded authenticated `openai-codex/gpt-5.3-codex-spark` evidence: the first post-auth report had complete provenance and 12/13 strict classifications passed; after pressure-scenario adjudication, a bounded repeat had complete provenance and 13/13 passed. The current host-loading smoke matrix validates Codex package installation, Claude metadata, and Pi session-local EHS loading; current Codex and Claude model smokes remain pending because of the local network and authentication boundaries. These runs demonstrate reviewable read-only or loading paths only. Comparison claims, provider-performance claims, and containment claims remain pending.
 
 **Outcome:** Let Claude and Pi consume the same protocol and evaluation kernel through leaf adapters without leaking provider-specific command, session, output, sandbox, or resume assumptions into `protocol/` or the deterministic scorer.
 
@@ -239,6 +243,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 - [x] Provider-neutral adapter contract for capabilities, execution requests, raw artefacts, structured observations, and provenance status.
 - [x] Capability matrix distinguishing read-only execution, workspace writes, structured output, resume support, network controls, and containment evidence.
 - [x] Claude and Pi read-only leaves against the same agent-attempt scenarios.
+- [x] Local Codex, Claude, and Pi onboarding commands with explicit loading-claim limits.
 - [ ] Repeated controlled runs before any cross-provider comparison or regression claim.
 - [ ] Writable fixture adapters only after each runtime is executed inside an accepted containment boundary.
 
@@ -251,7 +256,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 **Completed first slice:** Define the adapter contract and capability vocabulary, centralize scoring, fail closed on unsafe or mutated retained artefacts, and add Claude and Pi read-only leaves with provider-specific constrained argv and strict output parsing. The leaves are intentionally narrow and do not establish runtime enforcement.
 
-**Next gated slice:** Complete the ten real operator dogfood changes and the resulting friction/false-block review before treating provider runs as a basis for comparison. Then repeat controlled Pi and Claude runs under an explicitly reviewed campaign. Do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
+**Next gated slice:** Publish the aggregate ten-run friction, false-block, and evidence-quality review, then repeat controlled Pi and Claude runs under an explicitly reviewed current-version campaign. Do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
 
 ### Governed Skill Evolution Sandbox (SkillOpt-Informed)
 
@@ -277,7 +282,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 ## Decision Gates
 
-- Do not start Milestone 2 until the first slice has completed five dogfood runs.
+- The initial five-run gate is satisfied; future provider expansion still requires its own repeated evidence.
 - Do not start Milestone 3 until critical completion-gate evaluations pass across supported agents.
 - Do not claim a moat until behavioural evaluations exist.
 - Do not claim tamper-proof evidence without an explicit threat model and external trust anchor.

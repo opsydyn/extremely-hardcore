@@ -1,0 +1,19 @@
+{
+  "name": "extremely-hardcore",
+  "description": "Architecture-first skills for coding agents: change contracts, domain discovery, architecture gates, test-first implementation, and evidence ledgers.",
+  "version": "0.0.1",
+  "author": {
+    "name": "Alan Currie"
+  },
+  "license": "MIT",
+  "keywords": [
+    "architecture",
+    "ddd",
+    "change-contract",
+    "adr",
+    "bounded-context",
+    "testing",
+    "evidence",
+    "skills"
+  ]
+}

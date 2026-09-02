@@ -72,14 +72,30 @@ The example includes a change contract, domain map, ADR, implementation plan, an
 
 ## Installing For Codex
 
-For local development, keep this repo available and point Codex at the `skills/` directory or install it as a plugin once packaged. The Codex plugin metadata lives at `.codex-plugin/plugin.json`.
+For a local checkout with the Codex CLI, register the repository's local
+marketplace and install the plugin:
+
+```bash
+EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
+codex plugin marketplace add "$EHS_ROOT"
+codex plugin add extremely-hardcore@extremely-hardcore-dev
+codex plugin list
+```
+
+The Codex plugin metadata lives at `.codex-plugin/plugin.json`. The full
+loading smoke and the explicit fallback for environments without local
+marketplace support are in the [provider onboarding guide](docs/provider-onboarding.md).
 
 New users should start with the [user guide](docs/user-guide.md), which walks through the no-model health checks, proof-carrying demo, local `eh` CLI, host-agent loading, and optional provider evaluations.
+
+For concrete Codex, Claude Code, and Pi checkout loading commands, see the
+[provider onboarding guide](docs/provider-onboarding.md). It separates package
+discovery, a model loading smoke, and real engineering adherence.
 
 After changing the repo, run:
 
 ```bash
-bun install
+bun install --frozen-lockfile
 bun run check
 ```
 
@@ -151,10 +167,41 @@ See [the reference workflow](.github/workflows/extremely-hardcore.yml) and the [
 
 ## Installing For Claude
 
-Copy the skill folders from `skills/` into your Claude skills directory, or package the repo using the plugin mechanism available in your Claude environment.
+Validate the local Claude metadata, then load the checkout for one session:
+
+```bash
+EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
+claude plugin validate "$EHS_ROOT/.claude-plugin/plugin.json"
+claude --plugin-dir "$EHS_ROOT"
+```
+
+To install the local marketplace at a chosen scope:
+
+```bash
+claude plugin marketplace add "$EHS_ROOT" --scope user
+claude plugin install extremely-hardcore@extremely-hardcore-dev
+```
 
 The skill content is plain markdown and does not require runtime code to use.
 
+## Installing For Pi
+
+Pi loads the EHS entrypoint explicitly for a session:
+
+```bash
+EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
+pi --skill "$EHS_ROOT/skills/using-extremely-hardcore/SKILL.md"
+```
+
+Pi does not require a separate plugin manifest for this path. The repository
+claims session-local loading only; use the [provider onboarding guide](docs/provider-onboarding.md)
+for the smoke prompt and current evidence boundary.
+
 ## Project Status
 
-V0 protocol mechanics now include risk-aware lifecycle states, high-risk approval freshness, durable handoff status, repeated evaluation policy, CI artefacts, and controlled dogfood. Schema version 1 remains experimental; real operator dogfood and provider execution remain separate evidence gates.
+V0 protocol mechanics now include risk-aware lifecycle states, high-risk
+approval freshness, durable handoff status, repeated evaluation policy, CI
+artefacts, and controlled dogfood. Ten real operator dogfood records are
+complete. Schema version 1 remains experimental; aggregate operational review,
+current-version provider loading evidence, accepted containment, and any
+provider comparison remain separate evidence gates.
