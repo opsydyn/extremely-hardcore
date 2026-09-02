@@ -67,7 +67,9 @@ function getNextAction(input: {
   currentApproval: boolean;
 }): string {
   if (input.state === "complete") {
-    return "review the attestation and hand off the completed run";
+    return input.validation.ok
+      ? "review the attestation and hand off the completed run"
+      : "start a new run; completed run validation is invalid";
   }
   if (input.state === "abandoned") {
     return "start a new run; this run is terminal";
@@ -75,7 +77,12 @@ function getNextAction(input: {
   if (input.state === "needs-human-decision") {
     return "record the required human decision or abandon the run";
   }
-  if (input.state === "blocked" || input.openBlockers > 0) {
+  if (input.state === "blocked") {
+    return input.openBlockers > 0
+      ? "resolve the open blocker, then resume or abandon the run"
+      : "resume the run now that blockers are resolved, or abandon it";
+  }
+  if (input.openBlockers > 0) {
     return "resolve the open blocker, then resume or abandon the run";
   }
   if (input.covered < input.total) {

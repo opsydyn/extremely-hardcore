@@ -1,9 +1,10 @@
 import { expect, test } from "bun:test";
+import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { captureEvidence } from "../../protocol/evidence";
 import { createAttestation } from "../../protocol/attestation";
 import { readRunStatus } from "../../protocol/status";
-import { transitionToComplete } from "../../protocol/transition";
+import { transitionTo, transitionToComplete } from "../../protocol/transition";
 import { computeWorkspaceFingerprint } from "../../protocol/workspace-fingerprint";
 import { createGitWorkspace } from "./support";
 
@@ -38,6 +39,34 @@ async function createCompletedRun(): Promise<{ root: string; runPath: string }> 
   return { root, runPath };
 }
 
+async function createBlockedRun(): Promise<{ root: string; runPath: string }> {
+  const root = createGitWorkspace("extremely-hardcore blocked status ");
+  const runPath = join(root, ".extremely-hardcore", "runs", "status");
+  await Bun.write(
+    join(runPath, "run.json"),
+    `${JSON.stringify(
+      {
+        schemaVersion: 1,
+        changeId: "status",
+        initialState: "implemented",
+        risk: "standard",
+        acceptanceCriteria: [{ id: "checks-pass", description: "Checks pass.", evidenceIds: [] }],
+        blockers: [{ id: "review", description: "Review is pending.", status: "open" }],
+      },
+      null,
+      2,
+    )}\n`,
+  );
+  const transition = transitionTo(runPath, "blocked", {
+    workspaceFingerprint: computeWorkspaceFingerprint(root),
+    reason: "waiting for review",
+  });
+  if (!transition.ok) {
+    throw new Error(transition.errors.map(({ code }) => code).join(", "));
+  }
+  return { root, runPath };
+}
+
 test("reports a concise completed status with no next action", async () => {
   const { root, runPath } = await createCompletedRun();
   const status = readRunStatus(runPath, { workspaceFingerprint: computeWorkspaceFingerprint(root) });
@@ -46,6 +75,48 @@ test("reports a concise completed status with no next action", async () => {
   expect(status.validation.ok).toBe(true);
   expect(status.criteria).toEqual({ total: 1, covered: 1 });
   expect(status.nextAction).toBe("review the attestation and hand off the completed run");
+});
+
+test("directs a stale completed run to start a fresh run", async () => {
+  const { root, runPath } = await createCompletedRun();
+  writeFileSync(join(root, "tracked.txt"), "changed after completion\n");
+
+  const status = readRunStatus(runPath, { workspaceFingerprint: computeWorkspaceFingerprint(root) });
+
+  expect(status.state).toBe("complete");
+  expect(status.validation.ok).toBe(false);
+  expect(status.nextAction).toBe("start a new run; completed run validation is invalid");
+});
+
+test("directs a resolved blocked run to resume or abandon", async () => {
+  const { root, runPath } = await createBlockedRun();
+  const fingerprint = computeWorkspaceFingerprint(root);
+  const openStatus = readRunStatus(runPath, { workspaceFingerprint: fingerprint });
+
+  expect(openStatus.state).toBe("blocked");
+  expect(openStatus.blockers).toEqual({ open: 1, resolved: 0 });
+  expect(openStatus.nextAction).toBe("resolve the open blocker, then resume or abandon the run");
+
+  const run = await Bun.file(join(runPath, "run.json")).json() as {
+    blockers: Array<{ id: string; description: string; status: "open" | "resolved" }>;
+  };
+  const blocker = run.blockers[0];
+  if (!blocker) {
+    throw new Error("expected a blocker");
+  }
+  blocker.status = "resolved";
+  await Bun.write(join(runPath, "run.json"), `${JSON.stringify(run, null, 2)}\n`);
+
+  const resolvedStatus = readRunStatus(runPath, { workspaceFingerprint: fingerprint });
+  expect(resolvedStatus.state).toBe("blocked");
+  expect(resolvedStatus.blockers).toEqual({ open: 0, resolved: 1 });
+  expect(resolvedStatus.nextAction).toBe("resume the run now that blockers are resolved, or abandon it");
+
+  const resumed = transitionTo(runPath, "implemented", {
+    workspaceFingerprint: fingerprint,
+    reason: "review is complete",
+  });
+  expect(resumed.ok).toBe(true);
 });
 
 test("creates a digest-linked attestation without changing the run", async () => {

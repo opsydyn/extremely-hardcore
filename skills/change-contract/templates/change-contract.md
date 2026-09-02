@@ -10,6 +10,8 @@
 
 ## affected areas
 
+## minimum complete change
+
 ## public contracts
 
 ## assumptions
