@@ -283,9 +283,30 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 ### Governed Skill Evolution Sandbox (SkillOpt-Informed)
 
-**Status:** Backlogged. No optimiser integration or autonomous skill adoption is approved.
+**Self-evolving skills moat hypothesis:** EHS may earn a durable
+differentiator by letting its engineering method improve from its own
+evidence: propose bounded skill diffs, evaluate them on independent fixtures
+and hidden holdouts, reject critical regressions, and require human promotion.
+This is a hypothesis, not a current moat claim. It becomes credible only if
+improvements replicate across tasks, versions, and supported providers without
+increasing protocol violations or operator burden.
+
+**Status:** Backlogged and evidence-gated. No optimiser integration or
+autonomous skill adoption is approved.
 
 **Outcome:** Evaluate bounded candidate edits to nominated skill documents using independent behavioural evidence, then promote only human-reviewed improvements.
+
+**Roadmap sequence:**
+
+1. Establish evaluator credibility with repeatable baselines and hidden
+   holdouts.
+2. Nominate one non-protected skill and one fixture; generate offline
+   candidates without changing the installed skill.
+3. Select candidates only when held-out results improve without critical
+   regressions or unacceptable operator burden.
+4. Require a human promotion decision and retain the candidate, evidence,
+   rollback path, and rationale.
+5. Publish longitudinal evidence before using moat or comparative language.
 
 **Preconditions:**
 

@@ -5,6 +5,10 @@ Evidence before confidence.
 Scope before action.
 Small changes before big dreams.
 
+<p align="center">
+  <img src="assets/extremely-hardcore-skills.jpg" alt="Extremely Hardcore Skills" width="520">
+</p>
+
 Read [The Extremely Hardcore Manifesto](MANIFESTO.md) for the operating doctrine behind the skills.
 
 See the [product roadmap](ROADMAP.md) for the protocol direction and recommended first slice.
