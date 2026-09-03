@@ -19,7 +19,10 @@ real documentation changes, and human review has accepted it as a lightweight
 convention while deferring file-reading resume; Codex and Claude model loading,
 accepted containment, and release remain open gates. Run 052 confirms that the
 historical attestation and CI projection gap for Runs 033 through 035 cannot be
-recovered from the current checkout and is not backfilled.
+recovered from the current checkout and is not backfilled. Run 053 records
+human acceptance of that historical gap as a documented limitation and requires
+durable projections for future release evidence; no retention implementation or
+release approval follows from that decision.
 
 ## Target User
 
@@ -125,7 +128,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 1-2 weeks
 
-**Status:** Local protocol mechanics implemented in ADR 0018; ten real operator runs exercise the lifecycle. The aggregate operational review is recorded in Run 047, and Run 052 confirms the historical projection-retention gap without backfill. Measurement and retention acceptance remain open for human review.
+**Status:** Local protocol mechanics implemented in ADR 0018; ten real operator runs exercise the lifecycle. The aggregate operational review is recorded in Run 047, Run 052 confirms the historical projection-retention gap without backfill, and Run 053 records human acceptance of that gap as a documented limitation plus a future durable-projection requirement. Measurement and retention implementation remain open.
 
 **Outcome:** Extend the completion proof into a resumable lifecycle with proportionate gates.
 
@@ -163,7 +166,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 2 weeks
 
-**Status:** Local summary, attestation, exit codes, and reference workflow implemented; Run 052 confirms that three historical external projection sets were not retained. Repository adoption and any durable retention policy remain open.
+**Status:** Local summary, attestation, exit codes, and reference workflow implemented; Run 052 confirms that three historical external projection sets were not retained, and Run 053 records the future durable-projection policy. Repository adoption and durable-retention implementation remain open.
 
 **Outcome:** Make completion evidence visible at the normal review boundary.
 
@@ -180,7 +183,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** ongoing, with a release decision after 10 runs
 
-**Status:** Controlled ten-case harness and ten real operator runs are implemented. Run 047 records the aggregate release evidence and Run 052 confirms the historical retention gap. Operational acceptance remains open because retention, measurement, current Codex/Claude loading, adherence, and containment gates are incomplete.
+**Status:** Controlled ten-case harness and ten real operator runs are implemented. Run 047 records the aggregate release evidence, Run 052 confirms the historical retention gap, and Run 053 records the approved policy without implementing retention. Operational acceptance remains open because measurement, current Codex/Claude loading, adherence, and containment gates are incomplete.
 
 **Outcome:** Replace design confidence with operating evidence.
 
@@ -196,7 +199,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 ## V0 Feature-Complete Checkpoint
 
-**Current status:** V0 implementation gates and the ten-run real operator campaign are complete and locally recorded. Schema version 1 remains experimental. Run 047 records the aggregate friction, false-block, evidence-quality, and host-matrix review; Run 048 adds the future-record template and narrow Pi prompt-fed handoff evidence; Runs 049/050 apply the template to two real documentation changes; Run 051 records human acceptance of the convention and deferral of file-reading resume; Run 052 confirms the historical projection-retention gap without backfill. Release still requires decisions on retention and measurement gaps, current Codex/Claude model-loading evidence, and a separately approved containment plan for any writable execution.
+**Current status:** V0 implementation gates and the ten-run real operator campaign are complete and locally recorded. Schema version 1 remains experimental. Run 047 records the aggregate friction, false-block, evidence-quality, and host-matrix review; Run 048 adds the future-record template and narrow Pi prompt-fed handoff evidence; Runs 049/050 apply the template to two real documentation changes; Run 051 records human acceptance of the convention and deferral of file-reading resume; Run 052 confirms the historical projection-retention gap without backfill; Run 053 records acceptance of that gap as a documented limitation and requires durable projections for future release evidence. The retention policy is not an implementation. Release still requires current Codex/Claude model-loading evidence, standardized measurement, and a separately approved containment plan for any writable execution.
 
 Before expanding the provider surface, complete these gates:
 
@@ -209,16 +212,18 @@ Before expanding the provider surface, complete these gates:
 Ten real operator changes are now recorded separately under `docs/dogfood/`. They are evidence for operational review, not by themselves a release or benchmark claim.
 
 The aggregate review, first future-record/resume slice, two template
-applications, human decision, and historical projection-retention audit are
-complete as evidence records, but they did not clear release. Run 052 confirms
-that source records survived while the original projections for Runs 033
-through 035 did not; current invalid reruns are not historical recovery and no
-backfill was performed. The qualitative field-burden result is promising but
-timing and productivity effect remain unmeasured. File-reading resume is
-explicitly deferred; the next decision is whether the confirmed retention gap
-is acceptable for release or warrants a separately designed durable-retention
-proposal. Provider expansion should follow that acceptance checkpoint rather
-than becoming a substitute for it.
+applications, human decision, historical projection-retention audit, and
+retention-policy decision are complete as evidence records, but they did not
+clear release. Run 052 confirms that source records survived while the
+original projections for Runs 033 through 035 did not; current invalid reruns
+are not historical recovery and no backfill was performed. Run 053 accepts
+that gap as a documented limitation and requires durable projections for
+future release evidence, without implementing storage or enforcement. The
+qualitative field-burden result is promising but timing and productivity
+effect remain unmeasured. File-reading resume is explicitly deferred; the
+next gated slice is current Codex/Claude loading plus standardized measurement.
+Provider expansion should follow that evidence checkpoint rather than becoming
+a substitute for it.
 
 ## Completed First Slice
 
@@ -274,7 +279,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 **Completed first slice:** Define the adapter contract and capability vocabulary, centralize scoring, fail closed on unsafe or mutated retained artefacts, and add Claude and Pi read-only leaves with provider-specific constrained argv and strict output parsing. The leaves are intentionally narrow and do not establish runtime enforcement.
 
-**Next gated slice:** Human review of the confirmed historical projection-retention gap: decide whether it is acceptable for release evidence or whether to approve a separately designed durable-retention proposal. Keep file-reading resume deferred until a separate security and provenance proposal passes decision challenge. Repeat controlled Pi and Claude runs only under an explicitly reviewed current-version campaign. Do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
+**Next gated slice:** Run authorized current Codex and Claude loading checks and a small standardized operator measurement campaign. Keep the accepted historical gap visible, and keep durable-retention implementation/repository adoption, file-reading resume, provider comparison, and writable execution separately gated. Repeat provider runs only under an explicitly reviewed current-version campaign; do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
 
 ### Governed Skill Evolution Sandbox (SkillOpt-Informed)
 

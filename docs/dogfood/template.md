@@ -61,6 +61,9 @@ When an attestation or CI projection was written to an ephemeral location and
 is no longer present, record `not retained`. A current rerun may be recorded as
 current revalidation or an invalid result, but must not be described as recovery
 of the historical projection.
+For future release evidence, projection retention is a gate: the attestation
+and CI projection must be durably retained with the run and workspace
+fingerprint. If they are absent, report the release evidence as incomplete.
 
 ## fresh-session resume
 

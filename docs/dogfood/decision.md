@@ -96,6 +96,23 @@ projection is gone and to keep current revalidation separate. This is a
 documentation boundary, not a new schema or retention service. Whether the
 confirmed gap is acceptable for release remains a human decision.
 
+## Retention policy decision (2026-09-03)
+
+Human review approved the following retention policy for release planning:
+
+- Accept the missing attestation and CI projections for Runs 033 through 035
+  as a documented limitation of the existing campaign. Do not backfill or
+  relabel current outputs.
+- Require future release evidence to retain the attestation and CI projection
+  at a durable, reviewable location tied to the run and workspace fingerprint.
+  `/tmp` alone does not satisfy this requirement.
+- Treat this as a forward-looking documentation policy, not an implementation
+  of an archive, persistence service, or CI integration.
+- This decision does not approve release, writable execution, provider
+  comparison, file-reading resume, or self-evolving skill adoption. Current
+  Codex/Claude loading, measurement, adherence, containment, and the durable
+  retention implementation remain open.
+
 ## Human review decision (2026-09-03)
 
 Human review approved the following bounded decision:
@@ -107,7 +124,10 @@ Human review approved the following bounded decision:
 - Defer file-reading resume. Any future proposal must define its security,
   provenance, host, and operational boundaries and pass a separate decision
   challenge before implementation.
-- Keep retention gaps, current Codex/Claude model loading, adherence,
+- Accept the historical retention gap as a documented limitation without
+  backfill; require durable projections for future release evidence. The
+  retention implementation remains open.
+- Keep current Codex/Claude model loading, measurement, adherence,
   containment, provider comparison, and release as open gates.
 
 This approval records the documentation convention; it is not release approval

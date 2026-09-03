@@ -51,6 +51,12 @@ attestation and CI projections are absent. Current revalidation is stale and
 current regeneration is invalid, so the missing historical projections are not
 backfilled or relabelled.
 
+Run 053 records the approved retention policy: accept that historical gap as a
+documented limitation without backfill, and require durable attestation and CI
+projections for future release evidence. The policy does not implement storage
+or approve release; current provider loading, measurement, adherence, and
+containment remain open.
+
 ## Targeted design dogfood
 
 Run 11 applies the optional `simple-made-easy` lens to the multi-option design
@@ -75,7 +81,8 @@ skills-effect benchmark.
 
 | Review | Scope | Result |
 | --- | --- | --- |
-| [047 operational acceptance and host matrix](047-operational-acceptance-host-matrix.md) | Ten-run aggregate, supplemental dogfood, current Codex/Claude/Pi host checks | Review complete; release remains open pending retention, current loading, adherence, and containment evidence |
+| [047 operational acceptance and host matrix](047-operational-acceptance-host-matrix.md) | Ten-run aggregate, supplemental dogfood, current Codex/Claude/Pi host checks | Review complete; historical gap later accepted as a limitation, future durable projections required, release remains open pending loading, measurement, adherence, and containment evidence |
+| [053 retention policy decision](053-retention-policy-decision.md) | Human decision on historical and future projection retention | Historical gap accepted without backfill; future release projections must be durable; no storage implementation or release approval |
 
 The current provider-loading details live in the [provider onboarding guide](../provider-onboarding.md).
 
@@ -102,6 +109,9 @@ schema. Existing records remain historical and are not backfilled.
 If a projection was written only to an ephemeral path and is no longer present,
 write `not retained`. A current rerun must remain labelled as current
 revalidation or invalid output; it cannot restore historical projection proof.
+For future release evidence, projection retention is a gate: if the attestation
+and CI projection are not durably retained with the run and workspace
+fingerprint, report the release evidence as incomplete.
 
 ## Fresh-session dogfood
 
@@ -127,7 +137,8 @@ effect remain not measured.
 Human review on 2026-09-03 accepted the template as a lightweight recommended
 Markdown convention and deferred file-reading resume. Runs 049 and 050 remain
 qualitative field-burden evidence; timing, omission rates, and productivity
-effect are not measured. Release, provider loading, adherence, containment, and
-retention gates remain open. Run 052 confirms the historical retention gap;
-accepting that gap or designing durable retention still requires separate human
-review.
+effect are not measured. The historical retention gap is accepted as a
+documented limitation without backfill, and future release evidence requires
+durable projections. No storage implementation has been approved. Provider
+loading, measurement, adherence, containment, and release remain open. Run
+053 records the policy decision.
