@@ -27,6 +27,26 @@ Use when changing any of:
 
 Do not use for local implementation choices that do not affect contracts, boundaries, operations, dependencies, or future architecture.
 
+## repository ADR convention
+
+EHS is installed as a skill. Installation does not scaffold or mutate the
+user's repository.
+
+When an ADR is required:
+
+1. Inspect the repository for an existing decision convention, such as
+   `docs/adr/`, `adr/`, `docs/decisions/`, or a documented project-specific
+   path. Reuse that convention.
+2. If no convention exists, state the proposed `docs/adr/` path in the change
+   contract and create the directory only with the first ADR, as part of that
+   approved change.
+3. Do not create an empty directory, create an ADR for a change that does not
+   meet the trigger list, or treat EHS's own `docs/adr/` as part of the user
+   repository.
+
+The directory choice is repository-local documentation policy, not an EHS
+installation or runtime requirement.
+
 ## required inputs
 
 - Change contract.

@@ -32,6 +32,12 @@ The goal is not to slow every edit to a committee meeting. Trivial edits stay tr
 7. Review boundaries and delivery risk.
 8. Produce evidence ledger.
 
+ADR storage is lazy and repository-local. Installing EHS never creates an
+`docs/adr/` directory. During a change, the architecture-decision skill first
+reuses the repository's existing convention; only when an ADR is required and
+no convention exists does it propose `docs/adr/` and create it with the first
+ADR. See the [user guide](docs/user-guide.md) for the newcomer explanation.
+
 ## Included Skills
 
 - `using-extremely-hardcore`: decides when to run the full loop.

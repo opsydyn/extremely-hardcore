@@ -142,6 +142,19 @@ bun run eh approve "$RUN_PATH" \
 bun run eh transition "$RUN_PATH" complete
 ```
 
+### ADRs in a user repository
+
+Installing EHS does not create an ADR directory in the repository where you
+use it. The `docs/adr/` directory in this checkout stores EHS's own decisions;
+it is not copied into a user's project.
+
+When `architecture-decision` applies to a change, the agent should first look
+for the project's existing convention, such as `docs/adr/`, `adr/`, or
+`docs/decisions/`, and write the decision there. If no convention exists, the
+change contract should propose `docs/adr/`; the directory is created together
+with the first required ADR, not as an empty setup side effect. Changes that do
+not meet the architecture trigger list should record why no ADR is required.
+
 ## 7. Load the skills into an agent host
 
 The host-facing source is the `skills/` directory. The repository-owned Codex
