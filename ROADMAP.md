@@ -23,6 +23,14 @@ recovered from the current checkout and is not backfilled. Run 053 records
 human acceptance of that historical gap as a documented limitation and requires
 durable projections for future release evidence; no retention implementation or
 release approval follows from that decision.
+Run 055 refreshes the current provider boundary: Codex CLI `0.147.0` is
+responsive but the current default configuration does not load EHS and its
+bounded read-only smoke timed out before a marker, while
+Claude Code `2.1.251` validates plugin and marketplace metadata, with seven
+warnings on plugin validation and a clean marketplace validation, but its model
+smoke is blocked by the current authentication state. A three-repetition
+`eh status`/`eh summary` command-wall-time sample is recorded; active operator
+time, productivity, adherence, and release remain unproved.
 
 ## Target User
 
@@ -128,7 +136,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 1-2 weeks
 
-**Status:** Local protocol mechanics implemented in ADR 0018; ten real operator runs exercise the lifecycle. The aggregate operational review is recorded in Run 047, Run 052 confirms the historical projection-retention gap without backfill, and Run 053 records human acceptance of that gap as a documented limitation plus a future durable-projection requirement. Measurement and retention implementation remain open.
+**Status:** Local protocol mechanics implemented in ADR 0018; ten real operator runs exercise the lifecycle. The aggregate operational review is recorded in Run 047, Run 052 confirms the historical projection-retention gap without backfill, and Run 053 records human acceptance of that gap as a documented limitation plus a future durable-projection requirement. Run 055 adds a descriptive command-wall-time sample, while active operator timing, productivity, and retention implementation remain open.
 
 **Outcome:** Extend the completion proof into a resumable lifecycle with proportionate gates.
 
@@ -146,7 +154,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 1-2 weeks
 
-**Status:** Local status, handoff, next-action, critic contracts, provider onboarding paths, the targeted `simple-made-easy` simplicity lens, and a compact future dogfood-record template are implemented. Current host loading is partially verified, Run 048 has narrow Pi prompt-fed handoff evidence, Runs 049/050 provide two qualitative template applications, and Run 051 records human acceptance of the convention with file-reading resume deferred; cross-agent adherence and stronger fresh-session evidence remain open.
+**Status:** Local status, handoff, next-action, critic contracts, provider onboarding paths, the targeted `simple-made-easy` simplicity lens, and a compact future dogfood-record template are implemented. Run 055 refreshes current host loading: Pi remains session-locally verified, Codex is not loaded in the current default configuration and its bounded smoke timed out before a marker, and Claude plugin/marketplace metadata is valid with seven plugin warnings while model loading is authentication-blocked. Run 048 has narrow Pi prompt-fed handoff evidence, Runs 049/050 provide two qualitative template applications, and Run 051 records human acceptance of the convention with file-reading resume deferred; cross-agent adherence and stronger fresh-session evidence remain open.
 
 **Outcome:** Make the protocol feel like useful supervision rather than form filling.
 
@@ -183,7 +191,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** ongoing, with a release decision after 10 runs
 
-**Status:** Controlled ten-case harness and ten real operator runs are implemented. Run 047 records the aggregate release evidence, Run 052 confirms the historical retention gap, and Run 053 records the approved policy without implementing retention. Operational acceptance remains open because measurement, current Codex/Claude loading, adherence, and containment gates are incomplete.
+**Status:** Controlled ten-case harness and ten real operator runs are implemented. Run 047 records the aggregate release evidence, Run 052 confirms the historical retention gap, Run 053 records the approved policy without implementing retention, and Run 055 records a descriptive command-wall-time sample plus current provider loading state. Operational acceptance remains open because current Codex/Claude loading, active operator measurement, adherence, and containment gates are incomplete.
 
 **Outcome:** Replace design confidence with operating evidence.
 
@@ -199,7 +207,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 ## V0 Feature-Complete Checkpoint
 
-**Current status:** V0 implementation gates and the ten-run real operator campaign are complete and locally recorded. Schema version 1 remains experimental. Run 047 records the aggregate friction, false-block, evidence-quality, and host-matrix review; Run 048 adds the future-record template and narrow Pi prompt-fed handoff evidence; Runs 049/050 apply the template to two real documentation changes; Run 051 records human acceptance of the convention and deferral of file-reading resume; Run 052 confirms the historical projection-retention gap without backfill; Run 053 records acceptance of that gap as a documented limitation and requires durable projections for future release evidence. The retention policy is not an implementation. Release still requires current Codex/Claude model-loading evidence, standardized measurement, and a separately approved containment plan for any writable execution.
+**Current status:** V0 implementation gates and the ten-run real operator campaign are complete and locally recorded. Schema version 1 remains experimental. Run 047 records the aggregate friction, false-block, evidence-quality, and host-matrix review; Run 048 adds the future-record template and narrow Pi prompt-fed handoff evidence; Runs 049/050 apply the template to two real documentation changes; Run 051 records human acceptance of the convention and deferral of file-reading resume; Run 052 confirms the historical projection-retention gap without backfill; Run 053 records acceptance of that gap as a documented limitation and requires durable projections for future release evidence; Run 055 records current Codex/Claude loading state and a descriptive command-wall-time sample. The retention policy is not an implementation. Release still requires current Codex/Claude model-loading evidence, active-time measurement if a productivity claim is desired, and a separately approved containment plan for any writable execution.
 
 Before expanding the provider surface, complete these gates:
 
@@ -219,11 +227,12 @@ original projections for Runs 033 through 035 did not; current invalid reruns
 are not historical recovery and no backfill was performed. Run 053 accepts
 that gap as a documented limitation and requires durable projections for
 future release evidence, without implementing storage or enforcement. The
-qualitative field-burden result is promising but timing and productivity
-effect remain unmeasured. File-reading resume is explicitly deferred; the
-next gated slice is current Codex/Claude loading plus standardized measurement.
-Provider expansion should follow that evidence checkpoint rather than becoming
-a substitute for it.
+qualitative field-burden result is promising, and Run 055 now measures the
+local command path descriptively. Human active time and productivity effect
+remain unmeasured. File-reading resume is explicitly deferred; the next gated
+slice is an authorized authenticated Codex/Claude loading retry followed by a
+separate adherence task. Provider expansion should follow that evidence
+checkpoint rather than becoming a substitute for it.
 
 ## Completed First Slice
 
@@ -255,7 +264,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 ### Provider-Neutral Agent Adapter Surface: Claude And Pi
 
-**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a recorded explicit 2.1.224 report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 and has recorded authenticated `openai-codex/gpt-5.3-codex-spark` evidence: the first post-auth report had complete provenance and 12/13 strict classifications passed; after pressure-scenario adjudication, a bounded repeat had complete provenance and 13/13 passed. The 2026-09-03 host-loading refresh verifies Codex local discovery/install, Claude metadata validation with warnings, and Pi session-local EHS loading; Codex and Claude model smokes remain pending because the disposable Codex home lacks auth and the Claude OAuth session is expired. These runs demonstrate reviewable read-only or loading paths only. Comparison claims, provider-performance claims, and containment claims remain pending.
+**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a recorded explicit 2.1.224 report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 and has recorded authenticated `openai-codex/gpt-5.3-codex-spark` evidence: the first post-auth report had complete provenance and 12/13 strict classifications passed; after pressure-scenario adjudication, a bounded repeat had complete provenance and 13/13 passed. Run 055 refreshes the current host: Codex CLI `0.147.0` is responsive but the current default plugin configuration does not list EHS and its bounded smoke timed out before a marker; Claude Code `2.1.251` plugin and marketplace metadata validation passes, with seven warnings on plugin validation and a clean marketplace validation, but its model smoke is authentication-blocked; Pi session-local EHS loading remains verified. These runs demonstrate reviewable read-only or loading paths only. Comparison claims, provider-performance claims, and containment claims remain pending.
 
 **Outcome:** Let Claude and Pi consume the same protocol and evaluation kernel through leaf adapters without leaking provider-specific command, session, output, sandbox, or resume assumptions into `protocol/` or the deterministic scorer.
 
@@ -279,7 +288,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 **Completed first slice:** Define the adapter contract and capability vocabulary, centralize scoring, fail closed on unsafe or mutated retained artefacts, and add Claude and Pi read-only leaves with provider-specific constrained argv and strict output parsing. The leaves are intentionally narrow and do not establish runtime enforcement.
 
-**Next gated slice:** Run authorized current Codex and Claude loading checks and a small standardized operator measurement campaign. Keep the accepted historical gap visible, and keep durable-retention implementation/repository adoption, file-reading resume, provider comparison, and writable execution separately gated. Repeat provider runs only under an explicitly reviewed current-version campaign; do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
+**Next gated slice:** Retry Codex and Claude loading in user-authorized current configurations that have EHS installed and usable authentication, then run one separately approved engineering-adherence task. Keep the accepted historical gap visible, and keep durable-retention implementation/repository adoption, active-time productivity measurement, file-reading resume, provider comparison, and writable execution separately gated. Do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
 
 ### Governed Skill Evolution Sandbox (SkillOpt-Informed)
 

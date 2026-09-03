@@ -96,6 +96,34 @@ projection is gone and to keep current revalidation separate. This is a
 documentation boundary, not a new schema or retention service. Whether the
 confirmed gap is acceptable for release remains a human decision.
 
+## Current provider loading and measurement (2026-09-03)
+
+Run 055 refreshed the current host boundary without changing provider or EHS
+runtime behaviour:
+
+- Codex CLI `0.147.0` is installed and responsive, but the current default
+  `codex plugin list` does not list the local EHS plugin. Its bounded
+  15-second read-only smoke timed out before a trustworthy marker, so loading
+  is unverified until the user installs EHS in that configuration and retries.
+- Claude Code `2.1.251` validates the plugin and marketplace metadata; plugin
+  validation reports seven existing agent-frontmatter warnings and marketplace
+  validation exits cleanly. Its read-only model smoke did not reach a
+  trustworthy marker because the current authentication state blocked the
+  attempt; loading remains unverified.
+- Pi `0.84.1` remains verified only for its explicit session-local loading
+  smoke, as recorded previously.
+
+The fixed `bun run eh status`/`bun run eh summary` path was repeated three
+times. The observed command wall-time medians were 46.33 ms for `status` and
+46.33 ms for `summary`; all `status` invocations exited 0 and all `summary`
+invocations exited 1 because the run was incomplete during the probe. This is
+descriptive local command timing, not active operator time, productivity,
+adherence, provider comparison, or a performance threshold.
+
+This refresh does not clear release. Current Codex/Claude loading, engineering
+adherence, accepted containment, durable retention implementation, provider
+comparison, writable execution, and file-reading resume remain separate gates.
+
 ## Retention policy decision (2026-09-03)
 
 Human review approved the following retention policy for release planning:

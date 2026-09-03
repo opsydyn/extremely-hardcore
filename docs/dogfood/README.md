@@ -57,6 +57,17 @@ projections for future release evidence. The policy does not implement storage
 or approve release; current provider loading, measurement, adherence, and
 containment remain open.
 
+Run 055 refreshes the current provider boundary and records a small local
+measurement. Codex CLI `0.147.0` is healthy but the current default plugin
+configuration does not list EHS, and its bounded read-only smoke timed out
+before a marker. Claude Code `2.1.251` validates the plugin and marketplace; the
+plugin validation reports seven existing warnings and marketplace validation
+exits cleanly, while its model smoke is blocked by the current authentication
+state. The fixed `eh status`/`eh summary` path was repeated
+three times; this measures command wall time only, not active operator time or
+productivity. Release, adherence, comparison, containment, and writable
+execution remain open.
+
 ## Targeted design dogfood
 
 Run 11 applies the optional `simple-made-easy` lens to the multi-option design
@@ -83,6 +94,7 @@ skills-effect benchmark.
 | --- | --- | --- |
 | [047 operational acceptance and host matrix](047-operational-acceptance-host-matrix.md) | Ten-run aggregate, supplemental dogfood, current Codex/Claude/Pi host checks | Review complete; historical gap later accepted as a limitation, future durable projections required, release remains open pending loading, measurement, adherence, and containment evidence |
 | [053 retention policy decision](053-retention-policy-decision.md) | Human decision on historical and future projection retention | Historical gap accepted without backfill; future release projections must be durable; no storage implementation or release approval |
+| [055 current provider loading and measurement](055-current-provider-loading-and-measurement.md) | Current Codex/Claude loading state and three-repetition local command sample | Codex not loaded in current default config; Claude model smoke auth-blocked; command wall time recorded; active time, adherence, containment, comparison, and release remain open |
 
 The current provider-loading details live in the [provider onboarding guide](../provider-onboarding.md).
 
@@ -136,9 +148,10 @@ effect remain not measured.
 
 Human review on 2026-09-03 accepted the template as a lightweight recommended
 Markdown convention and deferred file-reading resume. Runs 049 and 050 remain
-qualitative field-burden evidence; timing, omission rates, and productivity
-effect are not measured. The historical retention gap is accepted as a
-documented limitation without backfill, and future release evidence requires
-durable projections. No storage implementation has been approved. Provider
-loading, measurement, adherence, containment, and release remain open. Run
-053 records the policy decision.
+qualitative field-burden evidence. Run 055 adds a descriptive command wall-time
+sample, but timing of human active work, omission rates, and productivity effect
+remain unmeasured. The historical retention gap is accepted as a documented
+limitation without backfill, and future release evidence requires durable
+projections. No storage implementation has been approved. Current Codex and
+Claude model loading, adherence, containment, comparison, and release remain
+open. Runs 053 and 055 record the policy and current host observations.

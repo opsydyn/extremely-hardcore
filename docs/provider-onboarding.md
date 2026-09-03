@@ -158,16 +158,41 @@ and final marker. Keep raw output private.
 
 | Host | Package/discovery evidence | Loading smoke | Current status |
 | --- | --- | --- | --- |
-| Codex CLI | Local marketplace accepted and plugin installed in an isolated `CODEX_HOME` with CLI `0.147.0` | Disposable model smoke returned `401 Unauthorized` because that isolated home had no bearer auth | Discovery verified; model loading pending |
-| Claude Code | Plugin and marketplace metadata validated with CLI `2.1.251`; validation exits 0 with seven existing agent-frontmatter warnings | Model smoke blocked because the OAuth session was expired and could not refresh | Metadata verified with warnings; model loading pending |
+| Codex CLI | Current default `codex plugin list` with CLI `0.147.0` did not list the local EHS plugin | Bounded 15-second read-only smoke timed out before a marker with exit 143 | Current configuration does not load EHS; loading remains unverified and the smoke is environment-blocked |
+| Claude Code | Plugin and marketplace metadata validated with CLI `2.1.251`; plugin validation exits 0 with seven existing agent-frontmatter warnings and marketplace validation exits 0 | Current read-only model smoke exited before a marker at the host authentication boundary | Metadata verified with warnings; loading is blocked by the current auth state |
 | Pi | Explicit `--skill` path with CLI `0.84.1`; `pi auth check --json --no-refresh` reported ready | Returned the exact `loaded=yes` marker using `openai-codex/gpt-5.3-codex-spark` | Session-local loading verified |
 
 This matrix is onboarding evidence, not a provider compatibility score. A
 provider can move from `pending` to `verified` only after a fresh smoke on the
-current version. The matrix was refreshed on 2026-09-03. The Codex and Claude
-model smoke failures are environment/authentication boundaries, not evidence
-that the skill is malformed; they still leave loading unverified. A smoke pass
+current version. Run 055 refreshed the matrix on 2026-09-03. The Codex result
+is a current configuration state, not a package failure: install the local
+marketplace entry and start a new session before retrying. Its bounded smoke
+also timed out before a trustworthy marker, so the result is not a loading
+pass. The Claude result is an authentication boundary, not evidence that the
+metadata is malformed.
+Neither provider has a current `loaded=yes` smoke result here. A smoke pass
 still does not establish broad adherence.
+
+## Small protocol-command measurement
+
+Run 055 also repeated the existing local receipt path three times:
+
+```bash
+bun run eh status "$RUN_PATH"
+bun run eh summary "$RUN_PATH"
+```
+
+The host-captured command wall-time sample was:
+
+| Command | Repetitions | Min | Median | Max | Exit state |
+| --- | ---: | ---: | ---: | ---: | --- |
+| `eh status` | 3 | 46.21 ms | 46.33 ms | 51.42 ms | `0` each time |
+| `eh summary` | 3 | 46.29 ms | 46.33 ms | 48.77 ms | `1` each time; Run 055 was incomplete during the probe |
+
+This is a descriptive local command measurement, not human active time, a
+productivity result, a benchmark, or a provider comparison. Active operator
+time and a baseline remain unmeasured. The summary exit state is expected while
+the run lacks final evidence; it is not classified as a repository failure.
 
 ## Use EHS on a real change
 
