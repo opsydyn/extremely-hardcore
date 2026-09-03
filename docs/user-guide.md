@@ -142,6 +142,15 @@ bun run eh approve "$RUN_PATH" \
 bun run eh transition "$RUN_PATH" complete
 ```
 
+### Record a real change
+
+For a real non-trivial change, start from the [dogfood record template](dogfood/template.md)
+and create a new record for that change. Keep the record short, write
+`not measured` or `not available` with a reason when a field was not captured,
+and do not backfill older records to fit later conventions. The template is a
+human-readable companion to the optional `eh` protocol; it does not add a CLI
+command or change the protocol schema.
+
 ### ADRs in a user repository
 
 Installing EHS does not create an ADR directory in the repository where you

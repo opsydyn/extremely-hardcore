@@ -37,12 +37,78 @@ The evaluation harness must include at least one scenario for each observed gate
 
 ## Current campaign state
 
-As of 2026-09-02, the ten-run real operator campaign is complete. Records 033
+As of 2026-09-03, the ten-run real operator campaign is complete. Records 033
 through 042 cover four EHS-repository changes and six external-repository
-changes. The current records include lifecycle approval and abandonment paths,
-freshness invalidation, external package boundaries, and final attestations.
+changes. The aggregate review in [Run 047](047-operational-acceptance-host-matrix.md)
+reports 65/65 documented acceptance criteria covered and finds all referenced
+run, evidence, and log paths present. Only 7/10 core attestation/CI projection
+sets remain available: the 033 through 035 projection paths are missing.
 
-This is operational evidence, not a benchmark or release decision. The next
-bounded review is to aggregate friction, false blocks, evidence quality, and
-fresh-agent readability across all ten records. Provider comparison and
-writable execution remain separately gated.
+Run 052 audited that gap. Runs 033 through 035 still retain their source run
+definitions, linked evidence, logs, and completion transitions, but the six
+documented original external attestation and CI projection targets are absent.
+Current `eh status` reports stale invalid evidence for all three, and current
+`eh ci` attempts write invalid projections tied to today's workspace. Those
+outputs cannot recover the original proof and were not used as replacements.
+
+The records explicitly report seven zero false-block outcomes and one corrected
+setup classifier mismatch; two core records omit a false-block field. Four
+core records explicitly report fresh-agent readability, while later records do
+not use a common field. The review therefore does not claim a false-block rate,
+fresh-agent-readability rate, or measured standard-lane overhead.
+
+Current host checks are also separated by claim: Codex local discovery/install
+passes but its disposable model smoke lacks auth, Claude metadata validation
+passes with existing warnings but its model smoke lacks a live OAuth session,
+and Pi passes the explicit session-local loading smoke on `0.84.1`.
+
+This remains operational evidence, not a benchmark or release decision. Release
+and provider expansion remain open pending human review of retention and
+measurement gaps, current Codex/Claude loading evidence, engineering
+adherence, and accepted containment. Provider comparison and writable execution
+remain separately gated.
+
+Run 048 adds the minimum future-record template and one narrow Pi fresh-session
+check. Pi interpreted a supplied durable `eh status` snapshot under a
+no-tools/no-session/no-context-files boundary and emitted the expected marker.
+That is not file-reading resume evidence. Timing remains not measured, and
+stronger resume, provider loading, containment, adherence, and release claims
+remain open.
+
+Runs 049 and 050 apply the template to two real documentation changes: making
+the record workflow discoverable in the user guide and documenting the
+provider-neutral fresh-session handoff boundary. Both records remain short and
+needed no new schema, command, or protocol machinery. This is a qualitative
+field-burden observation only; timing, omission rates, productivity effect, and
+file-reading resume remain unmeasured or unproved.
+
+## Historical projection retention audit (2026-09-03)
+
+The approved retention audit confirms a historical projection gap rather than
+closing it. The source records for Runs 033 through 035 are present, while the
+original attestation and CI projections are not. Because later workspace
+changes make their evidence stale, a current `eh ci` result cannot be called a
+recovered historical projection.
+
+The project will not backfill or relabel those outputs. The future dogfood
+template now requires an operator to say `not retained` when an ephemeral
+projection is gone and to keep current revalidation separate. This is a
+documentation boundary, not a new schema or retention service. Whether the
+confirmed gap is acceptable for release remains a human decision.
+
+## Human review decision (2026-09-03)
+
+Human review approved the following bounded decision:
+
+- Keep the future dogfood template as a lightweight recommended Markdown
+  convention. Do not add a second schema, CLI command, or mandatory ceremony.
+- Accept Runs 049 and 050 as qualitative field-burden evidence only. Timing,
+  omission rates, and productivity effect remain unmeasured.
+- Defer file-reading resume. Any future proposal must define its security,
+  provenance, host, and operational boundaries and pass a separate decision
+  challenge before implementation.
+- Keep retention gaps, current Codex/Claude model loading, adherence,
+  containment, provider comparison, and release as open gates.
+
+This approval records the documentation convention; it is not release approval
+and does not authorize provider execution or writable resume.

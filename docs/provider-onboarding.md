@@ -21,7 +21,7 @@ Set the checkout path once in each shell:
 EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
 ```
 
-Observed local CLI versions for this guide on 2026-09-02 were Codex CLI
+Observed local CLI versions for this guide on 2026-09-03 were Codex CLI
 `0.147.0`, Claude Code `2.1.251`, and Pi `0.84.1`. These are evidence
 snapshots, not minimum-version promises. Re-run the version command when a host
 has been updated.
@@ -158,13 +158,16 @@ and final marker. Keep raw output private.
 
 | Host | Package/discovery evidence | Loading smoke | Current status |
 | --- | --- | --- | --- |
-| Codex CLI | Local marketplace accepted and plugin installed in isolated `CODEX_HOME` with CLI `0.147.0` | Model smoke was blocked by the local network boundary during this run | Discovery verified; model loading pending |
-| Claude Code | Plugin and marketplace metadata validated with CLI `2.1.251` | Model smoke was blocked because the CLI was not authenticated | Metadata verified; model loading pending |
-| Pi | Explicit `--skill` path with CLI `0.84.1` | Returned the exact `loaded=yes` marker using `openai-codex/gpt-5.3-codex-spark` | Session-local loading verified |
+| Codex CLI | Local marketplace accepted and plugin installed in an isolated `CODEX_HOME` with CLI `0.147.0` | Disposable model smoke returned `401 Unauthorized` because that isolated home had no bearer auth | Discovery verified; model loading pending |
+| Claude Code | Plugin and marketplace metadata validated with CLI `2.1.251`; validation exits 0 with seven existing agent-frontmatter warnings | Model smoke blocked because the OAuth session was expired and could not refresh | Metadata verified with warnings; model loading pending |
+| Pi | Explicit `--skill` path with CLI `0.84.1`; `pi auth check --json --no-refresh` reported ready | Returned the exact `loaded=yes` marker using `openai-codex/gpt-5.3-codex-spark` | Session-local loading verified |
 
 This matrix is onboarding evidence, not a provider compatibility score. A
 provider can move from `pending` to `verified` only after a fresh smoke on the
-current version. A smoke pass still does not establish broad adherence.
+current version. The matrix was refreshed on 2026-09-03. The Codex and Claude
+model smoke failures are environment/authentication boundaries, not evidence
+that the skill is malformed; they still leave loading unverified. A smoke pass
+still does not establish broad adherence.
 
 ## Use EHS on a real change
 
@@ -187,6 +190,29 @@ Fix this one obvious spelling mistake in the README. Do not change anything else
 The host-facing receipt is the compact Markdown shape `result`, `claim`,
 `evidence`, `remaining uncertainty`, and `next`. The receipt can be used without
 the `eh` protocol.
+
+## Fresh-session handoff
+
+For a non-trivial run that already has durable `eh` state, capture the current
+status from the original workspace:
+
+```bash
+bun run eh status "$RUN_PATH"
+```
+
+Give the resulting snapshot to the fresh session as prompt input and ask it to
+restate the state, next action, and limitation before doing any work. Record
+the host and version, model, tools, session persistence, context files,
+expected result, observed result, and remaining uncertainty. Label this result
+as **prompt-fed interpretation** when the new session receives the snapshot as
+text. It does not prove file-reading resume, arbitrary workspace continuation,
+protocol enforcement, engineering adherence, containment, provider comparison,
+or release readiness.
+
+Provider-specific session flags and loading mechanics remain in the host
+sections above; do not infer that one provider's resume controls exist on
+another. [Run 048](dogfood/048-future-dogfood-record-and-pi-resume.md) is a
+narrow Pi example of this boundary, not a cross-provider result.
 
 ## Optional `eh` protocol
 

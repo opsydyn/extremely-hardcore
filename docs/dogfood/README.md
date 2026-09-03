@@ -35,8 +35,21 @@ is below; the original five-run decision remains a historical record in
 
 All ten records exist. Runs 5 through 10 target external repositories; the
 retained records state their exact worktrees, checks, limitations, and
-attestations. The aggregate friction, false-block, and evidence-quality
-decision is still open and is the next operational review.
+attestations. The aggregate operational review is recorded in [Run 047](047-operational-acceptance-host-matrix.md).
+
+Run 047 is an acceptance review, not an additional campaign case. It reports
+65/65 acceptance criteria covered in the ten records, confirms that all
+criterion-linked evidence and log paths are present, and records that three
+core attestation/CI projection paths are no longer present. It does not infer
+false-block or fresh-agent-readability rates where the older records omit
+those fields.
+
+Run 052 follows up on the retention finding without rewriting the historical
+records. It confirms that Runs 033 through 035 retain source run state,
+evidence, logs, and completion transitions, while their documented original
+attestation and CI projections are absent. Current revalidation is stale and
+current regeneration is invalid, so the missing historical projections are not
+backfilled or relabelled.
 
 ## Targeted design dogfood
 
@@ -47,3 +60,74 @@ comparison or a skill-effect benchmark.
 | Run | Record | Change type | Target |
 | --- | --- | --- | --- |
 | 11 | [Simple Made Easy lens](045-simple-made-easy-lens.md) | Multi-option public skill design | EHS repository |
+
+## Targeted external dogfood
+
+Run 12 applies the optional `simple-made-easy` lens to a concrete external
+repository repair. It is path-contract dogfood, not a provider execution or
+skills-effect benchmark.
+
+| Run | Record | Change type | Target |
+| --- | --- | --- | --- |
+| 12 | [Simple Made Easy edition snapshot path](046-real-operator-dogfood-edition-path.md) | Filesystem/public-boundary fix | `tech-radar-web` |
+
+## Operational acceptance
+
+| Review | Scope | Result |
+| --- | --- | --- |
+| [047 operational acceptance and host matrix](047-operational-acceptance-host-matrix.md) | Ten-run aggregate, supplemental dogfood, current Codex/Claude/Pi host checks | Review complete; release remains open pending retention, current loading, adherence, and containment evidence |
+
+The current provider-loading details live in the [provider onboarding guide](../provider-onboarding.md).
+
+## Future record minimum
+
+Start each new real-change record from [the dogfood record template](template.md).
+The minimum fields are:
+
+- change identity, target, risk lane, scope, and protocol run path;
+- protocol path, acceptance criteria, blockers, validation, and final
+  transition;
+- setup, implementation, verification, review, and handoff timing with
+  provenance or an explicit unavailable reason;
+- friction categories, workarounds, and an explicit false-block outcome;
+- run/evidence/log retention and attestation/CI projection retention;
+- host-captured versus record-reported evidence;
+- fresh-session host/version, boundary, expected and observed action, supported
+  claim, and limitation;
+- limitations and the next bounded action.
+
+This is a human-readable documentation convention, not a second protocol
+schema. Existing records remain historical and are not backfilled.
+
+If a projection was written only to an ephemeral path and is no longer present,
+write `not retained`. A current rerun must remain labelled as current
+revalidation or invalid output; it cannot restore historical projection proof.
+
+## Fresh-session dogfood
+
+[Run 048](048-future-dogfood-record-and-pi-resume.md) uses the template and
+records one Pi no-tools interpretation of a durable `eh status` snapshot. It is
+not evidence that Pi read local files or can resume arbitrary workspace
+execution.
+
+## Template field-burden dogfood
+
+Runs 049 and 050 apply the template to two real documentation changes. The
+qualitative result is recorded in each run: the required fields fit without a
+new schema or protocol command, while operator timing and any productivity
+effect remain not measured.
+
+| Run | Record | Change type | Target |
+| --- | --- | --- | --- |
+| 049 | [User-guide record workflow](049-user-guide-real-change-record-workflow.md) | New-user documentation | EHS repository |
+| 050 | [Provider fresh-session handoff](050-provider-fresh-session-handoff-guidance.md) | Provider-boundary documentation | EHS repository |
+
+## Human review
+
+Human review on 2026-09-03 accepted the template as a lightweight recommended
+Markdown convention and deferred file-reading resume. Runs 049 and 050 remain
+qualitative field-burden evidence; timing, omission rates, and productivity
+effect are not measured. Release, provider loading, adherence, containment, and
+retention gates remain open. Run 052 confirms the historical retention gap;
+accepting that gap or designing durable retention still requires separate human
+review.

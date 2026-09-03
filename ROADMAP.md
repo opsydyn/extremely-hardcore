@@ -10,9 +10,16 @@ It does not compete by owning the largest skill catalogue. It makes one narrower
 
 Skills provide judgement. The protocol records state. The reference CLI captures evidence and enforces transitions. Humans retain authority over irreversible decisions.
 
-**Status note (2026-09-02):** Core V0 mechanics and the ten-run real operator
-campaign are implemented. Operational acceptance, current-version provider
-loading evidence, accepted containment, and release remain open gates.
+**Status note (2026-09-03):** Core V0 mechanics and the ten-run real operator
+campaign are implemented. The operational acceptance review is recorded, with
+retention and measurement gaps preserved. Pi session-local loading is verified
+on the current host, and Run 048 records one prompt-fed fresh-session
+interpretation check. Runs 049 and 050 apply the future record template to two
+real documentation changes, and human review has accepted it as a lightweight
+convention while deferring file-reading resume; Codex and Claude model loading,
+accepted containment, and release remain open gates. Run 052 confirms that the
+historical attestation and CI projection gap for Runs 033 through 035 cannot be
+recovered from the current checkout and is not backfilled.
 
 ## Target User
 
@@ -118,7 +125,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 1-2 weeks
 
-**Status:** Local protocol mechanics implemented in ADR 0018; ten real operator runs now exercise the lifecycle, with aggregate operational review still open.
+**Status:** Local protocol mechanics implemented in ADR 0018; ten real operator runs exercise the lifecycle. The aggregate operational review is recorded in Run 047, and Run 052 confirms the historical projection-retention gap without backfill. Measurement and retention acceptance remain open for human review.
 
 **Outcome:** Extend the completion proof into a resumable lifecycle with proportionate gates.
 
@@ -136,7 +143,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 1-2 weeks
 
-**Status:** Local status, handoff, next-action, critic contracts, provider onboarding paths, and the targeted `simple-made-easy` simplicity lens are implemented; cross-agent adherence and fresh-session resume evidence remain open.
+**Status:** Local status, handoff, next-action, critic contracts, provider onboarding paths, the targeted `simple-made-easy` simplicity lens, and a compact future dogfood-record template are implemented. Current host loading is partially verified, Run 048 has narrow Pi prompt-fed handoff evidence, Runs 049/050 provide two qualitative template applications, and Run 051 records human acceptance of the convention with file-reading resume deferred; cross-agent adherence and stronger fresh-session evidence remain open.
 
 **Outcome:** Make the protocol feel like useful supervision rather than form filling.
 
@@ -156,7 +163,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 2 weeks
 
-**Status:** Local summary, attestation, exit codes, and reference workflow implemented; repository adoption remains open.
+**Status:** Local summary, attestation, exit codes, and reference workflow implemented; Run 052 confirms that three historical external projection sets were not retained. Repository adoption and any durable retention policy remain open.
 
 **Outcome:** Make completion evidence visible at the normal review boundary.
 
@@ -173,7 +180,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** ongoing, with a release decision after 10 runs
 
-**Status:** Controlled ten-case harness and ten real operator runs are implemented; aggregate release evidence and the operational acceptance decision remain open.
+**Status:** Controlled ten-case harness and ten real operator runs are implemented. Run 047 records the aggregate release evidence and Run 052 confirms the historical retention gap. Operational acceptance remains open because retention, measurement, current Codex/Claude loading, adherence, and containment gates are incomplete.
 
 **Outcome:** Replace design confidence with operating evidence.
 
@@ -189,7 +196,7 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 ## V0 Feature-Complete Checkpoint
 
-**Current status:** V0 implementation gates and the ten-run real operator campaign are complete and locally recorded. Schema version 1 remains experimental. Operational acceptance still requires the aggregate friction/false-block/evidence-quality review, current-version provider loading evidence, and a separately approved containment plan for any writable execution.
+**Current status:** V0 implementation gates and the ten-run real operator campaign are complete and locally recorded. Schema version 1 remains experimental. Run 047 records the aggregate friction, false-block, evidence-quality, and host-matrix review; Run 048 adds the future-record template and narrow Pi prompt-fed handoff evidence; Runs 049/050 apply the template to two real documentation changes; Run 051 records human acceptance of the convention and deferral of file-reading resume; Run 052 confirms the historical projection-retention gap without backfill. Release still requires decisions on retention and measurement gaps, current Codex/Claude model-loading evidence, and a separately approved containment plan for any writable execution.
 
 Before expanding the provider surface, complete these gates:
 
@@ -201,7 +208,17 @@ Before expanding the provider surface, complete these gates:
 
 Ten real operator changes are now recorded separately under `docs/dogfood/`. They are evidence for operational review, not by themselves a release or benchmark claim.
 
-The current next bounded slice is the aggregate ten-run friction, false-block, and evidence-quality review, alongside a current-version host-loading matrix. Provider expansion should follow that acceptance checkpoint rather than becoming a substitute for it.
+The aggregate review, first future-record/resume slice, two template
+applications, human decision, and historical projection-retention audit are
+complete as evidence records, but they did not clear release. Run 052 confirms
+that source records survived while the original projections for Runs 033
+through 035 did not; current invalid reruns are not historical recovery and no
+backfill was performed. The qualitative field-burden result is promising but
+timing and productivity effect remain unmeasured. File-reading resume is
+explicitly deferred; the next decision is whether the confirmed retention gap
+is acceptable for release or warrants a separately designed durable-retention
+proposal. Provider expansion should follow that acceptance checkpoint rather
+than becoming a substitute for it.
 
 ## Completed First Slice
 
@@ -233,7 +250,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 ### Provider-Neutral Agent Adapter Surface: Claude And Pi
 
-**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a recorded explicit 2.1.224 report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 and has recorded authenticated `openai-codex/gpt-5.3-codex-spark` evidence: the first post-auth report had complete provenance and 12/13 strict classifications passed; after pressure-scenario adjudication, a bounded repeat had complete provenance and 13/13 passed. The current host-loading smoke matrix validates Codex package installation, Claude metadata, and Pi session-local EHS loading; current Codex and Claude model smokes remain pending because of the local network and authentication boundaries. These runs demonstrate reviewable read-only or loading paths only. Comparison claims, provider-performance claims, and containment claims remain pending.
+**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a recorded explicit 2.1.224 report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 and has recorded authenticated `openai-codex/gpt-5.3-codex-spark` evidence: the first post-auth report had complete provenance and 12/13 strict classifications passed; after pressure-scenario adjudication, a bounded repeat had complete provenance and 13/13 passed. The 2026-09-03 host-loading refresh verifies Codex local discovery/install, Claude metadata validation with warnings, and Pi session-local EHS loading; Codex and Claude model smokes remain pending because the disposable Codex home lacks auth and the Claude OAuth session is expired. These runs demonstrate reviewable read-only or loading paths only. Comparison claims, provider-performance claims, and containment claims remain pending.
 
 **Outcome:** Let Claude and Pi consume the same protocol and evaluation kernel through leaf adapters without leaking provider-specific command, session, output, sandbox, or resume assumptions into `protocol/` or the deterministic scorer.
 
@@ -257,7 +274,7 @@ That demo is understandable in minutes, difficult to reproduce honestly with pro
 
 **Completed first slice:** Define the adapter contract and capability vocabulary, centralize scoring, fail closed on unsafe or mutated retained artefacts, and add Claude and Pi read-only leaves with provider-specific constrained argv and strict output parsing. The leaves are intentionally narrow and do not establish runtime enforcement.
 
-**Next gated slice:** Publish the aggregate ten-run friction, false-block, and evidence-quality review, then repeat controlled Pi and Claude runs under an explicitly reviewed current-version campaign. Do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
+**Next gated slice:** Human review of the confirmed historical projection-retention gap: decide whether it is acceptable for release evidence or whether to approve a separately designed durable-retention proposal. Keep file-reading resume deferred until a separate security and provenance proposal passes decision challenge. Repeat controlled Pi and Claude runs only under an explicitly reviewed current-version campaign. Do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
 
 ### Governed Skill Evolution Sandbox (SkillOpt-Informed)
 
