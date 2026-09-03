@@ -43,6 +43,7 @@ ADR. See the [user guide](docs/user-guide.md) for the newcomer explanation.
 - `using-extremely-hardcore`: decides when to run the full loop.
 - `change-contract`: fixes intent, scope, risks, public contracts, and stop conditions before editing.
 - `domain-discovery`: maps domain language, contexts, rules, integrations, and ambiguity.
+- `simple-made-easy`: compares complete implementation paths and exposes accidental complexity without treating line count as quality.
 - `architecture-decision`: records decisions when architecture, contracts, or operational behaviour changes.
 - `bounded-context-review`: checks coupling, ownership, dependencies, transactions, and context leakage.
 - `decision-challenge`: tests high-consequence execution, boundary, differentiation, and comparison claims before planning.

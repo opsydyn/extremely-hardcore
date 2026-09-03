@@ -37,3 +37,13 @@ All ten records exist. Runs 5 through 10 target external repositories; the
 retained records state their exact worktrees, checks, limitations, and
 attestations. The aggregate friction, false-block, and evidence-quality
 decision is still open and is the next operational review.
+
+## Targeted design dogfood
+
+Run 11 applies the optional `simple-made-easy` lens to the multi-option design
+decision that introduced it. It is targeted self-dogfood, not a provider
+comparison or a skill-effect benchmark.
+
+| Run | Record | Change type | Target |
+| --- | --- | --- | --- |
+| 11 | [Simple Made Easy lens](045-simple-made-easy-lens.md) | Multi-option public skill design | EHS repository |

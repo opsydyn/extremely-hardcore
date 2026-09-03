@@ -103,6 +103,22 @@ Discovered problems are recorded separately unless they block the contracted cha
 
 The goal is not the smallest diff at any cost. The goal is the smallest change that leaves the system more coherent than it found it.
 
+## We Believe Simple Is Not Easy
+
+Easy is familiar, nearby, or convenient for the current agent. Simple means
+that concerns are not braided together. A familiar abstraction can be easy to
+write and complex to live with.
+
+Agents should check for entanglement in state, control flow, policy, ownership,
+configuration, dependencies, and delivery concerns. They should remove
+speculative work, reuse sound boundaries, prefer standard or native capability,
+and add new structure only when the complete outcome requires it.
+
+Simplicity is not a line-count, file-count, token, or ceremony contest. More
+separate parts can be simpler than fewer intertwined parts. Required validation,
+security, error handling, accessibility, tests, rollback, and evidence are not
+acceptable sacrifices for a shorter patch.
+
 ## We Believe Humans Own Irreversible Judgement
 
 Agents may analyse trade-offs, recommend decisions, and gather evidence. They do not get unilateral authority over irreversible data loss, security posture, public compatibility, production deployment, legal obligations, or product intent.

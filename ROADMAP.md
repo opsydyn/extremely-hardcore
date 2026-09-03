@@ -136,13 +136,14 @@ Containment slice 024 adds a no-model, no-network Docker probe in a fresh named 
 
 **Estimated effort:** 1-2 weeks
 
-**Status:** Local status, handoff, next-action, critic contracts, and provider onboarding paths are implemented; cross-agent adherence and fresh-session resume evidence remain open.
+**Status:** Local status, handoff, next-action, critic contracts, provider onboarding paths, and the targeted `simple-made-easy` simplicity lens are implemented; cross-agent adherence and fresh-session resume evidence remain open.
 
 **Outcome:** Make the protocol feel like useful supervision rather than form filling.
 
 **Deliverables:**
 
 - `using-extremely-hardcore` routes changes into the correct lane.
+- `simple-made-easy` compares complete implementation paths and makes structural simplicity explicit without becoming a shortest-diff gate.
 - Skills read and update the same durable run.
 - Brief-to-change-run charter adapter: durable finish line, vocabulary, decision frontier, and advisory ownership claims feed a scoped change contract without replacing protocol evidence or gates.
 - Critic roles have explicit inputs, outputs, severity, and blocking contracts.

@@ -190,6 +190,36 @@ pi --skill "$EHS_ROOT/skills/using-extremely-hardcore/SKILL.md"
 These commands establish package discovery or explicit skill loading; they do
 not prove that a model will follow EHS during arbitrary engineering work.
 
+### Use the Simple Made Easy lens
+
+EHS remains the product and package. `simple-made-easy` is an optional skill
+for a non-trivial change with multiple plausible implementation paths or a
+risk of accidental coupling. It is not required for an obvious local fix and
+does not replace the change contract, architecture decision, tests, review, or
+evidence ledger.
+
+Use a prompt such as:
+
+```text
+Use Simple Made Easy for this change. Compare complete paths, inspect reuse,
+standard-library, native-platform, and installed-dependency options, then
+select the least entangled complete path. Do not optimize for line count or
+drop validation, security, accessibility, tests, rollback, or evidence.
+Record the compact simplicity check in the existing change contract.
+```
+
+The expected output is inline rather than a new tracker or transcript:
+
+```text
+outcome:
+options checked:
+selected path:
+entanglement avoided:
+safeguards preserved:
+omitted scope:
+remaining uncertainty:
+```
+
 After loading the skills, use the harmless loading smoke in the provider guide,
 or this equivalent prompt in a disposable project:
 

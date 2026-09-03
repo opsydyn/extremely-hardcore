@@ -139,6 +139,19 @@ describe("validateProject", () => {
     );
   });
 
+  test("requires the simple-made-easy skill", () => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    rmSync(join(root, "skills", "simple-made-easy"), { recursive: true, force: true });
+
+    const result = validateProject(root);
+
+    expect(result.ok).toBe(false);
+    expect(result.errors).toContain(
+      "missing required file: skills/simple-made-easy/SKILL.md",
+    );
+  });
+
   test("reports missing required skill headings", () => {
     const root = tempRepo();
     writeMinimalRequiredFiles(root);

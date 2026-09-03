@@ -60,6 +60,7 @@ export const skillFiles = [
   "skills/domain-discovery/SKILL.md",
   "skills/bounded-context-review/SKILL.md",
   "skills/decision-challenge/SKILL.md",
+  "skills/simple-made-easy/SKILL.md",
   "skills/test-first-implementation/SKILL.md",
   "skills/evidence-ledger/SKILL.md",
 ];

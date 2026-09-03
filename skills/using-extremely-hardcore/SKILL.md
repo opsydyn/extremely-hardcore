@@ -41,10 +41,12 @@ Still use judgement. If the one-line change is in auth, billing, schema migratio
 2. For non-trivial work, run:
    1. `change-contract`
    2. `domain-discovery` when domain, persistence, API, or cross-context logic is involved
-   3. `architecture-decision` when its trigger list applies
-   4. `test-first-implementation`
-   5. `bounded-context-review` before boundary-sensitive edits
-   6. `evidence-ledger`
+   3. `simple-made-easy` when multiple complete paths or accidental-complexity risks exist
+   4. `architecture-decision` when its trigger list applies
+   5. `decision-challenge` when its trigger rubric applies, before planning
+   6. `test-first-implementation`
+   7. `bounded-context-review` before boundary-sensitive edits
+   8. `evidence-ledger`
 3. For risky work, add `architecture-critic` and `delivery-critic` review roles.
 4. Keep scope small. If the work grows, stop and update the change contract.
 
