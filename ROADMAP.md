@@ -1,5 +1,22 @@
 # Extremely Hardcore Product Roadmap
 
+## Immediate Priority: Instruction Pruning
+
+Before adding capabilities, reduce routine instruction overhead while preserving
+scope, meaningful verification, evidence provenance, and required approvals.
+
+- Bounded pass: narrow the router and core skill descriptions, allow conversational
+  scope and plans for local work, remove duplicate reporting, and make verification
+  proportional. Keep existing protocol gates and consequential-work records.
+- Check the revised guidance against a bounded local fix, a risky one-line change,
+  and an existing protocol run. Scaffold checks do not prove agent behaviour.
+- Before claiming an efficiency improvement, compare Astra alone, current EHS,
+  and pruned EHS on repeated equivalent tasks: correctness, regressions, elapsed
+  time, tokens, unrelated changes, and human interruptions. Behavioural and
+  efficiency validation remain pending until those runs are recorded.
+- Defer new integrations and skills; this pass adds no runtime, provider,
+  dependency, or model-specific branch to the installed skills.
+
 ## Product Position
 
 `extremely-hardcore` is the verifiable control plane for high-risk agentic software changes.

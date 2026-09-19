@@ -16,3 +16,9 @@ Use the skills in `skills/` for non-trivial work in this repo.
 - Prefer boring code.
 
 Trivial edits do not need the full loop. A typo is still a typo. Do not make it an opera.
+
+For bounded local work, keep scope, plan, and evidence concise in the conversation;
+do not generate a document per skill. Preserve required durable records and
+approval gates for consequential work and existing protocol runs. Load only
+applicable skills, reuse equivalent records from other required workflows, and
+continue authorised work through relevant verification without extra stage approvals.

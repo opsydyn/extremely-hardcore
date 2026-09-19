@@ -1,6 +1,6 @@
 ---
 name: test-first-implementation
-description: Use before implementation to protect behaviour with tests, define the first failing test, choose the smallest code change, list checks, and prepare rollback.
+description: Choose meaningful regression tests and verification for implementation changes.
 ---
 
 # test-first-implementation
@@ -22,24 +22,22 @@ Do not use when the user explicitly approves a throwaway spike, generated code, 
 
 ## required output
 
-- Implementation plan from `templates/implementation-plan.md`.
-- First failing test, or a written reason why test-first is not practical.
+- A brief implementation and verification approach; use `templates/implementation-plan.md` when a durable plan is needed, not for every local fix.
+- A failing behavioural test where practical, or a brief explanation of the appropriate alternative verification. Reuse existing tests when they already protect the behaviour.
 
 ## procedure
 
 1. Identify behaviour to protect.
-2. Write or update tests before implementation where practical.
-3. Define the first failing test.
-4. Run the test and confirm it fails for the expected reason.
-5. Make the smallest implementation.
-6. Refactor only after tests pass.
-7. List checks to run.
-8. Define rollback plan.
+2. For a bug fix or changed behaviour, reproduce the failure with a meaningful test before implementation where practical. Confirm it fails for the expected reason; an unrelated failure is not a reproduction.
+3. Do not add tests that merely mirror implementation or manufacture failures for low-impact changes. State verification limits when a behavioural test is not appropriate.
+4. Make the smallest complete implementation, then run affected tests and required repository checks. Refactor only after the relevant tests pass.
+5. Broaden or repeat checks only when changes, failures, or unresolved risks justify it. Do not omit required checks.
+6. Define recovery proportional to the risk; migrations and external effects need more than reverting a local diff.
 
 ## quality bar
 
 - Tests describe behaviour, not private implementation trivia.
-- The first failing test is specific.
+- Regression tests fail for the behaviour being corrected, not incidental reasons.
 - The implementation is the smallest safe change.
 - Rollback is plausible.
 

@@ -1,6 +1,6 @@
 ---
 name: evidence-ledger
-description: Use at the end of non-trivial work to record changed files, commands, passing and failing checks, architecture impact, public contract impact, remaining risks, and final recommendation.
+description: Report evidence and remaining uncertainty before claiming non-trivial work complete.
 ---
 
 # evidence-ledger
@@ -23,7 +23,7 @@ Do not use for trivial edits where the final answer can state the one file chang
 
 ## required output
 
-- Evidence ledger from `templates/evidence-ledger.md`.
+- An evidence ledger, kept in the conversation for bounded local work unless a durable record is required. Use `templates/evidence-ledger.md` for consequential work or repository-required records; reuse existing evidence instead of duplicating it.
 - A compact work receipt at the top of the ledger with exactly five fields: `result`, `claim`, `evidence`, `remaining uncertainty`, and `next`.
 - Final recommendation: `merge`, `hold`, `needs review`, or `needs follow-up`.
 
@@ -33,17 +33,9 @@ The work receipt is standalone Markdown. It is a review projection, not a runtim
 
 1. Start with the work receipt: state the result, the claim, the supporting evidence, the remaining uncertainty, and the next action.
 2. Label evidence provenance plainly. Distinguish host-captured command results, agent-declared results, independent review, and evidence that was not run.
-3. Summarise the change.
-4. List changed files.
-5. Record meaningful commands run.
-6. Separate passing checks from failing checks.
-7. State architecture impact.
-8. State public contract impact.
-9. Record risks left open.
-10. Say whether human review is needed.
-11. Give one final recommendation from the allowed list.
-12. When a protocol run exists, capture each meaningful verification command with `bun run eh evidence <run-path> <criterion-id> -- <command> [args...]`.
-13. Use `bun run eh transition <run-path> complete` for the completion claim. Do not hand-author success when the gate rejects it.
+3. Record changed files, meaningful commands and results, relevant architecture or public contract impact, remaining risks, and any required human review. Keep supporting detail short and separate failures from passes; do not repeat the receipt or add empty sections.
+4. Give one final recommendation from the allowed list.
+5. When a protocol run exists, capture each meaningful verification command with `bun run eh evidence <run-path> <criterion-id> -- <command> [args...]` and use `bun run eh transition <run-path> complete` for the completion claim. Do not hand-author success when the gate rejects it. Standalone work does not require creating a run.
 
 ## quality bar
 

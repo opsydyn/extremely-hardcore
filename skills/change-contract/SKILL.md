@@ -1,6 +1,6 @@
 ---
 name: change-contract
-description: Use before editing for non-trivial work to define user intent, allowed scope, forbidden scope, affected areas, the minimum complete change, public contracts, risks, acceptance evidence, and stop conditions.
+description: Define scope and acceptance evidence before non-trivial edits, especially ambiguous or consequential changes.
 ---
 
 # change-contract
@@ -22,24 +22,17 @@ Do not use for trivial copy, typo, formatting, or one-line local test fixes with
 
 ## required output
 
-- A completed change contract, preferably written from `templates/change-contract.md`.
+- A concise contract in the conversation for bounded local work. Use `templates/change-contract.md` for consequential changes or when a durable record is requested or required by the repository. Reuse an existing contract rather than duplicating it.
 - A concise minimum-complete-change statement naming the least powerful implementation that fully satisfies the contract.
 - Clear allowed scope and forbidden scope.
 - Acceptance evidence that can be verified later.
 
 ## procedure
 
-1. Restate user intent in concrete terms.
-2. List current understanding from repository inspection.
-3. Define allowed scope.
-4. Define forbidden scope.
-5. Identify affected areas.
-6. State the minimum complete change: the least powerful implementation that fully satisfies the contract. Name validation, security, error handling, accessibility, and architectural obligations that must not be traded away for a smaller diff.
-7. Identify changed or potentially changed public contracts.
-8. Record assumptions and risks.
-9. Define acceptance evidence.
-10. Define stop conditions.
-11. Stop before editing if scope is unclear or acceptance evidence cannot be stated.
+1. Inspect relevant context and state the intended outcome, affected areas, and scope boundaries. Do not repeat an already clear user brief.
+2. State the minimum complete change, including validation, security, error handling, accessibility, and architectural obligations that must not be traded away for a smaller diff.
+3. Name affected public contracts, material assumptions, risks, and verifiable acceptance evidence.
+4. Define stop conditions. Ask only when missing information materially changes scope, safety, or acceptance; otherwise state reasonable assumptions and continue within authorisation.
 
 ## quality bar
 
