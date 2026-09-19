@@ -2,6 +2,8 @@ import { expect, test } from "bun:test";
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { captureEvidence } from "../../protocol/evidence";
+import { recordApproval } from "../../protocol/approvals";
+import type { RunDefinition } from "../../protocol/types";
 import { createAttestation } from "../../protocol/attestation";
 import { readRunStatus } from "../../protocol/status";
 import { transitionTo, transitionToComplete } from "../../protocol/transition";
@@ -129,4 +131,54 @@ test("creates a digest-linked attestation without changing the run", async () =>
   expect(attestation.valid).toBe(true);
   expect(attestation.artifacts.some(({ path }) => path === "run.json")).toBe(true);
   expect(attestation.artifacts.every(({ sha256 }) => /^[a-f0-9]{64}$/.test(sha256))).toBe(true);
+});
+
+test.each([
+  { scenario: "approved", risk: "high", decision: "approved", error: undefined },
+  { scenario: "missing approval", risk: "high", decision: undefined, error: "approval.required" },
+  { scenario: "rejected approval", risk: "high", decision: "rejected", error: "approval.rejected" },
+  { scenario: "stale approval", risk: "high", decision: "approved", error: "approval.stale" },
+  { scenario: "failed evidence", risk: "high", decision: "approved", error: "evidence.failed" },
+  { scenario: "open blocker", risk: "high", decision: "approved", error: "blocker.open" },
+  { scenario: "standard pending decision", risk: "standard", decision: undefined, error: undefined },
+] as const)("human-decision status: $scenario", async ({ scenario, risk, decision, error }) => {
+  const root = createGitWorkspace("extremely-hardcore decision status ");
+  const runPath = join(root, ".extremely-hardcore", "runs", "decision");
+  const run: RunDefinition = {
+    schemaVersion: 1,
+    changeId: "decision",
+    initialState: "implemented",
+    risk,
+    acceptanceCriteria: [{ id: "checks-pass", description: "Checks pass.", evidenceIds: [] }],
+    blockers: scenario === "open blocker"
+      ? [{ id: "review", description: "Review pending.", status: "open" }]
+      : [],
+  };
+  await Bun.write(join(runPath, "run.json"), JSON.stringify(run));
+  await captureEvidence({
+    runPath,
+    criterionId: "checks-pass",
+    command: ["bun", "-e", scenario === "failed evidence" ? "process.exit(1)" : "process.exit(0)"],
+  });
+  const workspaceFingerprint = computeWorkspaceFingerprint(root);
+  expect(transitionTo(runPath, "needs-human-decision", {
+    workspaceFingerprint,
+    reason: "Human decision pending.",
+  }).ok).toBe(true);
+  if (decision) {
+    recordApproval(runPath, {
+      approver: "fixture reviewer",
+      decision,
+      gate: "complete",
+      workspaceFingerprint: scenario === "stale approval" ? "previous-workspace" : workspaceFingerprint,
+      reason: "Fixture review decision.",
+    });
+  }
+
+  const status = readRunStatus(runPath, { workspaceFingerprint });
+  expect(status.state).toBe("needs-human-decision");
+  expect(status.validation.errors.map(({ code }) => code)).toEqual(error ? [error] : []);
+  expect(status.nextAction).toBe(scenario === "approved"
+    ? "request the guarded completion transition"
+    : "record the required human decision or abandon the run");
 });

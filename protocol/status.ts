@@ -75,7 +75,9 @@ function getNextAction(input: {
     return "start a new run; this run is terminal";
   }
   if (input.state === "needs-human-decision") {
-    return "record the required human decision or abandon the run";
+    return input.risk === "high" && input.validation.ok
+      ? "request the guarded completion transition"
+      : "record the required human decision or abandon the run";
   }
   if (input.state === "blocked") {
     return input.openBlockers > 0

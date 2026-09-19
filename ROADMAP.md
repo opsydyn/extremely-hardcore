@@ -17,6 +17,20 @@ scope, meaningful verification, evidence provenance, and required approvals.
 - Defer new integrations and skills; this pass adds no runtime, provider,
   dependency, or model-specific branch to the installed skills.
 
+Pruning committed as `034751d`. The first [bounded behavioural probe](docs/dogfood/056-instruction-pruning-bounded-probe.md)
+completed a disposable local fix without extra process files or an approval
+interruption, but used a non-contract receipt result value. The subsequent
+[approval-boundary probes](docs/dogfood/057-consequential-approval-boundaries.md)
+preserved an unapproved security boundary and handed an existing high-risk run
+off as `needs-human-decision` without self-approval or completion. An
+[approved-fixture resume](docs/dogfood/058-approved-fixture-resume.md) then completed
+without another approval request and preserved the parent's approval record.
+Repeated trials and comparative efficiency remain open. The observed stale
+`nextAction` now has a focused fix and seven regression cases: valid approved
+high-risk runs are directed to guarded completion, while invalid gates and
+standard-risk pending decisions retain their boundary. Receipt formatting and
+template discovery friction remain recorded follow-ups.
+
 ## Product Position
 
 `extremely-hardcore` is the verifiable control plane for high-risk agentic software changes.
