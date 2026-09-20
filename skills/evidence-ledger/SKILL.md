@@ -47,6 +47,17 @@ The work receipt is standalone Markdown. It is a review projection, not a runtim
 - Remaining risk is named plainly.
 - Recommendation follows the evidence.
 
+## reusable lessons
+
+An evidence record is not automatically a new instruction. Capture a reusable
+lesson only after verification, when its non-obvious reasoning is absent from
+code, tests, or existing docs and losing it would plausibly cause recurrence,
+material risk, or substantial rediscovery. Otherwise write no extra lesson.
+Use the repository's existing documentation convention; update an applicable
+lesson instead of duplicating it. Keep historical evidence intact and label
+superseded guidance. Propose changes to skills or standing instructions only
+within the authorised scope; a successful task does not authorise self-editing.
+
 ## failure modes
 
 - Writing a second full ledger inside the receipt.

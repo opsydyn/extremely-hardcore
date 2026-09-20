@@ -50,6 +50,58 @@ The corpus covers scope drift, fabricated evidence, stale state, unsafe commands
 
 This is a deterministic protocol harness, not an agent benchmark. It does not invoke Codex, Claude, or any model API; it does not establish baseline comparisons; and it does not apply CI merge thresholds. Later adapters must preserve this result vocabulary rather than parse natural-language output.
 
+## Controlled instruction comparisons
+
+This is an experiment protocol, not a new command or a claim that the existing
+adapters can isolate skill versions. Static audits identify plausible edits;
+passing tests and shorter instructions do not establish behavioural improvement.
+
+Before a comparative run:
+
+1. Verify that the runner can select a pinned skill build and retain actual
+   loading evidence, task input, tool trace, final output, and available usage.
+   A declared mode or echoed loading marker is insufficient. If this cannot be
+   established, report the missing capability and stop the comparison.
+2. Fix the task set, independent outcome checks, critical failure definitions,
+   repetition count, budget, stopping rule, and decision criteria before seeing
+   candidate results. Keep correctness criteria visible but held-out tasks and
+   expected answers unavailable to candidate authors. Do not weaken the scorer.
+3. Run an A/A control: the same pinned skill build on both sides, with fresh
+   sessions and disposable task workspaces. Record observed variation rather
+   than treating one pair as a reliable statistical noise estimate.
+4. Compare baseline and candidate with the same model configuration, runner,
+   permissions, task inputs, and tools. Interleave or randomise order, record
+   caching and environment differences, and change only the nominated skill
+   material. Keep interrupted and failed attempts in the record.
+5. Judge task correctness, regressions, scope violations, unnecessary approval
+   pauses, and completion accuracy from actions and artefacts, not self-reports.
+   Record elapsed time, tokens, cost, and human interventions where observable;
+   label unavailable metrics rather than estimating them. Use neutral candidate
+   labels for discretionary review where practical.
+6. Retain a candidate only when evidence supports the predeclared criteria
+   without critical regressions. Report uncertainty, variation, and untested
+   behaviours. Inconclusive results remain inconclusive; preserve rollback and
+   require human review before promotion.
+
+The current bounded probes cover a local fix, an unapproved security change,
+missing completion approval, and approved resume. They are development cases,
+not hidden holdouts or a comparative baseline. Include whole task journeys in
+future runs, not only final receipt wording. Distinguish a correct approval stop
+from a needless pause, and a repair from reversal of an intended product contract.
+
+Protocol fixtures and read-only classification remain useful checks, but neither
+substitutes for end-to-end behavioural evidence. Resolve the existing containment
+and authorisation gates before any repeated writable-provider experiment. This
+guidance does not authorise provider calls, new external recipients, or automatic
+skill mutation. Measurement belongs to repository evaluation tooling or an
+external evaluator, not the installed EHS method.
+
+The measurement discipline is informed by Compound Engineering's
+[ce-retune](https://github.com/EveryInc/compound-engineering-plugin/blob/main/skills/ce-retune/SKILL.md).
+The evidence-ledger lesson threshold is informed by
+[ce-compound](https://github.com/EveryInc/compound-engineering-plugin/blob/main/skills/ce-compound/SKILL.md).
+EHS adopts these principles without depending on either skill or its orchestration.
+
 ## Full-corpus policy
 
 Run the local policy-backed aggregate with:

@@ -31,6 +31,15 @@ high-risk runs are directed to guarded completion, while invalid gates and
 standard-risk pending decisions retain their boundary. Receipt formatting and
 template discovery friction remain recorded follow-ups.
 
+Before further instruction expansion, follow the
+[controlled comparison protocol](docs/evaluations/README.md#controlled-instruction-comparisons):
+verify build selection and trace capture, estimate run variation with an A/A
+control, then compare pinned builds against predeclared outcomes and budgets.
+These experiments remain pending; no new runner or automatic promotion is implied.
+Capture only verified, non-obvious lessons absent from existing code, tests, and
+docs. Maintain applicable guidance rather than accumulating rules from every run;
+preserve historical evidence separately.
+
 ## Product Position
 
 `extremely-hardcore` is the verifiable control plane for high-risk agentic software changes.
@@ -338,8 +347,9 @@ autonomous skill adoption is approved.
 
 **Roadmap sequence:**
 
-1. Establish evaluator credibility with repeatable baselines and hidden
-   holdouts.
+1. Establish evaluator credibility with verified skill-build selection,
+   same-build A/A controls, repeatable baselines, and hidden holdouts, following
+   the controlled comparison protocol above.
 2. Nominate one non-protected skill and one fixture; generate offline
    candidates without changing the installed skill.
 3. Select candidates only when held-out results improve without critical
