@@ -53,9 +53,12 @@ This is a deterministic protocol harness, not an agent benchmark. It does not in
 ## Controlled instruction comparisons
 
 Current [local readiness assessment](060-comparison-readiness.md): comparative
-execution is on hold. Skill-build selection/loading is unverified, read-only
-traces are incomplete, and applicable containment remains unverified. The
-surplus-code scoring defect found during preflight is now fixed and regression-tested.
+execution is on hold. One explicit-path loading turn and no-model catalog
+isolation probes establish a candidate host route, but exact instruction-byte
+delivery and comparable model outcomes remain unverified. The read-only
+adapter's traces are incomplete, and applicable writable containment remains
+unverified. The surplus-code scoring defect found during preflight is fixed
+and regression-tested.
 
 The [pinned-loading capability assessment](061-pinned-loading-capability.md)
 identifies a native explicit-path candidate in the installed host schema. The
@@ -66,6 +69,13 @@ instruction delivery was then probed in a
 accepted a native skill item, produced a skill-shaped answer, and retained
 events and usage. It did not expose the exact injected bytes or isolate a
 model control arm. The comparison hold remains.
+
+A [no-model control and scoring review](065-comparison-control-and-scoring-readiness.md)
+verified process-only skill catalog isolation on this signed-in host: zero
+enabled skills in control, the nine staged EHS skills in treatment, and 17
+ambient skills disabled in both. The current pressure-label scorer remains a
+classification check, not an independent engineering outcome. Hook/tool parity
+and a frozen review-task oracle are still needed before an A/A or A/B run.
 
 This is an experiment protocol, not a new command or a claim that the existing
 adapters can isolate skill versions. Static audits identify plausible edits;

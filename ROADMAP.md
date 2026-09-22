@@ -1,6 +1,6 @@
 # Extremely Hardcore Product Roadmap
 
-Updated 2026-09-20. This is a work-priority map, not release approval or a fresh
+Updated 2026-09-22. This is a work-priority map, not release approval or a fresh
 provider-health check.
 
 ## Product Boundary
@@ -56,7 +56,12 @@ Work in this order. New capabilities must not substitute for acceptance evidence
    [single corrected turn](docs/evaluations/064-codex-explicit-skill-turn.md)
    accepted the staged skill path and produced a skill-shaped answer with a
    retained trace. Exact instruction-byte delivery and a comparable model
-   control arm remain unverified. Next: design isolation and independent scoring.
+   control arm remain unverified. A
+   [no-model isolation review](docs/evaluations/065-comparison-control-and-scoring-readiness.md)
+   found that temporary process settings can disable all 17 ambient skills in
+   both arms while enabling only the nine staged EHS skills in treatment. The
+   present label scorer cannot measure engineering outcomes. Next: freeze one
+   independently scored read-only review fixture and fail-closed arm preflight.
    Keep comparative execution on hold until the remaining gaps are resolved.
 3. **Run an authorised controlled comparison.** Follow the
    [comparison protocol](docs/evaluations/README.md#controlled-instruction-comparisons):
