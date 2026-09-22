@@ -49,8 +49,14 @@ Work in this order. New capabilities must not substitute for acceptance evidence
    reports. [Capability assessment](docs/evaluations/061-pinned-loading-capability.md)
    confirms explicit skill-path input in the installed host schema, not runtime
    loading. The [no-model discovery probe](docs/evaluations/062-codex-skill-discovery-probe.md)
-   found all nine staged EHS skills and none in an empty control. Next: qualify
-   explicit-path delivery in a harmless, traced turn before choosing integration.
+   found all nine staged EHS skills and none in an empty control.
+   The [first loading attempt](docs/evaluations/063-codex-loading-turn-blocked.md)
+   stopped before initialisation when automatic review rejected signed-in state
+   access and possible provider transfer. The user then approved that scope. A
+   [single corrected turn](docs/evaluations/064-codex-explicit-skill-turn.md)
+   accepted the staged skill path and produced a skill-shaped answer with a
+   retained trace. Exact instruction-byte delivery and a comparable model
+   control arm remain unverified. Next: design isolation and independent scoring.
    Keep comparative execution on hold until the remaining gaps are resolved.
 3. **Run an authorised controlled comparison.** Follow the
    [comparison protocol](docs/evaluations/README.md#controlled-instruction-comparisons):

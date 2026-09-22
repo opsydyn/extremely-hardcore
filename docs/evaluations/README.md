@@ -61,7 +61,11 @@ The [pinned-loading capability assessment](061-pinned-loading-capability.md)
 identifies a native explicit-path candidate in the installed host schema. The
 [no-model discovery probe](062-codex-skill-discovery-probe.md) confirms that this
 host lists nine staged EHS skills and none in the empty control. Turn-level
-instruction delivery is still unverified; the comparison hold remains.
+instruction delivery was then probed in a
+[single explicit-path Codex turn](064-codex-explicit-skill-turn.md): the host
+accepted a native skill item, produced a skill-shaped answer, and retained
+events and usage. It did not expose the exact injected bytes or isolate a
+model control arm. The comparison hold remains.
 
 This is an experiment protocol, not a new command or a claim that the existing
 adapters can isolate skill versions. Static audits identify plausible edits;
