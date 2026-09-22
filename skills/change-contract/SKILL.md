@@ -22,7 +22,7 @@ Do not use for trivial copy, typo, formatting, or one-line local test fixes with
 
 ## required output
 
-- A concise contract in the conversation for bounded local work. Use `templates/change-contract.md` for consequential changes or when a durable record is requested or required by the repository. Reuse an existing contract rather than duplicating it.
+- A concise contract in the conversation for bounded local work. Use [templates/change-contract.md](templates/change-contract.md) (relative to this `SKILL.md`) for consequential changes or when a durable record is requested or required by the repository. Reuse an existing contract rather than duplicating it.
 - A concise minimum-complete-change statement naming the least powerful implementation that fully satisfies the contract.
 - Clear allowed scope and forbidden scope.
 - Acceptance evidence that can be verified later.

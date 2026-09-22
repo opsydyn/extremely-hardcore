@@ -56,7 +56,7 @@ installation or runtime requirement.
 
 ## required output
 
-- ADR from `templates/adr.md`, or a clear statement that no ADR is required and why.
+- ADR from [templates/adr.md](templates/adr.md) (relative to this `SKILL.md`), or a clear statement that no ADR is required and why.
 
 ## procedure
 

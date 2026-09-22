@@ -22,7 +22,7 @@ Do not use for isolated local implementation details that do not cross module, d
 
 ## required output
 
-- Review from `templates/bounded-context-review.md`.
+- Review from [templates/bounded-context-review.md](templates/bounded-context-review.md) (relative to this `SKILL.md`).
 - Verdict: `safe`, `safe with noted risk`, `needs redesign`, or `needs human decision`.
 
 ## procedure

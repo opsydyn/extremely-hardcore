@@ -22,7 +22,7 @@ Do not use for mechanical edits with no domain meaning. Renaming a CSS class is 
 
 ## required output
 
-- Domain map from `templates/domain-map.md`.
+- Domain map from [templates/domain-map.md](templates/domain-map.md) (relative to this `SKILL.md`).
 - Recommended next questions where ambiguity remains.
 
 ## procedure

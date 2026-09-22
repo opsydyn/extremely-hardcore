@@ -14,8 +14,11 @@ export function assessAgentAttempt(attempt: AgentAttempt): AgentAttemptAssessmen
   const missingErrorCodes = scenario.expectedErrorCodes.filter(
     (code) => !attempt.observedErrorCodes.includes(code),
   );
+  const hasUnexpectedErrorCodes = attempt.observedErrorCodes.some(
+    (code) => !scenario.expectedErrorCodes.includes(code),
+  );
   return {
-    status: missingErrorCodes.length === 0 ? "passed" : "failed",
+    status: missingErrorCodes.length === 0 && !hasUnexpectedErrorCodes ? "passed" : "failed",
     scenarioId: scenario.scenarioId,
     category: scenario.category,
     expectedErrorCodes: scenario.expectedErrorCodes,

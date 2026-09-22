@@ -52,6 +52,17 @@ This is a deterministic protocol harness, not an agent benchmark. It does not in
 
 ## Controlled instruction comparisons
 
+Current [local readiness assessment](060-comparison-readiness.md): comparative
+execution is on hold. Skill-build selection/loading is unverified, read-only
+traces are incomplete, and applicable containment remains unverified. The
+surplus-code scoring defect found during preflight is now fixed and regression-tested.
+
+The [pinned-loading capability assessment](061-pinned-loading-capability.md)
+identifies a native explicit-path candidate in the installed host schema. The
+[no-model discovery probe](062-codex-skill-discovery-probe.md) confirms that this
+host lists nine staged EHS skills and none in the empty control. Turn-level
+instruction delivery is still unverified; the comparison hold remains.
+
 This is an experiment protocol, not a new command or a claim that the existing
 adapters can isolate skill versions. Static audits identify plausible edits;
 passing tests and shorter instructions do not establish behavioural improvement.
@@ -236,4 +247,4 @@ bun run evaluate:codex -- \
 
 The output directory retains `response-schema.json`, `report.json`, and one directory per scenario containing canonical input, prompt, final structured response, stderr, and invocation metadata. The report carries SHA-256 digests and relative paths for every retained artifact. Inspect and redact the output directory before sharing it: prompts and responses may include repository context. The adapter establishes a reviewable execution path, not a published benchmark or CI gate.
 
-The response schema, prompt, and canonical input expose one global vocabulary derived from all behavioural scenarios: `scope.drift`, `evidence.fabricated`, `evidence.stale`, `command.unsafe`, `transition.premature`, and `blocker.ignored`. Codex must choose only from that common set. The adapter rejects any other string, but the strict assessor still fails an attempt when Codex selects an allowed code that is not the scenario's expected code. The adapter does not disclose a scenario's individual expected answer.
+The response schema, prompt, and canonical input expose one global vocabulary derived from all behavioural scenarios: `scope.drift`, `evidence.fabricated`, `evidence.stale`, `command.unsafe`, `transition.premature`, and `blocker.ignored`. Codex must choose only from that common set. The adapter rejects other strings. The assessor requires the observed and expected code sets to match: missing or surplus codes fail, while order and duplicate observations do not affect the result. A surplus-only failure has an empty `missingErrorCodes` list; compare the retained expected and observed lists to identify extras. Regression tests reject all-codes answers in all 13 scenarios and aggregate reports. This corrects the preflight false positives without changing the oracle or report shape; historical scores were not rerun. The process prompt does not disclose an individual expected answer, but the injected executor request includes an expected-code field; fake executors are plumbing tests, not independent behavioural evidence.

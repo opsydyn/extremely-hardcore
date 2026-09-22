@@ -22,7 +22,7 @@ Do not use when the user explicitly approves a throwaway spike, generated code, 
 
 ## required output
 
-- A brief implementation and verification approach; use `templates/implementation-plan.md` when a durable plan is needed, not for every local fix.
+- A brief implementation and verification approach; use [templates/implementation-plan.md](templates/implementation-plan.md) (relative to this `SKILL.md`) when a durable plan is needed, not for every local fix.
 - A failing behavioural test where practical, or a brief explanation of the appropriate alternative verification. Reuse existing tests when they already protect the behaviour.
 
 ## procedure

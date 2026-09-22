@@ -23,7 +23,7 @@ Do not use for ordinary local changes that do not meet the trigger rubric.
 
 ## required output
 
-- A Markdown decision record from `templates/decision-challenge.md`.
+- A Markdown decision record from [templates/decision-challenge.md](templates/decision-challenge.md) (relative to this `SKILL.md`).
 - Exactly one verdict: `proceed`, `hold`, or `needs-human-decision`.
 
 ## procedure
@@ -36,7 +36,7 @@ Do not use for ordinary local changes that do not meet the trigger rubric.
 6. Build a claim-to-evidence map that distinguishes observed facts, assumptions, and gaps.
 7. Name the minimum credible slice and falsifiable stop conditions.
 8. Choose exactly one verdict: `proceed`, `hold`, or `needs-human-decision`.
-9. Write the record from `templates/decision-challenge.md`.
+9. Write the record from [templates/decision-challenge.md](templates/decision-challenge.md) (relative to this `SKILL.md`).
 10. When verdict is `hold` or `needs-human-decision`, stop before implementation planning.
 
 ## quality bar

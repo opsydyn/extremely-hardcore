@@ -11,7 +11,7 @@ Small changes before big dreams.
 
 Read [The Extremely Hardcore Manifesto](MANIFESTO.md) for the operating doctrine behind the skills.
 
-See the [product roadmap](ROADMAP.md) for the protocol direction and recommended first slice.
+See the [product roadmap](ROADMAP.md) for completed work, next priorities, release gates, and deferred initiatives.
 
 ## What Is Extremely Hardcore?
 

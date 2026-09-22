@@ -1,384 +1,156 @@
 # Extremely Hardcore Product Roadmap
 
-## Immediate Priority: Instruction Pruning
-
-Before adding capabilities, reduce routine instruction overhead while preserving
-scope, meaningful verification, evidence provenance, and required approvals.
-
-- Bounded pass: narrow the router and core skill descriptions, allow conversational
-  scope and plans for local work, remove duplicate reporting, and make verification
-  proportional. Keep existing protocol gates and consequential-work records.
-- Check the revised guidance against a bounded local fix, a risky one-line change,
-  and an existing protocol run. Scaffold checks do not prove agent behaviour.
-- Before claiming an efficiency improvement, compare Astra alone, current EHS,
-  and pruned EHS on repeated equivalent tasks: correctness, regressions, elapsed
-  time, tokens, unrelated changes, and human interruptions. Behavioural and
-  efficiency validation remain pending until those runs are recorded.
-- Defer new integrations and skills; this pass adds no runtime, provider,
-  dependency, or model-specific branch to the installed skills.
-
-Pruning committed as `034751d`. The first [bounded behavioural probe](docs/dogfood/056-instruction-pruning-bounded-probe.md)
-completed a disposable local fix without extra process files or an approval
-interruption, but used a non-contract receipt result value. The subsequent
-[approval-boundary probes](docs/dogfood/057-consequential-approval-boundaries.md)
-preserved an unapproved security boundary and handed an existing high-risk run
-off as `needs-human-decision` without self-approval or completion. An
-[approved-fixture resume](docs/dogfood/058-approved-fixture-resume.md) then completed
-without another approval request and preserved the parent's approval record.
-Repeated trials and comparative efficiency remain open. The observed stale
-`nextAction` now has a focused fix and seven regression cases: valid approved
-high-risk runs are directed to guarded completion, while invalid gates and
-standard-risk pending decisions retain their boundary. Receipt formatting and
-template discovery friction remain recorded follow-ups.
-
-Before further instruction expansion, follow the
-[controlled comparison protocol](docs/evaluations/README.md#controlled-instruction-comparisons):
-verify build selection and trace capture, estimate run variation with an A/A
-control, then compare pinned builds against predeclared outcomes and budgets.
-These experiments remain pending; no new runner or automatic promotion is implied.
-Capture only verified, non-obvious lessons absent from existing code, tests, and
-docs. Maintain applicable guidance rather than accumulating rules from every run;
-preserve historical evidence separately.
-
-## Product Position
-
-`extremely-hardcore` is the verifiable control plane for high-risk agentic software changes.
-
-It does not compete by owning the largest skill catalogue. It makes one narrower promise:
-
-> A change may advance only when its risk-adjusted gate is satisfied by durable, traceable evidence.
-
-Skills provide judgement. The protocol records state. The reference CLI captures evidence and enforces transitions. Humans retain authority over irreversible decisions.
-
-**Status note (2026-09-03):** Core V0 mechanics and the ten-run real operator
-campaign are implemented. The operational acceptance review is recorded, with
-retention and measurement gaps preserved. Pi session-local loading is verified
-on the current host, and Run 048 records one prompt-fed fresh-session
-interpretation check. Runs 049 and 050 apply the future record template to two
-real documentation changes, and human review has accepted it as a lightweight
-convention while deferring file-reading resume; Codex and Claude model loading,
-accepted containment, and release remain open gates. Run 052 confirms that the
-historical attestation and CI projection gap for Runs 033 through 035 cannot be
-recovered from the current checkout and is not backfilled. Run 053 records
-human acceptance of that historical gap as a documented limitation and requires
-durable projections for future release evidence; no retention implementation or
-release approval follows from that decision.
-Run 055 refreshes the current provider boundary: Codex CLI `0.147.0` is
-responsive but the current default configuration does not load EHS and its
-bounded read-only smoke timed out before a marker, while
-Claude Code `2.1.251` validates plugin and marketplace metadata, with seven
-warnings on plugin validation and a clean marketplace validation, but its model
-smoke is blocked by the current authentication state. A three-repetition
-`eh status`/`eh summary` command-wall-time sample is recorded; active operator
-time, productivity, adherence, and release remain unproved.
-
-## Target User
-
-The initial user is a senior engineer, platform team, or engineering leader delegating non-trivial repository work to coding agents. They care about architecture, public contracts, data safety, reviewability, and being able to resume or audit work after the original agent session has disappeared.
-
-The initial product is not aimed at trivial edits, autonomous production deployment, or replacing issue trackers and CI systems.
-
-The installed EHS surface remains standalone: it owns engineering behaviour and a compact work receipt. The local protocol and evaluation/provider code are optional repository consumers, not prerequisites for using the skills. General orchestration, scheduling, retries, budgets, and experiment scoring remain outside EHS.
-
-## North-Star Outcome
-
-A fresh agent can inspect a change run and answer, without trusting prior conversation:
-
-- What is being changed and what is forbidden?
-- What state is the change in?
-- Why was it allowed to enter that state?
-- Which acceptance criteria remain unproved?
-- Which evidence was produced, by which command, against which workspace revision?
-- Which risks or blocking findings remain?
-- Which human decisions are still required?
-
-## Product Principles
-
-- Protocol before platform.
-- Local files before services.
-- Read-only validation before automatic mutation.
-- Append-only history before rewritten summaries.
-- Risk-adjusted ceremony before one universal workflow.
-- Captured evidence before agent-authored claims.
-- Standalone engineering method before orchestration.
-- Cross-harness artefacts before harness-specific orchestration.
-- Honest traceability before claims of hostile tamper resistance.
-
-## Success Measures
-
-The roadmap is working when:
-
-- A completed run cannot contain uncovered acceptance criteria.
-- Stale evidence is detected after the workspace changes.
-- A new agent can resume a run in under two minutes without conversation history.
-- Standard-lane overhead stays below one minute excluding the checks themselves.
-- High-risk runs cannot complete without their required human approvals.
-- Behavioural evaluations show at least 90% compliance with scope, evidence, and transition rules across supported agents.
-- Ten real dogfood changes produce fewer false completion claims than the skills-only baseline.
-
-## Milestones
-
-### 0. Confirm The Product Boundary
-
-**Estimated effort:** 1-2 focused days
-
-**Outcome:** Agree that the product is an open change protocol plus reference CLI, with skills as adapters.
-
-**Deliverables:**
-
-- Review and accept, revise, or reject `docs/adr/0001-open-change-protocol-and-reference-cli.md`.
-- Freeze core vocabulary: change run, gate, transition, evidence, criterion, blocker, approval, workspace fingerprint.
-- Define the non-adversarial V1 threat model.
-
-**Exit criteria:** The team can explain the product boundary in one paragraph and name what V1 explicitly does not guarantee.
-
-### 1. Proof-Carrying Completion Gate
-
-**Estimated effort:** 5 focused engineering days
-
-**Status:** Implemented; the proof gate and ten real operator dogfood records are complete. Schema version 1 remains experimental.
-
-**Outcome:** Prove the central differentiator with one guarded transition: `implemented -> complete`.
-
-**Deliverables:**
-
-- Versioned `run.json` protocol fixture.
-- Bun CLI for command evidence capture, run validation, and guarded completion.
-- Workspace fingerprint bound to captured evidence.
-- Append-only transition record.
-- Tests for missing, failed, stale, and complete evidence.
-- One executable example and one skill integration.
-
-**Exit criteria:** The CLI rejects completion when any criterion lacks fresh passing evidence, when a blocker remains open, or when the workspace fingerprint has changed. It accepts a valid run and records why.
-
-**Build brief:** `issues/002-proof-carrying-completion-gate.md`.
-
-### 2. Behavioural Evaluation Harness
-
-**Estimated effort:** 2 weeks
-
-**Status:** The 20-scenario corpus, seven-scenario deterministic runner, declared no-skill baseline assessor, and read-only Codex artifact/provenance adapter are implemented. Three corrected, model-pinned Codex repetitions per declared mode produced stable 13/13 strict classification results in both modes; this validates repeatable mechanics but is non-discriminative and cannot support a skills-effect claim. The first deterministic, provider-neutral action-level fixture now has immutable fixture-local evidence and completion commands plus a validated structural invocation ledger. An experimental two-stage Codex action-fixture adapter retains digest-validated raw provider-process artifacts beside that ledger, without using them as scoring input. One non-retried live Codex pilot passed the fixture and retained-artifact integrity checks, but its raw process output showed a successful read of the operator's `.codex/memories/MEMORY.md` outside the copied fixture workspace. It therefore demonstrates neither workspace-read isolation nor sandbox enforcement, and requires human review before any repeated or comparative execution. This proves local command executability and reviewable requested-process provenance, not agent identity, command ownership, sandbox or network enforcement, provider compliance, or provider performance. A second provider, comparison policy, and regression thresholds remain pending. Operate under the experimental schema boundary recorded in ADR 0004.
-
-Containment slice 024 adds a no-model, no-network Docker probe in a fresh named Colima profile. The final pinned-image run at `/tmp/extremely-hardcore-docker-containment-024-final-code` blocked exact host-path, traversal, symlink, and guest-network attempts while recording Docker policy, image identity, effective Lima configuration, and Bun/Git availability. The effective VM still has Colima's writable home mount and port-forwarding rules, so this is container-boundary evidence only; it does not clear provider execution or prove VM escape resistance.
-
-**Outcome:** Measure whether agents actually obey the completion protocol under pressure.
-
-**Deliverables:**
-
-- Baseline scenarios without `extremely-hardcore`.
-- Cross-agent runs for Codex, Claude, and Pi, with provider-specific constraints.
-- Failure taxonomy: scope drift, fabricated evidence, stale state, unsafe command, premature completion, ignored blocker.
-- Machine-readable evaluation results and regression thresholds.
-
-**Exit criteria:** At least 20 pressure scenarios run repeatedly, with published pass criteria and reproducible results. Protocol or skill changes cannot merge when they regress critical completion behaviours.
-
-### 3. Risk-Aware Lifecycle
-
-**Estimated effort:** 1-2 weeks
-
-**Status:** Local protocol mechanics implemented in ADR 0018; ten real operator runs exercise the lifecycle. The aggregate operational review is recorded in Run 047, Run 052 confirms the historical projection-retention gap without backfill, and Run 053 records human acceptance of that gap as a documented limitation plus a future durable-projection requirement. Run 055 adds a descriptive command-wall-time sample, while active operator timing, productivity, and retention implementation remain open.
-
-**Outcome:** Extend the completion proof into a resumable lifecycle with proportionate gates.
-
-**Deliverables:**
-
-- Trivial, standard, and high-risk lanes.
-- Risk rubric covering blast radius, reversibility, data, privilege, public contracts, operations, and uncertainty.
-- Full transition graph with blocked, abandoned, and needs-human-decision states.
-- Artefact revision checks and invalidation rules.
-- Human approval records for high-risk gates.
-
-**Exit criteria:** The validator rejects illegal transitions and stale approvals; every lane has documented entry, exit, and escalation rules.
-
-### 4. Agent Experience And Skill Integration
-
-**Estimated effort:** 1-2 weeks
-
-**Status:** Local status, handoff, next-action, critic contracts, provider onboarding paths, the targeted `simple-made-easy` simplicity lens, and a compact future dogfood-record template are implemented. Run 055 refreshes current host loading: Pi remains session-locally verified, Codex is not loaded in the current default configuration and its bounded smoke timed out before a marker, and Claude plugin/marketplace metadata is valid with seven plugin warnings while model loading is authentication-blocked. Run 048 has narrow Pi prompt-fed handoff evidence, Runs 049/050 provide two qualitative template applications, and Run 051 records human acceptance of the convention with file-reading resume deferred; cross-agent adherence and stronger fresh-session evidence remain open.
-
-**Outcome:** Make the protocol feel like useful supervision rather than form filling.
-
-**Deliverables:**
-
-- `using-extremely-hardcore` routes changes into the correct lane.
-- `simple-made-easy` compares complete implementation paths and makes structural simplicity explicit without becoming a shortest-diff gate.
-- Skills read and update the same durable run.
-- Brief-to-change-run charter adapter: durable finish line, vocabulary, decision frontier, and advisory ownership claims feed a scoped change contract without replacing protocol evidence or gates.
-- Critic roles have explicit inputs, outputs, severity, and blocking contracts.
-- Concise status and next-action output.
-- Resume and handoff workflow tested across fresh sessions.
-
-**Exit criteria:** A user can start, resume, inspect, and complete a standard run without manually reconciling artefacts or reading protocol documentation.
-
-### 5. CI And Pull-Request Attestation
-
-**Estimated effort:** 2 weeks
-
-**Status:** Local summary, attestation, exit codes, and reference workflow implemented; Run 052 confirms that three historical external projection sets were not retained, and Run 053 records the future durable-projection policy. Repository adoption and durable-retention implementation remain open.
-
-**Outcome:** Make completion evidence visible at the normal review boundary.
-
-**Deliverables:**
-
-- CI validation command with stable exit codes.
-- Human-readable PR summary generated from run state.
-- Machine-readable attestation artefact.
-- GitHub Action reference integration.
-
-**Exit criteria:** A pull request can show which criteria are proved, stale, blocked, waived, or awaiting human approval without trusting the agent's prose summary.
-
-### 6. Dogfood, Harden, And Release
-
-**Estimated effort:** ongoing, with a release decision after 10 runs
-
-**Status:** Controlled ten-case harness and ten real operator runs are implemented. Run 047 records the aggregate release evidence, Run 052 confirms the historical retention gap, Run 053 records the approved policy without implementing retention, and Run 055 records a descriptive command-wall-time sample plus current provider loading state. Operational acceptance remains open because current Codex/Claude loading, active operator measurement, adherence, and containment gates are incomplete.
-
-**Outcome:** Replace design confidence with operating evidence.
-
-**Deliverables:**
-
-- Ten documented real-world runs across features, bugs, refactors, dependencies, persistence, and CI changes.
-- Friction and false-block log.
-- Protocol compatibility policy.
-- Codex, Claude, and Pi installation paths.
-- Public benchmark and worked examples.
-
-**Exit criteria:** The protocol catches material agent failures, users can understand its decisions, and the measured overhead is proportionate to risk.
-
-## V0 Feature-Complete Checkpoint
-
-**Current status:** V0 implementation gates and the ten-run real operator campaign are complete and locally recorded. Schema version 1 remains experimental. Run 047 records the aggregate friction, false-block, evidence-quality, and host-matrix review; Run 048 adds the future-record template and narrow Pi prompt-fed handoff evidence; Runs 049/050 apply the template to two real documentation changes; Run 051 records human acceptance of the convention and deferral of file-reading resume; Run 052 confirms the historical projection-retention gap without backfill; Run 053 records acceptance of that gap as a documented limitation and requires durable projections for future release evidence; Run 055 records current Codex/Claude loading state and a descriptive command-wall-time sample. The retention policy is not an implementation. Release still requires current Codex/Claude model-loading evidence, active-time measurement if a productivity claim is desired, and a separately approved containment plan for any writable execution.
-
-Before expanding the provider surface, complete these gates:
-
-- [x] Behavioural Evaluation Harness mechanics: full 20-scenario policy, three-repetition local report, published thresholds, and provider-claim limits.
-- [x] Risk-Aware Lifecycle mechanics: risk rubric, legal transitions, stale approval invalidation, blocked/abandoned/needs-human-decision states, and high-risk human approval records.
-- [x] Agent Experience And Skill Integration mechanics: durable status/handoff output, resume guidance, next-action output, and explicit critic contracts.
-- [x] CI And Pull-Request Attestation mechanics: stable validation exit codes, human-readable summaries, machine-readable attestations, and a reference workflow.
-- [x] Controlled Dogfood, Harden, And Release mechanics: ten temporary-repository cases, friction-event counts, compatibility policy, installation paths, and worked commands.
-
-Ten real operator changes are now recorded separately under `docs/dogfood/`. They are evidence for operational review, not by themselves a release or benchmark claim.
-
-The aggregate review, first future-record/resume slice, two template
-applications, human decision, historical projection-retention audit, and
-retention-policy decision are complete as evidence records, but they did not
-clear release. Run 052 confirms that source records survived while the
-original projections for Runs 033 through 035 did not; current invalid reruns
-are not historical recovery and no backfill was performed. Run 053 accepts
-that gap as a documented limitation and requires durable projections for
-future release evidence, without implementing storage or enforcement. The
-qualitative field-burden result is promising, and Run 055 now measures the
-local command path descriptively. Human active time and productivity effect
-remain unmeasured. File-reading resume is explicitly deferred; the next gated
-slice is an authorized authenticated Codex/Claude loading retry followed by a
-separate adherence task. Provider expansion should follow that evidence
-checkpoint rather than becoming a substitute for it.
-
-## Completed First Slice
-
-The proof-carrying completion gate in Milestone 1 is implemented and dogfooded.
-
-It converted the manifesto's strongest claim into executable behaviour while avoiding a premature workflow engine:
-
-1. Define two acceptance criteria.
-2. Capture one passing command against one criterion.
-3. Attempt completion and receive a precise rejection for the uncovered criterion.
-4. Capture the second result.
-5. Change the workspace and see stale evidence rejected.
-6. Re-run the check and complete successfully.
-
-That demo is understandable in minutes, difficult to reproduce honestly with prose alone, and directly supports future FSM, evaluation, and CI work.
-
-## Explicitly Not Now
-
-- Hosted service or dashboard.
-- Database or daemon.
-- General-purpose agent orchestration.
-- Automatic code modification.
-- Issue-tracker replacement.
-- Cryptographic signing or hostile tamper resistance.
-- Full lifecycle implementation before the completion gate is dogfooded.
-- More engineering skills merely to increase catalogue size.
-
-## Deferred, Gated Initiatives
-
-### Provider-Neutral Agent Adapter Surface: Claude And Pi
-
-**Status:** The provider-neutral read-only contract and runner are implemented in ADR 0020. The Claude Code read-only leaf is implemented in ADR 0021 and has a recorded explicit 2.1.224 report: 13/13 structured attempts, 7/13 strict classifications passed, and 6/13 failed. The Pi 0.84.1 read-only leaf is implemented in ADR 0022 and has recorded authenticated `openai-codex/gpt-5.3-codex-spark` evidence: the first post-auth report had complete provenance and 12/13 strict classifications passed; after pressure-scenario adjudication, a bounded repeat had complete provenance and 13/13 passed. Run 055 refreshes the current host: Codex CLI `0.147.0` is responsive but the current default plugin configuration does not list EHS and its bounded smoke timed out before a marker; Claude Code `2.1.251` plugin and marketplace metadata validation passes, with seven warnings on plugin validation and a clean marketplace validation, but its model smoke is authentication-blocked; Pi session-local EHS loading remains verified. These runs demonstrate reviewable read-only or loading paths only. Comparison claims, provider-performance claims, and containment claims remain pending.
-
-**Outcome:** Let Claude and Pi consume the same protocol and evaluation kernel through leaf adapters without leaking provider-specific command, session, output, sandbox, or resume assumptions into `protocol/` or the deterministic scorer.
-
-**Reusable foundation:** Skills, change-run protocol, scenario corpus, fixture scorer, evidence ledger, artefact integrity checks, and claim limits remain shared.
-
-**Future deliverables:**
-
-- [x] Provider-neutral adapter contract for capabilities, execution requests, raw artefacts, structured observations, and provenance status.
-- [x] Capability matrix distinguishing read-only execution, workspace writes, structured output, resume support, network controls, and containment evidence.
-- [x] Claude and Pi read-only leaves against the same agent-attempt scenarios.
-- [x] Local Codex, Claude, and Pi onboarding commands with explicit loading-claim limits.
-- [ ] Repeated controlled runs before any cross-provider comparison or regression claim.
-- [ ] Writable fixture adapters only after each runtime is executed inside an accepted containment boundary.
-
-**Guardrails:**
-
-- Do not generalise by swapping an executable path into the Codex adapter.
-- Keep provider-specific flags, session mechanics, parsers, and artefacts in leaf adapters.
-- Treat provider self-report and requested sandbox settings as untrusted until directly observed.
-- Require an ADR and decision challenge before adopting the adapter contract or adding provider dependencies.
-
-**Completed first slice:** Define the adapter contract and capability vocabulary, centralize scoring, fail closed on unsafe or mutated retained artefacts, and add Claude and Pi read-only leaves with provider-specific constrained argv and strict output parsing. The leaves are intentionally narrow and do not establish runtime enforcement.
-
-**Next gated slice:** Retry Codex and Claude loading in user-authorized current configurations that have EHS installed and usable authentication, then run one separately approved engineering-adherence task. Keep the accepted historical gap visible, and keep durable-retention implementation/repository adoption, active-time productivity measurement, file-reading resume, provider comparison, and writable execution separately gated. Do not compare providers or add writable execution until repeated direct evidence and an accepted containment boundary exist.
-
-### Governed Skill Evolution Sandbox (SkillOpt-Informed)
-
-**Self-evolving skills moat hypothesis:** EHS may earn a durable
-differentiator by letting its engineering method improve from its own
-evidence: propose bounded skill diffs, evaluate them on independent fixtures
-and hidden holdouts, reject critical regressions, and require human promotion.
-This is a hypothesis, not a current moat claim. It becomes credible only if
-improvements replicate across tasks, versions, and supported providers without
-increasing protocol violations or operator burden.
-
-**Status:** Backlogged and evidence-gated. No optimiser integration or
-autonomous skill adoption is approved.
-
-**Outcome:** Evaluate bounded candidate edits to nominated skill documents using independent behavioural evidence, then promote only human-reviewed improvements.
-
-**Roadmap sequence:**
-
-1. Establish evaluator credibility with verified skill-build selection,
-   same-build A/A controls, repeatable baselines, and hidden holdouts, following
-   the controlled comparison protocol above.
-2. Nominate one non-protected skill and one fixture; generate offline
-   candidates without changing the installed skill.
-3. Select candidates only when held-out results improve without critical
-   regressions or unacceptable operator burden.
-4. Require a human promotion decision and retain the candidate, evidence,
-   rollback path, and rationale.
-5. Publish longitudinal evidence before using moat or comparative language.
-
-**Preconditions:**
-
-- The action fixture provides an immutable fixture-local protocol CLI, a structural invocation ledger, and digest-validated retained provider-process artifacts; command ownership remains unproven.
-- Multiple action-level fixtures support independent train, selection, and hidden holdout splits.
-- Baseline, repeated provider runs, and critical-regression policy are defined before any comparative claim.
-
-**Guardrails:**
-
-- The evaluator, policy, promotion record, and protected skills remain Bun-native.
-- `change-contract`, `architecture-decision`, `decision-challenge`, `test-first-implementation`, and `evidence-ledger` are immutable to candidate generation.
-- An external optimiser, including SkillOpt, is optional and offline; it can propose bounded candidate diffs but cannot adopt them.
-- Candidate promotion requires independent held-out results, no critical integrity regression, a decision challenge where triggered, human review, and an evidence ledger.
-- Do not mine or send session transcripts to an external provider by default.
-
-**First eventual slice:** Build a Bun candidate-skill sandbox that evaluates one non-protected skill copy against the fixture suite and emits a reviewable promotion record. Consider SkillOpt only as one candidate proposer after the evaluator is credible.
-
-## Decision Gates
-
-- The initial five-run gate is satisfied; future provider expansion still requires its own repeated evidence.
-- Do not start Milestone 3 until critical completion-gate evaluations pass across supported agents.
-- Do not claim a moat until behavioural evaluations exist.
-- Do not claim tamper-proof evidence without an explicit threat model and external trust anchor.
-- Stop or simplify if standard-lane protocol overhead exceeds one minute before checks run.
-- Revisit the product boundary if users value the skills but routinely bypass the protocol.
+Updated 2026-09-20. This is a work-priority map, not release approval or a fresh
+provider-health check.
+
+## Product Boundary
+
+EHS is a standalone engineering method for coding agents: explicit scope,
+structural simplicity, proportionate verification, evidence, and meaningful
+human decision boundaries. Routine work should not require a stack of documents.
+
+The Bun protocol, CLI, provider adapters, and evaluation tooling are optional
+consumers, not installation prerequisites. Orchestration, scheduling, retries,
+budgets, and experiment scoring remain outside the installed skills. This follows
+the accepted [standalone receipt decision](docs/adr/0023-standalone-work-receipt.md).
+Earlier protocol-first plans remain history, not the current product definition.
+
+## Done
+
+Implemented does not mean fully qualified, generally effective, or release-ready.
+
+| Area | Delivered | Evidence and limits |
+| --- | --- | --- |
+| Standalone skills | Nine skills, simplicity lens, compact receipt, onboarding | [User guide](docs/user-guide.md); installation is separate from adherence |
+| Optional protocol | Evidence capture, fingerprints, risk lanes, lifecycle, approvals, status and handoff | [Lifecycle ADR](docs/adr/0018-risk-aware-lifecycle-and-approval-freshness.md); schema v1 remains experimental |
+| Evaluation mechanics | Scenario corpus, deterministic fixtures, declared attempts, read-only provider adapters, action fixture | [Evaluation reference](docs/evaluations/README.md); not proof of skill effect |
+| CI projections | Summary, attestation, exit codes, reference workflow | [Delivery ADR](docs/adr/0019-local-ci-attestation-delivery.md); durable retention and adoption remain open |
+| Operator dogfood | Ten real operator changes and aggregate review | [Operational review](docs/dogfood/047-operational-acceptance-host-matrix.md); not release or productivity evidence |
+| Instruction pruning | Conversational local records, conditional loading, proportional verification | Commit `034751d`; [bounded fix probe](docs/dogfood/056-instruction-pruning-bounded-probe.md) |
+| Approval probes | Security change held; missing approval held; approved fixture resumed | [Boundary probes](docs/dogfood/057-consequential-approval-boundaries.md), [approved resume](docs/dogfood/058-approved-fixture-resume.md); single trials |
+| Status regression | Valid approved high-risk runs receive guarded-completion guidance | Commit `8652ee7`; seven new regression cases, 44 protocol tests passed at that checkpoint |
+| Learning guidance | Selective lesson capture and controlled comparison protocol | Commit `6b1e6b3`; experiments not run |
+| Instruction clarity | Skill-relative template links and exact receipt result values in the entrypoint | [Handoff probes](docs/dogfood/059-template-path-and-receipt-clarity.md); two narrow trials, not broad adherence proof |
+
+## Next
+
+Work in this order. New capabilities must not substitute for acceptance evidence.
+
+1. **Review the instruction-clarity slice.** Template paths and result vocabulary
+   are clarified with two narrow handoff probes. Include these behaviours in later
+   end-to-end trials; do not grow instructions on the strength of one pass.
+2. **Establish comparison prerequisites.** Verify pinned skill-build selection,
+   actual loading, fresh sessions, trace retention, independent outcome checks,
+   and observable usage. Refresh the relevant provider configuration first.
+   Report missing capabilities rather than substituting a static audit.
+   [Local preflight](docs/evaluations/060-comparison-readiness.md) found no verified
+   skill-build selection/loading. The scorer's all-codes false positives are now
+   fixed with regression coverage across all 13 classifications and aggregate
+   reports. [Capability assessment](docs/evaluations/061-pinned-loading-capability.md)
+   confirms explicit skill-path input in the installed host schema, not runtime
+   loading. The [no-model discovery probe](docs/evaluations/062-codex-skill-discovery-probe.md)
+   found all nine staged EHS skills and none in an empty control. Next: qualify
+   explicit-path delivery in a harmless, traced turn before choosing integration.
+   Keep comparative execution on hold until the remaining gaps are resolved.
+3. **Run an authorised controlled comparison.** Follow the
+   [comparison protocol](docs/evaluations/README.md#controlled-instruction-comparisons):
+   same-build A/A controls, then baseline versus pruned EHS under fixed conditions,
+   predeclared budgets and criteria, and held-out tasks. Include correctness,
+   regressions, scope violations, approval behaviour, and completion accuracy
+   alongside time, tokens, cost, and human intervention where measurable.
+4. **Refresh host acceptance.** Demonstrate current loading and bounded engineering
+   adherence for Codex, Claude, and Pi before expanding supported-host claims.
+   Refresh whichever host is used for measurement before step 3; the wider matrix
+   can follow.
+5. **Close the applicable release gates below.** Findings that could invalidate
+   evidence or scoring take precedence over comparative claims.
+
+The recent probes are development cases, not hidden holdouts or an A/B baseline.
+Fewer words, green tests, and one successful trial do not establish efficiency.
+
+## Release Gates
+
+No gate is cleared by this consolidation. Standalone package acceptance,
+optional protocol qualification, and comparative claims are separate decisions.
+
+- **Standalone package:** current loading and representative adherence on each
+  claimed host; useful receipts; documented limits; no needless pauses or weakened
+  consequential-work boundaries.
+- **Protocol integrity:** revalidate runtime input checks, command-time workspace
+  changes, approval freshness, and evidence/approval binding to the intended
+  acceptance contract. Happy-path probes do not qualify malformed inputs or forged
+  records. Keep schema v1 experimental pending its separate stability decision.
+- **Evaluator credibility:** establish scorer discrimination, version/loading
+  provenance, isolation, repeatability, and retained evidence. Classification
+  scores alone do not establish engineering productivity.
+- **Writable external execution:** require accepted containment and explicit
+  authorisation before repeated or comparative provider runs. Requested sandbox
+  flags and native fixture probes are not enforcement proof.
+- **Durable protocol evidence:** implement and demonstrate retention of future
+  release projections, then establish repository/CI adoption. An accepted
+  retention policy is not its implementation.
+- **Release and claims:** review actual evidence and residual risks. Measure
+  active time before productivity claims; require replicated independent results
+  before comparative or moat claims. Tamper-proof claims require an explicit
+  threat model and external trust anchor.
+
+## Historical Evidence
+
+These are dated snapshots, not current authentication or compatibility checks.
+Preserve them rather than backfilling observations that were never retained.
+
+- [Run 055, 2026-09-03](docs/dogfood/055-current-provider-loading-and-measurement.md):
+  Codex CLI `0.147.0` did not load EHS in its default configuration and a smoke
+  timed out; Claude Code `2.1.251` metadata validated with plugin warnings but
+  model loading was authentication-blocked; Pi had a session-local loading result.
+  An echoed loading marker is insufficient for the new comparison protocol.
+- [Provider onboarding](docs/provider-onboarding.md) and the
+  [evaluation reference](docs/evaluations/README.md) retain historical paths and
+  claim limits. Read-only adapter results do not prove loading or rank providers.
+- [Repeated classification report](docs/evaluations/016-repeated-controlled-codex-comparison-2026-07-16.md):
+  both declared modes reached the same reported classifications. This was
+  non-discriminative for skill effect, not evidence of equivalence or improvement.
+- [Action-fixture provenance ADR](docs/adr/0015-codex-action-fixture-provenance-retention.md):
+  retained artefacts do not prove command ownership or containment. The historical
+  writable pilot read host memory outside its fixture; containment remains open.
+- [Container probe ADR](docs/adr/0017-dedicated-colima-docker-containment-probe.md):
+  no-model container checks did not remove the effective VM's home mount or
+  port-forwarding exposure and did not clear provider execution.
+- [Run 048](docs/dogfood/048-future-dogfood-record-and-pi-resume.md) supplied Pi a
+  status snapshot in its prompt; it did not prove file-reading resume. Runs 057/058
+  add narrow native-agent durable-state probes, not cross-host qualification.
+- [Run 052](docs/dogfood/052-historical-projection-retention-audit.md) found missing
+  projections for Runs 033-035; [Run 053](docs/dogfood/053-retention-policy-decision.md)
+  accepted that limitation and required future retention. No historical recovery
+  or release approval is implied.
+
+Earlier milestone estimates and numerical aspirations remain in Git history
+(roadmap at `6b1e6b3`). They are not measured outcomes or substitutes for
+predeclared experiment criteria. No evaluator policy or threshold changes here.
+
+## Deferred
+
+- **Governed skill evolution:** a hypothesis, not a proven moat. Establish
+  credible baselines, A/A variation, independent selection and hidden holdouts
+  before offline candidate edits to one non-protected skill. Retain evidence,
+  rollback, and human promotion; no autonomous adoption.
+- **Evolution safeguards:** evaluator, policy, and promotion records remain
+  Bun-native. `change-contract`, `architecture-decision`, `decision-challenge`,
+  `test-first-implementation`, and `evidence-ledger` stay protected from candidate
+  generation. SkillOpt or another optimiser is optional, cannot promote itself,
+  and receives no session transcripts by default.
+- **Optional retrieval and triage:** Osad/Jev/tgrep remain proposals in the
+  [handoff](osad-tgrep-codex-handoff.md), not EHS dependencies. Confidence cannot
+  replace tests, approval, or evidence provenance.
+- **Competing approaches:** only for a consequential unresolved choice with a
+  justified budget; no mandatory bakeoff, new top-level skill, or dispatch framework.
+- **Provider expansion:** existing read-only leaves remain available. Additional
+  writable adapters require accepted containment, applicable ADR/challenge review,
+  and repeated evidence. Provider mechanics remain leaf concerns.
+- **Brief-to-contract adapter and wider resume:** revisit after demonstrated
+  friction; do not replace existing contracts or infer portability from one fixture.
+
+No hosted dashboard, daemon, general scheduler, issue tracker, catalogue growth
+for its own sake, or cryptographic attestation programme is planned in this pass.
+Capture reusable lessons only when verified reasoning is absent from code, tests,
+or existing docs. Maintain operative guidance without erasing historical evidence.

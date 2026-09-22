@@ -23,8 +23,9 @@ Do not use for trivial edits where the final answer can state the one file chang
 
 ## required output
 
-- An evidence ledger, kept in the conversation for bounded local work unless a durable record is required. Use `templates/evidence-ledger.md` for consequential work or repository-required records; reuse existing evidence instead of duplicating it.
+- An evidence ledger, kept in the conversation for bounded local work unless a durable record is required. Use [templates/evidence-ledger.md](templates/evidence-ledger.md) (relative to this `SKILL.md`) for consequential work or repository-required records; reuse existing evidence instead of duplicating it.
 - A compact work receipt at the top of the ledger with exactly five fields: `result`, `claim`, `evidence`, `remaining uncertainty`, and `next`.
+- `result` is exactly one of `complete`, `blocked`, `needs-human-decision`, or `abandoned`, with no explanatory sentence in that field. Put the explanation in `claim`; put the recommendation in `next` or below the receipt. This vocabulary also applies to conversational receipts when no template is loaded.
 - Final recommendation: `merge`, `hold`, `needs review`, or `needs follow-up`.
 
 The work receipt is standalone Markdown. It is a review projection, not a runtime event, trusted attestation, JSON schema, scheduler input, or evaluator-specific protocol. Keep it shorter than the detailed ledger it summarizes. Do not require it for trivial edits.

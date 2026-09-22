@@ -13,6 +13,17 @@ function passingAttempts(): AgentAttempt[] {
   }));
 }
 
+test("fails every repetition when attempts return all allowed codes", () => {
+  const allCodes = [...new Set(AGENT_ATTEMPT_SCENARIOS.flatMap((scenario) => scenario.expectedErrorCodes))];
+  const attempts = passingAttempts().map((attempt) => ({
+    ...attempt, observedErrorCodes: allCodes,
+  }));
+  const report = buildFullEvaluation(attempts, 3);
+  expect(report.status).toBe("failed");
+  expect(report.summary).toEqual({ repetitions: 3, passed: 0, failed: 3 });
+  expect(report.repetitions.every((repetition) => repetition.status === "failed")).toBe(true);
+});
+
 test("runs and assesses the full corpus for the required repetitions", () => {
   const report = buildFullEvaluation(passingAttempts(), 3);
 
