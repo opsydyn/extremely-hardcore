@@ -75,7 +75,35 @@ verified process-only skill catalog isolation on this signed-in host: zero
 enabled skills in control, the nine staged EHS skills in treatment, and 17
 ambient skills disabled in both. The current pressure-label scorer remains a
 classification check, not an independent engineering outcome. Hook/tool parity
-and a frozen review-task oracle are still needed before an A/A or A/B run.
+and a frozen review-task oracle were still needed at that point before an A/A
+or A/B run.
+
+The [seeded read-only review fixture and preflight](066-read-only-review-fixture-and-preflight.md)
+now provide a no-model witness scorer and fail-closed check of supplied arm
+records. They do not attest host provenance or authorise a model comparison;
+the hold remains.
+
+A [fresh no-model host capture](067-no-model-host-arm-capture.md) found matching
+skill, effective-config, and hook inventories, including one active
+`sessionStart` hook in both arms. The evidence-derived preflight is still
+blocked by unavailable turn-level tool, instruction, permission, and trace
+evidence. No A/A turn was run.
+
+A [no-model ephemeral-thread capability probe](068-ephemeral-thread-capability-gate.md)
+confirmed matched read-only thread policies and a process-only configuration
+with zero callable apps while preserving the 0-versus-9 EHS skill inventory.
+It still could not attest model-visible tools or turn trace retention; A/A
+remains on hold.
+
+The [control-only trace attempt](069-control-only-trace-probe.md) refreshed
+the inventories but stopped before model dispatch: the one-off gate rejected
+explicitly disabled MCP status entries. Zero model turns ran; the attempt
+did not establish trace retention, and comparison remains on hold.
+
+An [offline MCP gate regression correction](070-control-mcp-gate-regression.md)
+now accepts known disabled entries while rejecting active, unknown, malformed,
+duplicate, or paginated inventories. The retained response passes this check;
+no host/model retry occurred, and trace retention remains unverified.
 
 This is an experiment protocol, not a new command or a claim that the existing
 adapters can isolate skill versions. Static audits identify plausible edits;

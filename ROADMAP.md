@@ -1,6 +1,6 @@
 # Extremely Hardcore Product Roadmap
 
-Updated 2026-09-22. This is a work-priority map, not release approval or a fresh
+Updated 2026-09-26. This is a work-priority map, not release approval or a fresh
 provider-health check.
 
 ## Product Boundary
@@ -31,58 +31,77 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 | Status regression | Valid approved high-risk runs receive guarded-completion guidance | Commit `8652ee7`; seven new regression cases, 44 protocol tests passed at that checkpoint |
 | Learning guidance | Selective lesson capture and controlled comparison protocol | Commit `6b1e6b3`; experiments not run |
 | Instruction clarity | Skill-relative template links and exact receipt result values in the entrypoint | [Handoff probes](docs/dogfood/059-template-path-and-receipt-clarity.md); two narrow trials, not broad adherence proof |
+| Read-only review evaluation | Frozen seeded review task, executable witness scorer, pinned material, fail-closed supplied-record preflight | [Fixture and preflight](docs/evaluations/066-read-only-review-fixture-and-preflight.md); no model comparison or host attestation |
+| Host capability inventories | Captured skill/config/hook projections, accepted read-only ephemeral threads, process-only app/MCP controls | [Host capture](docs/evaluations/067-no-model-host-arm-capture.md), [thread gate](docs/evaluations/068-ephemeral-thread-capability-gate.md); exact model-visible tools/instructions remain unknown |
+| MCP preflight regression | Known disabled entries accepted; active, unknown, malformed, duplicate, and paginated inventories rejected | [Offline correction](docs/evaluations/070-control-mcp-gate-regression.md); retained capture replay only, no host/model retry |
 
 ## Next
 
-Work in this order. New capabilities must not substitute for acceptance evidence.
+The planned standalone feature set is implemented; release qualification is
+not complete. Stop adding capabilities and finish acceptance. These two tracks
+have separate gates: comparative superiority is not a prerequisite for a
+clearly labelled standalone release, and releasing skills does not qualify the
+optional protocol or evaluator.
 
-1. **Review the instruction-clarity slice.** Template paths and result vocabulary
-   are clarified with two narrow handoff probes. Include these behaviours in later
-   end-to-end trials; do not grow instructions on the strength of one pass.
-2. **Establish comparison prerequisites.** Verify pinned skill-build selection,
-   actual loading, fresh sessions, trace retention, independent outcome checks,
-   and observable usage. Refresh the relevant provider configuration first.
-   Report missing capabilities rather than substituting a static audit.
-   [Local preflight](docs/evaluations/060-comparison-readiness.md) found no verified
-   skill-build selection/loading. The scorer's all-codes false positives are now
-   fixed with regression coverage across all 13 classifications and aggregate
-   reports. [Capability assessment](docs/evaluations/061-pinned-loading-capability.md)
-   confirms explicit skill-path input in the installed host schema, not runtime
-   loading. The [no-model discovery probe](docs/evaluations/062-codex-skill-discovery-probe.md)
-   found all nine staged EHS skills and none in an empty control.
-   The [first loading attempt](docs/evaluations/063-codex-loading-turn-blocked.md)
-   stopped before initialisation when automatic review rejected signed-in state
-   access and possible provider transfer. The user then approved that scope. A
-   [single corrected turn](docs/evaluations/064-codex-explicit-skill-turn.md)
-   accepted the staged skill path and produced a skill-shaped answer with a
-   retained trace. Exact instruction-byte delivery and a comparable model
-   control arm remain unverified. A
-   [no-model isolation review](docs/evaluations/065-comparison-control-and-scoring-readiness.md)
-   found that temporary process settings can disable all 17 ambient skills in
-   both arms while enabling only the nine staged EHS skills in treatment. The
-   present label scorer cannot measure engineering outcomes. Next: freeze one
-   independently scored read-only review fixture and fail-closed arm preflight.
-   Keep comparative execution on hold until the remaining gaps are resolved.
-3. **Run an authorised controlled comparison.** Follow the
+### Ship EHS
+
+The evaluation and documentation consolidation is included in this slice.
+Preserve failed attempts and historical limits; do not include private host
+captures in the package.
+
+1. **Refresh claimed-host acceptance.** Demonstrate current loading and
+   representative bounded engineering adherence for Codex, Claude, and Pi.
+   Include skill-relative templates, exact receipt result vocabulary, useful
+   uncertainty, proportionate verification, and consequential-work approval
+   boundaries. Retain evidence and document host-specific limits; narrow support
+   claims if a host cannot be qualified. Installation alone is insufficient.
+2. **Make an explicit standalone release decision.** Review the acceptance
+   evidence, onboarding, package contents, and residual risks against the
+   standalone gate below. Publish only within the demonstrated support scope;
+   keep optional tooling experimental where its own gates remain open.
+
+### Prove Improvement
+
+1. **Finish the bounded control trace capability check.** The
+   [first control attempt](docs/evaluations/069-control-only-trace-probe.md)
+   stopped before dispatch because its local predicate rejected disabled MCP
+   entries. The [offline correction](docs/evaluations/070-control-mcp-gate-regression.md)
+   is tested, but actual turn input/final/usage retention under refreshed
+   controls remains unverified. A fresh attempt needs explicit authorisation,
+   fresh inventories, at most one turn, a 120-second deadline, and no retries.
+   The interrupted follow-up did not launch a host process or model request.
+2. **Resolve comparison provenance and isolation gaps.** Establish pinned skill
+   selection/loading and the exact relevant instruction/tool exposure; retain
+   raw traces and observable usage. The
+   [explicit-path turn](docs/evaluations/064-codex-explicit-skill-turn.md)
+   and no-model inventories are partial evidence, not full parity. The seeded
+   witness scorer measures a narrow review outcome, not implementation quality;
+   classification scores do not measure engineering effect. Report unavailable
+   capabilities honestly and keep comparison on hold if they cannot be resolved.
+3. **Predeclare and authorise controlled comparisons.** Follow the
    [comparison protocol](docs/evaluations/README.md#controlled-instruction-comparisons):
    same-build A/A controls, then baseline versus pruned EHS under fixed conditions,
    predeclared budgets and criteria, and held-out tasks. Include correctness,
    regressions, scope violations, approval behaviour, and completion accuracy
    alongside time, tokens, cost, and human intervention where measurable.
-4. **Refresh host acceptance.** Demonstrate current loading and bounded engineering
-   adherence for Codex, Claude, and Pi before expanding supported-host claims.
-   Refresh whichever host is used for measurement before step 3; the wider matrix
-   can follow.
-5. **Close the applicable release gates below.** Findings that could invalidate
-   evidence or scoring take precedence over comparative claims.
+   Refresh the measured host before execution. Only replicated independent
+   results can support comparative effectiveness or moat claims.
+
+Immediate next engineering slice after consolidation: plan one representative
+Codex standalone acceptance trial with explicit loading evidence, acceptance
+criteria, budget, and stop conditions. Claude and Pi follow under equivalent
+host-appropriate checks. Do not substitute more infrastructure for this work.
 
 The recent probes are development cases, not hidden holdouts or an A/B baseline.
 Fewer words, green tests, and one successful trial do not establish efficiency.
 
 ## Release Gates
 
-No gate is cleared by this consolidation. Standalone package acceptance,
-optional protocol qualification, and comparative claims are separate decisions.
+No gate is cleared by this consolidation. The standalone package gate governs
+the installed skills. Protocol integrity, durable protocol evidence, evaluator
+credibility, and writable-execution containment govern those optional surfaces,
+not installation or standalone skill use. Comparative claims require their own
+evidence regardless of release status.
 
 - **Standalone package:** current loading and representative adherence on each
   claimed host; useful receipts; documented limits; no needless pauses or weakened
