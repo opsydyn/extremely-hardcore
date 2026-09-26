@@ -1,3 +1,8 @@
+---
+name: architect
+description: Use to propose design boundaries, public contracts, trade-offs, and ADR needs for a scoped change.
+---
+
 # architect
 
 Proposes design, boundaries, trade-offs, and ADR need.

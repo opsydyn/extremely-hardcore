@@ -1,3 +1,8 @@
+---
+name: implementer
+description: Use to implement a bounded change after its scope and plan have been approved.
+---
+
 # implementer
 
 Makes the smallest safe code change based on an approved plan.

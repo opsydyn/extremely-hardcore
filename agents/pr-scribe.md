@@ -1,3 +1,8 @@
+---
+name: pr-scribe
+description: Use to summarise a verified change, command evidence, risks, and reviewer priorities for a pull request.
+---
+
 # pr-scribe
 
 Writes final PR summary, test evidence, risks, and reviewer notes.

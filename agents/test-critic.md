@@ -1,3 +1,8 @@
+---
+name: test-critic
+description: Use to review behaviour coverage, assertion strength, and untested failure paths for a scoped change.
+---
+
 # test-critic
 
 Finds missing tests, weak assertions, edge cases, and false confidence.

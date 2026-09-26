@@ -34,6 +34,7 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 | Read-only review evaluation | Frozen seeded review task, executable witness scorer, pinned material, fail-closed supplied-record preflight | [Fixture and preflight](docs/evaluations/066-read-only-review-fixture-and-preflight.md); no model comparison or host attestation |
 | Host capability inventories | Captured skill/config/hook projections, accepted read-only ephemeral threads, process-only app/MCP controls | [Host capture](docs/evaluations/067-no-model-host-arm-capture.md), [thread gate](docs/evaluations/068-ephemeral-thread-capability-gate.md); exact model-visible tools/instructions remain unknown |
 | MCP preflight regression | Known disabled entries accepted; active, unknown, malformed, duplicate, and paginated inventories rejected | [Offline correction](docs/evaluations/070-control-mcp-gate-regression.md); retained capture replay only, no host/model retry |
+| Local metadata and onboarding cleanup | Seven Claude agent definitions have minimal frontmatter; old smoke results explicitly dated; loading claims clarified | [Cleanup evidence](docs/evidence/071-local-metadata-and-onboarding-cleanup.md); no live model acceptance implied |
 
 ## Next
 
@@ -55,10 +56,16 @@ captures in the package.
    uncertainty, proportionate verification, and consequential-work approval
    boundaries. Retain evidence and document host-specific limits; narrow support
    claims if a host cannot be qualified. Installation alone is insufficient.
-2. **Make an explicit standalone release decision.** Review the acceptance
+2. **Make an explicit standalone release decision, with distribution last.** Review the acceptance
    evidence, onboarding, package contents, and residual risks against the
    standalone gate below. Publish only within the demonstrated support scope;
    keep optional tooling experimental where its own gates remain open.
+
+Distribution work is deliberately postponed: no lean bundle, export automation,
+marketplace publication, version bump, GitHub setup, or portal submission in the
+current cleanup. Once acceptance and the applicable loose ends below are resolved
+or explicitly deferred, prepare the chosen distribution and review it before
+publication.
 
 ### Prove Improvement
 
@@ -94,6 +101,22 @@ host-appropriate checks. Do not substitute more infrastructure for this work.
 
 The recent probes are development cases, not hidden holdouts or an A/B baseline.
 Fewer words, green tests, and one successful trial do not establish efficiency.
+
+## Loose Ends
+
+| Item | Status | Next bounded action |
+| --- | --- | --- |
+| Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
+| Codex, Claude, Pi standalone acceptance | Open | Predeclare and run representative host-specific trials with loading evidence and explicit budgets |
+| Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
+| Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
+| Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
+| Writable external execution | Hold; not needed for standalone installation | Do not expand adapters or run comparative writable tasks without accepted containment |
+| Distribution and directory publication | Last; intentionally deferred | Decide the support scope after acceptance, then prepare and validate the release package |
+
+Do not treat this list as one approval for live model runs, writable execution,
+new infrastructure, or publication. Optional surfaces may remain explicitly
+experimental or deferred without blocking the standalone skills release.
 
 ## Release Gates
 

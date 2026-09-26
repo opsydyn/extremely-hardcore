@@ -171,7 +171,7 @@ metadata is `.codex-plugin/plugin.json`; Claude metadata is under
 `.claude-plugin/`.
 
 Use the [provider onboarding guide](provider-onboarding.md) for the complete
-commands and current evidence matrix. The short local-checkout paths are:
+commands and dated evidence snapshots. The short local-checkout paths are:
 
 Codex CLI:
 
@@ -196,8 +196,9 @@ EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
 pi --skill "$EHS_ROOT/skills/using-extremely-hardcore/SKILL.md"
 ```
 
-These commands establish package discovery or explicit skill loading; they do
-not prove that a model will follow EHS during arbitrary engineering work.
+These commands request installation or explicit loading. Verify host discovery
+and loading separately; a successful command or echoed smoke marker does not
+prove that instructions reached the model or that it follows EHS during work.
 
 ### Use the Simple Made Easy lens
 
@@ -229,8 +230,10 @@ omitted scope:
 remaining uncertainty:
 ```
 
-After loading the skills, use the harmless loading smoke in the provider guide,
-or this equivalent prompt in a disposable project:
+After checking discovery, use the harmless smoke in the provider guide as a
+diagnostic, not a loading attestation. For a separate bounded engineering trial,
+give a concrete task and acceptance criteria in a disposable project, with a
+prompt such as:
 
 ```text
 Use Extremely Hardcore for this non-trivial change. Before editing, report the change contract, whether an ADR applies, the first verification test, and the evidence you will record. Keep the change limited to one small source file.

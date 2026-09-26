@@ -1,3 +1,8 @@
+---
+name: architecture-critic
+description: Use to review coupling, ownership, dependency direction, and public contracts in boundary-sensitive changes.
+---
+
 # architecture-critic
 
 Checks coupling, bounded contexts, public contracts, dependency direction, and domain leakage.

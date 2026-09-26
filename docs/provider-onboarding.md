@@ -4,11 +4,11 @@ This page explains how to load the standalone EHS skills into Codex CLI,
 Claude Code, or Pi from a local checkout. It separates three different claims:
 
 1. **Package discovery:** the host can find the checkout and its metadata.
-2. **Skill loading:** a model can read the EHS instructions and answer a
-   harmless verification prompt from them.
+2. **Skill loading:** the host supplies the EHS instructions to the model.
+   Discovery and an echoed smoke marker alone do not demonstrate this.
 3. **Engineering adherence:** the model follows EHS during real work.
 
-The first two are useful onboarding checks. Neither proves sandbox enforcement,
+The first two are distinct onboarding checks. Neither proves sandbox enforcement,
 network isolation, provider identity, model quality, or reliable adherence on
 arbitrary tasks. The optional `eh` protocol is a separate local evidence tool;
 it is not required for the Markdown skills.
@@ -154,24 +154,37 @@ For Pi JSON mode, inspect the final assistant message rather than treating a
 successful process start as a pass. Record the host version, model, command,
 and final marker. Keep raw output private.
 
-## Current smoke matrix
+## Historical smoke matrix (2026-09-03)
 
-| Host | Package/discovery evidence | Loading smoke | Current status |
+| Host | Package/discovery evidence | Loading smoke | Status at that checkpoint |
 | --- | --- | --- | --- |
-| Codex CLI | Current default `codex plugin list` with CLI `0.147.0` did not list the local EHS plugin | Bounded 15-second read-only smoke timed out before a marker with exit 143 | Current configuration does not load EHS; loading remains unverified and the smoke is environment-blocked |
-| Claude Code | Plugin and marketplace metadata validated with CLI `2.1.251`; plugin validation exits 0 with seven existing agent-frontmatter warnings and marketplace validation exits 0 | Current read-only model smoke exited before a marker at the host authentication boundary | Metadata verified with warnings; loading is blocked by the current auth state |
+| Codex CLI | Default `codex plugin list` with CLI `0.147.0` did not list the local EHS plugin | Bounded 15-second read-only smoke timed out before a marker with exit 143 | That configuration did not load EHS; smoke was environment-blocked |
+| Claude Code | Plugin and marketplace metadata validated with CLI `2.1.251`; plugin validation exited 0 with seven agent-frontmatter warnings and marketplace validation exited 0 | Read-only model smoke exited before a marker at the host authentication boundary | Metadata verified with warnings; smoke was authentication-blocked |
 | Pi | Explicit `--skill` path with CLI `0.84.1`; `pi auth check --json --no-refresh` reported ready | Returned the exact `loaded=yes` marker using `openai-codex/gpt-5.3-codex-spark` | Session-local loading verified |
 
-This matrix is onboarding evidence, not a provider compatibility score. A
-provider can move from `pending` to `verified` only after a fresh smoke on the
-current version. Run 055 refreshed the matrix on 2026-09-03. The Codex result
-is a current configuration state, not a package failure: install the local
-marketplace entry and start a new session before retrying. Its bounded smoke
-also timed out before a trustworthy marker, so the result is not a loading
-pass. The Claude result is an authentication boundary, not evidence that the
-metadata is malformed.
-Neither provider has a current `loaded=yes` smoke result here. A smoke pass
-still does not establish broad adherence.
+This is dated onboarding evidence from Run 055, not current authentication,
+installation, or compatibility status. Preserve it rather than overwriting it
+with newer observations. A smoke marker alone is self-report, not proof of
+instruction delivery or engineering adherence. The prompt above supplies the
+expected routing answer, so repeating it cannot establish that the skill was
+read. Retain host discovery/loading evidence separately and test representative
+behaviour before making supported-host claims.
+
+## Later evidence and remaining acceptance
+
+The [explicit-path Codex turn](evaluations/064-codex-explicit-skill-turn.md)
+retained native skill input, events, and usage, but not exact injected bytes.
+The [no-model thread gate](evaluations/068-ephemeral-thread-capability-gate.md)
+and [offline MCP regression correction](evaluations/070-control-mcp-gate-regression.md)
+add partial capability evidence, not general adherence or comparison readiness.
+The control-only trace attempt stopped before model dispatch.
+
+On 2026-09-26, Claude Code `2.1.259` validated the plugin and marketplace after
+the seven agent definitions received `name` and `description` frontmatter,
+without warnings. No Claude model loading or authentication check was run in
+that cleanup. Metadata validation does not supersede the historical smoke or
+clear Claude acceptance. Fresh loading and bounded engineering trials for
+Codex, Claude, and Pi remain the next standalone gate in the [roadmap](../ROADMAP.md).
 
 ## Small protocol-command measurement
 
@@ -196,8 +209,9 @@ the run lacks final evidence; it is not classified as a repository failure.
 
 ## Use EHS on a real change
 
-After the smoke passes, give the host a normal non-trivial task and name the
-desired method:
+After inspecting discovery/loading evidence, give the host a normal non-trivial
+task and name the desired method. Do not treat the smoke marker as its approval
+or acceptance evidence:
 
 ```text
 Use Extremely Hardcore for this non-trivial change. Before editing, state the

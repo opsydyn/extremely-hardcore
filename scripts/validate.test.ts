@@ -1,10 +1,24 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdtempSync, rmSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, rmSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { requiredFiles, requiredSkillHeadings, validateProject } from "./validate";
 
 const roots: string[] = [];
+
+test.each(requiredFiles.filter((file) => file.startsWith("agents/")))(
+  "%s has minimal parseable Claude agent metadata",
+  (file) => {
+    const content = readFileSync(join(import.meta.dir, "..", file), "utf8");
+    const frontmatter = content.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
+    expect(frontmatter).not.toBeNull();
+    const metadata = Bun.YAML.parse(frontmatter![1]!) as Record<string, unknown>;
+    expect(Object.keys(metadata).sort()).toEqual(["description", "name"]);
+    expect(metadata.name).toBe(file.slice("agents/".length, -".md".length));
+    expect(typeof metadata.description).toBe("string");
+    expect((metadata.description as string).trim().length).toBeGreaterThan(0);
+  },
+);
 
 afterEach(() => {
   for (const root of roots.splice(0)) {

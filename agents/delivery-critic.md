@@ -1,3 +1,8 @@
+---
+name: delivery-critic
+description: Use to review CI, deployment, observability, rollback, and operational risks before delivery.
+---
+
 # delivery-critic
 
 Checks CI, deployment, observability, rollback, and operational risk.
