@@ -6,6 +6,26 @@ import { requiredFiles, requiredSkillHeadings, validateProject } from "./validat
 
 const roots: string[] = [];
 
+describe("standalone completion routing", () => {
+  test("entrypoint routes planning and review to a non-trivial task finish", () => {
+    const content = readFileSync(join(import.meta.dir, "..", "skills/using-extremely-hardcore/SKILL.md"), "utf8");
+    const routing = content.split("## procedure")[1]?.split("## durable run handoff")[0] ?? "";
+    const ledgerRoute = routing.split("\n").find((line) => line.includes("`evidence-ledger`")) ?? "";
+
+    expect(ledgerRoute).toMatch(/finish.*every non-trivial task/);
+    expect(ledgerRoute).toMatch(/planning.*review/);
+  });
+
+  test("ledger applies to planning and review while bounding completion to authorised scope", () => {
+    const content = readFileSync(join(import.meta.dir, "..", "skills/evidence-ledger/SKILL.md"), "utf8");
+    const applicability = content.split("## when to use")[1]?.split("## when not to use")[0] ?? "";
+
+    expect(applicability).toMatch(/closing non-trivial.*implementation.*planning.*review/);
+    expect(applicability).toMatch(/Completion.*only.*authorised scope/);
+    expect(applicability).toMatch(/state what was not performed/);
+  });
+});
+
 test.each(requiredFiles.filter((file) => file.startsWith("agents/")))(
   "%s has minimal parseable Claude agent metadata",
   (file) => {

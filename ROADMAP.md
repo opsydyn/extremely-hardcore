@@ -1,6 +1,6 @@
 # Extremely Hardcore Product Roadmap
 
-Updated 2026-09-26. This is a work-priority map, not release approval or a fresh
+Updated 2026-10-05. This is a work-priority map, not release approval or a fresh
 provider-health check.
 
 ## Product Boundary
@@ -67,6 +67,40 @@ current cleanup. Once acceptance and the applicable loose ends below are resolve
 or explicitly deferred, prepare the chosen distribution and review it before
 publication.
 
+### Claude Release Preparation
+
+Queued for release preparation, not authorised execution or publication. Follow
+the [Claude plugin guidance](https://claude.com/blog/build-plugins-for-claude)
+without turning EHS into an integration service. Preserve the existing Codex
+manifest and Pi skill-loading path; no MCP server is required for the method.
+
+1. **Audit context cost before packaging.** Use Claude's
+   [plugin details and skill diagnostics](https://code.claude.com/docs/en/plugins/measure)
+   to record always-on versus on-invocation estimates and observed triggering.
+   Inspect optional agents alongside the nine skills. Prune only demonstrated
+   overhead and recheck triggering; invocation counts are not quality evidence.
+2. **Assess native eval tooling before adding custom infrastructure.** Evaluate
+   [Claude plugin eval](https://code.claude.com/docs/en/plugin-evals) as a possible
+   replacement for Claude-specific runner plumbing, not a mandatory EHS dependency.
+   Check installed-version/feature eligibility first. Any model run needs its own
+   payload consent, budget, tools, retention and sharing decision; defaults may
+   run repetitions, a no-plugin baseline and judge calls. Keep independent outcome
+   checks and comparison gates; neither skill invocation nor a grader score proves
+   improvement. No native eval migration or baseline run is approved by this item.
+3. **Prepare and review a lean skills-first distribution last.** Reuse the
+   existing Claude manifest; decide whether optional agents belong in the chosen
+   bundle and exclude development/evaluation/private artefacts. Declare and test
+   [surface-specific support](https://claude.com/docs/plugins/platform-support):
+   loading in Chat is not repository-engineering parity with Claude Code or Cowork.
+   After qualified support and release approval, establish the public GitHub
+   source and use the [directory submission process](https://claude.com/docs/directory/publish)
+   for validation, security review and controlled publication. Portal adoption
+   analytics may guide maintenance, but do not establish engineering effectiveness.
+
+Release completion means reviewed package contents, demonstrated support,
+documented cost/limits and an explicit publication decision. These tasks do not
+clear standalone acceptance, optional protocol qualification or comparisons.
+
 ### Prove Improvement
 
 1. **Finish the bounded control trace capability check.** The
@@ -94,9 +128,86 @@ publication.
    Refresh the measured host before execution. Only replicated independent
    results can support comparative effectiveness or moat claims.
 
-Immediate next engineering slice after consolidation: plan one representative
-Codex standalone acceptance trial with explicit loading evidence, acceptance
-criteria, budget, and stop conditions. Claude and Pi follow under equivalent
+The [first Codex standalone acceptance plan](docs/implementation-plans/072-codex-standalone-acceptance-trial.md)
+defines one read-only engineering-planning task with loading-request evidence,
+assessment criteria, budget, and stop conditions. Its
+[approved attempt](docs/evaluations/073-codex-standalone-planning-attempt.md)
+retained native input and four skill-file reads but stopped on a local driver's
+false rejection of a shell-wrapped read. No final plan or usage was retained;
+no retry occurred. The [offline read regression](docs/evaluations/074-staged-skill-read-regression.md)
+now passes, including replay of the retained read events. A
+[fresh approved attempt](docs/evaluations/075-codex-planning-inspection-stop.md)
+stopped on repository-status/discovery outside the staged-file-read allowance;
+no final plan or usage was retained and no retry occurred. The
+[version 2 plan](docs/implementation-plans/076-codex-planning-explicit-inspection.md)
+now makes the non-repository fixture and literal-read allowance explicit;
+execution was approved but [launch auto-review stopped before any host process](docs/evaluations/077-version-2-launch-approval-stop.md),
+pending explicit payload/destination consent. After that consent, the
+[version 2 result](docs/evaluations/078-codex-version-2-planning-result.md)
+retained a completed plan/turn and usage within budget, with six of eight
+criteria met. Concrete numeric witness and explicit no-ADR explanation remain
+gaps; no retry or skill edit followed. An
+[offline reviewer follow-up](docs/evaluations/079-planning-gap-review.md)
+confirmed the numeric witness in 28 fixture checks and recorded why no ADR is
+required. Those proposal questions are resolved; the agent's 6/8 response score
+is unchanged. The [Claude planning proposal](docs/implementation-plans/080-claude-standalone-planning-trial.md)
+has an [executed no-model preflight](docs/evaluations/081-claude-no-model-preflight.md):
+the nine staged skills and native plugin metadata checks pass, but both
+sandboxed and outside-sandbox auth checks report no signed-in account.
+The [authentication refresh](docs/evaluations/082-claude-auth-refresh.md)
+subsequently confirmed signed-in subscription access outside the sandbox and
+an unchanged staged plugin; sandboxed auth still reports logged out. Native
+validation leaves skill contents unchecked; exact runtime exposure remains
+unverified. Review that remaining gate and separate Anthropic payload consent
+before model dispatch, not a repetition of Codex solely for preferred wording.
+The [current runtime review](docs/evaluations/083-claude-runtime-gate-review.md)
+records CLI drift to `2.1.289`, passing native diagnostics and subscription auth,
+remote-policy ineligibility and absent inspected endpoint-policy paths. A
+version-refreshed normal-host observation needs explicit Anthropic consent and
+acceptance of its stated runtime limits; no model ran and comparisons remain hold.
+The [approved Claude attempt](docs/evaluations/084-claude-startup-inventory-stop.md)
+then reached native startup but stopped after 1.7 seconds on three additional
+host-labelled built-in plugins omitted by the no-model plugin list. Read/Skill
+were the only exposed tools; all nine EHS skills were catalogued, but no native
+invocation, tool call, final or usage was observed. No retry occurred. Review
+built-in catalogue handling and test the startup predicate offline before
+proposing another attempt; this is not an EHS behavioural score.
+The [offline catalogue regression](docs/evaluations/085-claude-startup-catalogue-regression.md)
+now accepts the exact retained normal-host startup and rejects changed/unknown
+entries, tools, paths, models and controls. Thirteen focused tests and 199
+repository tests pass. No provider ran; trial 084 remains blocked. The next
+slice is a separately authorised fresh planning attempt with refreshed preflight,
+not another skill change or relaxed comparison gate.
+The [fresh Claude proposal](docs/implementation-plans/086-claude-planning-fresh-attempt.md)
+now pins the observed model and tested startup catalogue, preserves the task,
+criteria and budget, and awaits renewed scoped Anthropic consent. Controller
+preparation and guard tests did not invoke a model.
+After scoped consent, the [fresh Claude result](docs/evaluations/087-claude-planning-result.md)
+completed in 20.5 seconds with native EHS invocation and unchanged files, meeting
+six of eight criteria. Explicit no-ADR decision and receipt remain missing;
+the answer exceeded its requested word limit and included an inaccurate
+original-code explanation. Independent candidate checks pass 28 cases but do
+not change the response score. Review completion-routing clarity offline before
+more trials; no automatic retry or skill edit follows.
+The [offline completion review](docs/evaluations/088-completion-routing-review.md)
+recommends two sentence-level clarifications making the existing ledger finish
+explicit for non-trivial planning/review. No skill was edited. Keep ADR routing
+conditional and review host turn-budget headroom before future trials; no
+blanket no-ADR boilerplate, receipt duplication or new capability is proposed.
+After approval, both substitutions were implemented on 2026-10-05. Two focused
+structural checks failed before the edits and passed afterwards; the full local
+suite passed 201 tests and scaffold validation passed. These checks establish
+instruction coverage, not agent adherence; historical trial scores remain unchanged.
+The [bounded completion check](docs/implementation-plans/089-claude-completion-routing-check.md)
+is prepared with the unchanged task, eight-turn cap and corrected build pin;
+fresh scoped Anthropic consent and preflight are required before its single launch.
+After consent, [completion result 090](docs/evaluations/090-claude-completion-routing-result.md)
+completed once in 21.6 seconds/six turns, with a 599-word answer and valid
+planning-only receipt. Seven of eight original criteria pass; explicit no-ADR
+conclusion remains absent. Earlier scores remain unchanged. No causal or
+efficiency claim, boilerplate addition or automatic retry follows.
+These trials cannot qualify implementation behaviour or clear
+the full standalone release gate. Claude and Pi follow under equivalent
 host-appropriate checks. Do not substitute more infrastructure for this work.
 
 The recent probes are development cases, not hidden holdouts or an A/B baseline.
@@ -107,12 +218,12 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | Item | Status | Next bounded action |
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
-| Codex, Claude, Pi standalone acceptance | Open | Predeclare and run representative host-specific trials with loading evidence and explicit budgets |
+| Codex, Claude, Pi standalone acceptance | Open; Claude latest planning case 7/8 with valid receipt; earlier 6/8 retained | Review accumulated local changes, then propose the next independently authorised acceptance slice; Pi and implementation acceptance remain open; do not chase this fixture's 8/8 with boilerplate |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
 | Writable external execution | Hold; not needed for standalone installation | Do not expand adapters or run comparative writable tasks without accepted containment |
-| Distribution and directory publication | Last; intentionally deferred | Decide the support scope after acceptance, then prepare and validate the release package |
+| Distribution and directory publication | Last; Claude cost audit, native-eval assessment and skills-first portal preparation queued | Follow Claude Release Preparation after acceptance/support decisions; no publication or new runtime implied |
 
 Do not treat this list as one approval for live model runs, writable execution,
 new infrastructure, or publication. Optional surfaces may remain explicitly

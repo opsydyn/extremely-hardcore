@@ -45,7 +45,7 @@ Still use judgement. If the one-line change is in auth, billing, schema migratio
    5. `decision-challenge` when its trigger rubric applies, before planning
    6. `test-first-implementation`
    7. `bounded-context-review` before boundary-sensitive edits
-   8. `evidence-ledger`
+   8. `evidence-ledger` to finish every non-trivial task, including planning and review.
 3. For risky work, add `architecture-critic` and `delivery-critic` review roles.
 4. Continue through authorised implementation and relevant verification. Pause for a material scope change, a required approval, or uncertainty that prevents safe progress; routine steps do not create new approval gates.
 

@@ -52,6 +52,73 @@ This is a deterministic protocol harness, not an agent benchmark. It does not in
 
 ## Controlled instruction comparisons
 
+Standalone host acceptance is separate from the comparative protocol below.
+The [first Codex planning attempt](073-codex-standalone-planning-attempt.md)
+retained exact native task/skill input and four staged skill reads, but a local
+capture-driver false rejection interrupted its one authorised turn before a
+final plan or usage event. No retry occurred; it did not clear acceptance or
+comparison gates.
+The [offline read regression](074-staged-skill-read-regression.md) fixes that
+predicate and accepts the retained events without invoking a model. A fresh
+trial still requires separate approval and refreshed gates. The
+[subsequent approved attempt](075-codex-planning-inspection-stop.md) stopped on
+repository-status/discovery outside its staged-file-read allowance. It remains
+blocked. The [version 2 plan](../implementation-plans/076-codex-planning-explicit-inspection.md)
+clarifies the fixture/input boundary without changing permissions or scoring;
+execution requires separate approval.
+With explicit OpenAI payload consent, the
+[version 2 result](078-codex-version-2-planning-result.md) retained a complete
+technical capture and met six of eight planning criteria. Witness/ADR
+explanation gaps remain; no retry, skill edit or comparative claim follows.
+The [offline controller review](079-planning-gap-review.md) resolves the numeric
+witness and no-ADR proposal questions with 28 fixture checks and an explicit
+decision rationale. It does not rewrite the agent's 6/8 response assessment.
+The [Claude no-model preflight](081-claude-no-model-preflight.md) validates the
+staged manifest and lists nine unchanged skills under the requested diagnostic
+profile. It cannot establish skill-content validation or runtime adherence;
+both sandboxed and outside-sandbox auth checks report no signed-in account.
+Restore host sign-in and refresh the gates before separately consenting to an
+Anthropic model payload. The subsequent [authentication refresh](082-claude-auth-refresh.md)
+confirms signed-in subscription access outside the sandbox and an unchanged
+staged plugin. The sandboxed auth check remains negative; runtime exposure and
+Anthropic payload consent remain separate gates. No Claude model ran and no
+behavioural acceptance gate is cleared.
+The [runtime gate review](083-claude-runtime-gate-review.md) refreshes diagnostics
+for CLI `2.1.289`, narrows the managed-policy gap and proposes one normal-host
+observation with explicit residual limits. Version drift stopped the frozen
+live proposal; a refreshed trial needs scoped Anthropic consent. No model ran.
+After that consent, the [Claude startup attempt](084-claude-startup-inventory-stop.md)
+stopped on three host-labelled built-in plugins omitted by the no-model inventory.
+Nine EHS skills were catalogued and tools were Read/Skill only, but no tool call,
+native invocation, final or usage was retained. No retry occurred; offline
+startup-inventory review comes next, not a change to EHS or a behavioural pass.
+The [offline startup-catalogue regression](085-claude-startup-catalogue-regression.md)
+accepts that retained init while rejecting unreviewed built-ins and changed
+controls. Thirteen focused cases pass and no provider ran. Historical trial 084
+remains blocked; a fresh attempt requires renewed consent and preflight.
+The [fresh proposal 086](../implementation-plans/086-claude-planning-fresh-attempt.md)
+prepares that single attempt with a pinned model, task and guards. Preparation
+does not dispatch a provider; scoped Anthropic consent remains required.
+With that consent, [Claude result 087](087-claude-planning-result.md) completed
+with native EHS invocation and retained usage, meeting six of eight criteria.
+No-ADR decision and receipt are missing; the response also exceeded its requested
+word limit. Independent candidate checks do not rewrite the response score.
+No retry or skill change followed; completion-routing clarity review comes next.
+The [completion-routing review](088-completion-routing-review.md) recommends
+two sentence substitutions to make planning/review completion explicit while
+preserving conditional ADRs and proportionality. No skill or score changed,
+and no model ran; implementation and any future behavioural trial remain separate.
+Following approval on 2026-10-05, the two substitutions were implemented.
+Two focused structural regressions failed before and passed after the edits;
+the full local suite passed 201 tests and scaffold validation passed. No model
+ran or historical score changed. Behavioural acceptance remains open.
+The [next bounded check](../implementation-plans/089-claude-completion-routing-check.md)
+is prepared offline; one launch awaits fresh scoped Anthropic consent and preflight.
+After consent, [result 090](090-claude-completion-routing-result.md) completed
+with a valid planning-only receipt and seven of eight original criteria passing.
+The explicit no-ADR conclusion remains absent. Earlier scores are unchanged;
+one repeated case does not establish causal improvement or clear release gates.
+
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog
 isolation probes establish a candidate host route, but exact instruction-byte

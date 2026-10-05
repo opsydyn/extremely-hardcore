@@ -7,7 +7,7 @@ description: Report evidence and remaining uncertainty before claiming non-trivi
 
 ## when to use
 
-Use before claiming non-trivial work is complete, ready, fixed, safe, or reviewed.
+Use when closing non-trivial implementation, planning or review work. Completion applies only to the authorised scope; state what was not performed.
 
 ## when not to use
 
