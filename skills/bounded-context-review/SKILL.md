@@ -32,9 +32,14 @@ Do not use for isolated local implementation details that do not cross module, d
 3. Identify allowed dependencies.
 4. Identify suspicious dependencies.
 5. State data ownership and transaction boundaries.
-6. Check integration events and anti-corruption needs.
-7. Give one verdict from the allowed list.
-8. Stop for redesign or human decision when the verdict requires it.
+6. For consequential operations, check how required preconditions reach the
+   operation and whether callers can omit them or substitute checks for a
+   different actor or resource. Prefer existing project mechanisms; consider
+   proof-carrying types only when proportionate. Types do not replace runtime
+   policy checks, freshness checks, or evidence validation.
+7. Check integration events and anti-corruption needs.
+8. Give one verdict from the allowed list.
+9. Stop for redesign or human decision when the verdict requires it.
 
 ## quality bar
 
