@@ -1,0 +1,148 @@
+{
+  "originalDefectObserved": true,
+  "independentCases": [
+    {
+      "stock": "10",
+      "quantity": "2",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "stock": "2",
+      "quantity": "3",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "3",
+      "quantity": "3",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "stock": "0",
+      "quantity": "1",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "3",
+      "quantity": "0",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "3",
+      "quantity": "-1",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "-1",
+      "quantity": "1",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "3.5",
+      "quantity": "1",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "3",
+      "quantity": "1.5",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "NaN",
+      "quantity": "1",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "Infinity",
+      "quantity": "1",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "-Infinity",
+      "quantity": "1",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "3",
+      "quantity": "NaN",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "3",
+      "quantity": "Infinity",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "stock": "3",
+      "quantity": "-Infinity",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    }
+  ],
+  "variants": [
+    {
+      "name": "final",
+      "exit": 0,
+      "violatesContract": false,
+      "behaviouralFailure": false
+    },
+    {
+      "name": "original-over-reservation",
+      "exit": 1,
+      "violatesContract": true,
+      "behaviouralFailure": true
+    },
+    {
+      "name": "reject-exact-stock",
+      "exit": 1,
+      "violatesContract": true,
+      "behaviouralFailure": true
+    },
+    {
+      "name": "accept-zero",
+      "exit": 1,
+      "violatesContract": true,
+      "behaviouralFailure": true
+    },
+    {
+      "name": "accept-fractional",
+      "exit": 1,
+      "violatesContract": true,
+      "behaviouralFailure": true
+    },
+    {
+      "name": "accept-infinite-stock",
+      "exit": 1,
+      "violatesContract": true,
+      "behaviouralFailure": true
+    }
+  ]
+}

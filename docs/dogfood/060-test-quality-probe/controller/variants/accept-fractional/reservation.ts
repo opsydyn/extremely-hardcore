@@ -1,0 +1,1 @@
+export function canReserve(s:number,q:number):boolean { return Number.isFinite(s) && Number.isFinite(q) && s >= 0 && q > 0 && q <= s; }

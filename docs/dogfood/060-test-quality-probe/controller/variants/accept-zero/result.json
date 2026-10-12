@@ -1,0 +1,5 @@
+{
+  "stdout": "bun test v1.4.2 (744846f84)\n",
+  "stderr": "\nreservation.test.ts:\n(pass) available inventory can be reserved [0.03ms]\n(pass) reservations cannot exceed available inventory\n(pass) exactly the available inventory can be reserved\n18 | test(\"stock must be non-negative and quantity must be positive\", () => {\n19 |   for (const [stock, quantity] of [\n20 |     [0, 1], [-0, 1], [-1, 1], [-10, 2],\n21 |     [10, 0], [10, -0], [10, -1], [0, 0], [-1, -1],\n22 |   ]) {\n23 |     expect(canReserve(stock, quantity)).toBe(false);\n                                             ^\nerror: expect(received).toBe(expected)\n\nExpected: false\nReceived: true\n\n      at <anonymous> (/Users/alancurrie/Projects/extremely-hardcore-skill/docs/dogfood/060-test-quality-probe/controller/variants/accept-zero/reservation.test.ts:23:41)\n(fail) stock must be non-negative and quantity must be positive [0.16ms]\n(pass) both inputs must be finite integers [0.02ms]\n(pass) finite integers are not restricted to safe integers\n\n 5 pass\n 1 fail\n 25 expect() calls\nRan 6 tests across 1 file. [2.00ms]\n",
+  "exit": 1
+}

@@ -1,0 +1,5 @@
+{
+  "stdout": "bun test v1.4.2 (744846f84)\n",
+  "stderr": "\nreservation.test.ts:\n(pass) available inventory can be reserved [0.09ms]\n(pass) reservations cannot exceed available inventory [0.01ms]\n(pass) exactly the available inventory can be reserved\n(pass) stock must be non-negative and quantity must be positive [0.06ms]\n(pass) both inputs must be finite integers [0.02ms]\n(pass) finite integers are not restricted to safe integers [0.01ms]\n\n 6 pass\n 0 fail\n 29 expect() calls\nRan 6 tests across 1 file. [3.00ms]\n",
+  "exit": 0
+}

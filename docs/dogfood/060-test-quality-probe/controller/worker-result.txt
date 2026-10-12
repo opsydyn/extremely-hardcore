@@ -1,0 +1,5 @@
+- result: complete
+- claim: Changed only reservation.ts and reservation.test.ts in the fixture. Reservations now require quantity <= stock.
+- evidence: Bun reproduced the defect before the fix; final bun test passed all 6 tests and 29 assertions. Covers over-reservation, exact stock, invalid inputs, and large finite integers.
+- remaining uncertainty: Staged test-critic self-review only, not independent review. No separate build/typecheck setup exists in the fixture.
+- next: Recommendation: merge.

@@ -27,17 +27,20 @@ Do not use when the user explicitly approves a throwaway spike, generated code, 
 
 ## procedure
 
-1. Identify behaviour to protect.
+1. Identify consequential behaviour to protect and derive expected outcomes from requirements or domain contracts, independently of the implementation.
 2. For a bug fix or changed behaviour, reproduce the failure with a meaningful test before implementation where practical. Confirm it fails for the expected reason; an unrelated failure is not a reproduction.
-3. Do not add tests that merely mirror implementation or manufacture failures for low-impact changes. State verification limits when a behavioural test is not appropriate.
+3. Exercise the actual production path at a meaningful boundary. Mock only outside that boundary; do not add tests that merely mirror implementation or manufacture failures for low-impact changes. State verification limits when a behavioural test is not appropriate.
 4. Make the smallest complete implementation, then run affected tests and required repository checks. Refactor only after the relevant tests pass.
-5. Broaden or repeat checks only when changes, failures, or unresolved risks justify it. Do not omit required checks.
+5. Ask which plausible defect these tests would miss. For consequential behaviour, demonstrate detection with the original regression or a targeted temporary mutation where useful; no mutation framework or quota is required. Broaden or repeat checks only when changes, failures, or unresolved risks justify it. Do not omit required checks.
 6. Define recovery proportional to the risk; migrations and external effects need more than reverting a local diff.
 
 ## quality bar
 
 - Tests describe behaviour, not private implementation trivia.
 - Regression tests fail for the behaviour being corrected, not incidental reasons.
+- Cover relevant rejection, boundary, recovery, and invariant cases in proportion to risk, not just the happy path.
+- Assert observable outcomes and invariants. Existence, truthiness, call counts, or "does not throw" suffice only when they are the contract.
+- Judge tests by meaningful defects they detect, not test count or coverage percentage.
 - The implementation is the smallest safe change.
 - Rollback is plausible.
 
@@ -45,5 +48,6 @@ Do not use when the user explicitly approves a throwaway spike, generated code, 
 
 - Writing tests after code and calling it discipline.
 - Testing mocks instead of behaviour.
+- Copying the implementation into expected values or weakening assertions to make tests pass.
 - Hiding broad refactors inside "smallest implementation".
 - Leaving rollback as "revert it" when migrations, contracts, or deployments are involved.
