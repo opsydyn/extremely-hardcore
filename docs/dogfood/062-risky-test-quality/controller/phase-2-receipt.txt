@@ -1,0 +1,12 @@
+- result: complete
+- claim: Approved synthetic correction implemented; exported types/signature and accepted policy preserved.
+- evidence: bun test ./access.test.ts exited 0: 105 pass, 0 fail. The parent-verified red checkpoint had 38 behavioural failures. Checkpoint tests, README, and ADR hashes remain unchanged.
+- remaining uncertainty: Independent review is pending. Arbitrary-object validation is outside scope; no deployment or broader security qualification occurred.
+- next: Result frozen for the parent-dispatched read-only reviewer. Recommendation: needs review.
+
+Changed paths across the attempt: access.ts and access.test.ts. This continuation changed only access.ts, replacing the admin bypass with a shared role gate before tenant validation and exact equality.
+
+Labelled Self-Review
+- Architecture critic: safe; no contract, dependency, or ownership changes.
+- Delivery critic: no local blockers; Bun verification passed, with no external effects.
+- Test critic: no blocking coverage gaps found; strict assertions cover grants, tenant isolation, invalid IDs, exact comparison, and rejected roles. The original bypass provides demonstrated regression detection.

@@ -1,0 +1,227 @@
+{
+  "capturedAt": "2026-10-12T21:41:19.594Z",
+  "sourceHash": "bf688312b1fa316ce35fa635083b0b21c13c2c91d3a30983ab85c3e65798ead2",
+  "testsHash": "27dc17476785d5914be213534b448c70dd283bd31ef13279cca3289d6efca806",
+  "independent": [
+    {
+      "role": "reader",
+      "actorTenant": "north",
+      "documentTenant": "north",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "role": "admin",
+      "actorTenant": "north",
+      "documentTenant": "north",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "role": "reader",
+      "actorTenant": "north",
+      "documentTenant": "south",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "admin",
+      "actorTenant": "north",
+      "documentTenant": "south",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "",
+      "actorTenant": "north",
+      "documentTenant": "north",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "writer",
+      "actorTenant": "north",
+      "documentTenant": "north",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "ADMIN",
+      "actorTenant": "north",
+      "documentTenant": "north",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "__proto__",
+      "actorTenant": "north",
+      "documentTenant": "north",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "constructor",
+      "actorTenant": "north",
+      "documentTenant": "north",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "toString",
+      "actorTenant": "north",
+      "documentTenant": "north",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "admin",
+      "actorTenant": "",
+      "documentTenant": "",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "reader",
+      "actorTenant": "",
+      "documentTenant": "",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "admin",
+      "actorTenant": " ",
+      "documentTenant": " ",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "reader",
+      "actorTenant": "\t",
+      "documentTenant": "\t",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "admin",
+      "actorTenant": "",
+      "documentTenant": "north",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "admin",
+      "actorTenant": "north",
+      "documentTenant": "",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "reader",
+      "actorTenant": "",
+      "documentTenant": "north",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "reader",
+      "actorTenant": "north",
+      "documentTenant": "",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "admin",
+      "actorTenant": "north",
+      "documentTenant": "North",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "reader",
+      "actorTenant": " north",
+      "documentTenant": "north",
+      "expected": false,
+      "actual": false,
+      "pass": true
+    },
+    {
+      "role": "admin",
+      "actorTenant": " north",
+      "documentTenant": " north",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    },
+    {
+      "role": "reader",
+      "actorTenant": " north",
+      "documentTenant": " north",
+      "expected": true,
+      "actual": true,
+      "pass": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "final",
+      "exit": 0,
+      "behaviouralFailure": false,
+      "violatesContract": false
+    },
+    {
+      "name": "checkpoint-tests-final-source",
+      "exit": 0,
+      "behaviouralFailure": false,
+      "violatesContract": false
+    },
+    {
+      "name": "original-cross-tenant-admin",
+      "exit": 1,
+      "behaviouralFailure": true,
+      "violatesContract": true
+    },
+    {
+      "name": "allow-missing-identity",
+      "exit": 1,
+      "behaviouralFailure": true,
+      "violatesContract": true
+    },
+    {
+      "name": "allow-unknown-role",
+      "exit": 1,
+      "behaviouralFailure": true,
+      "violatesContract": true
+    },
+    {
+      "name": "allow-cross-tenant-admin",
+      "exit": 1,
+      "behaviouralFailure": true,
+      "violatesContract": true
+    },
+    {
+      "name": "deny-valid-reader",
+      "exit": 1,
+      "behaviouralFailure": true,
+      "violatesContract": true
+    }
+  ]
+}

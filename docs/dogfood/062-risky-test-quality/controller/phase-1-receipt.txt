@@ -1,0 +1,7 @@
+- result: complete
+- claim: Test-only checkpoint prepared. Only access.test.ts changed; the security fix remains unimplemented.
+- evidence: Baseline: 2 pass. Expanded bun test ./access.test.ts: 67 pass, 38 fail, exit 1. All failures expose admin access incorrectly returning true for unequal or invalid tenant IDs. Source, README, and accepted ADR hashes remain unchanged.
+- remaining uncertainty: Self-review only; no mutations or independent review performed. Arbitrary-object validation remains outside scope.
+- next: Parent must check these red tests against unchanged source before authorising implementation.
+
+Coverage includes both authorised roles, exact identifier equality, whitespace-invalid IDs on either side, and rejected roles. Assertions require exact booleans. Architecture self-review: safe, contracts preserved. Delivery recommendation: hold at the checkpoint.

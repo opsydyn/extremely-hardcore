@@ -1,0 +1,5 @@
+{
+  "command": "diff -u initial/access.ts fixture/access.ts",
+  "exit": 1,
+  "output": "--- /tmp/ehs-risky-test-quality.TY7utA/controller/initial/access.ts\t2026-10-12 22:35:52\n+++ /tmp/ehs-risky-test-quality.TY7utA/fixture/access.ts\t2026-10-12 22:37:57\n@@ -8,8 +8,7 @@\n }\n \n export function canReadDocument(actor: Actor, document: Document): boolean {\n-  if (actor.role === \"admin\") return true;\n-  return actor.role === \"reader\"\n+  return (actor.role === \"reader\" || actor.role === \"admin\")\n     && actor.tenantId.trim().length > 0\n     && document.tenantId.trim().length > 0\n     && actor.tenantId === document.tenantId;\n"
+}

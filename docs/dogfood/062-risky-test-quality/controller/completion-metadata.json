@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "worker": {
+    "agent_id": "01a1320b-22cd-7c40-9808-38545a4a3cff",
+    "nickname": "Newton"
+  },
+  "freshPrompt": true,
+  "explicitModelOverride": false,
+  "phase1DispatchAt": "2026-10-12T21:35:53.013Z",
+  "phase1ObservedUpperBoundMs": 85680,
+  "implementationReleaseSubmittedAt": "2026-10-12T21:37:36.984Z",
+  "workerActiveBudgetSeconds": 240,
+  "reviewerBudgetSeconds": 90,
+  "retries": 0,
+  "sourceInitialHash": "109def7e64660b469a092ffc9dca7f9b1affdc2788bc2634e00441d0f514cb72",
+  "stagedHashes": {
+    "testFirst": "b49070a3c77d3b7a99cb9f75e3fe52a8ac6a3da8d72aa39dc98fe8fc5656a8d1",
+    "entrypoint": "e6de7790c2999ae028cdf4ea03aa0ad1e8201404a0b11e797e00492a5e007755",
+    "testCritic": "9d8ea738396a82017b99fc9affe4719226466baf9c26330cf470752a3be392be"
+  },
+  "phase2ObservedUpperBoundMs": 77522,
+  "workerObservedActiveUpperBoundMs": 163202,
+  "reviewer": {
+    "agent_id": "01a1320d-e8f7-7412-8f9a-22e6ec595b7e",
+    "nickname": "Kant"
+  },
+  "reviewerDispatchAt": "2026-10-12T21:38:54.836Z",
+  "reviewerObservedUpperBoundMs": 79000,
+  "completedWithinBudgets": true
+}
