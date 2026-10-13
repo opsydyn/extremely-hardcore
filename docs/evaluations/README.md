@@ -171,6 +171,46 @@ source changed; the fixed 13 tests and nine independent parent cases pass.
 This clears the narrower implementation observation under existing regressions,
 not spontaneous TDD, full standalone acceptance, Pi writable qualification or
 an efficacy comparison. Result 101 remains incomplete; no EHS edits follow.
+[Claude boundary review 104](104-claude-implementation-boundary-review.md)
+passes local plugin/argument diagnostics without a model. The proposed
+Read/Skill/Edit-only observation deliberately uses parent-run tests; it needs
+fresh scoped consent and cannot establish Claude executing its own verification
+or upgrade the read-only adapter's capabilities.
+After explicit consent, [pre-dispatch stop 105](105-claude-implementation-auth-stop.md)
+records passing build/plugin checks but failed redacted profile/default auth
+outside the sandbox. No model, fixture implementation or permission expansion
+occurred. Human sign-in and refreshed launch gates precede any requested resume.
+[Refresh 106](106-claude-auth-restored-synced-skill-stop.md) confirms successful
+subscription sign-in and fresh default/profile auth. A new user synced-skill
+source stops preparation before any model task; 15 cached skill directories
+are inventoried without reading bodies. Local observer checks pass, but actual
+cache loading and runtime exposure remain unknown. No more login is needed.
+[Loading-control review 107](107-claude-synced-skill-loading-review.md) finds
+official guidance and pinned native source support cache exclusion through the
+existing empty setting-source profile. This resolves the cache-absence
+assumption, not the runtime inventory or instruction-byte gap. Correct only the
+private preparation assertion and refresh gates; no model, cache mutation,
+runtime guard relaxation or EHS instruction change occurred in the review.
+[Observation 108](108-claude-implementation-turn-counter-stop.md) corrects only
+the private preparation assertion and passes fresh gates before one authorised
+Claude task. Native EHS/source Edit succeeds within 22 seconds and parent tests
+corroborate the source-only fix, with unchanged fixed inputs. The original
+observer rejects native num_turns 11 against its eight-turn acceptance check.
+Its rejection is retained; different trace counts are not silently substituted.
+Next inspect counter semantics offline, not another model call or EHS edit.
+[Counter review 109](109-claude-turn-counter-semantics-review.md) resolves that
+question in pinned source and retained metadata: success num_turns is a
+user-message count, distinct from the native query-loop budget. The observed
+11 reconciles exactly; it is not evidence of eleven agentic iterations.
+The original rejection remains unchanged. Next add focused offline coverage
+for a future private interpretation correction, not raise the limit, rescore
+108, retry the provider or edit EHS guidance.
+[Offline regression result 110](110-claude-counter-regression-result.md)
+records meaningful red followed by 21 passing local tests/77 assertions after
+one private counter-validation correction. Native errors and existing scope/
+deadline rules still reject; the native eight-turn request is unchanged.
+Historical 108 is not replayed/rescored and no provider ran. This completes the
+local counter follow-up, not full method or hard-limit qualification.
 
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog

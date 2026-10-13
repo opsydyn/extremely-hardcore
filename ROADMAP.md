@@ -263,6 +263,47 @@ records a fresh single-phase Codex fix within 92 seconds: only source changed,
 13 unchanged tests and nine parent contract cases pass. This is bounded
 implementation under existing regressions, not spontaneous TDD, a repair of 101,
 causal EHS improvement or Pi writable qualification. Keep EHS guidance unchanged.
+[Claude boundary review 104](docs/evaluations/104-claude-implementation-boundary-review.md)
+passes no-model metadata and candidate argument checks on the current CLI. It
+recommends Read/Skill/Edit with parent-run verification, not enabling Bash from
+a narrow command rule. This needs a new scope/payload decision and does not
+qualify agent-executed tests, full Claude adherence or writable adapters.
+After explicit payload consent, [pre-dispatch stop 105](docs/evaluations/105-claude-implementation-auth-stop.md)
+refreshes the unchanged plugin/build but both profile and default outside-sandbox
+auth checks report logged out. No model ran. Restore normal subscription sign-in
+and refresh gates on a requested resume; do not alter the adapter or auth route.
+The user then authorised normal sign-in. [Refresh 106](docs/evaluations/106-claude-auth-restored-synced-skill-stop.md)
+confirms default/profile readiness but finds 15 additional cached user skills
+outside the reviewed catalogue. The CLI task remains unlaunched while native
+loading controls are reviewed; cache presence is not proof of runtime exposure.
+Do not request another login, delete the cache or treat this as EHS failure.
+[Loading review 107](docs/evaluations/107-claude-synced-skill-loading-review.md)
+finds the unchanged native profile already excludes user sources, including
+the synced-cache loading path. Static evidence resolves the directory-absence
+assumption, not runtime attestation. Next correct only the private preparation
+assertion and refresh launch gates; keep 106 immutable, the runtime inventory
+guard unchanged and the existing observation undispatched until gates pass.
+After approval, [observation 108](docs/evaluations/108-claude-implementation-turn-counter-stop.md)
+corrects the private assertion and passes fresh launch gates. One native Claude
+task invokes EHS and edits only source within 22 seconds; parent inspection and
+13 tests/nine cases corroborate the fix. The original observer rejects reported
+num_turns 11 against its eight-turn check. Preserve that rejection and review
+counter semantics offline, not retry or widen the gate. Runtime startup excludes
+the cached account skills for this run; full adherence/containment remain open.
+[Counter review 109](docs/evaluations/109-claude-turn-counter-semantics-review.md)
+resolves the mismatch offline: success num_turns counts initial/user messages,
+while --max-turns controls query-loop continuation. The reported 11 is exactly
+one prompt, seven tool results and three skill-text injections, not evidence
+of eleven agentic iterations. Correct future private-observer interpretation
+with no-model regression coverage; keep the native limit at eight and preserve
+108's original rejection. No model retry or EHS instruction change follows.
+[Offline correction 110](docs/evaluations/110-claude-counter-regression-result.md)
+reproduces the false positive and invalid-metadata acceptance, then passes 21
+local tests/77 assertions after one private predicate correction. Native error,
+scope and deadline rejection remain; the eight-turn request and historical 108
+are unchanged. Counter follow-up is complete at this local boundary, with no
+provider retry or hard-limit qualification. Review/commit the evidence bundle
+and return to the remaining standalone method-acceptance questions.
 These development observations do not clear the full standalone release gate.
 Claude and Pi follow under equivalent
 host-appropriate checks. Do not substitute more infrastructure for this work.
@@ -275,7 +316,7 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | Item | Status | Next bounded action |
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
-| Codex, Claude, Pi standalone acceptance | Open; Claude latest planning case 7/8; Pi observation 099 has four behavioural passes, three failures and criterion 8 unverified; Codex 101 remains incomplete; fresh implementation 103 passes its narrower criteria | Review and commit the bounded implementation evidence, then assess remaining standalone acceptance/support claims; Pi writable execution remains a separate boundary decision |
+| Codex, Claude, Pi standalone acceptance | Open; Claude planning 7/8; implementation 108 has parent green and original rejection, with prospective counter correction locally tested in 110; Pi observation 099 has four behavioural passes, three failures and criterion 8 unverified; Codex 101 remains incomplete; fresh implementation 103 passes its narrower criteria | Review/commit the bounded evidence bundle, then assess remaining method-acceptance gaps; retain parent-only verification limits and separate Pi writable execution; no counter-driven provider retry |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
