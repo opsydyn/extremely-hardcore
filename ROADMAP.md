@@ -241,8 +241,30 @@ three fail and criterion 8 remains not observed. Missing numeric witness,
 explicit no-ADR conclusion and explicit unperformed-test statement are retained
 as reporting gaps, not corrected by reviewer supplementation. No automatic retry
 or fixture-specific instruction expansion follows.
-These trials cannot qualify implementation behaviour or clear
-the full standalone release gate. Claude and Pi follow under equivalent
+The [next implementation scope review](docs/evaluations/100-implementation-dogfood-scope-review.md)
+recommends one existing native Codex worker on a synthetic label-merge case,
+with a parent-observed test-only checkpoint and independent verification. This
+requires fresh concrete payload/delegation consent. Pi writable execution is
+not authorised by its read-only trial; no new runner or fixture code was created.
+Reporting-gap review alone does not justify extra instruction text or rescore 099.
+After scoped consent, [implementation result 101](docs/evaluations/101-implementation-dogfood-budget-stop.md)
+records tests-only completion and a total-budget stop before implementation
+release. Parent checks corroborate behavioural red, original-source equality
+and test discrimination; the parent reference is not a worker fix.
+[Checkpoint review 102](docs/evaluations/102-implementation-checkpoint-review.md)
+rechecks retained evidence and recommends reusing the 13 tests in a fresh,
+uninterrupted implementation observation with the same 180-second wall-clock
+cap. Remove the parent release step, not add instructions or increase budget.
+Fresh scoped consent is required; this would assess fixing under existing
+regressions, not spontaneous TDD or continuation of 101.
+Result 101 has no worker green or completed fix. After new scoped consent,
+[result 103](docs/evaluations/103-implementation-existing-regressions-result.md)
+records a fresh single-phase Codex fix within 92 seconds: only source changed,
+13 unchanged tests and nine parent contract cases pass. This is bounded
+implementation under existing regressions, not spontaneous TDD, a repair of 101,
+causal EHS improvement or Pi writable qualification. Keep EHS guidance unchanged.
+These development observations do not clear the full standalone release gate.
+Claude and Pi follow under equivalent
 host-appropriate checks. Do not substitute more infrastructure for this work.
 
 The recent probes are development cases, not hidden holdouts or an A/B baseline.
@@ -253,7 +275,7 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | Item | Status | Next bounded action |
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
-| Codex, Claude, Pi standalone acceptance | Open; Claude latest planning case 7/8; Pi observation 099 completes with four behavioural passes, three failures and criterion 8 unverified | Review retained Pi reporting gaps before selecting a representative implementation slice; no fixture-specific boilerplate or automatic retry; full acceptance remains open |
+| Codex, Claude, Pi standalone acceptance | Open; Claude latest planning case 7/8; Pi observation 099 has four behavioural passes, three failures and criterion 8 unverified; Codex 101 remains incomplete; fresh implementation 103 passes its narrower criteria | Review and commit the bounded implementation evidence, then assess remaining standalone acceptance/support claims; Pi writable execution remains a separate boundary decision |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |

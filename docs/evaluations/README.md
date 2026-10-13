@@ -151,6 +151,26 @@ with six staged-file reads and unchanged settings/content. Four behavioural
 criteria pass, three fail; criterion 8 remains not observed. Numeric witness,
 explicit no-ADR conclusion and explicit unperformed-test statement are missing.
 No full acceptance, causal improvement, automatic retry or skill edit is claimed.
+The [next implementation scope review](100-implementation-dogfood-scope-review.md)
+proposes a fresh native Codex worker with a test-only checkpoint on a label-merge
+case. It awaits concrete OpenAI payload/delegation consent and does not expand
+Pi write permissions, introduce a runner or qualify Pi implementation behaviour.
+After consent, [result 101](101-implementation-dogfood-budget-stop.md) records
+the tests-only phase and budget stop before implementation release. Parent
+checks verify meaningful red, unchanged source and test discrimination against
+the original/ordering defects. Parent reference green is not worker green;
+the implementation observation remains incomplete and no automatic retry follows.
+[Checkpoint review 102](102-implementation-checkpoint-review.md) rechecks the
+retained tests and recommends removing the mid-trial parent release: one fresh
+worker fixing under existing regressions, with the same 180-second wall-clock
+cap and new scoped consent. No EHS instruction change, resumed worker,
+spontaneous-TDD or Pi writable claim follows from this local review.
+After explicit new consent, [result 103](103-implementation-existing-regressions-result.md)
+records one fresh Codex worker completed and closed within 92 seconds. Only
+source changed; the fixed 13 tests and nine independent parent cases pass.
+This clears the narrower implementation observation under existing regressions,
+not spontaneous TDD, full standalone acceptance, Pi writable qualification or
+an efficacy comparison. Result 101 remains incomplete; no EHS edits follow.
 
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog
