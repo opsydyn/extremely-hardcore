@@ -228,6 +228,10 @@ local evidence commit `92bee7c`. It recommends surface-specific preview limits
 and identifies root licence and standalone-first onboarding as the next bounded
 cleanup. No host is declared fully qualified; no trial, packaging, licence
 change or publication follows from the review alone.
+The approved follow-up recorded in 113 adds the confirmed root MIT notice and
+standalone-first guides, preserving 38 shell examples. It changes no skill,
+host command, manifest/version or prior result, and does not clear installed-
+artifact qualification or authorise publication. The cleanup awaits commit.
 
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog

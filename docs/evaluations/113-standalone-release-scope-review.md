@@ -3,6 +3,11 @@
 Date: 2026-10-13. Approved assessment after committing the 111-112 evidence
 bundle locally as `92bee7c`. No push, release, new model task or install.
 
+Approved follow-up: review 113 was committed as `fda87b1`. The user then
+approved the bounded standalone-first documentation pass and the root MIT
+notice for 2026 Alan Currie. That cleanup is recorded below; the original
+assessment and release-scope verdict remain historical, not publication approval.
+
 - result: complete
 - claim: Release scope is assessed: prepare a standalone skills-first preview with explicit host limits, not a blanket fully-qualified three-host release.
 - evidence: Fresh 201 tests/792 assertions, scaffold validation and typecheck pass. Current guides/manifests, accepted standalone boundary and Codex/Claude/Pi records were reviewed. Both manifests declare MIT, but the root directory and tracked-file inventory contain no licence file.
@@ -129,3 +134,41 @@ no implementation plan, bundle, new model run or release follows from this
 assessment. Fresh commit checks passed 123 links and 47 retained pins before
 `92bee7c`. The three assessment documents pass 130 local links, scaffold
 validation and whitespace checks; they remain uncommitted pending review.
+
+## Approved Documentation And Licence Follow-up
+
+The authorised cleanup changes README, user guide and provider onboarding,
+adds [LICENSE](../../LICENSE), and updates current roadmap/index pointers.
+No new ADR is required: this implements the approved documentation scope and
+the MIT choice already declared by the manifests, without architecture, runtime
+or permission changes. The licence text follows
+[SPDX's MIT reference](https://spdx.org/licenses/MIT.html), with the approved
+copyright notice; this is not an audit of third-party rights.
+
+The user guide now starts with host loading and a bounded task; prerequisites,
+health checks, evaluations, protocol demos and CLI runs are explicitly optional.
+README presents all three host paths before optional tooling. The provider guide
+owns one linked current-evidence table; it distinguishes native staged Codex work,
+limited Claude Code observations and Pi session-local planning, without inferring
+CLI installation, full qualification or Chat/Cowork parity. Its model smoke is
+an optional diagnostic, not an onboarding prerequisite.
+
+Verification compares shell fences with `fda87b1`: all **38** remain byte-for-byte
+identical (README 12, user guide 14, provider guide 12), including optional
+tooling examples. Standalone section order and the approved copyright/manifest
+licence consistency pass. Existing skills, agents, commands, manifests/versions,
+protocol, tests and scores are unchanged. No behavioural unit tests are added
+for prose rearrangement; document, metadata and repository checks fit this scope.
+
+The missing-notice and first-run-order findings are resolved in the working diff.
+Fresh closure checks pass: 201 tests/792 assertions, repository typecheck,
+scaffold validation, 170 local links across six documents, the two evidence-table
+anchors, README image existence and whitespace. The untracked LICENSE no-index
+check emits no diagnostics; exit 1 indicates its new-file diff. No protected
+skill/runtime/manifest/test files differ from `fda87b1`.
+
+This does not clear installed-artifact qualification, optional-agent/context-cost
+review, support/publication decisions or the separate optional-tooling gates.
+The cleanup itself remains uncommitted for review; no new model-bearing host
+task was launched, package built, dependency installed, push made or publication
+attempted.

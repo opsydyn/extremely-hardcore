@@ -11,7 +11,9 @@ Claude Code, or Pi from a local checkout. It separates three different claims:
 The first two are distinct onboarding checks. Neither proves sandbox enforcement,
 network isolation, provider identity, model quality, or reliable adherence on
 arbitrary tasks. The optional `eh` protocol is a separate local evidence tool;
-it is not required for the Markdown skills.
+it is not required for the Markdown skills. You need an existing checkout and
+your host's normal setup/sign-in; Bun and the local evaluations are optional.
+This source checkout is pre-release, not a generally qualified published package.
 
 ## Prerequisites
 
@@ -92,12 +94,12 @@ Pi has a direct session-local skill flag. Load the EHS entrypoint explicitly:
 pi --skill "$EHS_ROOT/skills/using-extremely-hardcore/SKILL.md"
 ```
 
-Pi's CLI help also accepts a skill directory, but the single entrypoint makes
-the smoke deterministic and keeps the first context small. Directory loading
-is not part of the current smoke evidence. Pi does not need a separate plugin
-manifest for the verified path. A persistent Pi installation is not currently
-claimed; pass `--skill` when starting a session or use Pi's own discovery
-configuration only after verifying that configuration on the target version.
+The dated smoke below used a single entrypoint, not a full-directory install.
+Later no-model diagnostics and planning observations used a staged EHS tree;
+see the evidence limits below. Neither qualifies every installed configuration.
+Pi does not need a separate plugin manifest for this session-local path.
+A persistent Pi installation is not currently claimed; pass `--skill` when
+starting a session or verify Pi's own discovery configuration on the target version.
 
 Before a model call, check readiness without printing credentials:
 
@@ -109,9 +111,53 @@ Replace `provider/model-id` with an authenticated model. Do not use `--offline`
 for the model smoke; Pi documents that flag as controlling startup operations,
 not provider traffic.
 
+## Evidence and limits
+
+The following retained observations are not a fresh authentication check,
+installed-release test or provider comparison. Do not compare their scores
+across different tasks.
+
+| Surface | Observed | Not established |
+| --- | --- | --- |
+| Codex native worker | [2026-10-13 result 112](evaluations/112-uninterrupted-test-first-result.md): six current staged skill reads, meaningful worker-authored red/fix/green, useful tests and honest receipt | Current CLI marketplace installation or broad adherence; ambient superpowers prevent isolated EHS attribution |
+| Claude Code | [Planning result 090](evaluations/090-claude-completion-routing-result.md): native EHS loading and seven of eight criteria; [2026-10-13 observation 108](evaluations/108-claude-implementation-turn-counter-stop.md): parent-verified source fix | Worker-run tests or full qualification; 108's original observer rejection remains despite the [offline correction](evaluations/110-claude-counter-regression-result.md); no Chat/Cowork parity |
+| Pi session-local skills | [2026-10-13 result 099](evaluations/099-pi-bounded-planning-result.md): six staged reads and bounded planning; four behavioural passes, three failures, inventory criterion unobserved | Implementation/consequential-work qualification, full tool inventory or a writable evaluation adapter |
+
+All three have checkout-loading paths above, with different evidence limits.
+A read-only adapter limit is not a ban on using the standalone method in Pi or
+Claude; it is also not permission to expand that adapter. Full host acceptance
+and the actual installed release artifact remain open. See the
+[release-scope review](evaluations/113-standalone-release-scope-review.md).
+
+## Use EHS on a real change
+
+After inspecting discovery/loading evidence, give the host a normal non-trivial
+task and name the desired method. Do not treat the smoke marker as its approval
+or acceptance evidence:
+
+```text
+Use Extremely Hardcore for this non-trivial change. Before editing, state the
+change contract, whether an architecture decision applies, the first
+verification test, and the evidence you will record. Keep the change bounded
+and stop if a required assumption fails.
+```
+
+For a genuinely trivial edit, EHS should not force the full loop:
+
+```text
+Fix this one obvious spelling mistake in the README. Do not change anything else.
+```
+
+The host-facing receipt is the compact Markdown shape `result`, `claim`,
+`evidence`, `remaining uncertainty`, and `next`. The receipt can be used without
+the `eh` protocol.
+
 ## Loading smoke
 
-Run this harmless prompt after the host-specific discovery step. It must not
+This optional diagnostic contacts the configured model provider. Review its
+payload and budget before running it; it is not required to use the skills.
+
+Run this read-only prompt after the host-specific discovery step. It must not
 edit files, run commands, or inspect project content. The expected answer is
 exactly:
 
@@ -183,52 +229,9 @@ On 2026-09-26, Claude Code `2.1.259` validated the plugin and marketplace after
 the seven agent definitions received `name` and `description` frontmatter,
 without warnings. No Claude model loading or authentication check was run in
 that cleanup. Metadata validation does not supersede the historical smoke or
-clear Claude acceptance. Fresh loading and bounded engineering trials for
-Codex, Claude, and Pi remain the next standalone gate in the [roadmap](../ROADMAP.md).
-
-## Small protocol-command measurement
-
-Run 055 also repeated the existing local receipt path three times:
-
-```bash
-bun run eh status "$RUN_PATH"
-bun run eh summary "$RUN_PATH"
-```
-
-The host-captured command wall-time sample was:
-
-| Command | Repetitions | Min | Median | Max | Exit state |
-| --- | ---: | ---: | ---: | ---: | --- |
-| `eh status` | 3 | 46.21 ms | 46.33 ms | 51.42 ms | `0` each time |
-| `eh summary` | 3 | 46.29 ms | 46.33 ms | 48.77 ms | `1` each time; Run 055 was incomplete during the probe |
-
-This is a descriptive local command measurement, not human active time, a
-productivity result, a benchmark, or a provider comparison. Active operator
-time and a baseline remain unmeasured. The summary exit state is expected while
-the run lacks final evidence; it is not classified as a repository failure.
-
-## Use EHS on a real change
-
-After inspecting discovery/loading evidence, give the host a normal non-trivial
-task and name the desired method. Do not treat the smoke marker as its approval
-or acceptance evidence:
-
-```text
-Use Extremely Hardcore for this non-trivial change. Before editing, state the
-change contract, whether an architecture decision applies, the first
-verification test, and the evidence you will record. Keep the change bounded
-and stop if a required assumption fails.
-```
-
-For a genuinely trivial edit, EHS should not force the full loop:
-
-```text
-Fix this one obvious spelling mistake in the README. Do not change anything else.
-```
-
-The host-facing receipt is the compact Markdown shape `result`, `claim`,
-`evidence`, `remaining uncertainty`, and `next`. The receipt can be used without
-the `eh` protocol.
+clear Claude acceptance. The later observations in the evidence table above
+also retain their own limits. The [roadmap](../ROADMAP.md) keeps the remaining
+standalone support and installed-artifact decisions separate.
 
 ## Fresh-session handoff
 
@@ -263,3 +266,24 @@ protocol evidence unless the command was captured against a real run.
 The provider evaluation commands in [the evaluation reference](evaluations/README.md)
 are also separate. In particular, the Pi read-only adapter passes `--no-skills`
 and therefore intentionally does not test Pi plus EHS loading.
+
+## Optional protocol-command measurement
+
+Run 055 also repeated the existing local receipt path three times:
+
+```bash
+bun run eh status "$RUN_PATH"
+bun run eh summary "$RUN_PATH"
+```
+
+The host-captured command wall-time sample was:
+
+| Command | Repetitions | Min | Median | Max | Exit state |
+| --- | ---: | ---: | ---: | ---: | --- |
+| `eh status` | 3 | 46.21 ms | 46.33 ms | 51.42 ms | `0` each time |
+| `eh summary` | 3 | 46.29 ms | 46.33 ms | 48.77 ms | `1` each time; Run 055 was incomplete during the probe |
+
+This is a descriptive local command measurement, not human active time, a
+productivity result, a benchmark, or a provider comparison. Active operator
+time and a baseline remain unmeasured. The summary exit state is expected while
+the run lacks final evidence; it is not classified as a repository failure.

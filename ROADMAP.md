@@ -63,10 +63,11 @@ captures in the package.
 
 The [release-scope review 113](docs/evaluations/113-standalone-release-scope-review.md)
 recommends a skills-first preview with surface-specific evidence labels, not
-blanket host qualification. Root licence confirmation and standalone-first
-onboarding are the next bounded cleanup; package contents, installed-route
-checks and explicit support/publication decisions remain separate. No release
-gate is waived, new model task authorised or distribution work started.
+blanket host qualification. Its approved cleanup adds the root MIT notice and
+standalone-first onboarding, preserving all existing shell examples. Review/commit
+that working diff, then select the artifact/support scope for separate qualification.
+Package contents, installed-route checks and explicit publication decisions remain
+open. No release gate is waived, new model task authorised or distribution started.
 
 Distribution work is deliberately postponed: no lean bundle, export automation,
 marketplace publication, version bump, GitHub setup, or portal submission in the
@@ -341,7 +342,7 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
 | Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Decide surface-specific preview/support scope under 113; no automatic new trial, counter-driven retry or permission expansion |
-| Standalone release hygiene | Review 113: manifests declare MIT but root licence is missing; first-run guide leads with optional Bun/protocol tooling | Confirm licence/notice and approve a standalone-first documentation pass; packaging and publication remain last |
+| Standalone release hygiene | Approved 113 follow-up adds MIT notice and standalone-first guides; all 38 shell examples unchanged; cleanup pending commit | Review/commit cleanup, then select and qualify the intended artifact/support scope; packaging and publication remain last |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
