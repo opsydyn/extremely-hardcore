@@ -211,6 +211,18 @@ one private counter-validation correction. Native errors and existing scope/
 deadline rules still reject; the native eight-turn request is unchanged.
 Historical 108 is not replayed/rescored and no provider ran. This completes the
 local counter follow-up, not full method or hard-limit qualification.
+[Uninterrupted test-first preparation 111](111-uninterrupted-test-first-preparation.md)
+qualifies a fresh selection-helper case and freezes worker-authored red/fix/green,
+independent verification and receipt requirements. Later native history retrieval
+from closed worker 103 demonstrates ordered test/patch events without resuming
+or rescoring it. No fresh worker ran; new scoped OpenAI payload/delegation consent
+is required. No runner, skill edit or release/comparison claim follows.
+After fresh consent, [result 112](112-uninterrupted-test-first-result.md)
+records one uninterrupted worker completed/closed within 147 seconds, passing
+all nine frozen criteria. Native test-add/red/source-patch/green order is retained;
+unchanged worker tests detect the original/order/mutation defects, and independent
+parent verification passes. Ambient superpowers remain explicit; no isolated
+effectiveness, full-host acceptance, release approval or historical rescore.
 
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog

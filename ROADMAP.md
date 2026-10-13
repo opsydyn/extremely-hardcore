@@ -302,8 +302,20 @@ reproduces the false positive and invalid-metadata acceptance, then passes 21
 local tests/77 assertions after one private predicate correction. Native error,
 scope and deadline rejection remain; the eight-turn request and historical 108
 are unchanged. Counter follow-up is complete at this local boundary, with no
-provider retry or hard-limit qualification. Review/commit the evidence bundle
-and return to the remaining standalone method-acceptance questions.
+provider retry or hard-limit qualification. The evidence bundle is committed
+locally as `f4b3446`. [Preparation 111](docs/evaluations/111-uninterrupted-test-first-preparation.md)
+qualifies a new selection-helper case for one uninterrupted worker-authored
+red/fix/green observation. Existing native history exposes ordered command/patch
+evidence; no new runner is needed. Frozen criteria and private inputs await new
+scoped OpenAI payload/delegation consent. No model ran, old score changed or
+full standalone gate cleared.
+After that consent, [result 112](docs/evaluations/112-uninterrupted-test-first-result.md)
+records one uninterrupted native Codex worker completed/closed in 147 seconds,
+passing all nine frozen criteria. Native chronology and independent checks
+corroborate worker-authored red/fix/green and useful tests. EHS instructions and
+earlier outcomes remain unchanged; ambient host guidance precludes isolated
+effectiveness claims. Review/commit the acceptance records, then assess the
+remaining standalone support/release scope; no automatic additional trial.
 These development observations do not clear the full standalone release gate.
 Claude and Pi follow under equivalent
 host-appropriate checks. Do not substitute more infrastructure for this work.
@@ -316,7 +328,7 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | Item | Status | Next bounded action |
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
-| Codex, Claude, Pi standalone acceptance | Open; Claude planning 7/8; implementation 108 has parent green and original rejection, with prospective counter correction locally tested in 110; Pi observation 099 has four behavioural passes, three failures and criterion 8 unverified; Codex 101 remains incomplete; fresh implementation 103 passes its narrower criteria | Review/commit the bounded evidence bundle, then assess remaining method-acceptance gaps; retain parent-only verification limits and separate Pi writable execution; no counter-driven provider retry |
+| Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Review/commit 111-112 and assess standalone support/release scope against explicit host limits; no automatic new trial, counter-driven retry or permission expansion |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
