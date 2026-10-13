@@ -61,6 +61,13 @@ captures in the package.
    standalone gate below. Publish only within the demonstrated support scope;
    keep optional tooling experimental where its own gates remain open.
 
+The [release-scope review 113](docs/evaluations/113-standalone-release-scope-review.md)
+recommends a skills-first preview with surface-specific evidence labels, not
+blanket host qualification. Root licence confirmation and standalone-first
+onboarding are the next bounded cleanup; package contents, installed-route
+checks and explicit support/publication decisions remain separate. No release
+gate is waived, new model task authorised or distribution work started.
+
 Distribution work is deliberately postponed: no lean bundle, export automation,
 marketplace publication, version bump, GitHub setup, or portal submission in the
 current cleanup. Once acceptance and the applicable loose ends below are resolved
@@ -316,6 +323,11 @@ corroborate worker-authored red/fix/green and useful tests. EHS instructions and
 earlier outcomes remain unchanged; ambient host guidance precludes isolated
 effectiveness claims. Review/commit the acceptance records, then assess the
 remaining standalone support/release scope; no automatic additional trial.
+The evidence bundle is committed locally as `92bee7c`.
+[Scope review 113](docs/evaluations/113-standalone-release-scope-review.md)
+identifies missing root licence, tooling-first onboarding and unqualified
+installed-artifact/support assumptions. Review the proposed documentation/licence
+slice before packaging; do not add capabilities or repeat a scored fixture.
 These development observations do not clear the full standalone release gate.
 Claude and Pi follow under equivalent
 host-appropriate checks. Do not substitute more infrastructure for this work.
@@ -328,7 +340,8 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | Item | Status | Next bounded action |
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
-| Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Review/commit 111-112 and assess standalone support/release scope against explicit host limits; no automatic new trial, counter-driven retry or permission expansion |
+| Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Decide surface-specific preview/support scope under 113; no automatic new trial, counter-driven retry or permission expansion |
+| Standalone release hygiene | Review 113: manifests declare MIT but root licence is missing; first-run guide leads with optional Bun/protocol tooling | Confirm licence/notice and approve a standalone-first documentation pass; packaging and publication remain last |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |

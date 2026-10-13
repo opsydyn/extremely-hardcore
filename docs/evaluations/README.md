@@ -223,6 +223,11 @@ all nine frozen criteria. Native test-add/red/source-patch/green order is retain
 unchanged worker tests detect the original/order/mutation defects, and independent
 parent verification passes. Ambient superpowers remain explicit; no isolated
 effectiveness, full-host acceptance, release approval or historical rescore.
+[Release-scope review 113](113-standalone-release-scope-review.md) follows the
+local evidence commit `92bee7c`. It recommends surface-specific preview limits
+and identifies root licence and standalone-first onboarding as the next bounded
+cleanup. No host is declared fully qualified; no trial, packaging, licence
+change or publication follows from the review alone.
 
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog
