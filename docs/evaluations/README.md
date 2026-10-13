@@ -118,6 +118,39 @@ After consent, [result 090](090-claude-completion-routing-result.md) completed
 with a valid planning-only receipt and seven of eight original criteria passing.
 The explicit no-ADR conclusion remains absent. Earlier scores are unchanged;
 one repeated case does not establish causal improvement or clear release gates.
+Reviewed accumulated work is committed as `0b6c255`; the
+[Pi no-model preflight](../implementation-plans/091-pi-standalone-preflight.md)
+is prepared, not executed. Provider readiness and behavioural acceptance remain
+unobserved for that next slice.
+The [approved preflight result](092-pi-preflight-version-stop.md) stopped before
+staging/loading on Pi version and source drift to 1.1.0. The user separately
+reports OAuth ready, but current loading/behaviour remains unverified. Review
+the new build offline before refreshing the proposal; no model ran.
+The [Pi 1.1 review](../implementation-plans/093-pi-1-1-no-model-preflight.md)
+now proposes refreshed no-model checks for explicit skills, MCP/extensions,
+ambient prompt files and package resolution. Source inspection is not a native
+loading pass; no preflight execution or model run occurred during that review.
+The [executed Pi no-model diagnostic](094-pi-no-model-loading-result.md)
+recognises nine staged skills with clean diagnostics. Resource suppression passes
+in a settings-snapshot/sentinel probe, not a full CLI session. No model ran;
+active tools, model selection and planning behaviour remain separate gates.
+The [current-snapshot refresh](095-pi-refreshed-no-model-result.md) again loads
+all nine skills and independently observes no-refresh OAuth/local-model
+readiness. The [single planning proposal](../implementation-plans/096-pi-standalone-planning-trial.md)
+is prepared, not launched. Native internal retries, unrestricted host read paths
+and full-runtime inventory limits are explicit; fresh scoped consent and
+reviewed capture/control gates remain required.
+After approval, [Pi capture/control review 097](097-pi-capture-control-review.md)
+also inspected the actual bundle and found the required pre-dispatch callable
+tool inventory unresolved. No task ran. A narrower behavioural observation
+is recommended for a separate scope decision, not a relaxed 8/8 acceptance claim.
+The user approved that narrower scope under
+[plan 098](../implementation-plans/098-pi-bounded-planning-observation.md).
+[Pi result 099](099-pi-bounded-planning-result.md) completed once in 22.8 seconds
+with six staged-file reads and unchanged settings/content. Four behavioural
+criteria pass, three fail; criterion 8 remains not observed. Numeric witness,
+explicit no-ADR conclusion and explicit unperformed-test statement are missing.
+No full acceptance, causal improvement, automatic retry or skill edit is claimed.
 
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog

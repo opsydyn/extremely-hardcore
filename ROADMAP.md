@@ -1,6 +1,6 @@
 # Extremely Hardcore Product Roadmap
 
-Updated 2026-10-05. This is a work-priority map, not release approval or a fresh
+Updated 2026-10-13. This is a work-priority map, not release approval or a fresh
 provider-health check.
 
 ## Product Boundary
@@ -206,6 +206,41 @@ completed once in 21.6 seconds/six turns, with a 599-word answer and valid
 planning-only receipt. Seven of eight original criteria pass; explicit no-ADR
 conclusion remains absent. Earlier scores remain unchanged. No causal or
 efficiency claim, boilerplate addition or automatic retry follows.
+The reviewed changes were committed as `0b6c255`. The
+[Pi preflight plan](docs/implementation-plans/091-pi-standalone-preflight.md)
+now records the installed 0.84.1 candidate and source-reviewed explicit loading
+route. No Pi auth check or model ran; no-model loading/configuration diagnostics
+are the next bounded slice, before choosing and consenting to a live payload.
+The [approved Pi preflight](docs/evaluations/092-pi-preflight-version-stop.md)
+stopped before staging/loading on drift to 1.1.0 and changed loader hashes.
+User-reported OAuth readiness is not a loading pass. Review the current build
+offline before proposing refreshed diagnostics; no model or retry ran.
+The [Pi 1.1 control review and refreshed proposal](docs/implementation-plans/093-pi-1-1-no-model-preflight.md)
+adds explicit no-MCP, built-in-extension, global-prompt and package-resolution
+checks. It is source-reviewed preparation, not native loading or execution.
+The [approved Pi loading diagnostic](docs/evaluations/094-pi-no-model-loading-result.md)
+now recognises all nine staged skills with clean diagnostics and unchanged
+settings/tree. Its resource-loader probe uses a settings snapshot and sentinel
+factories, not a full CLI/model session. The local candidate is
+openai-codex/gpt-5.5; runtime tools, model availability and behaviour remain open.
+The [current EHS snapshot refresh](docs/evaluations/095-pi-refreshed-no-model-result.md)
+again passes nine-skill loading and independently observes no-refresh OAuth and
+local model resolution. The [single Pi planning proposal](docs/implementation-plans/096-pi-standalone-planning-trial.md)
+is prepared; native internal retries and filesystem/inventory limits are stated,
+not hidden by a no-relaunch promise. Capture/control review and fresh scoped
+OpenAI consent precede any launch. No model ran during refresh/preparation.
+After approval, [Pi control review 097](docs/evaluations/097-pi-capture-control-review.md)
+confirmed the pre-dispatch callable-tool inventory gap in the reviewed bundled
+CLI. No task was dispatched. Decide whether a narrower behavioural observation
+is useful with criterion 8 unverified; do not add a harness to force acceptance.
+The user approved the narrower observation in
+[plan 098](docs/implementation-plans/098-pi-bounded-planning-observation.md).
+[Pi result 099](docs/evaluations/099-pi-bounded-planning-result.md) completed once
+in 22.8 seconds with unchanged settings/content: four behavioural criteria pass,
+three fail and criterion 8 remains not observed. Missing numeric witness,
+explicit no-ADR conclusion and explicit unperformed-test statement are retained
+as reporting gaps, not corrected by reviewer supplementation. No automatic retry
+or fixture-specific instruction expansion follows.
 These trials cannot qualify implementation behaviour or clear
 the full standalone release gate. Claude and Pi follow under equivalent
 host-appropriate checks. Do not substitute more infrastructure for this work.
@@ -218,7 +253,7 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | Item | Status | Next bounded action |
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
-| Codex, Claude, Pi standalone acceptance | Open; Claude latest planning case 7/8 with valid receipt; earlier 6/8 retained | Review accumulated local changes, then propose the next independently authorised acceptance slice; Pi and implementation acceptance remain open; do not chase this fixture's 8/8 with boilerplate |
+| Codex, Claude, Pi standalone acceptance | Open; Claude latest planning case 7/8; Pi observation 099 completes with four behavioural passes, three failures and criterion 8 unverified | Review retained Pi reporting gaps before selecting a representative implementation slice; no fixture-specific boilerplate or automatic retry; full acceptance remains open |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
