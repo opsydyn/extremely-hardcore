@@ -259,6 +259,13 @@ agents/hooks/MCP/LSP. The ~376 always-on token projection is an estimate, not
 measured usage. This no-model observation is not a persistent install, skill-body
 validation or engineering-adherence result; all release/support gates remain.
 
+The approved [Pi candidate discovery check 118](118-pi-candidate-discovery.md)
+uses the installed native loader API against the exact extracted skills
+directory: nine canonical skills, zero diagnostics and nine formatted catalogue
+entries, with unchanged candidate/archive pins. A single-file control registers
+only the entrypoint. No full CLI startup, model delivery or adherence is observed;
+no auth operation, installation or model call is performed.
+
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog
 isolation probes establish a candidate host route, but exact instruction-byte

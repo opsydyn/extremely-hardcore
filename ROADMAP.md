@@ -97,6 +97,13 @@ installed-route qualification and engineering adherence remain unverified.
 The source README now uses the supplied landscape banner, outside the candidate;
 its publication rights remain a release-review item.
 
+The [Pi candidate discovery check 118](docs/evaluations/118-pi-candidate-discovery.md)
+exercises installed Pi 1.1.0's native loader against the README-selected extracted
+directory: all nine skills, zero diagnostics and unchanged candidate/archive pins.
+This is a direct API probe, not full CLI startup, model instruction delivery or
+engineering adherence. Candidate documentation/banner and the selected GitHub
+destination are committed locally as `c855429`; the artifact is not repackaged.
+
 The user has provided [opsydyn/extremely-hardcore](https://github.com/opsydyn/extremely-hardcore)
 as the intended GitHub destination when ready. This records the destination,
 not a remote availability/visibility check, push or release approval. No Git
