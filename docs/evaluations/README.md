@@ -245,6 +245,20 @@ and corrects current Pi examples to select the nine-skill directory. Historical
 smokes and scores remain unchanged. Source pins need refreshing before future
 artifact work; no packaging, model trial or broader support claim follows.
 
+After separate contents/build approval, [offline candidate 116](116-offline-skills-first-candidate.md)
+retains one 20-file ZIP from 19 pinned core files plus the authored package README.
+Exact archive membership, CRC, byte round-trip and all 18 resource links pass;
+extra-member and changed-byte controls are rejected. Inventory stays outside
+the payload. No host was invoked or model run; candidate review, installed-route
+qualification and release/support approval remain open.
+
+The subsequent [Claude candidate metadata check 117](117-claude-candidate-metadata-validation.md)
+passes strict manifest validation and explicit-directory details/session
+inventory for the same unchanged candidate: nine skills and no bundled
+agents/hooks/MCP/LSP. The ~376 always-on token projection is an estimate, not
+measured usage. This no-model observation is not a persistent install, skill-body
+validation or engineering-adherence result; all release/support gates remain.
+
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog
 isolation probes establish a candidate host route, but exact instruction-byte

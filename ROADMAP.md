@@ -68,22 +68,46 @@ standalone-first onboarding, preserving all existing shell examples; it is commi
 locally as `843f5a6`. The [artifact review 114](docs/evaluations/114-skills-first-artifact-review.md)
 identifies 19 existing core files and recommends a skills-only local candidate
 with a short package README, excluding optional agents and development/run records.
-The source README is not portable to that selection. Contents approval, delivery
-route, installed-route checks, actual context cost and publication remain open.
-No release gate is waived, new model task authorised or distribution started.
+The source README is not portable to that selection. The contents are now approved
+for a local candidate only, not public distribution or general host support.
 
 The approved [consistency pass 115](docs/evaluations/115-standalone-consistency-pass.md)
 aligns the manifesto and ordinary leaf outputs with that standalone boundary,
 corrects Pi's directory-loading examples and adds optional inline/native-subagent
-guidance without new execution machinery. The source bytes change, so refresh
-artifact pins before any separately approved candidate work. Local instruction
-and discovery checks are not model adherence, cost or installed-release proof.
+guidance without new execution machinery; it is committed as `c1e1997`. Local
+instruction and discovery checks are not model adherence, cost or installed-release
+proof.
 
-Distribution work is deliberately postponed: no lean bundle, export automation,
-marketplace publication, version bump, GitHub setup, or portal submission in the
-current review. Once acceptance and the applicable loose ends below are resolved
-or explicitly deferred, prepare the chosen distribution and review it before
-publication.
+The [offline candidate 116](docs/evaluations/116-offline-skills-first-candidate.md)
+now retains a 20-file ZIP: 19 freshly pinned core files plus the
+[package README](PREVIEW.md), with exact membership, CRC, byte round-trip and
+resource checks. Optional agents, marketplace metadata and development records
+are excluded. This is local packaging evidence, not installed-host qualification.
+The subsequent read-only README/inventory review finds no blocking package
+defects; archive bytes and all 18 resource links match the approved inputs.
+Selected delivery/loading route, actual context cost, rights/source-publication
+privacy and explicit release/support decisions remain open. No release gate is
+waived or new model task authorised.
+
+The subsequent [Claude candidate check 117](docs/evaluations/117-claude-candidate-metadata-validation.md)
+passes strict manifest validation and explicit-directory component/session
+diagnostics: nine skills, no bundled agents/hooks/MCP/LSP, unchanged candidate
+bytes. Native estimates report ~376 always-on tokens; measured usage/cost,
+installed-route qualification and engineering adherence remain unverified.
+The source README now uses the supplied landscape banner, outside the candidate;
+its publication rights remain a release-review item.
+
+The user has provided [opsydyn/extremely-hardcore](https://github.com/opsydyn/extremely-hardcore)
+as the intended GitHub destination when ready. This records the destination,
+not a remote availability/visibility check, push or release approval. No Git
+remote is configured yet; source/history privacy and artwork rights remain gates
+before publication.
+
+Public distribution remains postponed: no permanent export automation,
+marketplace publication, version bump, remote configuration, push or portal
+submission in this candidate slice. Once acceptance and the applicable loose
+ends below are resolved or explicitly deferred, review the chosen distribution
+before publication.
 
 ### Claude Release Preparation
 

@@ -6,7 +6,7 @@ Scope before action.
 Small changes before big dreams.
 
 <p align="center">
-  <img src="assets/extremely-hardcore-skills.jpg" alt="Extremely Hardcore Skills" width="520">
+  <img src="assets/extremely-hardcore-skills-banner.jpg" alt="Extremely Hardcore Skills" width="960">
 </p>
 
 Read [The Extremely Hardcore Manifesto](MANIFESTO.md) for the operating doctrine behind the skills.
