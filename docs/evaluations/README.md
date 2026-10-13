@@ -266,6 +266,15 @@ entries, with unchanged candidate/archive pins. A single-file control registers
 only the entrypoint. No full CLI startup, model delivery or adherence is observed;
 no auth operation, installation or model call is performed.
 
+The approved [publication/privacy review 119](119-publication-privacy-review.md)
+records Pi evidence commit `13f2ebf` and scans current tracked source/reachable
+history locally. Run records, host/project paths and Git identity remain public
+disclosure choices; limited credential rules produce no hits, not certified
+clearance. The existing candidate stays unchanged and marker-free under those
+rules. The user declares ChatGPT-generated artwork provenance. A fresh skills-first
+public tree is recommended for a separate contents/identity decision, not built
+or published; no cleanup or history rewriting occurred.
+
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog
 isolation probes establish a candidate host route, but exact instruction-byte

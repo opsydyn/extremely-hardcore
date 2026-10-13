@@ -110,6 +110,22 @@ not a remote availability/visibility check, push or release approval. No Git
 remote is configured yet; source/history privacy and artwork rights remain gates
 before publication.
 
+The [publication/privacy review 119](docs/evaluations/119-publication-privacy-review.md)
+follows Pi evidence commit `13f2ebf`. At that source pin, 913 tracked files include
+184 root-run records/logs; host/project paths and non-noreply Git identity remain
+explicit disclosure decisions. A bounded local scan finds no credential-shaped
+matches, not exhaustive secret clearance; the unchanged 20-file candidate has
+none of the scanned markers. The user reports both graphics were generated with
+ChatGPT from their prompt, and metadata inspection finds no identifying EXIF/GPS
+data. No legal-rights conclusion follows. Recommended next scope is a clean
+skills-first public tree with reviewed README/graphic inclusion and Git identity,
+retaining development history locally. That choice and publication remain held
+for human decision; no deletion, history rewrite or new public tree occurred.
+
+Subsequently, the user approved removing the previous square artwork from the
+working tree. Retain the landscape README banner; the historical image remains
+in Git history. This artwork choice does not authorise history rewriting or push.
+
 Public distribution remains postponed: no permanent export automation,
 marketplace publication, version bump, remote configuration, push or portal
 submission in this candidate slice. Once acceptance and the applicable loose
