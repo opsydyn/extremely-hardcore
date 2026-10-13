@@ -22,7 +22,7 @@ Do not use for isolated local implementation details that do not cross module, d
 
 ## required output
 
-- Review from [templates/bounded-context-review.md](templates/bounded-context-review.md) (relative to this `SKILL.md`).
+- A scoped boundary review, kept in the conversation for bounded local work. Use [templates/bounded-context-review.md](templates/bounded-context-review.md) (relative to this `SKILL.md`) for consequential changes or when a durable record is requested or required by the repository; reuse an existing review rather than duplicating it.
 - Verdict: `safe`, `safe with noted risk`, `needs redesign`, or `needs human decision`.
 
 ## procedure

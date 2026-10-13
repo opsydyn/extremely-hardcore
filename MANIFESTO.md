@@ -23,23 +23,23 @@ Scope may change. It may not drift silently.
 
 When new information invalidates the contract, work stops. The contract is revised before implementation continues. Discovery is allowed to change the plan. It is not allowed to quietly change the mission.
 
-## We Believe Workflow State Must Be Explicit
+## We Believe Progress Must Be Inspectable
 
 "Working on it" is not a useful engineering state.
 
-A non-trivial change moves through named states: classified, contracted, discovered, architecture-decided, planned, red-confirmed, implemented, reviewed, verified, and complete.
+Scope, consequential decisions, verification and unresolved blockers must be clear. Apply the guidance relevant to the change and its risk; bounded local contracts, plans and evidence can stay in the conversation.
 
-Each transition has entry conditions, required artefacts, evidence, and blocking outcomes. The agent may perform the work. It may not simply announce that a gate has been passed.
+Use the project's existing conventions for required durable records. Standalone EHS does not require a fixed state machine, a protocol run or a document for every step. The agent may perform the work; it may not simply announce that a required gate has been passed.
 
-Blocked, abandoned, and needs-human-decision are valid states. Pretending otherwise does not improve delivery.
+Blocked, abandoned, and needs-human-decision are valid outcomes. Pretending otherwise does not improve delivery.
 
-The workflow governs ceremony, not thought. Agents retain judgement inside each state. They do not receive discretion to erase the states.
+When an existing protocol run is used, its recorded state, evidence requirements and approval gates remain binding. Proportionate ceremony is not permission to bypass them.
 
 ## We Believe Risk Determines Ceremony
 
 A typo and a database migration are both changes. They are not the same kind of change.
 
-Trivial work should stay trivial. Standard work should receive proportionate structure. High-risk work should require stronger evidence, independent criticism, rollback planning, and human approval.
+Trivial work should stay trivial. Standard work should receive proportionate structure. High-risk work needs stronger evidence, critical review, rollback planning and required human approvals. Use independent review when available and authorised; otherwise label self-review and its limits, without substituting it for required independent review or human approval.
 
 Risk is assessed through blast radius, reversibility, data impact, privilege, security, public contracts, operational exposure, and uncertainty.
 

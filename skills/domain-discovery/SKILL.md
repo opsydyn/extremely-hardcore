@@ -22,7 +22,7 @@ Do not use for mechanical edits with no domain meaning. Renaming a CSS class is 
 
 ## required output
 
-- Domain map from [templates/domain-map.md](templates/domain-map.md) (relative to this `SKILL.md`).
+- Scoped domain findings, kept in the conversation for bounded local work. Use [templates/domain-map.md](templates/domain-map.md) (relative to this `SKILL.md`) for consequential changes or when a durable record is requested or required by the repository; reuse an existing domain map rather than duplicating it.
 - Recommended next questions where ambiguity remains.
 
 ## procedure

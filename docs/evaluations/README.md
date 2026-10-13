@@ -231,7 +231,19 @@ change or publication follows from the review alone.
 The approved follow-up recorded in 113 adds the confirmed root MIT notice and
 standalone-first guides, preserving 38 shell examples. It changes no skill,
 host command, manifest/version or prior result, and does not clear installed-
-artifact qualification or authorise publication. The cleanup awaits commit.
+artifact qualification or authorise publication. It is committed locally as
+`843f5a6`. The [no-model artifact review 114](114-skills-first-artifact-review.md)
+finds a 19-file core selection, 12 source-README paths absent from that selection,
+optional Claude agent discovery and tracked run records requiring explicit
+exclusion. It recommends a skills-only candidate and concise package README;
+contents approval, actual packaging/loading, context cost and publication remain
+open. No artifact or host trial was executed.
+
+The approved [standalone consistency pass 115](115-standalone-consistency-pass.md)
+aligns manifesto/leaf instructions, adds lightweight optional execution guidance
+and corrects current Pi examples to select the nine-skill directory. Historical
+smokes and scores remain unchanged. Source pins need refreshing before future
+artifact work; no packaging, model trial or broader support claim follows.
 
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog

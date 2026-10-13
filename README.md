@@ -77,13 +77,15 @@ The skill content is plain markdown and does not require runtime code to use.
 
 ## Installing For Pi
 
-Pi loads the EHS entrypoint explicitly for a session:
+Pi discovers all nine EHS skills explicitly for a session:
 
 ```bash
 EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
-pi --skill "$EHS_ROOT/skills/using-extremely-hardcore/SKILL.md"
+pi --skill "$EHS_ROOT/skills/"
 ```
 
+Pass the skills directory, not only the entrypoint file, so routing can discover
+the other eight skills. Check the native catalogue and diagnostics separately.
 Pi does not require a separate plugin manifest for this path. The repository
 claims session-local loading only; use the [provider onboarding guide](docs/provider-onboarding.md)
 for the smoke prompt and current evidence boundary.
@@ -95,6 +97,9 @@ fix observations; Pi has session-local reading/planning observations. Full
 host qualification remains open, with no Claude Chat/Cowork parity claim.
 
 ## Core Loop
+
+Use the applicable parts, scaled to risk; this is not a mandatory state machine
+or document-per-step workflow.
 
 1. Create change contract.
 2. Discover domain and architecture impact.

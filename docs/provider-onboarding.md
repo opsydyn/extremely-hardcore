@@ -88,13 +88,16 @@ skill failure.
 
 ## Pi
 
-Pi has a direct session-local skill flag. Load the EHS entrypoint explicitly:
+Pi has a direct session-local skill flag. Discover all nine EHS skills explicitly:
 
 ```bash
-pi --skill "$EHS_ROOT/skills/using-extremely-hardcore/SKILL.md"
+pi --skill "$EHS_ROOT/skills/"
 ```
 
-The dated smoke below used a single entrypoint, not a full-directory install.
+Pass the directory: a single SKILL.md file registers only that skill, not its
+siblings. Check the native catalogue for all nine names and inspect diagnostics;
+discovery still does not establish model loading or adherence.
+The historical smoke used a single entrypoint, not a full-directory install.
 Later no-model diagnostics and planning observations used a staged EHS tree;
 see the evidence limits below. Neither qualifies every installed configuration.
 Pi does not need a separate plugin manifest for this session-local path.
@@ -117,9 +120,12 @@ The following retained observations are not a fresh authentication check,
 installed-release test or provider comparison. Do not compare their scores
 across different tasks.
 
+They predate the [consistency-pass instruction edits](evaluations/115-standalone-consistency-pass.md).
+They describe their retained snapshots, not model adherence to the revised source.
+
 | Surface | Observed | Not established |
 | --- | --- | --- |
-| Codex native worker | [2026-10-13 result 112](evaluations/112-uninterrupted-test-first-result.md): six current staged skill reads, meaningful worker-authored red/fix/green, useful tests and honest receipt | Current CLI marketplace installation or broad adherence; ambient superpowers prevent isolated EHS attribution |
+| Codex native worker | [2026-10-13 result 112](evaluations/112-uninterrupted-test-first-result.md): six staged skill reads, meaningful worker-authored red/fix/green, useful tests and honest receipt | Current CLI marketplace installation or broad adherence; ambient superpowers prevent isolated EHS attribution |
 | Claude Code | [Planning result 090](evaluations/090-claude-completion-routing-result.md): native EHS loading and seven of eight criteria; [2026-10-13 observation 108](evaluations/108-claude-implementation-turn-counter-stop.md): parent-verified source fix | Worker-run tests or full qualification; 108's original observer rejection remains despite the [offline correction](evaluations/110-claude-counter-regression-result.md); no Chat/Cowork parity |
 | Pi session-local skills | [2026-10-13 result 099](evaluations/099-pi-bounded-planning-result.md): six staged reads and bounded planning; four behavioural passes, three failures, inventory criterion unobserved | Implementation/consequential-work qualification, full tool inventory or a writable evaluation adapter |
 
@@ -189,7 +195,7 @@ Pi:
 pi --no-session \
   --no-tools \
   --no-context-files \
-  --skill "$EHS_ROOT/skills/using-extremely-hardcore/SKILL.md" \
+  --skill "$EHS_ROOT/skills/" \
   --mode json \
   --print \
   --model provider/model-id \

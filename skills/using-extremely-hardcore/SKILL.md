@@ -51,6 +51,17 @@ Still use judgement. If the one-line change is in auth, billing, schema migratio
 
 Respect explicit user instructions and repository requirements within host permissions. When another workflow is required, reuse its equivalent scope, plan, and evidence records instead of producing duplicates. Do not create a protocol run just to use EHS.
 
+## execution approach
+
+Honour the user's or required host workflow's chosen method; otherwise use inline
+execution for bounded or tightly coupled work. Recommend native subagents only
+when available and authorised, and independently scoped tasks or a useful fresh
+review justify their coordination and context cost. Ask about the choice only
+if it materially changes budget, permissions, scope or delivery expectations.
+Give workers the relevant requirements, allowed scope and verification
+expectations; delegation grants no extra permissions. Keep overlapping writes
+under one owner; the parent owns integration, verification and the final receipt.
+
 ## durable run handoff
 
 When a run path already exists, inspect it before relying on conversation history:

@@ -40,8 +40,11 @@ Pi:
 
 ```bash
 EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
-pi --skill "$EHS_ROOT/skills/using-extremely-hardcore/SKILL.md"
+pi --skill "$EHS_ROOT/skills/"
 ```
+
+For Pi, pass the directory so the native catalogue can discover all nine skills,
+not only the router. Check for missing names or diagnostics before relying on it.
 
 These commands request installation or explicit loading. Verify host discovery
 and loading separately; a successful command or echoed smoke marker does not

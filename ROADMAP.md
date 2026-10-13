@@ -64,14 +64,24 @@ captures in the package.
 The [release-scope review 113](docs/evaluations/113-standalone-release-scope-review.md)
 recommends a skills-first preview with surface-specific evidence labels, not
 blanket host qualification. Its approved cleanup adds the root MIT notice and
-standalone-first onboarding, preserving all existing shell examples. Review/commit
-that working diff, then select the artifact/support scope for separate qualification.
-Package contents, installed-route checks and explicit publication decisions remain
-open. No release gate is waived, new model task authorised or distribution started.
+standalone-first onboarding, preserving all existing shell examples; it is committed
+locally as `843f5a6`. The [artifact review 114](docs/evaluations/114-skills-first-artifact-review.md)
+identifies 19 existing core files and recommends a skills-only local candidate
+with a short package README, excluding optional agents and development/run records.
+The source README is not portable to that selection. Contents approval, delivery
+route, installed-route checks, actual context cost and publication remain open.
+No release gate is waived, new model task authorised or distribution started.
+
+The approved [consistency pass 115](docs/evaluations/115-standalone-consistency-pass.md)
+aligns the manifesto and ordinary leaf outputs with that standalone boundary,
+corrects Pi's directory-loading examples and adds optional inline/native-subagent
+guidance without new execution machinery. The source bytes change, so refresh
+artifact pins before any separately approved candidate work. Local instruction
+and discovery checks are not model adherence, cost or installed-release proof.
 
 Distribution work is deliberately postponed: no lean bundle, export automation,
 marketplace publication, version bump, GitHub setup, or portal submission in the
-current cleanup. Once acceptance and the applicable loose ends below are resolved
+current review. Once acceptance and the applicable loose ends below are resolved
 or explicitly deferred, prepare the chosen distribution and review it before
 publication.
 
