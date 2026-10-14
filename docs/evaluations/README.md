@@ -299,6 +299,14 @@ No model trial, installation, marketplace/npm publication or general host
 qualification follows. The user approved the local release/status commit on
 2026-10-14; no push or change to the published release is implied.
 
+The release-record slice is committed locally as `40e7e3d`. The subsequent
+[released-preview discovery 121](121-released-preview-discovery.md) checks a
+fresh public download/extraction: 21 unchanged files and 19 resolving resources,
+Claude manifest/session discovery of nine skills and Pi native-loader discovery
+of nine skills without diagnostics. No model, authentication operation,
+persistent install, full Pi CLI or Codex session ran. This new record/status
+diff is uncommitted; host engineering qualification remains separate.
+
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog
 isolation probes establish a candidate host route, but exact instruction-byte

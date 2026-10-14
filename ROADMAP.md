@@ -1,6 +1,6 @@
 # Extremely Hardcore Product Roadmap
 
-Updated 2026-10-13. This is a work-priority map, not release approval or a fresh
+Updated 2026-10-14. This is a work-priority map, not release approval or a fresh
 provider-health check.
 
 ## Product Boundary
@@ -162,6 +162,17 @@ tree. No marketplace/npm publication, version bump, permanent exporter, portal
 submission or model trial ran. Full host, optional-tooling and comparison gates
 remain separate. The user approved committing the local release/status records
 on 2026-10-14; this does not authorise pushing them or changing the release.
+
+Those records are committed locally as `40e7e3d`. The subsequent
+[released-preview discovery check 121](docs/evaluations/121-released-preview-discovery.md)
+uses a fresh anonymous download and extraction of the actual 21-file release.
+Claude metadata/session diagnostics list nine skills; Pi's native loader API
+finds nine skills without diagnostics; all 19 resource links resolve and the
+payload remains unchanged. This is not a persistent install, full Pi CLI check,
+Codex session, model delivery or engineering adherence. Record 121 and current
+status pointers remain uncommitted. Next: one separately consented bounded
+read-only planning observation using the released artifact, not another loader
+check or capability addition.
 
 ### Claude Release Preparation
 
@@ -430,7 +441,7 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
 | Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Decide surface-specific preview/support scope under 113; no automatic new trial, counter-driven retry or permission expansion |
-| Standalone release hygiene | MIT/onboarding cleanup committed as `843f5a6`; experimental 21-file preview published at `7dc35a5`; release-record commit approved | Check the downloaded artifact's no-model discovery, then propose the smallest behavioural qualification check; no automatic model call or broader publication |
+| Standalone release hygiene | Release records committed locally as `40e7e3d`; fresh released-ZIP no-model discovery passes; record 121 uncommitted | Review/commit 121, then prepare one bounded read-only planning observation with fresh provider-payload consent; no automatic model call or broader publication |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
