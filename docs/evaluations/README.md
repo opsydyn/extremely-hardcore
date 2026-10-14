@@ -275,6 +275,30 @@ rules. The user declares ChatGPT-generated artwork provenance. A fresh skills-fi
 public tree is recommended for a separate contents/identity decision, not built
 or published; no cleanup or history rewriting occurred.
 
+The approved [clean public-repo preparation 120](120-clean-public-repo-preparation.md)
+follows review/artwork commit `7dc35a5`. Exactly 21 source files are staged in a
+fresh independent local Git repo: unchanged core, self-contained README and
+landscape banner. Input bytes, metadata, local resources and independent object
+storage validate. Development history stays local; first-commit identity is
+pending. No remote, push, model trial, host installation or public release ran.
+
+Record 120's owner follow-up distinguishes that local preparation from the
+user's subsequent public development-source push: GitHub `main` is `7dc35a5`,
+with 913 files, 80 commits and 184 root-run files. The user explicitly chose to
+keep it public. A separate local 21-file preview ZIP now passes exact membership,
+CRC and byte round-trip checks, without Git metadata or development records.
+No privacy conversion or history rewrite followed. With later separate explicit
+approval, record 120's release follow-up publishes the
+[experimental `v0.0.1` prerelease](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.1)
+at the existing `7dc35a5` commit with only the 21-file ZIP asset. Native GitHub and
+unauthenticated downloads match the approved bytes/SHA-256; exact membership,
+CRC and all 21 input comparisons pass. The tag targets the approved commit,
+the release is prerelease/not-latest and public `main` is unchanged. Notes
+distinguish the selected ZIP from automatic full-development source archives.
+No model trial, installation, marketplace/npm publication or general host
+qualification follows. The user approved the local release/status commit on
+2026-10-14; no push or change to the published release is implied.
+
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog
 isolation probes establish a candidate host route, but exact instruction-byte

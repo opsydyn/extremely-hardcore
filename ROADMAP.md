@@ -35,11 +35,13 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 | Host capability inventories | Captured skill/config/hook projections, accepted read-only ephemeral threads, process-only app/MCP controls | [Host capture](docs/evaluations/067-no-model-host-arm-capture.md), [thread gate](docs/evaluations/068-ephemeral-thread-capability-gate.md); exact model-visible tools/instructions remain unknown |
 | MCP preflight regression | Known disabled entries accepted; active, unknown, malformed, duplicate, and paginated inventories rejected | [Offline correction](docs/evaluations/070-control-mcp-gate-regression.md); retained capture replay only, no host/model retry |
 | Local metadata and onboarding cleanup | Seven Claude agent definitions have minimal frontmatter; old smoke results explicitly dated; loading claims clarified | [Cleanup evidence](docs/evidence/071-local-metadata-and-onboarding-cleanup.md); no live model acceptance implied |
+| Experimental skills-only preview | GitHub prerelease `v0.0.1`, 21-file ZIP with landscape banner | [Release and independent download checks](docs/evaluations/120-clean-public-repo-preparation.md#published-release-and-verification); not general host qualification or marketplace publication |
 
 ## Next
 
-The planned standalone feature set is implemented; release qualification is
-not complete. Stop adding capabilities and finish acceptance. These two tracks
+The planned standalone feature set is implemented and the experimental `v0.0.1`
+preview is published; general release qualification is not complete. Stop adding
+capabilities and finish acceptance. These two tracks
 have separate gates: comparative superiority is not a prerequisite for a
 clearly labelled standalone release, and releasing skills does not qualify the
 optional protocol or evaluator.
@@ -56,10 +58,11 @@ captures in the package.
    uncertainty, proportionate verification, and consequential-work approval
    boundaries. Retain evidence and document host-specific limits; narrow support
    claims if a host cannot be qualified. Installation alone is insufficient.
-2. **Make an explicit standalone release decision, with distribution last.** Review the acceptance
-   evidence, onboarding, package contents, and residual risks against the
-   standalone gate below. Publish only within the demonstrated support scope;
-   keep optional tooling experimental where its own gates remain open.
+2. **Review support scope before a stable release or wider distribution.** The
+   explicitly approved experimental preview does not clear the standalone gate
+   below. Review fresh acceptance evidence, onboarding, package contents and
+   residual risks before broader claims; keep optional tooling experimental
+   where its own gates remain open. No additional publication is implied.
 
 The [release-scope review 113](docs/evaluations/113-standalone-release-scope-review.md)
 recommends a skills-first preview with surface-specific evidence labels, not
@@ -68,8 +71,9 @@ standalone-first onboarding, preserving all existing shell examples; it is commi
 locally as `843f5a6`. The [artifact review 114](docs/evaluations/114-skills-first-artifact-review.md)
 identifies 19 existing core files and recommends a skills-only local candidate
 with a short package README, excluding optional agents and development/run records.
-The source README is not portable to that selection. The contents are now approved
-for a local candidate only, not public distribution or general host support.
+The source README is not portable to that selection. At that checkpoint, the
+contents were approved for a local candidate only, not public distribution or
+general host support. Later experimental publication approval is recorded below.
 
 The approved [consistency pass 115](docs/evaluations/115-standalone-consistency-pass.md)
 aligns the manifesto and ordinary leaf outputs with that standalone boundary,
@@ -104,11 +108,13 @@ This is a direct API probe, not full CLI startup, model instruction delivery or
 engineering adherence. Candidate documentation/banner and the selected GitHub
 destination are committed locally as `c855429`; the artifact is not repackaged.
 
-The user has provided [opsydyn/extremely-hardcore](https://github.com/opsydyn/extremely-hardcore)
-as the intended GitHub destination when ready. This records the destination,
-not a remote availability/visibility check, push or release approval. No Git
-remote is configured yet; source/history privacy and artwork rights remain gates
-before publication.
+The user has published the development source at
+[opsydyn/extremely-hardcore](https://github.com/opsydyn/extremely-hardcore).
+Read-only GitHub checks confirm public `main` at `7dc35a5`: 913 tracked files,
+80 commits and 184 root-run files. The user configured `origin`, renamed the
+development branch to `main` and explicitly chose to keep it public after the
+source/history boundary was explained. This is public source availability, not
+a versioned skills-only release, exhaustive secret clearance or host qualification.
 
 The [publication/privacy review 119](docs/evaluations/119-publication-privacy-review.md)
 follows Pi evidence commit `13f2ebf`. At that source pin, 913 tracked files include
@@ -119,18 +125,43 @@ none of the scanned markers. The user reports both graphics were generated with
 ChatGPT from their prompt, and metadata inspection finds no identifying EXIF/GPS
 data. No legal-rights conclusion follows. Recommended next scope is a clean
 skills-first public tree with reviewed README/graphic inclusion and Git identity,
-retaining development history locally. That choice and publication remain held
-for human decision; no deletion, history rewrite or new public tree occurred.
+retaining development history locally. That was the review's recommendation,
+not a historical rewrite. The later user publication/keep-public choice is
+recorded above; the assessment's bounded scan and limitations remain unchanged.
 
 Subsequently, the user approved removing the previous square artwork from the
 working tree. Retain the landscape README banner; the historical image remains
 in Git history. This artwork choice does not authorise history rewriting or push.
 
-Public distribution remains postponed: no permanent export automation,
-marketplace publication, version bump, remote configuration, push or portal
-submission in this candidate slice. Once acceptance and the applicable loose
-ends below are resolved or explicitly deferred, review the chosen distribution
-before publication.
+The approved [clean public-repo preparation 120](docs/evaluations/120-clean-public-repo-preparation.md)
+follows development commit `7dc35a5`. An independent local repo under ignored
+`dist/public-repo/extremely-hardcore/` has exactly 21 staged files: the unchanged
+19-file core, a self-contained public README and the unchanged landscape banner.
+Membership, metadata, 19 local links and independent Git/object-storage checks
+pass; no development history is copied. Its unborn `main` has no commits or
+remotes. Its first commit still awaits a Git identity choice, but a selected
+downloadable artifact does not require replacing the existing public history.
+The prepared tree itself was not pushed; its separate first-commit identity
+remains pending. General host support remains unqualified.
+
+The same 21-file tree is now packaged locally as
+`dist/public-repo/extremely-hardcore-0.0.1-skills-only-preview.zip`. Exact archive
+membership, CRC and direct/extracted byte comparisons pass; no Git metadata,
+inventory sidecars or development records are bundled. Record 120 retains its
+pin and the user's keep-public decision. The existing 20-file candidate is
+unchanged; neither artifact is relabelled as the other.
+
+With separate explicit user approval, the
+[experimental `v0.0.1` prerelease](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.1)
+is now published at `7dc35a5`, with only the verified 21-file skills-only ZIP as
+an uploaded asset. Both native GitHub and unauthenticated public downloads match
+the original bytes and SHA-256; tag/ref, prerelease and not-latest checks pass.
+Public `main` and history remain intact. The notes label limited host evidence
+and explain that GitHub's automatic source archives contain the full development
+tree. No marketplace/npm publication, version bump, permanent exporter, portal
+submission or model trial ran. Full host, optional-tooling and comparison gates
+remain separate. The user approved committing the local release/status records
+on 2026-10-14; this does not authorise pushing them or changing the release.
 
 ### Claude Release Preparation
 
@@ -399,12 +430,12 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
 | Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Decide surface-specific preview/support scope under 113; no automatic new trial, counter-driven retry or permission expansion |
-| Standalone release hygiene | Approved 113 follow-up adds MIT notice and standalone-first guides; all 38 shell examples unchanged; cleanup pending commit | Review/commit cleanup, then select and qualify the intended artifact/support scope; packaging and publication remain last |
+| Standalone release hygiene | MIT/onboarding cleanup committed as `843f5a6`; experimental 21-file preview published at `7dc35a5`; release-record commit approved | Check the downloaded artifact's no-model discovery, then propose the smallest behavioural qualification check; no automatic model call or broader publication |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
 | Writable external execution | Hold; not needed for standalone installation | Do not expand adapters or run comparative writable tasks without accepted containment |
-| Distribution and directory publication | Last; Claude cost audit, native-eval assessment and skills-first portal preparation queued | Follow Claude Release Preparation after acceptance/support decisions; no publication or new runtime implied |
+| Distribution and directory publication | GitHub experimental skills-only ZIP published; stable support, marketplace/directory publication, Claude cost audit and native-eval assessment remain open | Follow Claude Release Preparation before wider claims/distribution; no new publication, model trial or runtime implied |
 
 Do not treat this list as one approval for live model runs, writable execution,
 new infrastructure, or publication. Optional surfaces may remain explicitly
