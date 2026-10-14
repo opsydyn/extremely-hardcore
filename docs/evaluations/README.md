@@ -304,8 +304,22 @@ The release-record slice is committed locally as `40e7e3d`. The subsequent
 fresh public download/extraction: 21 unchanged files and 19 resolving resources,
 Claude manifest/session discovery of nine skills and Pi native-loader discovery
 of nine skills without diagnostics. No model, authentication operation,
-persistent install, full Pi CLI or Codex session ran. This new record/status
-diff is uncommitted; host engineering qualification remains separate.
+persistent install, full Pi CLI or Codex session ran. Record 121 is committed
+locally as `909f3b2`; host engineering qualification remains separate. The
+[released-artifact planning proposal 122](../implementation-plans/122-released-preview-planning-observation.md)
+freezes one synthetic native Codex observation and its inputs/limits. Preparation
+checks only existing native/history interfaces and artifact pins. After specific
+OpenAI payload/delegation approval, [result 123](123-released-preview-planning-result.md)
+records seven of eight criteria passing, with the exact current numeric witness
+missing. Native input and released body reads match; 21 package files and the
+916-file repository snapshot remain unchanged during the task. Completion/
+closure takes 87,007 ms; 30 parent-only proposal cases pass without repairing
+the worker's criterion. Ambient host context and unavailable usage are disclosed.
+No retry, EHS edit, implementation or general support claim follows. The user's
+approved offline witness-gap review is included in 123: retain 7/8, reuse existing
+test-first/evidence guidance, and add no numeric-witness boilerplate or scorer
+change. It recommends a small real released-package implementation task after
+repository/task selection and scoped consent, not another parser repetition.
 
 Current [local readiness assessment](060-comparison-readiness.md): comparative
 execution is on hold. One explicit-path loading turn and no-model catalog

@@ -169,10 +169,24 @@ uses a fresh anonymous download and extraction of the actual 21-file release.
 Claude metadata/session diagnostics list nine skills; Pi's native loader API
 finds nine skills without diagnostics; all 19 resource links resolve and the
 payload remains unchanged. This is not a persistent install, full Pi CLI check,
-Codex session, model delivery or engineering adherence. Record 121 and current
-status pointers remain uncommitted. Next: one separately consented bounded
-read-only planning observation using the released artifact, not another loader
-check or capability addition.
+Codex session, model delivery or engineering adherence. Record 121 is now
+committed locally as `909f3b2`. The subsequent
+[released-preview planning proposal 122](docs/implementation-plans/122-released-preview-planning-observation.md)
+freezes one native Codex planning observation using the released skill tree,
+the synthetic port-parser task and a 180-second cap. After explicit scoped
+OpenAI payload/delegation consent, [result 123](docs/evaluations/123-released-preview-planning-result.md)
+records seven of eight criteria passing: the worker omits a concrete current
+numeric witness result. All decisive released reads match pinned bodies, scoped
+state stays unchanged, and completion/closure takes 87,007 ms. The proposed
+validation passes 30 independent parent-only cases; those do not repair the
+worker's failed criterion or establish implementation adherence. Mandatory
+ambient context and unavailable usage remain explicit limits. The approved
+offline witness-gap review in 123 recommends keeping EHS unchanged and retaining
+7/8: existing regression/evidence guidance is sufficient, and this known fixture
+does not justify mandatory numeric-witness boilerplate. No retry follows. Next
+useful acceptance work is one small real implementation/verification task with
+the released package after explicit repository/task selection and bounded
+consent. No push, release change or wider host/effectiveness claim is authorised.
 
 ### Claude Release Preparation
 
@@ -441,7 +455,7 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
 | Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Decide surface-specific preview/support scope under 113; no automatic new trial, counter-driven retry or permission expansion |
-| Standalone release hygiene | Release records committed locally as `40e7e3d`; fresh released-ZIP no-model discovery passes; record 121 uncommitted | Review/commit 121, then prepare one bounded read-only planning observation with fresh provider-payload consent; no automatic model call or broader publication |
+| Standalone release hygiene | Released-artifact planning observation 123 completes at 7/8; approved offline review retains that score and recommends no EHS instruction change | Select one small real task/repository for released-package implementation/verification; scope and consent first, no automatic trial or broader publication |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
