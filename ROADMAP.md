@@ -56,14 +56,16 @@ counts clear EHS acceptance. Freeze the current nine skills unless a demonstrate
 defect justifies a separately approved correction. More capabilities or another
 coached chart task are not the next release milestone.
 
-1. **Qualify the actual released package on real work, starting with Codex.**
-   Select one bounded implementation/verification task and a fresh session using
-   the published skills-only preview through the selected host route. Record
-   package/loading provenance, actual use, a meaningful regression and executed
-   verification, scope/approval behaviour and an honest receipt. Disclose ambient
-   skills and human intervention; do not infer isolation or efficiency. Choose
-   the repository/task and obtain scoped payload/write consent before any run.
-   This documentation slice prepares no dispatch, retries or host changes.
+1. **User-led fresh-session check of the released package.** The user will
+   choose normal real work in a new session without Superpowers, rather than
+   commission another coached internal or FoldKit task from this chat. Use the
+   [short handoff](docs/fresh-session-check.md), not this development history or
+   earlier assessor answers. Retain ordinary task/diff/verification evidence and
+   disclose any remaining host, memory or repository guidance. A fresh session
+   reduces conversation carryover; it does not establish zero bias, containment
+   or isolated EHS effect. [Scope review 125](docs/evaluations/125-released-package-implementation-scope-review.md)
+   is parked; its repository/task request is withdrawn. No worker, new trial,
+   settings change or automatic follow-up is launched here.
 2. **Set host-specific support scope.** Retain useful uncertainty, proportional
    verification, skill-relative resources and consequential-work boundaries on
    every claimed surface. Assess Claude and Pi against their own loading and
@@ -479,7 +481,7 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
 | Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Decide surface-specific preview/support scope under 113; no automatic new trial, counter-driven retry or permission expansion |
-| Standalone release hygiene | Released-artifact planning observation 123 remains 7/8; consolidated FoldKit dogfood 124 preserves mixed-method results without clearing package acceptance | Select one small real task/repository for fresh-session released-package implementation/verification, starting with Codex; scope and consent first, no automatic trial or broader publication |
+| Standalone release hygiene | Observation 123 remains 7/8; mixed-method dogfood 124 is closed; internally orchestrated proposal 125 is parked | User-led fresh-session use of the actual preview without Superpowers; record actual context and outcomes, then review support scope. No task selection or worker dispatch is pending in this chat |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |

@@ -53,6 +53,11 @@ This is a deterministic protocol harness, not an agent benchmark. It does not in
 ## Controlled instruction comparisons
 
 Standalone host acceptance is separate from the comparative protocol below.
+The [released-package implementation scope review 125](125-released-package-implementation-scope-review.md)
+is parked at the user's direction. No worker, auth check, implementation,
+comparison or release ran; its task-selection request is withdrawn. The user
+will instead use the [fresh-session handoff](../fresh-session-check.md) for
+ordinary work without Superpowers, not another coached internal trial.
 The [first Codex planning attempt](073-codex-standalone-planning-attempt.md)
 retained exact native task/skill input and four staged skill reads, but a local
 capture-driver false rejection interrupted its one authorised turn before a
