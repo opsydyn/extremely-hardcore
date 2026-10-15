@@ -1,6 +1,6 @@
 # Extremely Hardcore Product Roadmap
 
-Updated 2026-10-14. This is a work-priority map, not release approval or a fresh
+Updated 2026-10-15. This is a work-priority map, not release approval or a fresh
 provider-health check.
 
 ## Product Boundary
@@ -26,6 +26,7 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 | Evaluation mechanics | Scenario corpus, deterministic fixtures, declared attempts, read-only provider adapters, action fixture | [Evaluation reference](docs/evaluations/README.md); not proof of skill effect |
 | CI projections | Summary, attestation, exit codes, reference workflow | [Delivery ADR](docs/adr/0019-local-ci-attestation-delivery.md); durable retention and adoption remain open |
 | Operator dogfood | Ten real operator changes and aggregate review | [Operational review](docs/dogfood/047-operational-acceptance-host-matrix.md); not release or productivity evidence |
+| Standalone engineering dogfood | FoldKit globe, mobile feedback, CI recovery and functional/AI radar merged | [Consolidated retrospective](docs/dogfood/124-foldkit-earthquake-and-ci-retrospective.md); mixed EHS/Superpowers work, not isolated skill effect, installed-package acceptance or extra protocol-campaign cases |
 | Instruction pruning | Conversational local records, conditional loading, proportional verification | Commit `034751d`; [bounded fix probe](docs/dogfood/056-instruction-pruning-bounded-probe.md) |
 | Approval probes | Security change held; missing approval held; approved fixture resumed | [Boundary probes](docs/dogfood/057-consequential-approval-boundaries.md), [approved resume](docs/dogfood/058-approved-fixture-resume.md); single trials |
 | Status regression | Valid approved high-risk runs receive guarded-completion guidance | Commit `8652ee7`; seven new regression cases, 44 protocol tests passed at that checkpoint |
@@ -48,21 +49,34 @@ optional protocol or evaluator.
 
 ### Ship EHS
 
-The evaluation and documentation consolidation is included in this slice.
-Preserve failed attempts and historical limits; do not include private host
-captures in the package.
+The [FoldKit retrospective](docs/dogfood/124-foldkit-earthquake-and-ci-retrospective.md)
+closes the current mixed-method internal dogfood observation. Preserve its
+failures and recovery; neither merged application code nor application test
+counts clear EHS acceptance. Freeze the current nine skills unless a demonstrated
+defect justifies a separately approved correction. More capabilities or another
+coached chart task are not the next release milestone.
 
-1. **Refresh claimed-host acceptance.** Demonstrate current loading and
-   representative bounded engineering adherence for Codex, Claude, and Pi.
-   Include skill-relative templates, exact receipt result vocabulary, useful
-   uncertainty, proportionate verification, and consequential-work approval
-   boundaries. Retain evidence and document host-specific limits; narrow support
-   claims if a host cannot be qualified. Installation alone is insufficient.
-2. **Review support scope before a stable release or wider distribution.** The
+1. **Qualify the actual released package on real work, starting with Codex.**
+   Select one bounded implementation/verification task and a fresh session using
+   the published skills-only preview through the selected host route. Record
+   package/loading provenance, actual use, a meaningful regression and executed
+   verification, scope/approval behaviour and an honest receipt. Disclose ambient
+   skills and human intervention; do not infer isolation or efficiency. Choose
+   the repository/task and obtain scoped payload/write consent before any run.
+   This documentation slice prepares no dispatch, retries or host changes.
+2. **Set host-specific support scope.** Retain useful uncertainty, proportional
+   verification, skill-relative resources and consequential-work boundaries on
+   every claimed surface. Assess Claude and Pi against their own loading and
+   representative adherence evidence, or keep their support explicitly
+   experimental. A Codex result does not qualify either host; installation alone
+   is insufficient for all three. Do not require new writable adapters.
+3. **Review readiness before a stable release or wider distribution.** The
    explicitly approved experimental preview does not clear the standalone gate
-   below. Review fresh acceptance evidence, onboarding, package contents and
-   residual risks before broader claims; keep optional tooling experimental
-   where its own gates remain open. No additional publication is implied.
+   below. Review fresh acceptance evidence, newcomer onboarding, package contents,
+   context overhead and residual risks before broader claims; label unavailable
+   cost evidence honestly. Keep optional tooling experimental where its own gates
+   remain open. Distribution comes last, with an explicit publication decision.
+   No new packaging, model trial or publication follows from this consolidation.
 
 The [release-scope review 113](docs/evaluations/113-standalone-release-scope-review.md)
 recommends a skills-first preview with surface-specific evidence labels, not
@@ -187,6 +201,16 @@ does not justify mandatory numeric-witness boilerplate. No retry follows. Next
 useful acceptance work is one small real implementation/verification task with
 the released package after explicit repository/task selection and bounded
 consent. No push, release change or wider host/effectiveness claim is authorised.
+
+The subsequent [FoldKit observation 124](docs/dogfood/124-foldkit-earthquake-and-ci-retrospective.md)
+now consolidates merged engineering work through radar PR 24. It records actual
+browser/review defects and recovery, but not fresh-session loading of the released
+package or its isolated implementation effect. Observation 123's 7/8 score and
+the released-package acceptance gap remain unchanged. Return to the bounded
+acceptance step above, not another parser repetition, mandatory checklist or
+unapproved model run. Live release-normalization qualification remains pending
+the next genuine package release in FoldKit; it does not block standalone skill
+use or authorise a synthetic release.
 
 ### Claude Release Preparation
 
@@ -455,7 +479,7 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
 | Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Decide surface-specific preview/support scope under 113; no automatic new trial, counter-driven retry or permission expansion |
-| Standalone release hygiene | Released-artifact planning observation 123 completes at 7/8; approved offline review retains that score and recommends no EHS instruction change | Select one small real task/repository for released-package implementation/verification; scope and consent first, no automatic trial or broader publication |
+| Standalone release hygiene | Released-artifact planning observation 123 remains 7/8; consolidated FoldKit dogfood 124 preserves mixed-method results without clearing package acceptance | Select one small real task/repository for fresh-session released-package implementation/verification, starting with Codex; scope and consent first, no automatic trial or broader publication |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |

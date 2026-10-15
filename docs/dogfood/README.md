@@ -1,5 +1,19 @@
 # Completion-gate dogfood
 
+## Standalone Engineering Observations
+
+[FoldKit charts and CI retrospective](124-foldkit-earthquake-and-ci-retrospective.md)
+records the merged globe, mobile-feedback repair, CI recovery and functional/AI
+radar as mixed-method engineering observation, not additional protocol-campaign
+cases or causal skill-effect claims. It distinguishes the earlier post-merge
+CI from the radar's successful PR check and preserves failed checkpoints,
+browser/review regressions and recovery. Return to standalone released-package
+acceptance, not more coached internal chart tasks. Live changelog-normalization
+qualification remains pending the next genuine package release; no dummy
+release is planned.
+
+## Historical Completion-Gate Campaign
+
 This directory records real use of the proof-carrying completion gate. A run counts only when it corresponds to a non-trivial repository change and preserves its `.extremely-hardcore/runs/<change-id>/` evidence directory.
 
 Each record states the change type, risk, captured commands, gate behaviour, setup overhead, friction, fresh-agent readability, and any workaround. Failed or abandoned runs remain records; they are not erased to improve the headline result.
