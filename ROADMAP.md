@@ -1,6 +1,6 @@
 # Extremely Hardcore Product Roadmap
 
-Updated 2026-10-15. This is a work-priority map, not release approval or a fresh
+Updated 2026-11-12. This is a work-priority map, not release approval or a fresh
 provider-health check.
 
 ## Product Boundary
@@ -12,7 +12,9 @@ human decision boundaries. Routine work should not require a stack of documents.
 The Bun protocol, CLI, provider adapters, and evaluation tooling are optional
 consumers, not installation prerequisites. Orchestration, scheduling, retries,
 budgets, and experiment scoring remain outside the installed skills. This follows
-the accepted [standalone receipt decision](docs/adr/0023-standalone-work-receipt.md).
+the [standalone receipt boundary](docs/adr/0023-standalone-work-receipt.md) and
+[proportionate guidance decision](docs/adr/049-proportionate-guidance-and-functional-domain-modelling.md),
+which supersedes its fixed human-report format without changing protocol gates.
 Earlier protocol-first plans remain history, not the current product definition.
 
 ## Done
@@ -21,7 +23,7 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 
 | Area | Delivered | Evidence and limits |
 | --- | --- | --- |
-| Standalone skills | Nine skills, simplicity lens, compact receipt, onboarding | [User guide](docs/user-guide.md); installation is separate from adherence |
+| Standalone skills | Nine skills, simplicity lens, flexible evidence reporting, onboarding | [User guide](docs/user-guide.md); installation is separate from adherence |
 | Optional protocol | Evidence capture, fingerprints, risk lanes, lifecycle, approvals, status and handoff | [Lifecycle ADR](docs/adr/0018-risk-aware-lifecycle-and-approval-freshness.md); schema v1 remains experimental |
 | Evaluation mechanics | Scenario corpus, deterministic fixtures, declared attempts, read-only provider adapters, action fixture | [Evaluation reference](docs/evaluations/README.md); not proof of skill effect |
 | CI projections | Summary, attestation, exit codes, reference workflow | [Delivery ADR](docs/adr/0019-local-ci-attestation-delivery.md); durable retention and adoption remain open |
@@ -31,7 +33,7 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 | Approval probes | Security change held; missing approval held; approved fixture resumed | [Boundary probes](docs/dogfood/057-consequential-approval-boundaries.md), [approved resume](docs/dogfood/058-approved-fixture-resume.md); single trials |
 | Status regression | Valid approved high-risk runs receive guarded-completion guidance | Commit `8652ee7`; seven new regression cases, 44 protocol tests passed at that checkpoint |
 | Learning guidance | Selective lesson capture and controlled comparison protocol | Commit `6b1e6b3`; experiments not run |
-| Instruction clarity | Skill-relative template links and exact receipt result values in the entrypoint | [Handoff probes](docs/dogfood/059-template-path-and-receipt-clarity.md); two narrow trials, not broad adherence proof |
+| Instruction clarity | Skill-relative template links; historical fixed-receipt clarification now superseded by ADR 049 | [Handoff probes](docs/dogfood/059-template-path-and-receipt-clarity.md); retained scores and observations unchanged |
 | Read-only review evaluation | Frozen seeded review task, executable witness scorer, pinned material, fail-closed supplied-record preflight | [Fixture and preflight](docs/evaluations/066-read-only-review-fixture-and-preflight.md); no model comparison or host attestation |
 | Host capability inventories | Captured skill/config/hook projections, accepted read-only ephemeral threads, process-only app/MCP controls | [Host capture](docs/evaluations/067-no-model-host-arm-capture.md), [thread gate](docs/evaluations/068-ephemeral-thread-capability-gate.md); exact model-visible tools/instructions remain unknown |
 | MCP preflight regression | Known disabled entries accepted; active, unknown, malformed, duplicate, and paginated inventories rejected | [Offline correction](docs/evaluations/070-control-mcp-gate-regression.md); retained capture replay only, no host/model retry |
@@ -39,6 +41,14 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 | Experimental skills-only preview | GitHub prerelease `v0.0.1`, 21-file ZIP with landscape banner | [Release and independent download checks](docs/evaluations/120-clean-public-repo-preparation.md#published-release-and-verification); not general host qualification or marketplace publication |
 
 ## Next
+
+The approved source-only proportionality update addresses reported Flow friction:
+routine routing, accepted-decision reuse, flexible evidence/simplicity reports,
+testing consistency, standalone reviewer inputs, onboarding and selective
+Wlaschin-inspired domain modelling. See [ADR 049](docs/adr/049-proportionate-guidance-and-functional-domain-modelling.md)
+for its constraints and [inline dogfood](docs/dogfood/126-proportionate-guidance.md)
+for verification and limits. These changes are not in the published `v0.0.1`
+artifact or installed cache. No new model trial, package or publication is implied.
 
 The planned standalone feature set is implemented and the experimental `v0.0.1`
 preview is published; general release qualification is not complete. Stop adding

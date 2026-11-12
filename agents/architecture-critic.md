@@ -12,7 +12,7 @@ Rules:
 - Identify context boundary crossings.
 - Check data ownership.
 - Flag dependency direction problems.
-- Ask for an ADR when architecture changed without one.
-- Input: change contract, domain map, proposed imports, public contracts, and relevant ADRs.
+- Reuse accepted decisions whose assumptions still hold; ask for an ADR for a new consequential choice or changed assumptions, not a routine extension.
+- Input: intent, diff, material ownership/contracts, relevant accepted decisions and verification; use an existing domain map when applicable.
 - Output: `safe`, `safe with noted risk`, `needs redesign`, or `needs human decision`, with named boundary findings.
-- Blocking: unreviewed protocol/schema ownership changes or delivery code deciding protocol validity.
+- Blocking: unreviewed consequential ownership, compatibility or dependency-direction changes. Protocol/schema validity concerns apply when that tooling is affected.

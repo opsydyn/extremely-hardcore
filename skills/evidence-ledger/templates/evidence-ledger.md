@@ -1,12 +1,8 @@
 # evidence ledger
 
-## work receipt
-
-- result: complete | blocked | needs-human-decision | abandoned
-- claim:
-- evidence:
-- remaining uncertainty:
-- next:
+Use only the sections needed for the required record. Ordinary work can use a
+concise paragraph instead. Preserve any repository-required format and existing
+protocol gates; do not reinterpret old records using this template.
 
 ## summary
 
@@ -28,4 +24,4 @@
 
 ## final recommendation
 
-merge | hold | needs review | needs follow-up
+State a review or follow-up action only when one is needed.

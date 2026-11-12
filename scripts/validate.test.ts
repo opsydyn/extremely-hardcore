@@ -6,6 +6,108 @@ import { requiredFiles, requiredSkillHeadings, validateProject } from "./validat
 
 const roots: string[] = [];
 
+function source(path: string): string {
+  return readFileSync(join(import.meta.dir, "..", path), "utf8");
+}
+
+function skillSection(name: string, heading: string): string {
+  return source(`skills/${name}/SKILL.md`).split(`## ${heading}\n`)[1]?.split("\n## ")[0] ?? "";
+}
+
+describe("proportionate instruction contracts", () => {
+  test("routine work has a short path without new stage approvals", () => {
+    const router = skillSection("using-extremely-hardcore", "procedure");
+    expect(router).toMatch(/scope and constraints.*smallest complete change.*meaningful verification.*outcome and limitations/is);
+    expect(router).toMatch(/routine steps do not create new approval gates/);
+    expect(source("AGENTS.md")).toMatch(/Routine work follows/);
+  });
+
+  test("decision reuse avoids a new ADR but never waives safeguards", () => {
+    const architecture = source("skills/architecture-decision/SKILL.md");
+    expect(architecture).toMatch(/reuse.*accepted decision/is);
+    expect(architecture).toMatch(/assumptions.*still hold/is);
+    expect(architecture).toMatch(/does not waive.*approval.*verification/is);
+    expect(architecture).not.toContain("If any trigger applies, write an ADR");
+    expect(skillSection("architecture-decision", "required output")).toMatch(/No standalone.*no-ADR/is);
+  });
+
+  test("challenge and boundary selection distinguish consequences from keywords", () => {
+    const challenge = skillSection("decision-challenge", "when to use");
+    expect(challenge).toMatch(/material.*consequences/is);
+    expect(skillSection("decision-challenge", "when not to use")).toMatch(/accepted.*assumptions/is);
+    const boundary = source("skills/bounded-context-review/SKILL.md");
+    expect(boundary).not.toMatch(/description:.*before changing imports/);
+    expect(skillSection("bounded-context-review", "when not to use")).toMatch(/import.*alone/is);
+    expect(boundary).toMatch(/Types do not replace runtime/);
+  });
+
+  test("ordinary completion is flexible while provenance and existing gates remain", () => {
+    const ledger = source("skills/evidence-ledger/SKILL.md");
+    expect(skillSection("evidence-ledger", "required output")).toMatch(/concise paragraph/);
+    expect(ledger).not.toMatch(/exactly five fields|result.*is exactly one of/);
+    expect(ledger).toContain("host-captured");
+    expect(ledger).toContain("agent-declared");
+    expect(ledger).toContain("independent review");
+    expect(ledger).toContain("Do not hand-author success when the gate rejects it");
+    expect(ledger).toMatch(/required.*formats.*remain binding/is);
+    expect(source("docs/adr/0023-standalone-work-receipt.md")).toMatch(/superseded.*049/is);
+  });
+
+  test("simplicity records only a useful choice, not another fixed form", () => {
+    const output = skillSection("simple-made-easy", "required output");
+    expect(output).toMatch(/only.*material.*trade-off/is);
+    expect(output).not.toContain("outcome:\noptions checked:");
+    expect(source("skills/simple-made-easy/SKILL.md")).toMatch(/does not change the choice.*omit/is);
+  });
+
+  test("domain discovery makes functional modelling selective and keeps runtime checks", () => {
+    const domain = source("skills/domain-discovery/SKILL.md");
+    expect(domain).toContain("Scott Wlaschin");
+    expect(domain).toContain("Domain Modeling Made Functional");
+    expect(domain).toMatch(/workflow.*valid states.*expected rejections/is);
+    expect(domain).toContain("validated construction");
+    expect(domain).toMatch(/decision logic.*I\/O/is);
+    expect(domain).toMatch(/Types\s+do\s+not\s+replace.*authorisation.*freshness.*concurrency/is);
+    expect(domain).toMatch(/Do not require.*functional.*library/is);
+    expect(skillSection("domain-discovery", "when not to use")).toMatch(/already understood/);
+  });
+
+  test("ubiquitous language stays context-specific without requiring a glossary", () => {
+    const procedure = skillSection("domain-discovery", "procedure").replace(/\s+/g, " ");
+    expect(procedure).toMatch(/ubiquitous language/i);
+    expect(procedure).toMatch(/agreed.*code, tests and documentation within each bounded context/i);
+    expect(procedure).toMatch(/preserving legitimate differences between contexts/i);
+    expect(procedure).toMatch(/Reuse existing definitions.*not create a glossary by default/i);
+  });
+
+  test("verification alternatives do not introduce an automatic approval pause", () => {
+    const implementation = source("skills/test-first-implementation/SKILL.md");
+    const manifesto = source("MANIFESTO.md");
+    expect(implementation).toMatch(/approval only when.*user or repository/is);
+    expect(manifesto).not.toContain("unless an explicit, approved exception applies");
+    expect(manifesto).toMatch(/alternative verification/);
+    expect(implementation).toContain("independently of the implementation");
+  });
+
+  test("ordinary reviewers do not require protocol attestations", () => {
+    const critic = source("agents/delivery-critic.md");
+    expect(critic).toMatch(/Input:.*intent.*diff.*verification/);
+    expect(critic).toMatch(/When.*protocol.*attestation/is);
+    expect(source("agents/architecture-critic.md")).toMatch(/accepted decisions/);
+  });
+
+  test("onboarding separates the public preview from unreleased source changes", () => {
+    for (const path of ["README.md", "docs/user-guide.md", "docs/provider-onboarding.md"]) {
+      const content = source(path);
+      expect(content).toContain("experimental");
+      expect(content).toContain("v0.0.1");
+      expect(content).toMatch(/source.*unreleased/is);
+      expect(content).not.toContain("this is a private source package");
+      expect(content).not.toContain("The receipt has five fields");
+    }
+  });
+});
+
 describe("standalone completion routing", () => {
   test("entrypoint routes planning and review to a non-trivial task finish", () => {
     const content = readFileSync(join(import.meta.dir, "..", "skills/using-extremely-hardcore/SKILL.md"), "utf8");
@@ -25,6 +127,18 @@ describe("standalone completion routing", () => {
     expect(applicability).toMatch(/state what was not performed/);
   });
 });
+
+test.each(requiredFiles.filter((file) => file.endsWith("/SKILL.md")))(
+  "%s has parseable skill discovery metadata",
+  (file) => {
+    const frontmatter = source(file).match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
+    expect(frontmatter).not.toBeNull();
+    const metadata = Bun.YAML.parse(frontmatter![1]!) as Record<string, unknown>;
+    expect(metadata.name).toBe(file.split("/").at(-2));
+    expect(typeof metadata.description).toBe("string");
+    expect((metadata.description as string).trim().length).toBeGreaterThan(0);
+  },
+);
 
 test.each(requiredFiles.filter((file) => file.startsWith("agents/")))(
   "%s has minimal parseable Claude agent metadata",

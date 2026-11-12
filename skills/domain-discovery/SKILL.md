@@ -1,24 +1,25 @@
 ---
 name: domain-discovery
-description: Use when work involves domain language, persistence, API shape, cross-context logic, business rules, invariants, external systems, or ambiguity about ownership.
+description: Clarify unclear or changing domain language, business rules, valid states and ownership before implementing domain-sensitive behaviour.
 ---
 
 # domain-discovery
 
 ## when to use
 
-Use when the change involves domain terms, persistence shape, API shape, integration flows, business rules, invariants, or unclear ownership between contexts.
+Use when domain language, rules, valid states or ownership are unclear or changing.
+An API, persistence or integration change warrants discovery when it raises
+these questions, not merely because it touches those technologies.
 
 ## when not to use
 
-Do not use for mechanical edits with no domain meaning. Renaming a CSS class is not a bounded context. Try to remain indoors.
+Skip discovery when the relevant rules and ownership are already understood and
+unchanged. Reuse the existing model; do not catalogue the domain again for a
+mechanical edit or routine extension.
 
 ## required inputs
 
-- Change contract.
-- Relevant domain code, schemas, API contracts, and docs.
-- User-facing terminology.
-- Existing integrations.
+The existing contract and relevant domain code, terminology, contracts and decisions.
 
 ## required output
 
@@ -27,20 +28,36 @@ Do not use for mechanical edits with no domain meaning. Renaming a CSS class is 
 
 ## procedure
 
-1. Extract domain terms from the request and code.
-2. Identify candidate bounded contexts.
-3. List aggregates, entities, and value objects only when useful.
-4. Record commands, events, policies, rules, and invariants.
-5. Identify external systems and integration points.
-6. Name ambiguity directly.
-7. Recommend the next questions needed to reduce risk.
+1. Use ubiquitous language: the domain's agreed terms consistently in conversation,
+   code, tests and documentation within each bounded context. Clarify ambiguous
+   or conflicting terms while preserving legitimate differences between contexts.
+   Reuse existing definitions; do not create a glossary by default. Ask only
+   questions whose answers change the design or acceptance conditions.
+2. When behaviour is non-trivial, model the relevant workflow: inputs, valid states,
+   expected rejections, outputs and effects. Do not begin with tables or classes.
+3. Express meaningful invariants using existing types and validated construction
+   where proportionate. Prefer explicit alternatives to contradictory flags and
+   optional fields; entities and aggregates are useful only when identity or
+   consistency requires them.
+4. Keep decision logic separate from I/O where it clarifies ownership and testing.
+   Distinguish external DTOs from domain values when their rules differ. Types do
+   not replace runtime validation, authorisation, freshness or concurrency checks.
+5. Identify actual domain/data ownership and integration contracts. Technical
+   layers or different clients are not automatically separate bounded contexts.
+6. Capture only unresolved ambiguity or reasoning absent from existing code and
+   records. Do not require a functional language, library, new layers or wrapper
+   types for every value.
+
+This selective lens draws on Scott Wlaschin's
+[Domain Modeling Made Functional](https://store.pragprog.com/titles/swdddf/domain-modeling-made-functional/)
+and his [warning against indiscriminate railway-oriented programming](https://fsharpforfunandprofit.com/posts/against-railway-oriented-programming/).
+Use the repository's error conventions; make expected outcomes explicit without
+turning every exception into a new result framework.
 
 ## quality bar
 
-- Uses the language of the product and codebase.
-- Avoids over-modelling.
-- Separates domain rules from transport, UI, and persistence details.
-- Identifies ownership and ambiguity.
+The model uses product language, exposes meaningful invariants/ownership and
+avoids speculative abstractions. Existing code can be sufficient documentation.
 
 ## failure modes
 

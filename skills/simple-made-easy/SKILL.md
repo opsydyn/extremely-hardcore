@@ -34,26 +34,16 @@ architecture, or evidence.
 
 ## required inputs
 
-- The current change contract and its outcome.
-- Relevant repository conventions, helpers, dependencies, and platform
-  capabilities.
-- Domain and ownership context when the choice crosses a boundary.
-- Required safeguards, verification, and stop conditions.
+The existing outcome/constraints, project conventions and available helpers,
+dependencies or platform capabilities; ownership context when relevant.
 
 ## required output
 
-Add a compact simplicity check to the existing change contract or
-implementation plan:
-
-```text
-outcome:
-options checked:
-selected path:
-entanglement avoided:
-safeguards preserved:
-omitted scope:
-remaining uncertainty:
-```
+Record only a material choice and its trade-off in the existing conversation,
+contract or plan: which complete path was selected, why it avoids unnecessary
+coupling, and any meaningful limitation. A sentence is enough; there is no
+required field list. If the check does not change the choice or confidence, omit
+the report rather than restating the contract.
 
 Do not create a separate simplicity document by default. If the decision is
 durable architecture or domain policy, hand it to `architecture-decision` or
@@ -62,7 +52,7 @@ private reasoning dump.
 
 ## procedure
 
-1. Restate the user outcome and the forbidden scope from the change contract.
+1. Use the existing outcome and constraints without restating the contract.
 2. Inspect the existing code, project conventions, helpers, standard library,
    native platform capabilities, and already-installed dependencies.
 3. If an unanswered question could change the path, ask it plainly and one at
@@ -82,33 +72,21 @@ private reasoning dump.
    - provider, transport, or delivery concerns leaking into domain code.
 6. Select the least entangled complete path. A larger diff or more separate
    parts may be simpler than a shorter, braided change.
-7. Record the simplicity check, including safeguards preserved and speculative
-   scope deliberately omitted.
-8. Pass durable architecture choices to `architecture-decision`, high-
-   consequence claims to `decision-challenge`, boundary concerns to
-   `bounded-context-review`, and behavior concerns to
-   `test-first-implementation`. This lens owns none of those gates.
+7. Record only decision-relevant trade-offs or omitted scope, not a second checklist.
+8. Use applicable domain, architecture, boundary and testing guidance; this lens
+   owns none of their gates.
 
 ## quality bar
 
-- The selected path still satisfies the user outcome completely.
-- Structural separation, not line count or familiarity, supports the choice.
-- Existing project code and conventions were considered before new structure.
-- Required safeguards and meaningful verification remain intact.
-- Questions were limited to uncertainty that could change the design.
-- The output is concise enough to help a reviewer rather than create ceremony.
-- Claims about tokens, cost, speed, or skill effect have independent evidence or
-  are not made.
+The complete solution is justified by structural separation and project fit, not
+line count or familiarity. Safeguards remain intact. Do not claim token, cost,
+speed or skill-effect gains without independent evidence.
 
 ## failure modes
 
 - Treating “simple” as the shortest diff or fewest files.
-- Repeating YAGNI or KISS as slogans without inspecting the actual boundary.
-- Choosing a familiar tool that creates more intertwined runtime behavior.
-- Removing validation, tests, security, accessibility, or rollback to make the
-  implementation look smaller.
-- Asking an exhaustive interview after the design path is already clear.
-- Creating a second tracker, workflow, score, or durable document for this
-  lens.
-- Replacing domain discovery, architecture decisions, adversarial review,
-  testing, or evidence with a claim that the result is “simple.”
+- Removing safeguards or braiding concerns to make a patch shorter.
+- Asking an exhaustive interview after the design is clear.
+- Creating another tracker, workflow, score or report for this lens.
+- Calling a result simple instead of addressing an actual domain, boundary,
+  testing or evidence concern.

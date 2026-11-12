@@ -13,7 +13,9 @@ network isolation, provider identity, model quality, or reliable adherence on
 arbitrary tasks. The optional `eh` protocol is a separate local evidence tool;
 it is not required for the Markdown skills. You need an existing checkout and
 your host's normal setup/sign-in; Bun and the local evaluations are optional.
-This source checkout is pre-release, not a generally qualified published package.
+The [experimental v0.0.1 preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.1)
+is public, not generally host-qualified. This source checkout includes unreleased
+instruction changes; the commands here load that source, not an updated release.
 
 ## Prerequisites
 
@@ -120,7 +122,8 @@ The following retained observations are not a fresh authentication check,
 installed-release test or provider comparison. Do not compare their scores
 across different tasks.
 
-They predate the [consistency-pass instruction edits](evaluations/115-standalone-consistency-pass.md).
+They predate the [consistency-pass instruction edits](evaluations/115-standalone-consistency-pass.md)
+and [proportionate guidance update](adr/049-proportionate-guidance-and-functional-domain-modelling.md).
 They describe their retained snapshots, not model adherence to the revised source.
 
 | Surface | Observed | Not established |
@@ -142,10 +145,8 @@ task and name the desired method. Do not treat the smoke marker as its approval
 or acceptance evidence:
 
 ```text
-Use Extremely Hardcore for this non-trivial change. Before editing, state the
-change contract, whether an architecture decision applies, the first
-verification test, and the evidence you will record. Keep the change bounded
-and stop if a required assumption fails.
+Use Extremely Hardcore to <the actual task>. Preserve <the compatibility or
+safety constraint>. Verify <the observable outcome> and report checks and limits.
 ```
 
 For a genuinely trivial edit, EHS should not force the full loop:
@@ -154,9 +155,9 @@ For a genuinely trivial edit, EHS should not force the full loop:
 Fix this one obvious spelling mistake in the README. Do not change anything else.
 ```
 
-The host-facing receipt is the compact Markdown shape `result`, `claim`,
-`evidence`, `remaining uncertainty`, and `next`. The receipt can be used without
-the `eh` protocol.
+Ordinary completion can be a concise paragraph with the outcome, supporting
+checks/results and limitations. There is no required field list or `eh` run;
+existing repository records, formats and approvals remain binding.
 
 ## Loading smoke
 

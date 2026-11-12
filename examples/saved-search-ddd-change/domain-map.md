@@ -8,18 +8,35 @@
 - Canonical format: shared representation accepted by API and persistence.
 - Share link: URL that lets another user open a saved search.
 
+## relevant workflow
+
+Save or share a vehicle search: accept client input, validate the search and
+current ownership/sharing policy, decide the allowed operation, then persist
+and return a public result. Expected rejections include an invalid price range,
+unsupported legacy filters and a caller without sharing permission. Keep the
+rule decision separate from persistence and share-link delivery where useful.
+
 ## candidate bounded contexts
 
 - Search: owns filter semantics and canonical query shape.
 - Saved searches: owns naming, ownership, persistence, and sharing.
-- Web client: owns URL state and UI mapping.
-- Mobile client: owns screen state and UI mapping.
+- Web and mobile are adapters with different UI/input representations, not
+  separate bounded contexts merely because they are different clients.
 
 ## aggregates/entities/value objects
 
 - SavedSearch aggregate: id, owner, name, canonical vehicle search, sharing state.
 - VehicleSearch value object: make, model, fuel type, price range, and future filters.
 - PriceRange value object: minimum and maximum price.
+
+Use validated construction for PriceRange so callers cannot accidentally create
+a minimum greater than the maximum through its supported constructor. Do not
+add a type for every primitive or mistake a TypeScript cast for validation.
+If private/shared searches have different required data, model those alternatives
+explicitly rather than `isShared` plus unrelated optional fields. Use existing
+project mechanisms; these are design examples, not a new library requirement.
+Static distinctions do not replace runtime ownership, revocation or concurrency
+checks against the current resource.
 
 ## commands
 

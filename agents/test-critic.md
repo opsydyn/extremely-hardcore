@@ -17,4 +17,4 @@ Rules:
 - Separate test gaps from implementation opinions.
 - Input: change contract, relevant tests and any original failing reproduction, implementation diff, and verification output.
 - Output: missing scenario, assertion weakness, or false-confidence finding with a reproducible check.
-- Blocking: an unprotected consequential acceptance condition, including missing lifecycle terminal-state coverage, stale approval coverage, or fail-open evaluation coverage. Separate blockers from optional test improvements.
+- Blocking: an unprotected consequential acceptance condition. Lifecycle, approval-freshness and fail-open evaluation cases matter when that behaviour is affected, not for every change. Separate blockers from optional test improvements.

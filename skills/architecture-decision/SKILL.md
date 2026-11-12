@@ -1,51 +1,36 @@
 ---
 name: architecture-decision
-description: Use when a change may alter architecture, runtime, framework, schema, persistence, public API, auth, deployment, CI, observability, cross-context flow, dependency, shared package contract, or domain invariant.
+description: Use for consequential new or revised decisions about ownership, compatibility, data, dependencies, security or operations, not routine implementation of an accepted design.
 ---
 
 # architecture-decision
 
 ## when to use
 
-Use when changing any of:
+Use when choosing or revising architecture with material consequences:
 
-- Runtime.
-- Framework.
-- Database schema.
-- Persistence model.
-- Public API.
-- Auth.
-- Deployment.
-- CI.
-- Observability.
-- Cross-context flow.
-- Shared package contract.
-- External dependency.
-- Domain model invariant.
+- New ownership, dependency direction, cross-context flow or domain invariant.
+- Public API/shared-contract compatibility, schema or persistence semantics.
+- Runtime, framework or external dependency choices.
+- Security/auth, deployment, CI or observability policy and operational behaviour.
+
+First reuse an accepted decision when its scope and assumptions still hold.
+Changed assumptions, incompatible behaviour or new risks need review.
+Reusing a decision does not waive required approval or verification.
 
 ## when not to use
 
-Do not use for local implementation choices that do not affect contracts, boundaries, operations, dependencies, or future architecture.
+Do not create a new ADR for a local fix or extension within an accepted design
+whose assumptions still hold. A familiar pattern is not an exemption for a
+material security, compatibility, data or operational change.
 
 ## repository ADR convention
 
-EHS is installed as a skill. Installation does not scaffold or mutate the
-user's repository.
-
-When an ADR is required:
-
-1. Inspect the repository for an existing decision convention, such as
-   `docs/adr/`, `adr/`, `docs/decisions/`, or a documented project-specific
-   path. Reuse that convention.
-2. If no convention exists, state the proposed `docs/adr/` path in the change
-   contract and create the directory only with the first ADR, as part of that
-   approved change.
-3. Do not create an empty directory, create an ADR for a change that does not
-   meet the trigger list, or treat EHS's own `docs/adr/` as part of the user
-   repository.
-
-The directory choice is repository-local documentation policy, not an EHS
-installation or runtime requirement.
+Installation never scaffolds the user's repository. Reuse its existing ADR
+convention (`docs/adr/`, `adr/`, `docs/decisions/`, or a documented alternative).
+If none exists, propose `docs/adr/` in the contract and create it only with the
+first required ADR in the approved change, never as an empty setup directory.
+EHS's own decision directory is not part of the user's project.
 
 ## required inputs
 
@@ -56,24 +41,19 @@ installation or runtime requirement.
 
 ## required output
 
-- ADR from [templates/adr.md](templates/adr.md) (relative to this `SKILL.md`), or a clear statement that no ADR is required and why.
+- An ADR from [templates/adr.md](templates/adr.md) for a consequential new or revised decision; otherwise reference the accepted decision only when useful to the work. No standalone no-ADR statement is required for routine work.
 
 ## procedure
 
-1. Check the trigger list.
-2. If any trigger applies, write an ADR.
-3. State context without rewriting project history as folklore.
-4. Record the decision.
-5. List consequences, options considered, and trade-offs.
-6. Add follow-up work only when it is real and owned.
-7. Set a review date when the decision is provisional.
+1. Inspect existing decisions and the actual consequences of the proposed change.
+2. Reuse a covered decision, or record the new/revised choice, context, alternatives
+   and consequences. Do not duplicate the accepted record.
+3. Name owned follow-ups and a review condition for provisional decisions.
 
 ## quality bar
 
-- The ADR explains why this choice is better than plausible alternatives.
-- Consequences include costs, not just optimism.
-- Trade-offs are explicit.
-- Follow-up work is not a dumping ground for regret.
+The decision explains the trade-off against plausible alternatives, including
+costs, compatibility and ownership.
 
 ## failure modes
 

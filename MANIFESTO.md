@@ -17,7 +17,7 @@ Small changes before big dreams.
 
 An agent must know what it is changing, why it is changing it, and what it must leave alone.
 
-Non-trivial work begins with an explicit change contract. The contract records intent, allowed scope, forbidden scope, affected contracts, assumptions, risks, acceptance evidence, and stop conditions.
+Non-trivial work begins with clear scope, constraints and acceptance evidence. A clear brief or existing task record can be the change contract; fill material gaps without creating a second form.
 
 Scope may change. It may not drift silently.
 
@@ -53,7 +53,7 @@ Changes to boundaries, ownership, persistence, public contracts, dependencies, r
 
 Important decisions record context, options, consequences, trade-offs, and ownership. The purpose of an ADR is not to make a decision look official. It is to preserve why the decision was reasonable when the surrounding context is no longer obvious.
 
-Not every choice deserves an ADR. Every consequential choice deserves a visible decision.
+Not every choice deserves an ADR. Reuse accepted decisions while their assumptions still hold; record new consequential choices or changed assumptions. Decision reuse never waives required approvals or verification.
 
 ## We Believe The Domain Comes Before The Abstraction
 
@@ -67,9 +67,9 @@ DDD is a tool for finding clarity. It is not permission to rename every object a
 
 A test that never failed has not demonstrated that it can detect the missing behaviour.
 
-For behavioural changes, the agent first states what must be protected, writes the smallest meaningful failing test, runs it, and records why it failed. Only then does implementation begin.
+For behavioural changes where practical, the agent first states what must be protected, writes the smallest meaningful failing test, runs it, and records why it failed. Only then does implementation begin.
 
-Exceptions must be named. "Not practical" is a conclusion that requires an explanation, not a small door through which discipline leaves the building.
+When behavioural RED is impractical, explain the appropriate alternative verification and its limits. Seek approval only when the user or repository requires it; do not manufacture a failing test or a new approval stage.
 
 Tests should protect public behaviour, invariants, boundaries, and failure modes. They should not merely admire mocks interacting with other mocks.
 
@@ -83,7 +83,7 @@ If a check was not run, the ledger says `not run`. It does not write the test re
 
 Completion is a state supported by evidence, not a mood.
 
-A completion handoff starts with a small receipt: result, claim, evidence, remaining uncertainty, and next action. The receipt is a human-readable summary, not a new runtime protocol.
+A completion handoff states the outcome, supporting verification and limitations. A concise paragraph is enough for ordinary work; required durable records and existing protocol gates remain binding. Presentation is flexible, evidence is not.
 
 ## We Believe Review Must Be Capable Of Disagreement
 
@@ -144,7 +144,7 @@ It is one where:
 - Risk determines the workflow.
 - Architecture decisions are visible.
 - Domain boundaries and ownership are respected.
-- Behavioural changes begin with an observed failing test unless an explicit, approved exception applies.
+- Behavioural changes begin with an observed failing test where practical, otherwise explained alternative verification with explicit limits.
 - Independent review can block completion.
 - Acceptance criteria trace to fresh verification.
 - Remaining uncertainty is stated plainly.

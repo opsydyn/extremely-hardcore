@@ -1,17 +1,25 @@
 ---
 name: decision-challenge
-description: Use before planning high-consequence proposals involving external writable-agent execution, boundary changes, product differentiation, or comparison claims.
+description: "Challenge high-consequence proposals before planning: new writable-agent execution, material boundary or policy changes, or differentiation and comparison claims."
 ---
 
 # decision-challenge
 
 ## when to use
 
-Use before planning a proposal that introduces external writable-agent execution; changes an architecture, security, sandbox, isolation, or provenance boundary; changes public contracts, persistence, CI, deployment, or observability behaviour; or makes a product-differentiation, benchmark, provider-comparison, or regression-threshold claim.
+Use before planning a proposal that introduces external writable-agent execution;
+changes an architecture, security, sandbox, isolation, or provenance boundary;
+changes public contracts, persistence, CI, deployment, or observability behaviour
+with material compatibility, data, security or operational consequences; or makes
+a product-differentiation, benchmark, provider-comparison, or regression-threshold
+claim. Judge consequences and uncertainty, not the presence of a keyword.
 
 ## when not to use
 
-Do not use for ordinary local changes that do not meet the trigger rubric.
+Do not use for routine implementation within an accepted design whose assumptions
+still hold and which introduces no material boundary, policy or compatibility
+change. Reuse an applicable accepted challenge; revisit changed assumptions or
+new consequences. Required approvals remain binding regardless of familiarity.
 
 ## required inputs
 
@@ -28,24 +36,18 @@ Do not use for ordinary local changes that do not meet the trigger rubric.
 
 ## procedure
 
-1. Check the trigger rubric; skip the skill for ordinary local changes.
-2. Read the change contract, relevant ADRs/reviews, code boundaries, and local tool capability evidence.
-3. State every product, isolation, evaluation, or architecture claim the proposal makes.
-4. State what an existing platform already owns and the durable differentiated value left for this repository.
-5. State the strongest reason not to build the proposal.
-6. Build a claim-to-evidence map that distinguishes observed facts, assumptions, and gaps.
-7. Name the minimum credible slice and falsifiable stop conditions.
-8. Choose exactly one verdict: `proceed`, `hold`, or `needs-human-decision`.
-9. Write the record from [templates/decision-challenge.md](templates/decision-challenge.md) (relative to this `SKILL.md`).
-10. When verdict is `hold` or `needs-human-decision`, stop before implementation planning.
+1. Check applicability and inspect the contract, relevant decisions, boundaries
+   and local capability evidence. Do not execute a provider to review it.
+2. Use the template to separate platform ownership from proposed value, challenge
+   the strongest counterargument and map claims to observed evidence or gaps.
+3. Define the minimum credible slice, falsifiable stop conditions and one verdict.
+   Reuse equivalent sections of an existing decision record rather than duplicate it.
+4. When verdict is `hold` or `needs-human-decision`, stop before implementation planning.
 
 ## quality bar
 
-- The trigger and proposal claims are explicit.
-- Platform-owned capabilities are separated from repository-owned durable value.
-- Evidence distinguishes observed facts from assumptions and gaps.
-- The minimum credible slice and stop conditions can falsify the proposal.
-- The verdict is singular and usable before planning.
+Claims, platform ownership, counterevidence and stop conditions make the verdict
+reviewable. Observed evidence is distinct from assumptions and missing proof.
 
 ## failure modes
 

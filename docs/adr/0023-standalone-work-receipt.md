@@ -2,7 +2,7 @@
 
 ## status
 
-accepted
+accepted; mandatory presentation superseded by [ADR 049](049-proportionate-guidance-and-functional-domain-modelling.md) on 2026-11-12. The original decision below is retained as history; its standalone-method boundary remains in force.
 
 ## context
 

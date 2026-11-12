@@ -35,8 +35,10 @@ bounded task, and review its receipt. You need a checkout and your coding host's
 usual setup/sign-in; no Bun, `eh` run, provider adapter or evaluation harness is
 required to use the Markdown skills.
 
-This is a pre-release local source checkout, not a published npm package.
-Choose the existing checkout-loading path for your host below. These commands
+An [experimental v0.0.1 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.1)
+is public. This source checkout includes unreleased instruction changes; loading
+it does not update or qualify the published preview. The package is not published
+to npm. Choose the existing checkout-loading path for your host below. These commands
 request installation/loading; they are not evidence that your host has followed
 EHS or that a released artifact has been qualified.
 
@@ -96,19 +98,21 @@ worker, not the CLI marketplace route. Claude Code has planning and parent-verif
 fix observations; Pi has session-local reading/planning observations. Full
 host qualification remains open, with no Claude Chat/Cowork parity claim.
 
-## Core Loop
+## Routine Work
 
 Use the applicable parts, scaled to risk; this is not a mandatory state machine
 or document-per-step workflow.
 
-1. Create change contract.
-2. Discover domain and architecture impact.
-3. Decide whether an ADR is needed.
-4. Challenge high-consequence proposals before planning when the trigger rubric applies.
-5. Plan the smallest safe change.
-6. Implement test-first.
-7. Review boundaries and delivery risk.
-8. Produce evidence ledger.
+1. Establish scope and constraints, reusing a clear brief or existing record.
+2. Make the smallest complete change, with meaningful behavioural RED where practical.
+3. Run relevant verification and required repository checks.
+4. Report the outcome, supporting results and limitations concisely.
+
+Use domain discovery for unclear or changing rules; architecture/boundary review
+for consequential choices, changed assumptions or ownership/contracts; challenge
+high-consequence proposals before planning. Reuse accepted decisions without
+waiving security, compatibility or required approvals. No fixed completion form,
+routine no-ADR announcement or document per skill is required.
 
 ADR storage is lazy and repository-local. Installing EHS never creates an
 `docs/adr/` directory. During a change, the architecture-decision skill first
@@ -120,13 +124,13 @@ ADR. See the [user guide](docs/user-guide.md) for the newcomer explanation.
 
 - `using-extremely-hardcore`: decides when to run the full loop.
 - `change-contract`: fixes intent, scope, risks, public contracts, and stop conditions before editing.
-- `domain-discovery`: maps domain language, contexts, rules, integrations, and ambiguity.
+- `domain-discovery`: clarifies rules, workflows, valid states, expected rejections and ownership, using proportionate modelling in the existing stack.
 - `simple-made-easy`: compares complete implementation paths and exposes accidental complexity without treating line count as quality.
 - `architecture-decision`: records decisions when architecture, contracts, or operational behaviour changes.
 - `bounded-context-review`: checks coupling, ownership, dependencies, transactions, and context leakage.
 - `decision-challenge`: tests high-consequence execution, boundary, differentiation, and comparison claims before planning.
 - `test-first-implementation`: plans behaviour-first implementation with the first failing test.
-- `evidence-ledger`: records a compact work receipt plus commands, checks, risks, architecture impact, and final recommendation.
+- `evidence-ledger`: supports completion claims with verification and limitations; ordinary reports can be a concise paragraph.
 
 ## Agent Roles
 

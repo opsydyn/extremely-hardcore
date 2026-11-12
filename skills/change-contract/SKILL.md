@@ -27,6 +27,10 @@ Do not use for trivial copy, typo, formatting, or one-line local test fixes with
 - Clear allowed scope and forbidden scope.
 - Acceptance evidence that can be verified later.
 
+A clear user brief or existing task record can already supply this contract.
+Fill only material gaps; do not restate it as a second checklist or seek another
+approval for work that is already authorised.
+
 ## procedure
 
 1. Inspect relevant context and state the intended outcome, affected areas, and scope boundaries. Do not repeat an already clear user brief.

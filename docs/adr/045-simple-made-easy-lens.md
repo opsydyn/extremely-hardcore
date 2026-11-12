@@ -2,7 +2,7 @@
 
 ## status
 
-accepted
+accepted; fixed inline presentation amended by [ADR 049](049-proportionate-guidance-and-functional-domain-modelling.md) on 2026-11-12. The optional structural-simplicity lens and original rationale remain; the decision below records its original form.
 
 ## context
 

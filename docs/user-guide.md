@@ -5,8 +5,10 @@ and using them on a bounded change. Your host needs its usual setup and sign-in
 for model work; EHS adds no runtime prerequisite. Bun and the `eh` protocol are
 only needed for the optional repository tooling later in this guide.
 
-Use a local checkout: this is a private source package, not an npm registry
-installation or an approved public release. Current
+The [experimental v0.0.1 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.1)
+is public, but not generally host-qualified. This source checkout contains
+unreleased instruction changes; the commands below load source, not a new
+release. EHS is not published to npm. Current
 [host evidence and limits](provider-onboarding.md#evidence-and-limits) distinguish
 staged Codex work, Claude Code observations and Pi session-local planning.
 Discovery alone does not establish loading or engineering adherence.
@@ -58,19 +60,22 @@ loading smoke is an optional model diagnostic, not a prerequisite or loading
 attestation.
 
 ```text
-Use Extremely Hardcore for this non-trivial change. Before editing, report the change contract, whether an ADR applies, the first verification test, and the evidence you will record. Keep the change limited to one small source file.
+Use Extremely Hardcore to fix <the observed problem>. Preserve <the relevant
+compatibility constraint>. Verify <the observable outcome> and report what
+was checked and what remains unverified.
 ```
 
 The expected agent behaviour is:
 
-- Classify the request as non-trivial.
-- Establish scope and stop conditions with `change-contract`.
-- Check whether `architecture-decision` applies; preserve the project's decision convention.
+- Establish scope and constraints, reusing the brief rather than announcing every skill.
+- Reuse accepted architecture; review new consequential choices or changed assumptions using the project's decision convention.
 - Reproduce changed behaviour with a meaningful failing test where practical, then run relevant verification after the fix.
 - Keep the diff bounded.
-- Finish with an evidence ledger and its compact work receipt rather than claiming completion from conversation text alone.
+- Finish with the outcome, supporting checks/results and limitations rather than an unsupported completion claim.
 
-The receipt has five fields: `result`, `claim`, `evidence`, `remaining uncertainty`, and `next`. It is standalone Markdown; it does not require the `eh` protocol or an evaluation harness.
+A concise paragraph or short bullets are enough for ordinary completion. No
+fixed fields, separate no-ADR declaration or protocol run is required. Required
+repository records, checks and approvals still apply.
 
 Also test the trivial path:
 
@@ -86,12 +91,13 @@ Installing EHS does not create an ADR directory in the repository where you
 use it. The `docs/adr/` directory in this checkout stores EHS's own decisions;
 it is not copied into a user's project.
 
-When `architecture-decision` applies to a change, the agent should first look
-for the project's existing convention, such as `docs/adr/`, `adr/`, or
-`docs/decisions/`, and write the decision there. If no convention exists, the
+First reuse an accepted decision when its assumptions still hold. A routine
+extension does not require another ADR; new consequential choices or changed
+assumptions do. Look for the project's existing convention, such as `docs/adr/`,
+`adr/`, or `docs/decisions/`, and write the decision there. If no convention exists, the
 change contract should propose `docs/adr/`; the directory is created together
-with the first required ADR, not as an empty setup side effect. Changes that do
-not meet the architecture trigger list should record why no ADR is required.
+with the first required ADR, not as an empty setup side effect. Decision reuse
+never waives required approval, compatibility review or verification.
 
 ## 3. Optional Simple Made Easy lens
 
@@ -108,20 +114,25 @@ Use Simple Made Easy for this change. Compare complete paths, inspect reuse,
 standard-library, native-platform, and installed-dependency options, then
 select the least entangled complete path. Do not optimize for line count or
 drop validation, security, accessibility, tests, rollback, or evidence.
-Record the compact simplicity check in the existing change contract.
+Mention only trade-offs that materially affect the choice or confidence.
 ```
 
-The expected output is inline rather than a new tracker or transcript:
+Use a sentence in the existing conversation or plan when the choice matters;
+omit a redundant report. No fixed simplicity form, tracker or transcript is needed.
 
-```text
-outcome:
-options checked:
-selected path:
-entanglement avoided:
-safeguards preserved:
-omitted scope:
-remaining uncertainty:
-```
+### Domain modelling when it matters
+
+For unclear or changing business rules, EHS's domain skill uses selected ideas
+from Scott Wlaschin's *Domain Modeling Made Functional*: model the relevant
+workflow, valid states, expected rejections and effects before inventing tables
+or classes. Use existing types and validated construction proportionately;
+separate decision logic from I/O when useful. It requires no functional language,
+library or extra layers, and does not replace runtime checks or meaningful tests.
+Use agreed ubiquitous language in code, tests and documentation within each
+bounded context; preserve legitimate differences between contexts and reuse
+existing definitions rather than creating a glossary by default.
+The [saved-search example](../examples/saved-search-ddd-change/domain-map.md)
+shows the distinction; routine rendering or plumbing needs no domain catalogue.
 
 ## 4. Optional repository tooling
 
@@ -131,7 +142,10 @@ This repository has three related surfaces:
 - `scripts/eh.ts` is a Bun reference CLI for evidence, run status, validation, transitions, approvals, summaries, attestations, and CI artefacts.
 - `evaluation/` and `tests/` contain deterministic protocol tests and experimental provider adapters.
 
-This checkout is currently a private package (`package.json` has `"private": true`). Treat it as a local plugin and skill source tree, not as an npm package to install from a registry. The Codex plugin manifest is [`.codex-plugin/plugin.json`](../.codex-plugin/plugin.json).
+`package.json` has `"private": true`, preventing npm publication; that does not
+mean the GitHub repository or experimental preview is private. Treat this as a
+local plugin and skill source tree, not an npm registry package. The Codex plugin
+manifest is [`.codex-plugin/plugin.json`](../.codex-plugin/plugin.json).
 
 The protocol is schema version 1 and experimental. It provides local traceability in a normal workspace. It is not cryptographic signing, hostile-workspace tamper resistance, sandbox enforcement, or a benchmark system.
 
