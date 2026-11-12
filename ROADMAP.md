@@ -50,6 +50,12 @@ for its constraints and [inline dogfood](docs/dogfood/126-proportionate-guidance
 for verification and limits. These changes are not in the published `v0.0.1`
 artifact or installed cache. No new model trial, package or publication is implied.
 
+The separately approved [v0.0.2 preparation](docs/evaluations/127-v0.0.2-preview-preparation.md)
+now supplies a local 21-file skills-only ZIP, standalone README, aligned versions
+and archive-integrity checks. It is not tagged, published or installed. The user
+approved the preparation commit; experimental publication remains a separate gate;
+fresh installed-package adherence and general host support remain unqualified.
+
 The planned standalone feature set is implemented and the experimental `v0.0.1`
 preview is published; general release qualification is not complete. Stop adding
 capabilities and finish acceptance. These two tracks

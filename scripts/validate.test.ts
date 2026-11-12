@@ -6,6 +6,16 @@ import { requiredFiles, requiredSkillHeadings, validateProject } from "./validat
 
 const roots: string[] = [];
 
+test("0.0.2 preview source versions are aligned", () => {
+  const version = JSON.parse(source("package.json")).version;
+  expect(version).toBe("0.0.2");
+  for (const path of [".codex-plugin/plugin.json", ".claude-plugin/plugin.json"]) {
+    expect(JSON.parse(source(path)).version).toBe(version);
+  }
+  const marketplace = JSON.parse(source(".claude-plugin/marketplace.json"));
+  expect(marketplace.plugins.find((plugin: { name: string }) => plugin.name === "extremely-hardcore").version).toBe(version);
+});
+
 function source(path: string): string {
   return readFileSync(join(import.meta.dir, "..", path), "utf8");
 }

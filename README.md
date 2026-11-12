@@ -42,6 +42,10 @@ to npm. Choose the existing checkout-loading path for your host below. These com
 request installation/loading; they are not evidence that your host has followed
 EHS or that a released artifact has been qualified.
 
+A local `0.0.2` skills-only candidate is now prepared with the revised guidance
+and aligned metadata. See the [preparation record](docs/evaluations/127-v0.0.2-preview-preparation.md)
+for artifact checks and limits; it has not been tagged or published.
+
 ## Installing For Codex
 
 For a local checkout with the Codex CLI, register the repository's local
