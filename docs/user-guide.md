@@ -5,10 +5,10 @@ and using them on a bounded change. Your host needs its usual setup and sign-in
 for model work; EHS adds no runtime prerequisite. Bun and the `eh` protocol are
 only needed for the optional repository tooling later in this guide.
 
-The [experimental v0.0.1 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.1)
+The [experimental v0.0.2 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.2)
 is public, but not generally host-qualified. This source checkout contains
-unreleased instruction changes; the commands below load source, not a new
-release. EHS is not published to npm. Current
+optional development tooling omitted from the ZIP; the commands below load source
+and do not automatically upgrade installed copies. EHS is not published to npm. Current
 [host evidence and limits](provider-onboarding.md#evidence-and-limits) distinguish
 staged Codex work, Claude Code observations and Pi session-local planning.
 Discovery alone does not establish loading or engineering adherence.

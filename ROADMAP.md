@@ -38,7 +38,7 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 | Host capability inventories | Captured skill/config/hook projections, accepted read-only ephemeral threads, process-only app/MCP controls | [Host capture](docs/evaluations/067-no-model-host-arm-capture.md), [thread gate](docs/evaluations/068-ephemeral-thread-capability-gate.md); exact model-visible tools/instructions remain unknown |
 | MCP preflight regression | Known disabled entries accepted; active, unknown, malformed, duplicate, and paginated inventories rejected | [Offline correction](docs/evaluations/070-control-mcp-gate-regression.md); retained capture replay only, no host/model retry |
 | Local metadata and onboarding cleanup | Seven Claude agent definitions have minimal frontmatter; old smoke results explicitly dated; loading claims clarified | [Cleanup evidence](docs/evidence/071-local-metadata-and-onboarding-cleanup.md); no live model acceptance implied |
-| Experimental skills-only preview | GitHub prerelease `v0.0.1`, 21-file ZIP with landscape banner | [Release and independent download checks](docs/evaluations/120-clean-public-repo-preparation.md#published-release-and-verification); not general host qualification or marketplace publication |
+| Experimental skills-only preview | GitHub prerelease `v0.0.2`, 21-file ZIP; `v0.0.1` preserved | [Current publication/download checks](docs/evaluations/127-v0.0.2-preview-preparation.md#approved-publication-and-download-verification); not general host qualification or marketplace publication |
 
 ## Next
 
@@ -50,13 +50,13 @@ for its constraints and [inline dogfood](docs/dogfood/126-proportionate-guidance
 for verification and limits. These changes are not in the published `v0.0.1`
 artifact or installed cache. No new model trial, package or publication is implied.
 
-The separately approved [v0.0.2 preparation](docs/evaluations/127-v0.0.2-preview-preparation.md)
-now supplies a local 21-file skills-only ZIP, standalone README, aligned versions
-and archive-integrity checks. It is not tagged, published or installed. The user
-approved the preparation commit; experimental publication remains a separate gate;
-fresh installed-package adherence and general host support remain unqualified.
+The separately approved [v0.0.2 publication](docs/evaluations/127-v0.0.2-preview-preparation.md#approved-publication-and-download-verification)
+is now a public prerelease at `0fca28e`, not latest. The sole uploaded ZIP passed
+fresh anonymous-download and byte-comparison checks; `v0.0.1` is unchanged.
+No installed plugin was updated. Fresh installed-package adherence and general
+host support remain unqualified.
 
-The planned standalone feature set is implemented and the experimental `v0.0.1`
+The planned standalone feature set is implemented and the experimental `v0.0.2`
 preview is published; general release qualification is not complete. Stop adding
 capabilities and finish acceptance. These two tracks
 have separate gates: comparative superiority is not a prerequisite for a

@@ -13,9 +13,10 @@ network isolation, provider identity, model quality, or reliable adherence on
 arbitrary tasks. The optional `eh` protocol is a separate local evidence tool;
 it is not required for the Markdown skills. You need an existing checkout and
 your host's normal setup/sign-in; Bun and the local evaluations are optional.
-The [experimental v0.0.1 preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.1)
-is public, not generally host-qualified. This source checkout includes unreleased
-instruction changes; the commands here load that source, not an updated release.
+The [experimental v0.0.2 preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.2)
+is public, not generally host-qualified. This source checkout also includes optional
+development tooling omitted from the ZIP. The commands here load source; publication
+does not automatically update installed copies.
 
 ## Prerequisites
 
@@ -46,8 +47,7 @@ codex plugin list
 ```
 
 The final command should show `extremely-hardcore` as `installed, enabled` with
-version `0.0.2` when loading this source candidate, not the older published
-preview. These commands change Codex's local plugin configuration by
+version `0.0.2` when loading this source revision. These commands change Codex's local plugin configuration by
 user choice. A repository check can use a temporary `CODEX_HOME` instead.
 
 Start a new session in the target project and run the smoke prompt below. For a

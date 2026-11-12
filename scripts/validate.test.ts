@@ -106,12 +106,12 @@ describe("proportionate instruction contracts", () => {
     expect(source("agents/architecture-critic.md")).toMatch(/accepted decisions/);
   });
 
-  test("onboarding separates the public preview from unreleased source changes", () => {
+  test("onboarding names the published preview and separates development tooling", () => {
     for (const path of ["README.md", "docs/user-guide.md", "docs/provider-onboarding.md"]) {
       const content = source(path);
       expect(content).toContain("experimental");
-      expect(content).toContain("v0.0.1");
-      expect(content).toMatch(/source.*unreleased/is);
+      expect(content).toContain("v0.0.2");
+      expect(content).toMatch(/source checkout.*development/is);
       expect(content).not.toContain("this is a private source package");
       expect(content).not.toContain("The receipt has five fields");
     }

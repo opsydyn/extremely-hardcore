@@ -35,16 +35,17 @@ bounded task, and review its receipt. You need a checkout and your coding host's
 usual setup/sign-in; no Bun, `eh` run, provider adapter or evaluation harness is
 required to use the Markdown skills.
 
-An [experimental v0.0.1 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.1)
-is public. This source checkout includes unreleased instruction changes; loading
-it does not update or qualify the published preview. The package is not published
+An [experimental v0.0.2 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.2)
+is public. This source checkout also contains optional development tooling excluded
+from the ZIP. Loading source does not update installed copies or qualify the preview.
+The package is not published
 to npm. Choose the existing checkout-loading path for your host below. These commands
 request installation/loading; they are not evidence that your host has followed
 EHS or that a released artifact has been qualified.
 
-A local `0.0.2` skills-only candidate is now prepared with the revised guidance
-and aligned metadata. See the [preparation record](docs/evaluations/127-v0.0.2-preview-preparation.md)
-for artifact checks and limits; it has not been tagged or published.
+The preview is tagged at `0fca28e` and includes the revised guidance and aligned
+metadata. See the [preparation and publication record](docs/evaluations/127-v0.0.2-preview-preparation.md)
+for checksums, download verification and limits. The older `v0.0.1` is preserved.
 
 ## Installing For Codex
 
