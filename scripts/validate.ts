@@ -1,5 +1,5 @@
-import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, lstatSync, readdirSync, readFileSync } from "node:fs";
+import { join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export type ValidationResult = {
@@ -135,6 +135,7 @@ export function validateProject(root: string): ValidationResult {
 
   validateDecisionChallengeContract(root, errors);
   validatePluginManifest(root, errors);
+  validatePiManifest(root, errors);
 
   return { ok: errors.length === 0, errors };
 }
@@ -245,6 +246,62 @@ function validatePluginManifest(root: string, errors: string[]): void {
     }
   } catch (error) {
     errors.push(`.codex-plugin/plugin.json is not valid JSON: ${String(error)}`);
+  }
+}
+
+function validatePiManifest(root: string, errors: string[]): void {
+  const path = resolve(root, "package.json");
+  if (!existsSync(path)) return;
+  try {
+    const { pi } = JSON.parse(readFileSync(path, "utf8"));
+    if (!pi || typeof pi !== "object" || Object.keys(pi).length !== 1 ||
+      !Array.isArray(pi.skills) || pi.skills.length !== 1 || pi.skills[0] !== "./skills") {
+      errors.push('package.json pi must expose only skills: ["./skills"]');
+      return;
+    }
+  } catch (error) {
+    errors.push(`package.json Pi manifest is invalid: ${String(error)}`);
+    return;
+  }
+
+  // Match the directory/loose-Markdown discovery rules, not Pi's runtime loader.
+  const discovered: string[] = [];
+  function visit(dir: string, includeLooseMarkdown: boolean): void {
+    if (!existsSync(dir)) return;
+    if (lstatSync(dir).isSymbolicLink()) throw new Error(`symlinked skill directory: ${dir}`);
+    const entrypoint = join(dir, "SKILL.md");
+    if (existsSync(entrypoint)) {
+      if (!lstatSync(entrypoint).isFile() || lstatSync(entrypoint).isSymbolicLink()) {
+        throw new Error(`non-regular skill entrypoint: ${entrypoint}`);
+      }
+      discovered.push(relative(root, entrypoint).split(sep).join("/"));
+      return;
+    }
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      if (entry.isSymbolicLink()) throw new Error(`symlinked skill resource: ${join(dir, entry.name)}`);
+      if (entry.isDirectory()) visit(join(dir, entry.name), false);
+      else if (includeLooseMarkdown && entry.isFile() && entry.name.endsWith(".md")) {
+        discovered.push(relative(root, join(dir, entry.name)).split(sep).join("/"));
+      }
+    }
+  }
+  try {
+    visit(resolve(root, "skills"), true);
+    if (JSON.stringify(discovered.sort()) !== JSON.stringify([...skillFiles].sort())) {
+      errors.push("Pi discovery must contain exactly the nine existing skill paths");
+    }
+    for (const file of skillFiles) {
+      const fullPath = resolve(root, file);
+      if (!existsSync(fullPath)) continue;
+      const frontmatter = readFileSync(fullPath, "utf8").match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n/);
+      const metadata = frontmatter ? Bun.YAML.parse(frontmatter[1]!) as { name?: unknown; description?: unknown } | null : null;
+      if (!metadata || metadata.name !== file.split("/").at(-2) ||
+        typeof metadata.description !== "string" || !metadata.description.trim()) {
+        errors.push(`${file} Pi metadata must match its directory name and have a description`);
+      }
+    }
+  } catch (error) {
+    errors.push(`Pi discovery failed: ${String(error)}`);
   }
 }
 

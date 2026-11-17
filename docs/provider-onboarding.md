@@ -91,7 +91,12 @@ skill failure.
 
 ## Pi
 
-Pi has a direct session-local skill flag. Discover all nine EHS skills explicitly:
+For native user installation, update/removal and discovery verification, follow
+the [README's Pi instructions](../README.md#installing-for-pi). Pi `1.5.2` native
+package management and nine-skill discovery were tested without model calls in
+isolated configuration; see [ADR 050](adr/050-native-pi-skill-package.md).
+
+The existing direct session-local flag remains available:
 
 ```bash
 pi --skill "$EHS_ROOT/skills/"
@@ -104,8 +109,8 @@ The historical smoke used a single entrypoint, not a full-directory install.
 Later no-model diagnostics and planning observations used a staged EHS tree;
 see the evidence limits below. Neither qualifies every installed configuration.
 Pi does not need a separate plugin manifest for this session-local path.
-A persistent Pi installation is not currently claimed; pass `--skill` when
-starting a session or verify Pi's own discovery configuration on the target version.
+Native installation persists a package declaration in Pi's settings; explicit
+`--skill` remains a session-only alternative. Discovery is not engineering adherence.
 
 Before a model call, check readiness without printing credentials:
 

@@ -4,6 +4,9 @@
   "private": true,
   "description": "architecture-first skills for coding agents",
   "type": "module",
+  "pi": {
+    "skills": ["./skills"]
+  },
   "scripts": {
     "validate": "bun scripts/validate.ts",
     "check": "bun run validate",

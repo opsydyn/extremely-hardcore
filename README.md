@@ -31,8 +31,8 @@ The goal is not to slow every edit to a committee meeting. Trivial edits stay tr
 ## Start Here
 
 Use the [user guide](docs/user-guide.md) to load the skills, give your host a
-bounded task, and review its receipt. You need a checkout and your coding host's
-usual setup/sign-in; no Bun, `eh` run, provider adapter or evaluation harness is
+bounded task, and review its receipt. Local-source paths need a checkout; Pi can
+install directly from Git. Use your host's usual setup/sign-in; no Bun, `eh` run, provider adapter or evaluation harness is
 required to use the Markdown skills.
 
 An [experimental v0.0.2 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.2)
@@ -84,18 +84,67 @@ The skill content is plain markdown and does not require runtime code to use.
 
 ## Installing For Pi
 
-Pi discovers all nine EHS skills explicitly for a session:
+Install the native Pi package for your user:
+
+```bash
+pi install git:github.com/opsydyn/extremely-hardcore
+pi list
+```
+
+The minimal `package.json` manifest exposes the existing `skills/` directory:
+`"pi": { "skills": ["./skills"] }`. It adds no Pi runtime extension or runtime
+dependency. Pi manages the Git checkout and its package settings; this is not an
+npm installation or npm publication. Git installation fetches the development
+repository, not the lean preview ZIP; only its skills are exposed to Pi. Review
+the source before installing: Pi may
+run its dependency-install step, and skills are instructions, not a sandbox.
+
+Update only EHS:
+
+```bash
+pi update git:github.com/opsydyn/extremely-hardcore
+```
+
+Remove EHS and verify its package declaration is gone:
+
+```bash
+pi remove git:github.com/opsydyn/extremely-hardcore
+pi list
+```
+
+Use the targeted update above, not bare `pi update`, which updates Pi itself on
+current releases. `pi update --extensions` updates all installed packages. An
+unversioned Git source follows the repository's default branch. Tags/commit pins
+do not move to another ref automatically. For a project-local install, add `-l`
+to installation/removal and observe Pi's project-trust requirements.
+
+To verify, first confirm EHS appears in `pi list`. Start a new Pi session or use
+`/reload`, inspect startup diagnostics, and use `/skill:` command completion to
+check all nine EHS names listed below. `pi config` can show whether its skills
+are disabled; command completion also depends on Pi's `enableSkillCommands`
+setting. For real work, explicitly invoke `/skill:using-extremely-hardcore` when
+you need the router loaded. Listing a package or skill does not prove adherence,
+and starting a normal model session can contact your configured provider.
+
+Native install/update/removal and nine-skill discovery were checked with Pi
+`1.5.2` using isolated configuration and no model calls. Older Pi versions and
+full engineering behaviour remain separate compatibility gaps; see the
+[decision and evidence](docs/adr/050-native-pi-skill-package.md). The Git command
+also worked against the existing public checkout via conventional discovery;
+the explicit manifest was tested separately as a source change, not as part of the
+published `v0.0.2` preview ZIP.
+
+For session-only loading from a local checkout, the existing fallback remains:
 
 ```bash
 EHS_ROOT=/absolute/path/to/extremely-hardcore-skill
 pi --skill "$EHS_ROOT/skills/"
 ```
 
-Pass the skills directory, not only the entrypoint file, so routing can discover
-the other eight skills. Check the native catalogue and diagnostics separately.
-Pi does not require a separate plugin manifest for this path. The repository
-claims session-local loading only; use the [provider onboarding guide](docs/provider-onboarding.md)
-for the smoke prompt and current evidence boundary.
+Pass the directory, not only the router, so all nine skills are available. See
+the [provider onboarding guide](docs/provider-onboarding.md) for historical
+model observations and their limits. No Claude or Codex metadata changes are
+required for Pi packaging.
 
 See [host evidence and limits](docs/provider-onboarding.md#evidence-and-limits)
 before interpreting compatibility. Current Codex proof uses a staged native
