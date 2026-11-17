@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdtempSync, rmSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { mkdtempSync, rmSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { requiredFiles, requiredSkillHeadings, validateProject } from "./validate";
@@ -192,6 +192,8 @@ function writeMinimalRequiredFiles(root: string): void {
       write(root, file, completeAgentsRouting());
     } else if (file === ".codex-plugin/plugin.json") {
       write(root, file, JSON.stringify({ name: "extremely-hardcore", skills: "./skills/" }));
+    } else if (file === "package.json") {
+      write(root, file, JSON.stringify({ private: true, pi: { skills: ["./skills"] } }));
     } else {
       write(root, file, `${file}\n`);
     }
@@ -274,6 +276,66 @@ function completeAgentsRouting(): string {
 }
 
 describe("validateProject", () => {
+  test("source exposes exactly the existing skills directory to Pi", () => {
+    expect(JSON.parse(source("package.json")).pi).toEqual({ skills: ["./skills"] });
+    expect(validateProject(join(import.meta.dir, "..")).ok).toBe(true);
+  });
+
+  test.each([undefined, null, {}, { skills: "./skills" }, { skills: [] },
+    { skills: ["../skills"] }, { skills: ["./skills/using-extremely-hardcore"] },
+    { skills: ["./skills", "./extra"] }, { skills: ["./skills"], extensions: ["./extension.ts"] },
+  ])("rejects missing, filtered or non-skill Pi resources: %j", (pi) => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    write(root, "package.json", JSON.stringify({ pi }));
+    expect(validateProject(root).errors).toContain('package.json pi must expose only skills: ["./skills"]');
+  });
+
+  test("Pi discovery requires every canonical skill and no extras", () => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    expect(validateProject(root).ok).toBe(true);
+    rmSync(join(root, "skills", "domain-discovery"), { recursive: true });
+    expect(validateProject(root).errors).toContain("Pi discovery must contain exactly the nine existing skill paths");
+    write(root, "skills/domain-discovery/SKILL.md", completeSkill("skills/domain-discovery/SKILL.md"));
+    write(root, "skills/extra/SKILL.md", completeSkill("skills/extra/SKILL.md"));
+    expect(validateProject(root).errors).toContain("Pi discovery must contain exactly the nine existing skill paths");
+  });
+
+  test("Pi discovery rejects misleading metadata and loose root Markdown", () => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    const path = "skills/domain-discovery/SKILL.md";
+    write(root, path, completeSkill(path).replace("name: domain-discovery", "name: change-contract"));
+    expect(validateProject(root).errors).toContain(`${path} Pi metadata must match its directory name and have a description`);
+    write(root, path, completeSkill(path));
+    write(root, "skills/unexpected.md", "# unintended skill\n");
+    expect(validateProject(root).errors).toContain("Pi discovery must contain exactly the nine existing skill paths");
+  });
+
+  test("Pi validation reports malformed package JSON instead of throwing", () => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    write(root, "package.json", "{");
+    expect(validateProject(root).errors.some(error => error.startsWith("package.json Pi manifest is invalid:"))).toBe(true);
+  });
+
+  test("Pi discovery reports malformed metadata instead of passing a partial catalogue", () => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    write(root, "skills/domain-discovery/SKILL.md", "---\nname: domain-discovery\ndescription: broken: yaml\n---\n# domain-discovery\n");
+    expect(validateProject(root).errors.some(error => error.startsWith("Pi discovery failed:"))).toBe(true);
+  });
+
+  test("Pi discovery rejects a linked skill rather than reading outside the canonical tree", () => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    write(root, "outside.md", completeSkill("skills/domain-discovery/SKILL.md"));
+    rmSync(join(root, "skills/domain-discovery/SKILL.md"));
+    symlinkSync(join(root, "outside.md"), join(root, "skills/domain-discovery/SKILL.md"));
+    expect(validateProject(root).errors.some(error => error.startsWith("Pi discovery failed:"))).toBe(true);
+  });
+
   test("reports missing required files", () => {
     const result = validateProject(tempRepo());
 

@@ -47,6 +47,9 @@ pi --skill "$EHS_ROOT/skills/"
 
 For Pi, pass the directory so the native catalogue can discover all nine skills,
 not only the router. Check for missing names or diagnostics before relying on it.
+For persistent native Git installation instead, use the
+[README's Pi package instructions](../README.md#installing-for-pi). The direct
+`--skill` command above remains a local-checkout/session-only fallback.
 
 These commands request installation or explicit loading. Verify host discovery
 and loading separately; a successful command or echoed smoke marker does not
