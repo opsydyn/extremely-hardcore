@@ -43,8 +43,11 @@ to npm. Choose the existing checkout-loading path for your host below. These com
 request installation/loading; they are not evidence that your host has followed
 EHS or that a released artifact has been qualified.
 
-The preview is tagged at `0fca28e` and includes the revised guidance and aligned
-metadata. See the [preparation and publication record](docs/evaluations/127-v0.0.2-preview-preparation.md)
+For the current guidance, select
+`extremely-hardcore-0.0.2-guidance-31e0592-skills-only-preview.zip` on that release.
+This supplemental snapshot is pinned to `31e0592`; the original preview ZIP and
+tag at `0fca28e` remain unchanged. See the [guidance update record](docs/evaluations/128-v0.0.2-guidance-update.md)
+and [original publication record](docs/evaluations/127-v0.0.2-preview-preparation.md)
 for checksums, download verification and limits. The older `v0.0.1` is preserved.
 
 ## Installing For Codex
