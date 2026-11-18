@@ -38,6 +38,12 @@ RED alone does not create a new approval stage or excuse meaningful verification
 5. Ask which plausible defect these tests would miss. For consequential behaviour, demonstrate detection with the original regression or a targeted temporary mutation where useful; no mutation framework or quota is required. Broaden or repeat checks only when changes, failures, or unresolved risks justify it. Do not omit required checks.
 6. Define recovery proportional to the risk; migrations and external effects need more than reverting a local diff.
 
+On shared machines, avoid duplicate expensive builds or test runs and choose
+concurrency to leave capacity for other work; give demanding checks room when
+needed. At completion, stop only jobs you started and remove only your disposable
+temporary resources once no longer needed. Preserve evidence, user resources
+and anything still in use. Resource limits never waive required checks.
+
 ## quality bar
 
 - Tests describe behaviour, not private implementation trivia.

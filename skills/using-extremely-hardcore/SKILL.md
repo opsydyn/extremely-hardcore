@@ -50,12 +50,13 @@ Before adding a document, test or review, ask whether it changes the implementat
 
 ## execution approach
 
-Honour the chosen user/host method; otherwise work inline. Recommend native
-subagents only when available, authorised and worth their context/coordination
-cost for independent work or fresh review. Ask only if the choice changes scope,
-budget or permissions. Workers need requirements, scope and verification
-expectations, not extra authority. One owner handles overlapping writes; the
-parent owns integration and final verification.
+Honour the chosen user/host method; otherwise choose the simplest effective
+approach: inline for tightly coupled work, or native subagents for independent
+work or fresh review when available, authorised and worth their
+context/coordination cost. Ask only if the choice changes scope, budget or
+permissions. Workers need requirements, scope and verification expectations,
+not extra authority. One owner handles overlapping writes; the parent owns
+integration and final verification.
 
 ## durable run handoff
 

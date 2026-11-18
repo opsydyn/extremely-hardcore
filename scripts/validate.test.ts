@@ -32,6 +32,27 @@ describe("proportionate instruction contracts", () => {
     expect(source("AGENTS.md")).toMatch(/Routine work follows/);
   });
 
+  test("execution approach fits the task without expanding worker authority", () => {
+    const execution = skillSection("using-extremely-hardcore", "execution approach").replace(/\s+/g, " ");
+    expect(execution).toContain("Honour the chosen user/host method");
+    expect(execution).toMatch(/simplest effective approach.*inline.*tightly coupled.*native subagents.*independent work or fresh review/);
+    expect(execution).toMatch(/available, authorised.*context\/coordination cost/);
+    expect(execution).toMatch(/Ask only if.*scope, budget or permissions/);
+    expect(execution).toContain("not extra authority");
+    expect(execution).toContain("One owner handles overlapping writes");
+    expect(execution).toContain("parent owns integration and final verification");
+  });
+
+  test("resource-aware verification preserves required checks and retained resources", () => {
+    const implementation = source("skills/test-first-implementation/SKILL.md").replace(/\s+/g, " ");
+    expect(implementation).toMatch(/shared machines.*duplicate expensive builds or test runs/);
+    expect(implementation).toMatch(/concurrency.*capacity for other work/);
+    expect(implementation).toMatch(/stop only jobs you started/);
+    expect(implementation).toMatch(/remove only your disposable temporary resources once no longer needed/);
+    expect(implementation).toMatch(/Preserve evidence, user resources and anything still in use/);
+    expect(implementation).toContain("Resource limits never waive required checks");
+  });
+
   test("decision reuse avoids a new ADR but never waives safeguards", () => {
     const architecture = source("skills/architecture-decision/SKILL.md");
     expect(architecture).toMatch(/reuse.*accepted decision/is);
