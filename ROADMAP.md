@@ -51,10 +51,17 @@ for verification and limits. These changes are not in the published `v0.0.1`
 artifact or installed cache. No new model trial, package or publication is implied.
 
 The separately approved [v0.0.2 publication](docs/evaluations/127-v0.0.2-preview-preparation.md#approved-publication-and-download-verification)
-is now a public prerelease at `0fca28e`, not latest. The sole uploaded ZIP passed
-fresh anonymous-download and byte-comparison checks; `v0.0.1` is unchanged.
+is now a public prerelease at `0fca28e`, not latest. The original ZIP and the
+[supplemental guidance ZIP](docs/evaluations/128-v0.0.2-guidance-update.md) pinned
+to `31e0592` both passed anonymous-download and byte-comparison checks;
+`v0.0.1` is unchanged.
 No installed plugin was updated. Fresh installed-package adherence and general
 host support remain unqualified.
+
+**Next preview:** include the evidence-ledger guidance on turning material,
+reproducible mistakes into deterministic checks. Keep the fresh-session handoff
+pointed at the exact recommended download; the source regression covers that
+link, not agent adherence. This is release scope, not publication approval.
 
 The planned standalone feature set is implemented and the experimental `v0.0.2`
 preview is published; general release qualification is not complete. Stop adding

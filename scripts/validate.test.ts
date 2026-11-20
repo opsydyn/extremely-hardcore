@@ -137,6 +137,16 @@ describe("proportionate instruction contracts", () => {
       expect(content).not.toContain("The receipt has five fields");
     }
   });
+
+  test("fresh-session setup links directly to the preview recommended in the README", () => {
+    const preview = source("README.md").match(/`(extremely-hardcore-(\d+\.\d+\.\d+)[\w.-]*-skills-only-preview\.zip)`/);
+    expect(preview).not.toBeNull();
+    const [, asset, version] = preview!;
+    const setup = source("docs/fresh-session-check.md").split("## Before Starting\n")[1]?.split("\n## ")[0] ?? "";
+    const firstStep = setup.split(/^\d+\.\s/m)[1];
+    const download = firstStep?.match(/\]\(([^)\s]+)\)/)?.[1];
+    expect(download).toBe(`https://github.com/opsydyn/extremely-hardcore/releases/download/v${version}/${asset}`);
+  });
 });
 
 describe("standalone completion routing", () => {
