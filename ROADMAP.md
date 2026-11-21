@@ -271,6 +271,32 @@ Release completion means reviewed package contents, demonstrated support,
 documented cost/limits and an explicit publication decision. These tasks do not
 clear standalone acceptance, optional protocol qualification or comparisons.
 
+### Blackbelt: Opt-In Delivery-Flow Playbook
+
+Dogfood this playbook on the next three real engineering changes that already
+need multiple agents and have an observable review or verification handoff.
+Do not add agents just to qualify a change or count earlier work or synthetic
+fixtures. No new skill, scheduler, dashboard, or release gate. Progress: 0 of 3.
+
+- **Pull against capacity.** Before starting more work, check whether review or
+  verification can absorb it. Limit changes awaiting verification, not just
+  active agents.
+- **Stop promotion, keep diagnosing.** A failed required check blocks promotion,
+  not authorised investigation. Surface the failed check, affected revision and
+  owner or next decision. Turn material, reproducible mistakes into durable
+  checks through the existing evidence-ledger guidance.
+- **Record the decision, not a new receipt.** Use existing PR, CI and review
+  timestamps to note where work waited and whether the first review-ready
+  attempt passed verification. Note escaped defects when observed; mark missing
+  evidence as unknown. In the ordinary handoff, record what decision changed
+  (or did not), why, and any extra effort the playbook imposed.
+
+Review after three changes. Keep the playbook only if a repeated bottleneck
+leads to a useful delivery decision without weakening checks or adding material
+reporting overhead. Otherwise keep the useful lessons in existing guidance and
+park Blackbelt. These observations are not a comparative effectiveness claim
+or approval to run new agents, change CI policy, or publish.
+
 ### Prove Improvement
 
 1. **Finish the bounded control trace capability check.** The
