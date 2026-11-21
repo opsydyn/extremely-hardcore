@@ -1,7 +1,7 @@
 # Provider onboarding
 
 This page explains how to load the standalone EHS skills into Codex CLI,
-Claude Code, or Pi from a local checkout. It separates three different claims:
+Claude Code, or Pi. It separates three different claims:
 
 1. **Package discovery:** the host can find the checkout and its metadata.
 2. **Skill loading:** the host supplies the EHS instructions to the model.
@@ -11,16 +11,28 @@ Claude Code, or Pi from a local checkout. It separates three different claims:
 The first two are distinct onboarding checks. Neither proves sandbox enforcement,
 network isolation, provider identity, model quality, or reliable adherence on
 arbitrary tasks. The optional `eh` protocol is a separate local evidence tool;
-it is not required for the Markdown skills. You need an existing checkout and
-your host's normal setup/sign-in; Bun and the local evaluations are optional.
-The [experimental v0.0.2 preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.2)
-is public, not generally host-qualified. This source checkout also includes optional
-development tooling omitted from the ZIP. The commands here load source; publication
-does not automatically update installed copies.
+it is not required for the Markdown skills. Use your host's normal setup and sign
+in for model work; Bun and the local evaluations are optional.
 
-## Prerequisites
+## Published preview ZIP
 
-Set the checkout path once in each shell:
+Download the [recommended experimental v0.0.2 skills-only ZIP](https://github.com/opsydyn/extremely-hardcore/releases/download/v0.0.2/extremely-hardcore-0.0.2-guidance-31e0592-skills-only-preview.zip).
+Extract it outside the target project and follow the README inside the ZIP for
+your host. Do not use GitHub's automatic source archives or the checkout
+marketplace commands below with the ZIP. The preview is not generally
+host-qualified and does not automatically update installed copies.
+
+## Native Pi Git install
+
+For a persistent Pi package, use the [native Git install instructions](../README.md#installing-for-pi).
+Pi fetches the source repository, not the preview ZIP. This route does not
+require an existing checkout or an extracted archive.
+
+## Local source checkout
+
+Use the host commands below if you already have a source checkout. The checkout
+also has optional development tooling omitted from the ZIP. Set its path once
+in each shell:
 
 ```bash
 EHS_ROOT=/absolute/path/to/extremely-hardcore-skill

@@ -5,10 +5,13 @@ and using them on a bounded change. Your host needs its usual setup and sign-in
 for model work; EHS adds no runtime prerequisite. Bun and the `eh` protocol are
 only needed for the optional repository tooling later in this guide.
 
-The [experimental v0.0.2 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.2)
-is public, but not generally host-qualified. This source checkout contains
-optional development tooling omitted from the ZIP; the commands below load source
-and do not automatically upgrade installed copies. EHS is not published to npm. Current
+Choose the [published experimental v0.0.2 skills-only preview](provider-onboarding.md#published-preview-zip)
+for a session using the extracted package and its own README. Use the commands
+below if you already have a source checkout, which also contains optional
+development tooling. For persistent Pi installation without a checkout, use
+the [native Git route](provider-onboarding.md#native-pi-git-install) instead.
+The preview is not generally host-qualified and does not upgrade installed copies.
+EHS is not published to npm. Current
 [host evidence and limits](provider-onboarding.md#evidence-and-limits) distinguish
 staged Codex work, Claude Code observations and Pi session-local planning.
 Discovery alone does not establish loading or engineering adherence.

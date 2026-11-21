@@ -276,7 +276,7 @@ clear standalone acceptance, optional protocol qualification or comparisons.
 Dogfood this playbook on the next three real engineering changes that already
 need multiple agents and have an observable review or verification handoff.
 Do not add agents just to qualify a change or count earlier work or synthetic
-fixtures. No new skill, scheduler, dashboard, or release gate. Progress: 0 of 3.
+fixtures. No new skill, scheduler, dashboard, or release gate. Progress: 3 of 3.
 
 - **Pull against capacity.** Before starting more work, check whether review or
   verification can absorb it. Limit changes awaiting verification, not just
@@ -296,6 +296,29 @@ leads to a useful delivery decision without weakening checks or adding material
 reporting overhead. Otherwise keep the useful lessons in existing guidance and
 park Blackbelt. These observations are not a comparative effectiveness claim
 or approval to run new agents, change CI policy, or publish.
+
+**Three-change review:**
+
+1. [PR CI](https://github.com/opsydyn/extremely-hardcore/pull/2#issuecomment-7061145775):
+   first hosted pass was red. Ubuntu exposed a test-fixture assumption that
+   local macOS checks missed. Fixing the fixture, not weakening the gate, let
+   the reviewed change merge on green. Runner queueing was not the bottleneck.
+2. **Local preview:** first handoff passed with no rebuild. An independent
+   verifier checked the 21-file ZIP against merged `aee8078`; the checksum and
+   review note are retained beside it in local `dist/skills-only-next-aee8078/`.
+   Review was the last wait, but queue and active review times were not measured.
+3. **Newcomer onboarding:** the first handoff selected and extracted the correct
+   published `31e0592` ZIP. Claude's offline preflight was blocked before CLI
+   launch. Instead, the verifier followed the packaged Pi route and used only
+   Pi 1.5.2's native file loader: nine expected skills, no diagnostics, no model
+   call. This is file discovery, not CLI startup, model loading or adherence.
+
+**Decision:** keep this opt-in reference and park expansion. We did not observe
+a recurring queue bottleneck that justifies a new skill or workflow. The useful
+repeat lesson was to check the target environment's prerequisites before handing
+off, and to distinguish environment blockers from failed verification. Keep
+the strict PR checks, pinned artifact handoff and onboarding regression; do not
+add a standing review step or infer a throughput improvement from three changes.
 
 ### Prove Improvement
 
