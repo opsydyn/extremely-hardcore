@@ -147,6 +147,16 @@ describe("proportionate instruction contracts", () => {
     const download = firstStep?.match(/\]\(([^)\s]+)\)/)?.[1];
     expect(download).toBe(`https://github.com/opsydyn/extremely-hardcore/releases/download/v${version}/${asset}`);
   });
+
+  test("onboarding sends ZIP readers to the same preview as fresh-session setup", () => {
+    const firstLink = (section: string) => section.match(/\]\(([^)\s]+)\)/)?.[1];
+    const setup = source("docs/fresh-session-check.md").split("## Before Starting\n")[1]?.split("\n## ")[0] ?? "";
+    const preview = source("docs/provider-onboarding.md").split("## Published preview ZIP\n")[1]?.split("\n## ")[0] ?? "";
+    const expected = firstLink(setup);
+    expect(expected).toBeDefined();
+    expect(firstLink(preview)).toBe(expected);
+    expect(source("docs/user-guide.md")).toContain("](provider-onboarding.md#published-preview-zip)");
+  });
 });
 
 describe("standalone completion routing", () => {
