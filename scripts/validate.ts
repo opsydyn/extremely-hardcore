@@ -52,6 +52,10 @@ const decisionChallengeEvidenceGapTable = "| claim | current evidence | gap | re
 const decisionChallengeVerdictOptions = "proceed | hold | needs-human-decision";
 const decisionChallengeSkillFile = "skills/decision-challenge/SKILL.md";
 const decisionChallengeTemplateFile = "skills/decision-challenge/templates/decision-challenge.md";
+const codexManifest = ".codex-plugin/plugin.json";
+const claudeManifest = ".claude-plugin/plugin.json";
+const claudeMarketplace = ".claude-plugin/marketplace.json";
+const releaseMetadataFiles = [codexManifest, claudeManifest, claudeMarketplace];
 
 export const skillFiles = [
   "skills/using-extremely-hardcore/SKILL.md",
@@ -81,7 +85,7 @@ export const requiredFiles = [
   "package.json",
   "tsconfig.json",
   ".gitignore",
-  ".codex-plugin/plugin.json",
+  ...releaseMetadataFiles,
   ...skillFiles,
   ...templateFiles,
   "agents/scout.md",
@@ -134,8 +138,8 @@ export function validateProject(root: string): ValidationResult {
   }
 
   validateDecisionChallengeContract(root, errors);
-  validatePluginManifest(root, errors);
-  validatePiManifest(root, errors);
+  const version = validatePackageManifest(root, errors);
+  validateReleaseMetadata(root, version, errors);
 
   return { ok: errors.length === 0, errors };
 }
@@ -225,39 +229,52 @@ export function formatValidationResult(result: ValidationResult): string {
   return ["validation failed:", ...result.errors.map((error) => `- ${error}`)].join("\n");
 }
 
-function validatePluginManifest(root: string, errors: string[]): void {
-  const manifestPath = resolve(root, ".codex-plugin/plugin.json");
-  if (!existsSync(manifestPath)) {
-    return;
-  }
+function validateReleaseMetadata(root: string, version: string | undefined, errors: string[]): void {
+  for (const file of releaseMetadataFiles) {
+    const path = resolve(root, file);
+    if (!existsSync(path)) continue;
 
-  try {
-    const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as {
-      name?: unknown;
-      skills?: unknown;
-    };
+    try {
+      const manifest = JSON.parse(readFileSync(path, "utf8"));
+      if (file === codexManifest) {
+        if (manifest?.name !== "extremely-hardcore") {
+          errors.push(`${file} must use name extremely-hardcore`);
+        }
+        if (manifest?.skills !== "./skills/") {
+          errors.push(`${file} must point skills to ./skills/`);
+        }
+      }
 
-    if (manifest.name !== "extremely-hardcore") {
-      errors.push(".codex-plugin/plugin.json must use name extremely-hardcore");
+      const plugins: { name?: unknown; version?: unknown }[] = Array.isArray(manifest?.plugins)
+        ? manifest.plugins
+        : [];
+      const metadata = file === claudeMarketplace
+        ? plugins.find((plugin) => plugin?.name === "extremely-hardcore")
+        : manifest;
+      if (version !== undefined && metadata?.version !== version) {
+        errors.push(`${file} version must match package.json version ${version}`);
+      }
+    } catch (error) {
+      errors.push(`${file} is not valid JSON: ${String(error)}`);
     }
-
-    if (manifest.skills !== "./skills/") {
-      errors.push(".codex-plugin/plugin.json must point skills to ./skills/");
-    }
-  } catch (error) {
-    errors.push(`.codex-plugin/plugin.json is not valid JSON: ${String(error)}`);
   }
 }
 
-function validatePiManifest(root: string, errors: string[]): void {
+function validatePackageManifest(root: string, errors: string[]): string | undefined {
   const path = resolve(root, "package.json");
   if (!existsSync(path)) return;
+  let version: string | undefined;
   try {
-    const { pi } = JSON.parse(readFileSync(path, "utf8"));
+    const { pi, version: packageVersion } = JSON.parse(readFileSync(path, "utf8"));
+    if (typeof packageVersion === "string" && packageVersion.trim()) {
+      version = packageVersion;
+    } else {
+      errors.push("package.json must declare a version");
+    }
     if (!pi || typeof pi !== "object" || Object.keys(pi).length !== 1 ||
       !Array.isArray(pi.skills) || pi.skills.length !== 1 || pi.skills[0] !== "./skills") {
       errors.push('package.json pi must expose only skills: ["./skills"]');
-      return;
+      return version;
     }
   } catch (error) {
     errors.push(`package.json Pi manifest is invalid: ${String(error)}`);
@@ -303,6 +320,7 @@ function validatePiManifest(root: string, errors: string[]): void {
   } catch (error) {
     errors.push(`Pi discovery failed: ${String(error)}`);
   }
+  return version;
 }
 
 function isCliEntry(): boolean {
