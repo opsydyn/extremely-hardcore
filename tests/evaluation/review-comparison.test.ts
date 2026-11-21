@@ -73,12 +73,16 @@ test("preflight accepts a complete, pinned no-model arm pair", () => {
   expect(preflightReviewComparison(validPreflight()).status).toBe("ready");
 });
 
-test("preflight accepts host-canonical staged paths when the local temp root has an alias", () => {
+test("preflight accepts canonical staged paths and rejects the staged alias", () => {
   const dir = mkdtempSync(join(tmpdir(), "ehs-review-paths-"));
   try {
-    const staged = join(dir, "skills");
-    cpSync(join(root, "skills"), staged, { recursive: true });
-    const canonical = realpathSync(staged);
+    const canonicalDir = realpathSync(dir);
+    const staging = join(canonicalDir, "staging");
+    const canonical = join(staging, "skills");
+    cpSync(join(root, "skills"), canonical, { recursive: true });
+    const alias = join(canonicalDir, "alias");
+    symlinkSync(staging, alias, "dir");
+    const staged = join(alias, "skills");
     const input = validPreflight();
     input.pin = reviewPins(staged);
     input.treatment.skillRoot = staged;
