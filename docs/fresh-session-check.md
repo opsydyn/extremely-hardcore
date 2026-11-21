@@ -6,7 +6,7 @@ do not try to reproduce our old scores or prove that it works.
 
 ## Before Starting
 
-1. Use the [recommended skills-only ZIP](https://github.com/opsydyn/extremely-hardcore/releases/download/v0.0.2/extremely-hardcore-0.0.2-guidance-31e0592-skills-only-preview.zip), not GitHub's automatic full-source archives. Extract it outside this development checkout and use its own README. Do not rebuild or edit the skills for this check. Record the exact archive and revision used; different previews can have the same manifest version.
+1. Use the [recommended skills-only ZIP](https://github.com/opsydyn/extremely-hardcore/releases/download/v0.0.3/extremely-hardcore-0.0.3-skills-only-preview.zip), not GitHub's automatic full-source archives. Extract it outside this development checkout and use its own README. Do not rebuild or edit the skills for this check. Record the exact archive and revision used; different previews can have the same manifest version.
 2. Use your chosen project's normal safety rules and permissions. Disable Superpowers through your host's supported controls before the new session, including any separately installed copies/hooks or global instructions that load it. Verify what is actually active; a prompt saying "do not use Superpowers" is not removal.
 3. Start a new conversation, not a fork/resume of this one. Do not supply this chat, retrospective, evaluations or expected answers. Turn off memory injection for this check where the host supports it, or record that it remained active. No transcript export or private-reasoning capture is required.
 4. Keep other unavoidable host/repository instructions and note their presence. Do not weaken safety controls or remove required repository guidance to manufacture isolation.

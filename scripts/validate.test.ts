@@ -131,7 +131,7 @@ describe("proportionate instruction contracts", () => {
     for (const path of ["README.md", "docs/user-guide.md", "docs/provider-onboarding.md"]) {
       const content = source(path);
       expect(content).toContain("experimental");
-      expect(content).toContain("v0.0.2");
+      expect(content).toContain("v0.0.3");
       expect(content).toMatch(/source checkout.*development/is);
       expect(content).not.toContain("this is a private source package");
       expect(content).not.toContain("The receipt has five fields");
