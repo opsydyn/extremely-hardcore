@@ -35,7 +35,7 @@ bounded task, and review its receipt. Local-source paths need a checkout; Pi can
 install directly from Git. Use your host's usual setup/sign-in; no Bun, `eh` run, provider adapter or evaluation harness is
 required to use the Markdown skills.
 
-An [experimental v0.0.2 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.2)
+The [experimental v0.0.3 skills-only preview](https://github.com/opsydyn/extremely-hardcore/releases/tag/v0.0.3)
 is public. This source checkout also contains optional development tooling excluded
 from the ZIP. Loading source does not update installed copies or qualify the preview.
 The package is not published
@@ -44,11 +44,10 @@ request installation/loading; they are not evidence that your host has followed
 EHS or that a released artifact has been qualified.
 
 For the current guidance, select
-`extremely-hardcore-0.0.2-guidance-31e0592-skills-only-preview.zip` on that release.
-This supplemental snapshot is pinned to `31e0592`; the original preview ZIP and
-tag at `0fca28e` remain unchanged. See the [guidance update record](docs/evaluations/128-v0.0.2-guidance-update.md)
-and [original publication record](docs/evaluations/127-v0.0.2-preview-preparation.md)
-for checksums, download verification and limits. The older `v0.0.1` is preserved.
+`extremely-hardcore-0.0.3-skills-only-preview.zip` on that release, not GitHub's
+automatic source archives. See the [publication record](docs/evaluations/129-v0.0.3-preview-publication.md)
+for the source pin, checksum, download verification and limits. The earlier
+v0.0.2 release and both of its ZIPs are unchanged.
 
 ## Installing For Codex
 
@@ -134,8 +133,8 @@ Native install/update/removal and nine-skill discovery were checked with Pi
 full engineering behaviour remain separate compatibility gaps; see the
 [decision and evidence](docs/adr/050-native-pi-skill-package.md). The Git command
 also worked against the existing public checkout via conventional discovery;
-the explicit manifest was tested separately as a source change, not as part of the
-published `v0.0.2` preview ZIP.
+the explicit manifest was tested separately as a source change. The skills-only
+preview ZIP does not include the native Pi Git package manifest.
 
 For session-only loading from a local checkout, the existing fallback remains:
 
