@@ -38,7 +38,7 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 | Host capability inventories | Captured skill/config/hook projections, accepted read-only ephemeral threads, process-only app/MCP controls | [Host capture](docs/evaluations/067-no-model-host-arm-capture.md), [thread gate](docs/evaluations/068-ephemeral-thread-capability-gate.md); exact model-visible tools/instructions remain unknown |
 | MCP preflight regression | Known disabled entries accepted; active, unknown, malformed, duplicate, and paginated inventories rejected | [Offline correction](docs/evaluations/070-control-mcp-gate-regression.md); retained capture replay only, no host/model retry |
 | Local metadata and onboarding cleanup | Seven Claude agent definitions have minimal frontmatter; old smoke results explicitly dated; loading claims clarified | [Cleanup evidence](docs/evidence/071-local-metadata-and-onboarding-cleanup.md); no live model acceptance implied |
-| Experimental skills-only preview | GitHub prerelease `v0.0.2`, 21-file ZIP; `v0.0.1` preserved | [Current publication/download checks](docs/evaluations/127-v0.0.2-preview-preparation.md#approved-publication-and-download-verification); not general host qualification or marketplace publication |
+| Experimental skills-only preview | GitHub prerelease `v0.0.3`, 21-file ZIP; earlier releases preserved | [Publication and download checks](docs/evaluations/129-v0.0.3-preview-publication.md); not general host qualification or marketplace publication |
 
 ## Next
 
@@ -58,12 +58,12 @@ to `31e0592` both passed anonymous-download and byte-comparison checks;
 No installed plugin was updated. Fresh installed-package adherence and general
 host support remain unqualified.
 
-**Next preview:** include the evidence-ledger guidance on turning material,
-reproducible mistakes into deterministic checks. Keep the fresh-session handoff
-pointed at the exact recommended download; the source regression covers that
-link, not agent adherence. This is release scope, not publication approval.
+The [v0.0.3 preview](docs/evaluations/129-v0.0.3-preview-publication.md) now
+includes the evidence-ledger guidance on turning material, reproducible mistakes
+into deterministic checks. The fresh-session handoff points at the exact
+recommended download; the source regression covers that link, not agent adherence.
 
-The planned standalone feature set is implemented and the experimental `v0.0.2`
+The planned standalone feature set is implemented and the experimental `v0.0.3`
 preview is published; general release qualification is not complete. Stop adding
 capabilities and finish acceptance. These two tracks
 have separate gates: comparative superiority is not a prerequisite for a

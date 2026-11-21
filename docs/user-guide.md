@@ -5,7 +5,7 @@ and using them on a bounded change. Your host needs its usual setup and sign-in
 for model work; EHS adds no runtime prerequisite. Bun and the `eh` protocol are
 only needed for the optional repository tooling later in this guide.
 
-Choose the [published experimental v0.0.2 skills-only preview](provider-onboarding.md#published-preview-zip)
+Choose the [published experimental v0.0.3 skills-only preview](provider-onboarding.md#published-preview-zip)
 for a session using the extracted package and its own README. Use the commands
 below if you already have a source checkout, which also contains optional
 development tooling. For persistent Pi installation without a checkout, use

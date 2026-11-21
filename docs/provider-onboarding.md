@@ -16,7 +16,7 @@ in for model work; Bun and the local evaluations are optional.
 
 ## Published preview ZIP
 
-Download the [recommended experimental v0.0.2 skills-only ZIP](https://github.com/opsydyn/extremely-hardcore/releases/download/v0.0.2/extremely-hardcore-0.0.2-guidance-31e0592-skills-only-preview.zip).
+Download the [recommended experimental v0.0.3 skills-only ZIP](https://github.com/opsydyn/extremely-hardcore/releases/download/v0.0.3/extremely-hardcore-0.0.3-skills-only-preview.zip).
 Extract it outside the target project and follow the README inside the ZIP for
 your host. Do not use GitHub's automatic source archives or the checkout
 marketplace commands below with the ZIP. The preview is not generally
