@@ -1,6 +1,6 @@
 {
   "name": "extremely-hardcore",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Architecture-first skills for coding agents: change contracts, domain discovery, architecture gates, test-first implementation, and evidence ledgers.",
   "author": {
     "name": "Alan Currie"

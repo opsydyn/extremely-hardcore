@@ -59,8 +59,9 @@ codex plugin list
 ```
 
 The final command should show `extremely-hardcore` as `installed, enabled` with
-version `0.0.2` when loading this source revision. These commands change Codex's local plugin configuration by
-user choice. A repository check can use a temporary `CODEX_HOME` instead.
+the version in the checkout's `.codex-plugin/plugin.json`. These commands change
+Codex's local plugin configuration by user choice. A repository check can use a
+temporary `CODEX_HOME` instead.
 
 Start a new session in the target project and run the smoke prompt below. For a
 non-interactive read-only check, use `codex exec --ephemeral --sandbox
