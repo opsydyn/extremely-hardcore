@@ -51,10 +51,17 @@ for verification and limits. These changes are not in the published `v0.0.1`
 artifact or installed cache. No new model trial, package or publication is implied.
 
 The separately approved [v0.0.2 publication](docs/evaluations/127-v0.0.2-preview-preparation.md#approved-publication-and-download-verification)
-is now a public prerelease at `0fca28e`, not latest. The sole uploaded ZIP passed
-fresh anonymous-download and byte-comparison checks; `v0.0.1` is unchanged.
+is now a public prerelease at `0fca28e`, not latest. The original ZIP and the
+[supplemental guidance ZIP](docs/evaluations/128-v0.0.2-guidance-update.md) pinned
+to `31e0592` both passed anonymous-download and byte-comparison checks;
+`v0.0.1` is unchanged.
 No installed plugin was updated. Fresh installed-package adherence and general
 host support remain unqualified.
+
+**Next preview:** include the evidence-ledger guidance on turning material,
+reproducible mistakes into deterministic checks. Keep the fresh-session handoff
+pointed at the exact recommended download; the source regression covers that
+link, not agent adherence. This is release scope, not publication approval.
 
 The planned standalone feature set is implemented and the experimental `v0.0.2`
 preview is published; general release qualification is not complete. Stop adding
@@ -263,6 +270,32 @@ manifest and Pi skill-loading path; no MCP server is required for the method.
 Release completion means reviewed package contents, demonstrated support,
 documented cost/limits and an explicit publication decision. These tasks do not
 clear standalone acceptance, optional protocol qualification or comparisons.
+
+### Blackbelt: Opt-In Delivery-Flow Playbook
+
+Dogfood this playbook on the next three real engineering changes that already
+need multiple agents and have an observable review or verification handoff.
+Do not add agents just to qualify a change or count earlier work or synthetic
+fixtures. No new skill, scheduler, dashboard, or release gate. Progress: 0 of 3.
+
+- **Pull against capacity.** Before starting more work, check whether review or
+  verification can absorb it. Limit changes awaiting verification, not just
+  active agents.
+- **Stop promotion, keep diagnosing.** A failed required check blocks promotion,
+  not authorised investigation. Surface the failed check, affected revision and
+  owner or next decision. Turn material, reproducible mistakes into durable
+  checks through the existing evidence-ledger guidance.
+- **Record the decision, not a new receipt.** Use existing PR, CI and review
+  timestamps to note where work waited and whether the first review-ready
+  attempt passed verification. Note escaped defects when observed; mark missing
+  evidence as unknown. In the ordinary handoff, record what decision changed
+  (or did not), why, and any extra effort the playbook imposed.
+
+Review after three changes. Keep the playbook only if a repeated bottleneck
+leads to a useful delivery decision without weakening checks or adding material
+reporting overhead. Otherwise keep the useful lessons in existing guidance and
+park Blackbelt. These observations are not a comparative effectiveness claim
+or approval to run new agents, change CI policy, or publish.
 
 ### Prove Improvement
 

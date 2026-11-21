@@ -47,6 +47,13 @@ visible; protocol-backed evidence is fresh for the current workspace fingerprint
 
 ## reusable lessons
 
+For a material, reproducible mistake, add or strengthen the smallest
+deterministic check within scope. Show that it rejects the original failure and
+accepts the intended behaviour, and put it in the project's existing verification
+path. Reuse an effective check rather than duplicating it. If prevention needs
+human judgement or work outside scope, report that limitation instead of forcing
+a brittle rule or expanding scope.
+
 An evidence record is not automatically a new instruction. Capture a reusable
 lesson only after verification, when its non-obvious reasoning is absent from
 code, tests, or existing docs and losing it would plausibly cause recurrence,
