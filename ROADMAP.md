@@ -335,6 +335,13 @@ off, and to distinguish environment blockers from failed verification. Keep
 the strict PR checks, pinned artifact handoff and onboarding regression; do not
 add a standing review step or infer a throughput improvement from three changes.
 
+**Delivery-flow pilot:** the [one-page Blackbelt playbook](docs/blackbelt-playbook.md)
+defines a bounded, opt-in follow-up that tests competing work, not more isolated
+handoffs. The first FoldKit pair did not enroll. In the subsequent shared review
+window, #187 was held on CI and base freshness; #185 was already merged when
+reviewed and is retrospective only. No second live case was counted. This does
+not reopen skill or release scope.
+
 ### Prove Improvement
 
 1. **Finish the bounded control trace capability check.** The
