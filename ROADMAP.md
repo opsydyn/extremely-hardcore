@@ -1,6 +1,6 @@
 # Extremely Hardcore Product Roadmap
 
-Updated 2026-11-12. This is a work-priority map, not release approval or a fresh
+Updated 2026-11-21. This is a work-priority map, not release approval or a fresh
 provider-health check.
 
 ## Product Boundary
@@ -39,6 +39,7 @@ Implemented does not mean fully qualified, generally effective, or release-ready
 | MCP preflight regression | Known disabled entries accepted; active, unknown, malformed, duplicate, and paginated inventories rejected | [Offline correction](docs/evaluations/070-control-mcp-gate-regression.md); retained capture replay only, no host/model retry |
 | Local metadata and onboarding cleanup | Seven Claude agent definitions have minimal frontmatter; old smoke results explicitly dated; loading claims clarified | [Cleanup evidence](docs/evidence/071-local-metadata-and-onboarding-cleanup.md); no live model acceptance implied |
 | Experimental skills-only preview | GitHub prerelease `v0.0.3`, 21-file ZIP; earlier releases preserved | [Publication and download checks](docs/evaluations/129-v0.0.3-preview-publication.md); not general host qualification or marketplace publication |
+| v0.0.3 fresh-session dogfood | Codex fixed standalone release-version validation; three regressions failed before the fix and passed afterward | [PR #6](https://github.com/opsydyn/extremely-hardcore/pull/6), merged `b5d7c90`; one explicit-path use of the published ZIP, not installed-plugin or comparative evidence |
 
 ## Next
 
@@ -79,16 +80,32 @@ counts clear EHS acceptance. Freeze the current nine skills unless a demonstrate
 defect justifies a separately approved correction. More capabilities or another
 coached chart task are not the next release milestone.
 
-1. **User-led fresh-session check of the released package.** The user will
-   choose normal real work in a new session without Superpowers, rather than
-   commission another coached internal or FoldKit task from this chat. Use the
-   [short handoff](docs/fresh-session-check.md), not this development history or
-   earlier assessor answers. Retain ordinary task/diff/verification evidence and
-   disclose any remaining host, memory or repository guidance. A fresh session
-   reduces conversation carryover; it does not establish zero bias, containment
-   or isolated EHS effect. [Scope review 125](docs/evaluations/125-released-package-implementation-scope-review.md)
-   is parked; its repository/task request is withdrawn. No worker, new trial,
-   settings change or automatic follow-up is launched here.
+**Fresh-session checkpoint complete.** A fresh Codex CLI 0.170.0 session used the
+published v0.0.3 ZIP on the real validator defect. Plugins, hooks, memory and host
+skill discovery were disabled; no Superpowers loading was observed. The trace
+confirmed reads of the released router, change contract, test-first guidance and
+evidence ledger. The agent reproduced all three false passes before editing,
+changed only the validator and its tests, and passed 64 focused tests. The parent
+applied the exact patch and passed all 243 tests, validation and TypeScript.
+[PR #6](https://github.com/opsydyn/extremely-hardcore/pull/6) merged on green;
+the merged CLI independently accepted aligned metadata and rejected each of the
+three stale manifests or entries with a file-specific diagnostic. No released
+asset changed. This is one bounded observation, not a baseline comparison,
+proof of installed-host adherence, or a general support decision.
+
+The first sandbox startup stopped before model dispatch and required a narrow
+executable allowance. The history-free snapshot also caused one unsuccessful
+`git status`; the session recovered. For another isolated exercise, preflight
+the exact host route and prefer a disposable Git checkout without supplying
+trial history. Do not turn setup friction into a new skill requirement.
+
+1. **Observe one ordinary user-led use on a different real task.** Use the
+   [short handoff](docs/fresh-session-check.md) and the unchanged v0.0.3 ZIP in
+   the chosen project's normal checkout, without Superpowers or this trial's
+   expected answers. Capture any setup friction, unnecessary ceremony and the
+   resulting diff and checks. Do not rerun the validator task to collect another
+   passing result. [Scope review 125](docs/evaluations/125-released-package-implementation-scope-review.md)
+   remains parked. No new session or settings change is authorised here.
 2. **Set host-specific support scope.** Retain useful uncertainty, proportional
    verification, skill-relative resources and consequential-work boundaries on
    every claimed surface. Assess Claude and Pi against their own loading and
@@ -222,18 +239,16 @@ worker's failed criterion or establish implementation adherence. Mandatory
 ambient context and unavailable usage remain explicit limits. The approved
 offline witness-gap review in 123 recommends keeping EHS unchanged and retaining
 7/8: existing regression/evidence guidance is sufficient, and this known fixture
-does not justify mandatory numeric-witness boilerplate. No retry follows. Next
-useful acceptance work is one small real implementation/verification task with
-the released package after explicit repository/task selection and bounded
-consent. No push, release change or wider host/effectiveness claim is authorised.
+does not justify mandatory numeric-witness boilerplate. No retry followed. The
+later v0.0.3 validator checkpoint under Ship EHS addressed the bounded real-task
+follow-up without changing this historical score or supporting broader claims.
 
 The subsequent [FoldKit observation 124](docs/dogfood/124-foldkit-earthquake-and-ci-retrospective.md)
 now consolidates merged engineering work through radar PR 24. It records actual
 browser/review defects and recovery, but not fresh-session loading of the released
-package or its isolated implementation effect. Observation 123's 7/8 score and
-the released-package acceptance gap remain unchanged. Return to the bounded
-acceptance step above, not another parser repetition, mandatory checklist or
-unapproved model run. Live release-normalization qualification remains pending
+package or its isolated implementation effect. Observation 123's 7/8 score
+remains unchanged. The later Codex result is separate evidence, not an upgrade
+to the FoldKit observation. Live release-normalization qualification remains pending
 the next genuine package release in FoldKit; it does not block standalone skill
 use or authorise a synthetic release.
 
@@ -552,8 +567,8 @@ Fewer words, green tests, and one successful trial do not establish efficiency.
 | Item | Status | Next bounded action |
 | --- | --- | --- |
 | Claude agent metadata and stale onboarding labels | Locally corrected; metadata validation is not model acceptance | Keep the regression checks; do not overwrite historical smokes |
-| Codex, Claude, Pi standalone acceptance | Open; Codex uninterrupted test-first observation 112 meets nine frozen criteria; 101 remains incomplete and 103 narrower; Claude planning 7/8, implementation parent-green with historical observer rejection and local counter correction; Pi planning partial, callable inventory/writable qualification open | Decide surface-specific preview/support scope under 113; no automatic new trial, counter-driven retry or permission expansion |
-| Standalone release hygiene | Observation 123 remains 7/8; mixed-method dogfood 124 is closed; internally orchestrated proposal 125 is parked | User-led fresh-session use of the actual preview without Superpowers; record actual context and outcomes, then review support scope. No task selection or worker dispatch is pending in this chat |
+| Codex, Claude, Pi standalone acceptance | Open; v0.0.3 has one real Codex explicit-path result in PR #6. Fresh Codex native installation is unverified. Claude and Pi have narrower historical evidence; Pi file discovery is not adherence | Decide support per host under 113. Verify the actual install/load route and representative behaviour before stronger claims; no automatic new trial or permission expansion |
+| Standalone preview adoption | First fresh-session real task complete; 123 remains 7/8, mixed-method dogfood 124 is closed, and proposal 125 is parked | Observe ordinary user-led use on a different task with the published ZIP; retain setup and verification evidence without a new harness |
 | Control-only trace retention | Open; first attempt stopped before a turn, local MCP predicate corrected | Obtain fresh inventories for one separately authorised bounded attempt |
 | Comparative effectiveness | Hold | Resolve provenance/isolation gaps before A/A, then predeclare independent comparisons |
 | Optional protocol integrity and durable evidence retention | Separate open qualification gates | Assess runtime input/evidence/approval binding and future CI retention against existing decisions; retain experimental status until qualified |
