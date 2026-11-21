@@ -6,9 +6,9 @@ import { requiredFiles, requiredSkillHeadings, validateProject } from "./validat
 
 const roots: string[] = [];
 
-test("0.0.2 preview source versions are aligned", () => {
+test("0.0.3 preview source versions are aligned", () => {
   const version = JSON.parse(source("package.json")).version;
-  expect(version).toBe("0.0.2");
+  expect(version).toBe("0.0.3");
   for (const path of [".codex-plugin/plugin.json", ".claude-plugin/plugin.json"]) {
     expect(JSON.parse(source(path)).version).toBe(version);
   }
