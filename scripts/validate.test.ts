@@ -232,9 +232,18 @@ function writeMinimalRequiredFiles(root: string): void {
     } else if (file === "AGENTS.md") {
       write(root, file, completeAgentsRouting());
     } else if (file === ".codex-plugin/plugin.json") {
-      write(root, file, JSON.stringify({ name: "extremely-hardcore", skills: "./skills/" }));
+      write(root, file, JSON.stringify({ name: "extremely-hardcore", skills: "./skills/", version: "1.2.3" }));
+    } else if (file === ".claude-plugin/plugin.json") {
+      write(root, file, JSON.stringify({ version: "1.2.3" }));
+    } else if (file === ".claude-plugin/marketplace.json") {
+      write(root, file, JSON.stringify({
+        plugins: [
+          { name: "another-plugin", version: "9.9.9" },
+          { name: "extremely-hardcore", version: "1.2.3" },
+        ],
+      }));
     } else if (file === "package.json") {
-      write(root, file, JSON.stringify({ private: true, pi: { skills: ["./skills"] } }));
+      write(root, file, JSON.stringify({ private: true, version: "1.2.3", pi: { skills: ["./skills"] } }));
     } else {
       write(root, file, `${file}\n`);
     }
@@ -317,6 +326,27 @@ function completeAgentsRouting(): string {
 }
 
 describe("validateProject", () => {
+  test.each([
+    [".codex-plugin/plugin.json", { name: "extremely-hardcore", skills: "./skills/", version: "1.2.4" }],
+    [".claude-plugin/plugin.json", { version: "1.2.4" }],
+    [".claude-plugin/marketplace.json", {
+      plugins: [
+        { name: "another-plugin", version: "1.2.3" },
+        { name: "extremely-hardcore", version: "1.2.4" },
+      ],
+    }],
+  ] as const)("rejects a release version mismatch in %s", (file, metadata) => {
+    const root = tempRepo();
+    writeMinimalRequiredFiles(root);
+    expect(validateProject(root)).toEqual({ ok: true, errors: [] });
+    write(root, file, JSON.stringify(metadata));
+
+    expect(validateProject(root)).toEqual({
+      ok: false,
+      errors: [`${file} version must match package.json version 1.2.3`],
+    });
+  });
+
   test("source exposes exactly the existing skills directory to Pi", () => {
     expect(JSON.parse(source("package.json")).pi).toEqual({ skills: ["./skills"] });
     expect(validateProject(join(import.meta.dir, "..")).ok).toBe(true);
@@ -328,7 +358,7 @@ describe("validateProject", () => {
   ])("rejects missing, filtered or non-skill Pi resources: %j", (pi) => {
     const root = tempRepo();
     writeMinimalRequiredFiles(root);
-    write(root, "package.json", JSON.stringify({ pi }));
+    write(root, "package.json", JSON.stringify({ version: "1.2.3", pi }));
     expect(validateProject(root).errors).toContain('package.json pi must expose only skills: ["./skills"]');
   });
 
